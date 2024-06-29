@@ -1,0 +1,368 @@
+/*
+ * Top Bar
+ */
+ .topbar_container {
+    display: flex;
+    justify-content: flex-start;
+ }
+ .right_topbar {
+    flex: 1;
+    @include box_shadow(0px 2px 15px -10px, #888);
+ }
+.left_topbar {
+    width: 220px;
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+    position: relative;
+    &.minimized { justify-content: center;}
+
+    // LOGO
+    .lrz_logo_wrap {
+        padding: 5px 1.5rem;
+        background-color: transparent;
+        position: relative;
+        height: auto;
+        .lrz_logo {    
+            color: black;
+            text-decoration: none;
+    
+            &:hover,
+            &:focus {
+                color: black;
+            }
+    
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+    
+            img {
+                height: 60px;
+                width: auto;
+    
+                &.lrz_square {
+                    width: auto;
+                    height: 40px;
+                }
+    
+                margin-right: 15px;
+            }
+    
+            .logo_text {
+                font-size: 1.5rem;
+                font-family: 'Open_Sans-Bold';
+                color: white;
+            }
+            .small_text { font-size: 0.8rem;}
+    
+        }
+    }
+    .toggle_btn {
+        // position: absolute;
+        // right: 1rem;
+        // top: 1rem;
+        padding: 5px;
+        width: 30px;
+        border-color: transparent;
+        z-index: 2;
+        .toggler_bar { border-color: #dddddd;}
+    }
+}
+
+.topbar {
+    padding: 0 1rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    .responsive_logo {
+        margin-right: 10px;
+        .lrz_logo_wrap {
+            padding: 0;
+            .lrz_logo {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                img.lrz_square { width: 40px; height: 40px; margin-right: 5px;}
+                
+                .logo_text { 
+                    color:$lrz_blue; font-size: 1.5rem;
+                    font-family: 'Open_Sans-Bold';
+                }
+            }
+        }
+    }
+    .topbar_element {
+        // position: relative;
+        color: $dark_grey;
+        font-size: 1.1rem;
+        font-family: 'Open_Sans-Regular';
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-right: 2rem;
+        .topbar_element_icon {
+            width: 30px; height: 30px;
+            background-color: $dark_grey;
+            margin-right: 10px;
+            &.counter_icon {
+                @include bg_mask_image('../../../assets/icons/clock_counter_icon.svg');
+            }
+        }
+    }
+
+    .date {
+        display: flex;
+        align-items: center;
+        position: relative;
+        font-family: 'Open_Sans-Regular';
+        font-size: 1rem;;
+        .calendar_icon {
+            margin-right: 8px;
+            width: 30px; height: 30px;
+            background-color: $lrz_blue;
+            @include bg_mask_image('../../../assets/icons/calendar_date_icon.svg');
+        }
+    }
+    #timer {
+        display: flex;
+        align-items: center;
+        position: relative;
+        padding-left: 40px;
+        height: 40px;
+        .timer_icon {
+            position: absolute;
+            top: 5px; left: 0;
+            width: 30px; height: 30px;
+            background-color: $dark_grey;
+            @include bg_mask_image('../../../assets/icons/timer_icon.svg');
+        }
+        .extend_session_btn {
+            background-color: white;
+            border: 1px solid #dddddd;
+            width: 38px; height: 36px;
+            margin-left: 10px;
+            @include border_radius(3px, 3px, 3px, 3px);
+            position: relative;
+            &:hover, &:focus {
+                background-color: $silver_grey;
+            }
+            &:active { border: 2px solid #dddddd;}
+            .refresh_icon {
+                position: absolute;
+                top: 2px; left: 3px;
+                width: 30px; height: 30px;
+                background-color: $dark_grey;
+                @include bg_mask_image('../../../assets/icons/refresh_icon.svg');
+                //animation: spinner 2s linear reverse infinite;
+                //transform: rotate(180deg);
+            }
+        }
+    }
+
+    .accessibilities {
+        position: relative;
+        ul.accessibilities_list {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 0;
+            margin-bottom: 0;
+            li {
+                list-style-type: none;
+                margin-right: 1rem;
+            }
+        }
+        .accessibility_btn {
+            width: 40px;
+            height: 40px;
+            margin: 5px;
+            background-color: $lrz_blue;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            border: 1px solid #dddddd;
+            @include border_radius(3px, 3px, 3px, 3px);
+            &:hover,
+            &:focus {
+                cursor: pointer;
+                scale: 1.05;
+            }
+            &:focus-visible { border: 1px solid $dark_blue; background-color: $dark_blue;}
+        }
+
+        // .dark_mode_toggle {
+        //     @include bg_mask_image('../../../assets/icons/Icon_Contrast_lrzblue.svg');
+        // }
+
+        // .font_size_toggle {
+        //     @include bg_mask_image('../../../assets/icons/Icon_FontSize_lrzblue.svg');            
+        // }
+
+        .font_size_btn {
+            background-color: white;
+            border: 1px solid #dddddd;
+            width: 38px;
+            height: 38px;
+            margin: 5px;
+            font-family: 'Open_Sans-Bold';
+            color: $lrz_blue;
+            &:hover, &:focus {
+                scale: 1.05;
+            }
+            &:active {
+                border-width: 2px;
+            }
+            &:disabled {
+                background-color: $silver_grey;
+                color: gray;
+                cursor: not-allowed;
+            }
+        }
+        .darkmode_btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid #dddddd;
+            @include box_shadow(1px 1px 2px 0px inset, #888888);
+            .handle {
+                position: relative;
+                .handle_icon {
+                    -webkit-mask-repeat: no-repeat;
+                    mask-repeat: no-repeat;
+                    background-color: $yellow;
+                    @include bg_mask_image('../../../assets/icons/sun_icon.svg');
+                    z-index: 1;
+                }
+            }
+            &[data-toggle="true"] {
+                background-color: #444444;
+                @include box_shadow(1px 1px 2px 0px inset, #ddd);
+                .handle {
+                    background-color: transparent;
+                    .handle_icon {
+                        background-color: white;
+                        width: 22px;
+                        height: 22px;
+                        top: 2px;
+                        @include bg_mask_image('../../../assets/icons/moon_stars_icon.svg');
+                    }
+                }
+            }
+        }
+    }
+
+    // .user_info {
+    //     .user_avatar {
+    //         width: 30px;
+    //         height: 30px;
+    //     }
+    // }
+    // select.adjustFS_selection {
+    //     position: absolute;
+    //     top: 50px;
+    //     left: 0;
+    //     z-index: 1;
+    //     width: 100px;
+    // }
+    
+
+    // Overwride by Darkmode
+    &.dark_bg {
+        border-left: 1px solid $dark_grey;
+        .responsive_logo {
+            .lrz_logo_wrap .lrz_logo .logo_text { color: white;}
+        }
+        .timer {
+            .timer_icon {
+                background-color: white;
+                //@include bg_mask_image('../../../assets/icons/refresh_icon.svg');
+            }
+        }
+        .accessibilities {
+            .accessibility_btn {
+                background-color: white;
+            }
+        }
+        //.date .calendar_icon { background-color: white;}
+        .font_size_btn { background-color: #444444; color: white;}
+        
+    }
+
+    .navbar_toggle {
+        .navbar_toggler {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: space-between;
+            width: 55px;
+            height: 40px;
+            padding: 10px;
+            border: 1px solid #dddddd;
+            background-color: transparent;
+            @include border_radius(3px, 3px, 3px, 3px);
+            .toggler_bar {
+                width: 35px;
+                height: 1px;
+                border-top: 1px solid var(--bs-gray-600);
+            }
+            &:not(.collapsed) {
+                justify-content: center;
+                align-items: center;
+                .toggler_bar {
+                    @include _transition(all, 0.2s, ease-out);
+                    &.bar_1 {
+                        transform: rotate(-45deg);
+                    }
+                    &.bar_2 {
+                        display: none;
+                    }
+                    &.bar_3 {
+                        transform: rotate(45deg);
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+
+/*
+ * Responsive layout
+ */
+@media screen and (max-width: 991px) {
+    .topbar {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        .navbar_toggle {display: flex;}
+        .responsive_logo { display: inline-block;}
+        #access_top { display: none;}
+        #access_dropdown {
+            .accessibilities_list { padding-left: 1.5rem;}
+            .dark_mode_toggle { background-color: white;}
+        }
+    }
+    .left_topbar { display: none;}
+    .dark_bg {
+        .navbar_toggle .navbar_toggler .toggler_bar {
+            border-color: white;
+        }
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .topbar {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        .responsive_logo { display: none;}
+        .navbar_toggle {display: none;}
+        #access_dropdown { display: none;}
+    }
+    .left_topbar .lrz_logo_wrap { padding: 5px 1rem;}
+    
+}
+
+.topbar.dark_bg .topbar_element .topbar_element_icon {
+    background-color: white;
+}
+

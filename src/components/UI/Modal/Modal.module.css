@@ -1,0 +1,58 @@
+@keyframes slide-in-from-top {
+  0% {
+    transform: translateY(-15%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+dialog { padding: 0; border: 1px solid #dddddd;}
+.tokenModal {
+  border: none;
+  border-radius: 8px;
+  padding: 2rem;
+  background-color: white;
+  top: 30vh;
+  width: 80%;
+  margin: auto;
+  z-index: 100;
+  overflow: hidden;
+}
+
+
+.modal {
+  top: 30vh;
+  width: 80%;
+  margin: auto;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.header {
+  background: darkred;
+  padding: 1rem;
+}
+
+.header h2 {
+  margin: 0;
+  color: white;
+}
+
+.content {
+  padding: 1rem;
+}
+
+.actions {
+  padding: 1rem 1rem 2rem 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .modal {
+    width: 30rem;
+  }
+}

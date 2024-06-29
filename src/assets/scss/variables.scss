@@ -1,0 +1,138 @@
+
+
+/*******************
+* Defined Colours
+*******************/
+$dark_blue: #141E37;
+$light_gold: #CEAA77;
+$dark_gold: #B48A58;
+$silver_grey: #CCD4D9;
+$dark_grey: #565657;
+$medium_grey: #d2d1d1;
+$light_grey: #f2f2f2;
+$lrz_blue: #6CACDE;
+$yellow: #ffbe00;
+$light_yellow: #fdd45b;
+$text_grey: #666666;
+$medium_blue: #2F5597;
+$bg_light_orange: #FDD0BC;
+$bg_light_blue: #C6E4FF;
+$bg_green: #A7F8B1;
+$border_color_light: #dddddd;
+$green: #65B741;
+$blue: #11009E;
+$red: #DF2E38;
+$orange: #FFB534;
+
+/**************************
+ * Define basic font-size
+ **************************/
+$basic_fs: 1em;
+
+/*
+ * Animations
+ */
+@keyframes spinner {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+}
+
+
+/*
+ * Functions
+ */
+ @mixin _transform2D($args){
+    transform: $args;
+    -webkit-transform: $args; 
+    -moz-transform: $args;
+    -ms-transform: $args;
+    -o-transform: $args;
+}
+@mixin _background($size, $position) {
+    background-size: $size;
+    background-repeat: no-repeat;
+    background-position: $position;
+}
+@mixin bg_layer($color, $opacity){
+    background-color: $color;
+    opacity: $opacity;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    transition: .5s ease;
+    
+}
+@mixin border_top($width, $color) {
+    border-top: $width solid $color;
+}
+
+@mixin short_devider($width, $color) {
+    width: $width;
+    height: 1px;
+    border: 1px solid $color;
+    background-color: $color;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+@mixin icon_bottom_container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
+}
+@mixin box_shadow($width, $color) {
+    -webkit-box-shadow: $width $color;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+    -moz-box-shadow:    $width $color;  /* Firefox 3.5 - 3.6 */
+    box-shadow:         $width $color;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+}
+@mixin border_radius($x, $y, $z, $t){
+    border-radius: $x $y $z $t; /* $topLeft, $topRight, $bottomRight, $bottomLeft */
+    -moz-border-radius: $x $y $z $t;
+    -webkit-border-radius: $x $y $z $t; 
+}
+@mixin _bounce {
+	opacity: 0;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+@mixin scale_element($scale) {
+    -webkit-transform: scale($scale);
+    -ms-transform: scale($scale);
+    transform: scale($scale);
+    z-index: 2;
+}
+
+@mixin _translate($x,$y,$z){
+    -moz-transform: translate3d($x, $y, $z);
+    -webkit-transform: translate3d($x, $y, $z);
+    -o-transform: translate($x, $y);
+    -ms-transform: translate($x, $y);
+    transform: translate3d($x, $y, $z);
+}
+@mixin _transition($property, $duration, $function){
+    -moz-transition: $property $duration $function;
+    -webkit-transition: $property $duration $function;
+    -o-transition: $property $duration $function;
+    transition: $property $duration $function;
+}
+@mixin round($width) {
+    /* Safari 3-4, iOS 1-3.2, Android 1.6- */
+    -webkit-border-radius: $width; 
+    /* Firefox 1-3.6 */
+    -moz-border-radius: $width;   
+    /* Opera 10.5, IE 9, Safari 5, Chrome, Firefox 4, iOS 4, Android 2.1+ */
+    border-radius: $width; 
+}
+
+@mixin bg_mask_image($url) {
+    -webkit-mask-image: url($url);
+    mask-image: url($url);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: cover;
+    mask-size: cover;
+}

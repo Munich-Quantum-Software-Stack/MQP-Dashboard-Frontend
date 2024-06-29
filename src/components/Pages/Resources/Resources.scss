@@ -1,0 +1,151 @@
+/*************
+ * Resources 
+ ************/
+@import '../../../assets/scss/variables.scss';
+
+// Resources
+$resource_bg_1: #fbc398; // light orange
+$resource_bg_2: #D5E9F8; // light blue
+$resource_bg_3: #E5F8E6; // light green
+$resource_bg_4: #faf1bd; // gold
+$resource_bg_5: #f9a2e3; // lyft pink
+$resource_bg_6: #ae73ae; // purple
+$resource_divider_1: #DE5215;
+$resource_divider_2: #058AF7;
+$resource_divider_3: #05FA12;
+$resource_divider_4: #FFD700;
+$resource_divider_5: #FF00BF;
+$resource_divider_6: #800080;
+
+.resources_list {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;        
+}
+
+.resource_item_wrap {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    a { text-decoration: none;}
+    .resource_item {
+        flex: 1;
+        color: black;
+        .resource_item_logo {
+            width: 60%;
+            .resource_log_wrap {
+                height: 30px;
+                display: flex;
+                justify-content: flex-end;
+                img { width: auto; height: 100%; object-fit: contain;}
+            }
+        }
+        .resource_status {
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            .status_icon_wrap {
+                position: relative;
+                padding-left: 30px;                
+                .status_icon {
+                    width: 20px; height: 20px;
+                    position: absolute;     
+                    top: 2px; left: 10px;          
+                    border: 1px solid $dark_grey;              
+                    background-color: white;    
+                    @include border_radius(50%, 50%, 50%, 50%);
+                    @include bg_mask_image("/assets/icons/circle_dot_icon.svg");
+                    .offline_icon {
+                        background-color: red;     
+                        width: 20px; height: 20px;  
+                        position: absolute; top: -1px; left: -1px;
+                    }
+                    .online_icon { 
+                        background-color: green;
+                        width: 20px; height: 20px;
+                        position: absolute; top: -1px; left: -1px;
+                    }
+                }
+            }
+        }
+        .resource_technology { display: flex; justify-content: flex-start; flex-wrap: wrap;}
+        .resource_value { padding-left: 10px;}
+        
+        &.resource_bg_1 {       
+            background-image: linear-gradient($resource_bg_1, white);
+            .short_divider {
+                @include short_devider(40px, $resource_divider_1);
+            }
+        }
+        &.resource_bg_2 {
+            background-image: linear-gradient($resource_bg_2, white);
+            .short_divider { @include short_devider(40px, $resource_divider_2); }
+        }
+        &.resource_bg_3 {
+            background-image: linear-gradient($resource_bg_3, white);
+            .short_divider { @include short_devider(40px, $resource_divider_3); }
+        }
+        &.resource_bg_4 {
+            background-image: linear-gradient($resource_bg_4, white);
+            .short_divider { @include short_devider(40px, $resource_divider_4); }
+        }
+        &.resource_bg_5 {
+            background-image: linear-gradient($resource_bg_5, white);
+            .short_divider { @include short_devider(40px, $resource_divider_5); }
+        }
+        &.resource_bg_6 {
+            background-image: linear-gradient($resource_bg_6, white);
+            .short_divider { @include short_devider(40px, $resource_divider_6); }
+        }
+    }
+}
+
+.pane_title {
+    font-size: 1.5rem;
+    font-family: 'Open_Sans-Bold';
+}
+.pane_desc { color: var(--bs-gray-800); }
+.pane_subtitle { color: var(--bs-gray-700); font-size: 1.05rem; font-weight: 700; }
+
+/*
+ * Darkmode
+ */
+.dark_bg {
+    .resource_item {
+        .pane_title { color: black;}
+        .pane_desc *, .resource_qubit *, .resource_technology *, .resource_budgets * { color: $dark_grey;}
+        .resource_status {
+            .status_icon_wrap > * { color: black;}
+        }
+    }
+}
+
+/*
+ * Responsive Layout
+ */
+
+@media screen and (min-width: 1200px) and (max-width: 1400px) {
+    .resource_item_wrap {
+        .resource_item {
+            .resource_item_logo {
+                .resource_log_wrap {
+                    height: 20px;
+                    margin-top: 5px;
+                }
+            }
+        }
+    }
+}
+
+
+@media screen and (min-width: 1401px) and (max-width: 1600px) {
+    .resource_item_wrap {
+        .resource_item {
+            .resource_item_logo {
+                .resource_log_wrap {
+                    height: 30px;
+                }
+            }
+        }
+    }
+}

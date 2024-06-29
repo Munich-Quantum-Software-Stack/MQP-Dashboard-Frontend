@@ -1,0 +1,226 @@
+@import "../../assets/scss/variables.scss";
+
+/******** Button *********/
+
+.dashboard_btn {
+    border: 1px solid var(--bs-gray-400);
+    color: black;
+    background-color: $light_yellow;
+    //background-image: linear-gradient($yellow, white);
+    //text-transform: capitalize;
+    height: 40px;
+    width: 150px;
+    vertical-align: middle;
+    @include border_radius(20px, 20px, 20px, 20px);
+    @include _transition(all, 0.5s, ease);
+    &:hover,
+    &:focus {
+        background-color: $yellow;
+    }
+    &:disabled,
+    &:disabled:hover,
+    &:disabled:focus {
+        background-color: $light_grey;
+        cursor: not-allowed;
+    }
+}
+.gray_btn {
+    color: var(--bs-gray-600);
+    background-color: var(--bs-gray-100);
+    @include _transition(all, 0.3s, ease);
+    &:hover, &:focus {
+        background-color: var(--bs-gray-100);
+        color: black;
+        border-color: $yellow;
+    }
+}
+
+.logout_button { width: auto; padding-left: 15px; padding-right: 15px;}
+// .logout_btn {
+//     position: relative;
+//     padding: 0.75rem 1.5rem;
+//     color: white;
+//     background-color: transparent;
+//     border: none;
+//     font-size: 1.1rem;
+//     font-family: "Open_Sans-Regular";
+//     display: flex;
+//     justify-content: flex-start;
+//     align-items: center;
+//     .link_text {
+//         margin-left: 10px;
+//     }
+//     .logout_icon {
+//         width: 25px;
+//         height: 25px;
+//         background-color: white;
+//         @include bg_mask_image("../../assets/icons/logout_icon_white.svg");
+//     }
+//     &:hover,
+//     &:focus {
+//         color: $yellow;
+//         @include _transition(ease, 0.2s, all);
+//         background-color: $dark_grey;
+//         .logout_icon {
+//             background-color: $yellow;
+//         }
+//     }
+// }
+
+.alert-dismissible .btn_close {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background-color: #666666;
+    @include bg_mask_image("../../assets/icons/close_cross_icon.svg");
+    &:hover,
+    &:focus {
+        background-color: #666666;
+    }
+}
+
+.toggle_switch_btn {
+    width: 60px;
+    height: 34px;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 50px;
+    padding: 4px;
+    cursor: pointer;
+
+    .handle {
+        width: 26px;
+        height: 26px;
+        position: relative;
+        .handle_icon {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+.toggle_switch_btn[data-toggle="true"] {
+    justify-content: flex-end;
+    background-color: white;
+}
+
+.toggle_btn {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    width: 36px;
+    height: 30px;
+    padding: 5px;
+    border: 1px solid #dddddd;
+    background-color: transparent;
+    @include border_radius(3px, 3px, 3px, 3px);
+    .toggler_bar {
+        width: 27px;
+        height: 1px;
+        border-top: 1px solid var(--bs-gray-600);
+    }
+    &:not(.collapsed) {
+        justify-content: center;
+        align-items: center;
+        .toggler_bar {
+            @include _transition(all, 0.2s, ease-out);
+            &.bar_1 {
+                transform: rotate(-45deg);
+            }
+            &.bar_2 {
+                display: none;
+            }
+            &.bar_3 {
+                transform: rotate(45deg);
+            }
+        }
+    }
+}
+
+/******** Card *********/
+
+.content_container {
+    padding: 2rem;
+    margin-bottom: 0.75rem;
+    // background-color: white;
+    @include box_shadow(0px 2px 15px -10px, #888);
+    position: relative;
+    &:last-child {
+        margin-bottom: 0;
+    }
+    //height: 80vh;
+}
+
+.blank_container {
+    min-height: 70vh;
+    padding: 2rem;
+}
+
+.pane_card {
+    @include border_radius(5px, 5px, 5px, 5px);
+    @include box_shadow(0px 1px 3px -1px, $dark_grey);
+    padding: 1rem;
+}
+.LoginPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    //min-height: 100vh;
+}
+
+// Loading Indicator
+@keyframes lds-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    margin: 1rem 0;
+    div {
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        width: 34px;
+        height: 34px;
+        margin: 8px;
+        border: 5px solid $dark_grey;
+        border-radius: 50%;
+        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        border-color: $dark_grey transparent transparent transparent;
+        &:nth-child(1) {
+            animation-delay: -0.45s;
+        }
+        &:nth-child(2) {
+            animation-delay: -0.3s;
+        }
+        &:nth-child(3) {
+            animation-delay: -0.15s;
+        }
+    }
+}
+
+.lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+}

@@ -1,0 +1,19 @@
+.status_container { flex-grow: 1;}
+.welcome_text {
+    background: rgb(255,190,0);
+    background: linear-gradient(90deg, rgba(255,190,0,1) 0%, rgba(180,138,88,1) 47%, rgba(20,30,55,1) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.dark_bg {
+    
+    .welcome_text { 
+        background-image: none;
+        color: white;
+        background-color: white;
+        background-clip: text;
+    }
+
+   
+}

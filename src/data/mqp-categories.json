@@ -1,0 +1,9 @@
+[
+    { "id": 1, "name": "General" },
+    { "id": 2, "name": "Status" },
+    { "id": 3, "name": "Tokens" },
+    {"id": 4, "name": "Jobs"},
+    {"id": 5, "name": "Budgets"},
+    {"id": 6, "name": "Resources"},
+    {"id": 7, "name": "Accessibilities"}
+]

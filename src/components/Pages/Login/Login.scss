@@ -1,0 +1,63 @@
+/**********
+ * Login 
+ *********/
+@import '../../../assets/scss/variables.scss';
+
+
+
+
+.form_text {
+    color: $dark_grey;
+}
+
+.page_header {
+    line-height: 1.2;
+}
+.errorList { padding-left: 15px;}
+
+
+.logout_btn { width: auto;}
+
+.LoginPage_bg {
+    background-color: black;
+    background-image: url('../../../assets/images/Visual_Web_HPC-QC_3.jpg');
+    @include _background(cover, center center);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+}
+.LoginForm_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    position: relative;
+}
+
+.LoginForm_wrap {
+    width: 100%;
+    max-width: 420px;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    @include box_shadow(0px 8px 20px 0px, #000);
+    background-color: white;
+    padding: 2rem 3rem 1rem;
+    color: $dark_grey;
+    .login_content {
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+    }
+}
+.lrz_logo {
+    img {
+        width: 80px;
+        height: 80px;
+    }
+
+    text-align: center;
+}
