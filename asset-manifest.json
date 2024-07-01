@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "./static/css/main.61b38485.css",
+    "main.css": "./static/css/main.ea0495e4.css",
     "main.js": "./static/js/main.3881a1ac.js",
     "static/js/453.79b30e5b.chunk.js": "./static/js/453.79b30e5b.chunk.js",
     "static/media/Visual_Web_HPC-QC_3.jpg": "./static/media/Visual_Web_HPC-QC_3.2f840313c5d9db045780.jpg",
@@ -37,12 +37,12 @@
     "static/media/timer_icon.svg": "./static/media/timer_icon.54666351533f01dabd7f.svg",
     "static/media/add_plus_icon.svg": "./static/media/add_plus_icon.7c966efea8f01cb38e6c.svg",
     "static/media/circle_dot_icon.svg": "./static/media/circle_dot_icon.2d03e756353d2b38fdd4.svg",
-    "main.61b38485.css.map": "./static/css/main.61b38485.css.map",
+    "main.ea0495e4.css.map": "./static/css/main.ea0495e4.css.map",
     "main.3881a1ac.js.map": "./static/js/main.3881a1ac.js.map",
     "453.79b30e5b.chunk.js.map": "./static/js/453.79b30e5b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.61b38485.css",
+    "static/css/main.ea0495e4.css",
     "static/js/main.3881a1ac.js"
   ]
 }
