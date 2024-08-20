@@ -13,12 +13,13 @@ $completed_color: $blue;
 $running_color: $green;
 $canceled_color: $red;
 
+.jobs_container { flex-grow: 1;}
+
 // Jobs Actions
 .jobs_actions {
-    // display: flex;
-    display: none;
-    justify-content: space-between;
-    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
     margin-bottom: 2rem;
 }
 .action_container {
@@ -32,21 +33,104 @@ $canceled_color: $red;
 
 // JOBS SORTING
 .sorting_container {
-    .sorting_input {
+    margin-right: 3rem;
+    .sorting_items_wrap { display: flex; flex-direction: row; justify-content: flex-start;}
+    .sorting_item_input {
         width: 200px;
+        margin-right: 10px;
         margin-left: 10px;
+    }
+    .sorting_order_input {
+        width: 100px;
     }
 }
 
 // JOBS FILTER
 .filter_container {
-    display: none;
     .filter_input {
         width: 180px;
         margin-left: 10px;
     }
 }
 
+// JOBS LIST Table
+.jobsList_table {
+    border: 1px solid #dddddd;
+    padding: 0;
+    thead tr.job_row_header {
+        background-color: var(--bs-gray-400);
+        td {
+            background-color: var(--bs-gray-400);
+        }
+    }
+    tbody {       
+        tr.job_item_detail {
+            .job_column {
+
+                vertical-align: middle;
+                &.job_id {
+                    min-width: 100px;
+                }
+                &.job_shots {
+                    min-width: 120px;
+                }
+                &.job_submitted { min-width: 220px;}
+                &.job_status,
+                &.job_circuit_format,
+                &.job_target {
+                    min-width: 150px;
+                }
+                // &.job_circuit {
+                //     min-width: 150px;
+                // }
+                &.job_note {
+                    min-width: 220px;
+                    flex: 1;
+                }
+                &.job_view {
+                    min-width: 40px;
+                    padding: 10px 5px;
+                    position: relative;
+                    .view_icon {
+                        position: absolute;
+                        top: 10px;
+                        left: 12px;
+                        width: 20px;
+                        height: 20px;
+                        background-color: $dark_grey;
+                        opacity: 1;
+                        @include bg_mask_image(
+                            "../../../assets/icons/link_icon_2.svg"
+                        );
+                    }
+                }
+            }
+            .pending_bg {
+                color: $pending_color;
+            }
+            .running_bg {
+                color: $running_color;
+            }
+            .canceled_bg {
+                color: $canceled_color;
+            }
+            .complete_bg {
+                color: $completed_color;
+            }
+            &:hover, &:focus { 
+                cursor: pointer;
+                @include _transition(all, 0.2s, ease-out);
+                // .job_view .view_icon {
+                //     opacity: 1;
+                // }
+            }
+        }
+    }
+}
+
+
+
+/*
 .jobsList_wrap_fix {
     width: 100%;
     overflow-x: hidden;
@@ -64,6 +148,7 @@ ul.jobsList {
         display: flex;
         justify-content: flex-start;
         align-items: center;
+        flex-wrap: nowrap;
         &.job_item_row {
             border-top: 1px solid #dddddd;
             border-bottom: 1px solid #dddddd;
@@ -71,13 +156,14 @@ ul.jobsList {
             .job_column {
                 line-height: 2;
                 vertical-align: middle;
-                padding: 0.5rem 1rem;
+                padding: 0.5rem;
                 &.job_id {
-                    width: 50px;
+                    width: 100px;
                 }
                 &.job_shots {
                     width: 120px;
                 }
+                &.job_submitted,
                 &.job_status,
                 &.job_circuit_format,
                 &.job_target {
@@ -160,6 +246,7 @@ ul.jobsList {
         }
     }
 }
+*/
 
 // JOB DETAIL
 .job_detail_container {
@@ -231,28 +318,50 @@ ul.jobsList {
  */
 
 .dark_bg {
-    ul.jobsList li.job_item_row {
-        background-color: var(--bs-gray-800);
-        &.job_row_header div {
-            background-color: var(--bs-gray-800);
-        }
-        &:nth-child(even) {
-            a .job_column {
-                background-color: $light_grey;
-                color: black;
+    // ul.jobsList li.job_item_row {
+    //     background-color: var(--bs-gray-800);
+    //     &.job_row_header div {
+    //         background-color: var(--bs-gray-800);
+    //     }
+    //     &:nth-child(even) {
+    //         a .job_column {
+    //             background-color: $light_grey;
+    //             color: black;
+    //         }
+    //     }
+    //     &:nth-child(odd) {
+    //         a .job_column {
+    //             background-color: #222222;
+    //             color: white;
+    //         }
+    //     }
+    // }
+    .table-dark {
+        thead tr.job_row_header {
+            td {
+                background-color: var(--bs-gray-800);
+
             }
         }
-        &:nth-child(odd) {
-            a .job_column {
-                background-color: #222222;
-                color: white;
+        tbody tr.job_item_detail {
+            td.job_column {
+                &.job_status { 
+                    &.complete_bg {color: white;}
+                }
             }
         }
     }
     ul.pagination {
         li.page-item {
+            a.page-link {
+                color: black;
+                span { color: $dark_grey;}  
+            } 
             &.active {
-                background-color: $dark_grey;
+                span.page-link {
+                    background-color: $dark_grey;
+                    border-color: $dark_grey;
+                }
             }
             &.disabled {
                 span {
@@ -260,5 +369,8 @@ ul.jobsList {
                 }
             }
         }
+    }
+    .job_detail_btn {
+        color: black;
     }
 }

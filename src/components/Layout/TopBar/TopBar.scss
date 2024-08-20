@@ -10,7 +10,7 @@
     @include box_shadow(0px 2px 15px -10px, #888);
  }
 .left_topbar {
-    width: 220px;
+    width: 265px;
     background-color: black;
     display: flex;
     flex-direction: row;
@@ -21,15 +21,15 @@
     &.minimized { justify-content: center;}
 
     // LOGO
-    .lrz_logo_wrap {
+    .topbar_mqp_logo_wrap {
         padding: 5px 1.5rem;
         background-color: transparent;
         position: relative;
         height: auto;
-        .lrz_logo {    
+        .mqp_logo {    
             color: black;
             text-decoration: none;
-    
+            margin-top: 5px;
             &:hover,
             &:focus {
                 color: black;
@@ -43,7 +43,7 @@
                 height: 60px;
                 width: auto;
     
-                &.lrz_square {
+                &.mqp_logo_img {
                     width: auto;
                     height: 40px;
                 }
@@ -65,13 +65,14 @@
         // right: 1rem;
         // top: 1rem;
         padding: 5px;
-        width: 30px;
+        width: 38px;
         border-color: transparent;
         z-index: 2;
         .toggler_bar { border-color: #dddddd;}
     }
 }
 
+// Responsive Topbar
 .topbar {
     padding: 0 1rem;
     display: flex;
@@ -79,16 +80,16 @@
     align-items: center;
     .responsive_logo {
         margin-right: 10px;
-        .lrz_logo_wrap {
+        .topbar_mqp_logo_wrap {
             padding: 0;
-            .lrz_logo {
+            .mqp_logo {
                 display: flex;
                 align-items: center;
                 justify-content: flex-start;
-                img.lrz_square { width: 40px; height: 40px; margin-right: 5px;}
+                img.mqp_logo_img { width: 40px; height: 40px; margin-right: 5px;}
                 
                 .logo_text { 
-                    color:$lrz_blue; font-size: 1.5rem;
+                    color: $lrz_blue; font-size: 1.5rem;
                     font-family: 'Open_Sans-Bold';
                 }
             }
@@ -270,7 +271,7 @@
     &.dark_bg {
         border-left: 1px solid $dark_grey;
         .responsive_logo {
-            .lrz_logo_wrap .lrz_logo .logo_text { color: white;}
+            .mqp_logo_wrap .mqp_logo .logo_text { color: white;}
         }
         .timer {
             .timer_icon {
@@ -330,17 +331,73 @@
 /*
  * Responsive layout
  */
+
+// Galaxy Z Fold 5
+@media screen and (max-width: 344px) {
+    .topbar .topbar_element { margin-right: 1rem;}
+    .mqp_logo {
+        margin-bottom: 0;
+        img {
+            width: auto;
+            height: 30px;
+            margin-right: 5px;
+        }
+        .small_text { font-size: 0.6rem;}
+    }
+}
+
+@media screen and (min-width: 376px) and (max-width: 991px) {
+    .topbar {
+        .responsive_logo {
+            .topbar_mqp_logo_wrap {
+                padding: 0;
+                .mqp_logo {
+                    margin-bottom: 0;
+                    img.mqp_logo_img { width: auto; height: 24px; margin-right: 5px;}
+                    
+                    .logo_text { 
+                        color: $lrz_blue; font-size: 0.8rem;
+                    }
+                }
+            }
+        }
+    }
+    
+}
 @media screen and (max-width: 991px) {
     .topbar {
         padding-top: 10px;
         padding-bottom: 10px;
-        .navbar_toggle {display: flex;}
-        .responsive_logo { display: inline-block;}
+        .topbar_element { margin-right: 1rem;}
+        .navbar_toggle {
+            display: flex;
+            .navbar_toggler {
+                width: 42px;
+                .toggler_bar {
+                    width: 20px;
+                }
+            }
+        }
+        .responsive_logo {
+            display: inline-block;
+            margin-right: 10px;
+            .topbar_mqp_logo_wrap {
+                padding: 0;
+                .mqp_logo {
+                    img.mqp_logo_img { width: auto; height: 35px; margin-right: 5px;}
+                    
+                    .logo_text { 
+                        color: $lrz_blue; font-size: 0.8rem;
+                    }
+                }
+            }
+        }
         #access_top { display: none;}
         #access_dropdown {
             .accessibilities_list { padding-left: 1.5rem;}
             .dark_mode_toggle { background-color: white;}
         }
+
     }
     .left_topbar { display: none;}
     .dark_bg {

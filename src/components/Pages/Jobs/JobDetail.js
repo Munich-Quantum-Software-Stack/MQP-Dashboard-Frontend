@@ -44,6 +44,7 @@ const JobDetail = () => {
                     responsive
                     bordered
                     striped
+                    variant={`${darkmode ? "dark" : "light"} `}
                     className="mb-0 job_property"
                     style={{ fontSize: text_fs }}
                 >
@@ -68,6 +69,7 @@ const JobDetail = () => {
                     responsive
                     bordered
                     striped
+                    variant={`${darkmode ? "dark" : "light"} `}
                     className="mb-0 job_property"
                     style={{ fontSize: text_fs }}
                 >
@@ -133,6 +135,7 @@ const JobDetail = () => {
                     responsive
                     bordered
                     striped
+                    variant={`${darkmode ? "dark" : "light"} `}
                     className="mb-0 job_property"
                     style={{ fontSize: text_fs }}
                 >
@@ -167,7 +170,7 @@ const JobDetail = () => {
                     &lt;&lt; Back
                 </Link>
                 <CSVLink
-                    className="dashboard_btn job_detail_btn export_btn"
+                    className=" job_detail_btn dashboard_btn export_btn"
                     style={{ fontSize: text_fs }}
                     data={exportJob}
                 >

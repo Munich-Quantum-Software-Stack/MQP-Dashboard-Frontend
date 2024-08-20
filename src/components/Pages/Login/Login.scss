@@ -20,8 +20,8 @@
 
 .LoginPage_bg {
     background-color: black;
-    background-image: url('../../../assets/images/Visual_Web_HPC-QC_3.jpg');
-    @include _background(cover, center center);
+    background-image: url('../../../assets/images/Visual_HPC-QC_02072024_16-9.jpg');
+    @include _background(cover, right center);
     position: absolute;
     top: 0;
     left: 0;
@@ -45,7 +45,8 @@
     flex-direction: column;
     @include box_shadow(0px 8px 20px 0px, #000);
     background-color: white;
-    padding: 2rem 3rem 1rem;
+    padding: 3rem 2rem 2rem;
+    margin: 0 1rem;
     color: $dark_grey;
     .login_content {
         display: flex;
@@ -53,11 +54,21 @@
         flex-direction: column;
     }
 }
-.lrz_logo {
+.login_mqp_logo {
+    margin-bottom: 3rem;
     img {
-        width: 80px;
+        width: auto;
         height: 80px;
     }
 
     text-align: center;
+}
+
+// iPhone SE
+@media screen and (max-width: 375px) {
+    .LoginForm_wrap {
+        margin: 0 18px;
+        padding: 2rem 12px 1rem;
+        .mqp_logo { margin-bottom: 2rem;}
+    }
 }

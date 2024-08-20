@@ -38,8 +38,10 @@ import NewToken, {
 import { tokenLoader, checkTokenLoader } from "./components/utils/auth";
 import Feedback from "./components/Pages/Feedback/Feedback";
 import RequestAccess from "./components/Pages/RequestAccess/RequestAccess";
+import Information from "./components/Pages/Information/Information";
 
 import "./App.scss";
+import Credits from "./components/Pages/Credits/Credits";
 
 function App() {
     /*
@@ -88,12 +90,12 @@ function App() {
                         {
                             index: true,
                             element: <Tokens />,
-                            loader: tokensLoader,
+                            //loader: tokensLoader,
                         },
                         {
                             path: "new",
                             element: <NewToken />,
-                            loader: newTokenLoader,
+                            //loader: newTokenLoader,
                         },
                     ],
                 },
@@ -106,7 +108,7 @@ function App() {
                         {
                             index: true,
                             element: <Jobs />,
-                            loader: jobsLoader,
+                            //loader: jobsLoader,
                         },
                         {
                             path: ":jobId",
@@ -136,7 +138,7 @@ function App() {
                         {
                             index: true,
                             element: <Resources />,
-                            loader: resourcesLoader,
+                            //loader: resourcesLoader,
                         },
                         {
                             path: ":resourceId",
@@ -151,8 +153,18 @@ function App() {
                     ],
                 },
                 {
+                    path: "information",
+                    element: <Information />,
+                    errorElement: <ErrorPage />,
+                },
+                {
                     path: "feedback",
                     element: <Feedback />,
+                    errorElement: <ErrorPage />,
+                },
+                {
+                    path: "credits",
+                    element: <Credits />,
                     errorElement: <ErrorPage />,
                 },
                 // {

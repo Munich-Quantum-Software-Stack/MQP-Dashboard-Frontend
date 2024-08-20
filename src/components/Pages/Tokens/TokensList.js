@@ -7,10 +7,12 @@ import { queryClient } from "../../utils/query";
 import { useMutation } from "@tanstack/react-query";
 import { revokeToken } from "../../utils/tokens-http";
 import NotificationCard from "../../UI/MessageBox/NotificationCard";
+import BlankCard from "../../UI/Card/BlankCard";
 import AlertCard from "../../UI/MessageBox/AlertCard";
 import { getAuthToken } from "../../utils/auth";
 
 function TokensList({ tokens }) {
+    const darkmode = useSelector((state) => state.accessibilities.darkmode);
     const fs = useSelector((state) => state.accessibilities.font_size);
     const table_label_fs = +fs * 1.05;
     const page_header_fs = +fs * 1.5;
@@ -29,6 +31,13 @@ function TokensList({ tokens }) {
     });
     const revokeHandler = (tokenName) => {
         mutate({ tokenName, access_token });
+    }
+    if (tokens.length === 0) {
+        return (
+            <BlankCard className={`${darkmode ? "dark_bg" : "white_bg"} h-100`}>
+                <h5>No Token found.</h5>
+            </BlankCard>
+        );
     }
     return (
         <React.Fragment>

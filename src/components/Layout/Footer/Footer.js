@@ -3,9 +3,23 @@ import { getAuthToken } from "../../utils/auth";
 function Footer() {
     const fs = useSelector((state) => state.accessibilities.font_size);
     const token = getAuthToken();
-    const footer_fs = +fs * 0.85;
+    const window_width = window.innerWidth;
+    const STANDARD_FOOTER_FS = window_width <= 375 ? 0.8 : 0.85;
+    const footer_fs = +fs * STANDARD_FOOTER_FS;
     return (
-        <div className="footer_container">
+        <div className="mt-auto footer_container">
+            <div className="copyright text-center">
+                <span
+                    style={{
+                        fontSize: token
+                            ? footer_fs
+                            : STANDARD_FOOTER_FS + "rem",
+                    }}
+                >
+                    &copy; 2024 Developed and operated by Leibniz Supercomputing
+                    Centre
+                </span>
+            </div>
             <div className="footer_navbar">
                 <ul className="footer_nav">
                     <li>
@@ -13,7 +27,11 @@ function Footer() {
                             href="https://www.lrz.de/datenschutzerklaerung/"
                             target="_blank"
                             rel="noreferrer"
-                            style={{ fontSize: token ? footer_fs : "0.85rem" }}
+                            style={{
+                                fontSize: token
+                                    ? footer_fs
+                                    : STANDARD_FOOTER_FS + "rem",
+                            }}
                         >
                             Data Privacy
                         </a>
@@ -23,7 +41,11 @@ function Footer() {
                             href="https://www.lrz.de/impressum/"
                             target="_blank"
                             rel="noreferrer"
-                            style={{ fontSize: token ? footer_fs : "0.85rem" }}
+                            style={{
+                                fontSize: token
+                                    ? footer_fs
+                                    : STANDARD_FOOTER_FS + "rem",
+                            }}
                         >
                             Imprint
                         </a>
@@ -33,17 +55,16 @@ function Footer() {
                             href="https://www.lrz.de/barrierefreiheit/"
                             target="_blank"
                             rel="noreferrer"
-                            style={{ fontSize: token ? footer_fs : "0.85rem" }}
+                            style={{
+                                fontSize: token
+                                    ? footer_fs
+                                    : STANDARD_FOOTER_FS + "rem",
+                            }}
                         >
                             Accessibility
                         </a>
                     </li>
                 </ul>
-            </div>
-            <div className="copyright text-center">
-                <span style={{ fontSize: token ? footer_fs : "0.85rem" }}>
-                    &copy; 2024 Munich Quantum Portal
-                </span>
             </div>
         </div>
     );

@@ -52,3 +52,18 @@
     }
     .copyright { color: $silver_grey;}
 }
+
+// Galaxy Z Fold 5
+@media screen and (max-width: 344px) {
+    .footer_container { padding: 0.75rem 10px;}
+    .footer_container .footer_navbar .footer_nav li a {
+        font-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .footer_container { padding: 0.75rem 10px;}
+    .footer_container .footer_navbar .footer_nav li a {
+        font-size: 0.8rem;
+    }
+}

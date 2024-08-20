@@ -1,14 +1,14 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
-
+import StatusItems from "./StatusItem";
 
 function StatusContent() {
     const fs = useSelector((state) => state.accessibilities.font_size);
     const h1_fs = +fs * 2.5;
     return (
-   
-            <div className="text-center">
+        <React.Fragment>
+            <div className="mb-5 text-center">
                 <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -17,10 +17,11 @@ function StatusContent() {
                 >
                     Welcome to Munich Quantum Portal
                 </motion.h1>
-
-                
             </div>
- 
+            <div className="status_items_list">
+                <StatusItems />
+            </div>
+        </React.Fragment>
     );
 }
 

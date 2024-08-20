@@ -8,7 +8,7 @@ function JobsRoot() {
 
   return (
 
-      <div className={` jobs_container flex-grow-1`}>
+      <div className={` jobs_container `}>
         <Outlet />
       </div>
   );

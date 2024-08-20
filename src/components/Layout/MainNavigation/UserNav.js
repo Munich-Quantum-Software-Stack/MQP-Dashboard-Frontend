@@ -40,6 +40,18 @@ const UserNavigation = ({ onHidden }) => {
                         )}
                     </NavLink>
                 </li>
+                <li className="nav-item">
+                    <NavLink
+                        to="credits"
+                        className="nav-link "
+                        style={{ fontSize: navbar_fs }}
+                    >
+                        <span className="link_icon credits_icon"></span>
+                        {onHidden && (
+                            <span className="link_text">Credits</span>
+                        )}
+                    </NavLink>
+                </li>
                 <li className="nav-item ">
                     <Logout onHidden={onHidden} />
                 </li>

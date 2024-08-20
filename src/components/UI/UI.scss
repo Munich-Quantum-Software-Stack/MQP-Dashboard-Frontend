@@ -1,7 +1,6 @@
 @import "../../assets/scss/variables.scss";
 
 /******** Button *********/
-
 .dashboard_btn {
     border: 1px solid var(--bs-gray-400);
     color: black;
@@ -146,7 +145,6 @@
 }
 
 /******** Card *********/
-
 .content_container {
     padding: 2rem;
     margin-bottom: 0.75rem;
@@ -164,11 +162,21 @@
     padding: 2rem;
 }
 
+// Pane Card
 .pane_card {
     @include border_radius(5px, 5px, 5px, 5px);
     @include box_shadow(0px 1px 3px -1px, $dark_grey);
     padding: 1rem;
 }
+
+.pane_title {
+    font-size: 1.5rem;
+    font-family: 'Open_Sans-Bold';
+}
+.pane_desc { color: var(--bs-gray-800); }
+.pane_subtitle { color: var(--bs-gray-700); font-size: 1.05rem; font-weight: 700; }
+
+// Login Page
 .LoginPage {
     display: flex;
     justify-content: center;
@@ -224,3 +232,23 @@
 .lds-ring div:nth-child(3) {
     animation-delay: -0.15s;
 }
+
+// PDF Document
+.pdf_link {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    text-decoration: none;
+    position: relative;
+    padding-left: 50px;
+    .pdf_icon {
+        position: absolute;
+        top: 5px; left: 0;
+        width: 45px;
+        height: auto;
+    }
+    &:hover, &:focus, &:active {
+        text-decoration: underline;
+    }
+}
+

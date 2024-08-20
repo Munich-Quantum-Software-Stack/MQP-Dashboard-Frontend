@@ -1,3 +1,5 @@
+
+
 export async function fetchResources({ signal, access_token }) {
     const url = process.env.REACT_APP_API_ENDPOINT + "/resources";
     const response = await fetch(
@@ -15,10 +17,14 @@ export async function fetchResources({ signal, access_token }) {
     if (!response.ok) {
         const error = new Error("Could not fetch resources!");
         error.code = response.status;
+        error.message = response.error_message;
+        console.log("responsed resources:");
+        console.log(resources);
         throw error;
     }
-    const { resources } = await response.json();
+    const { resources, available_resources } =
+        await response.json();
     //console.log("responsed resources:");
     //console.log(resources);
-    return resources;
+    return { resources, available_resources };
 }

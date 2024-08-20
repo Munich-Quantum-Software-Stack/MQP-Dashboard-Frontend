@@ -17,12 +17,14 @@ import { useInput } from "../../../hooks/use-input";
 import { updateExpiration } from "../../utils/tokens";
 import SuccessfullyToken from "./SuccessfullyToken";
 import AlertCard from "../../UI/MessageBox/AlertCard";
+import BlankCard from "../../UI/Card/BlankCard";
 import { getAuthToken } from "../../utils/auth";
 
 registerLocale("de", de);
 setDefaultLocale("de");
 
 function CreateTokenForm({ userLimits }) {
+    const darkmode = useSelector((state) => state.accessibilities.darkmode);
     const fs = useSelector((state) => state.accessibilities.font_size);
     const text_fs = +fs;
     const small_fs = +fs * 0.8;
@@ -67,7 +69,7 @@ function CreateTokenForm({ userLimits }) {
         const customExpiration = updateExpiration(creation, validity);
         setExpiration(customExpiration);
     }, [validity]);
-    
+
     const createTokenHandler = (event) => {
         event.preventDefault();
 
@@ -83,7 +85,13 @@ function CreateTokenForm({ userLimits }) {
         event.target.reset();
     };
 
-    
+    if (!userLimits || Object.keys(userLimits).length === 0) {
+        return (
+            <BlankCard className={`${darkmode ? "dark_bg" : "white_bg"} h-100`}>
+                <p>User limits is undefined!</p>
+            </BlankCard>
+        );
+    }
 
     return (
         <React.Fragment>

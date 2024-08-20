@@ -70,7 +70,8 @@ export async function createNewToken({ tokenData, access_token }) {
     });
     console.log("response:");
     console.log(response);
-    
+    console.log("error message: ");
+    console.log(response.error_message);
     if (!response.ok) {
         const error = new Error();
         if (response.status === 403) {

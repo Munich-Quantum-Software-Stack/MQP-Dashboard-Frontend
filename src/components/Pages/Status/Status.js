@@ -3,7 +3,7 @@ import React from "react";
 //import { useRouteLoaderData } from "react-router-dom";
 import ContentCard from "../../UI/Card/ContentCard";
 import StatusContent from './StatusContent';
-import { getAuthToken } from "../../utils/auth";
+//import { getAuthToken } from "../../utils/auth";
 import './Status.scss';
 
 function Status() {
@@ -26,6 +26,7 @@ function Status() {
 
 export default Status;
 
+/*
 export async function loader() {
   // fetching to status
   const access_token = getAuthToken();
@@ -50,3 +51,4 @@ export async function loader() {
     return resData.status;
   }
 }
+  */

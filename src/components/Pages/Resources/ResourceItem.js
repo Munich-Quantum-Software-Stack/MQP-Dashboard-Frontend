@@ -4,9 +4,9 @@ import { useSelector } from "react-redux";
 import PaneCard from "../../UI/Card/PaneCard";
 import IQM_logo from "../../../assets/images/IQM_logo.png";
 import Eviden_QLM_logo from "../../../assets/images/eviden-logo.png";
-import WMI_logo from "../../../assets/images/wmilogo_2019.png";
+import WMI_logo from "../../../assets/images/wmi-logo.svg";
 import AQT_logo from "../../../assets/images/Logo-AQT.png";
-import MUNICQ_Atoms_logo from "../../../assets/images/MQV_MUNIQC-Atoms_Logo_Blue.svg";
+import MUNICQ_Atoms_logo from "../../../assets/images/MunicQC_Atoms.png";
 
 const ResourceItem = (props) => {
     const fs = useSelector((state) => state.accessibilities.font_size);
@@ -43,136 +43,136 @@ const ResourceItem = (props) => {
         resource_logo_src = MUNICQ_Atoms_logo;
         resource_bg = "resource_bg_5";
     }
-        return (
-            <div className="col-12 col-xs-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3 resource_item_wrap">
-                <PaneCard className={`resource_item ${resource_bg}`}>
-                    <div className="d-flex justify-content-between">
-                        <div className="resource_item_title">
-                            <h5
-                                className="pane_title resource_title"
-                                style={{ fontSize: resource_name_fs }}
-                            >
-                                {props.name}
-                            </h5>
-                            <div className="short_divider"></div>
-                        </div>
-                        {resource_logo_src && (
-                            <div className="resource_item_logo">
-                                {resource_name === "wmi3" && (
-                                    <div
-                                        className="resource_log_wrap"
-                                        style={{ height: 40 }}
-                                    >
-                                        <img
-                                            src={resource_logo_src}
-                                            alt={resource_name}
-                                        />
-                                    </div>
-                                )}
-                                {resource_name === "muniqc-atoms20" && (
+    return (
+        <div className="col-12 col-xs-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3 resource_item_wrap">
+            <PaneCard className={`resource_item ${resource_bg}`}>
+                <div className="d-flex justify-content-between">
+                    <div className="resource_item_title">
+                        <h5
+                            className="pane_title resource_title"
+                            style={{ fontSize: resource_name_fs }}
+                        >
+                            {props.name}
+                        </h5>
+                        <div className="short_divider"></div>
+                    </div>
+                    {resource_logo_src && (
+                        <div className="resource_item_logo">
+                            {resource_name === "wmi3" && (
+                                <div
+                                    className="resource_log_wrap"
+                                    style={{ height: 50 }}
+                                >
+                                    <img
+                                        src={resource_logo_src}
+                                        alt={resource_name}
+                                    />
+                                </div>
+                            )}
+                            {resource_name === "muniqc-atoms20" && (
+                                <div className="resource_log_wrap">
+                                    <img
+                                        src={resource_logo_src}
+                                        alt={resource_name}
+                                        style={{ height: 50 }}
+                                    />
+                                </div>
+                            )}
+                            {resource_name !== "wmi3" &&
+                                resource_name !== "muniqc-atoms20" && (
                                     <div className="resource_log_wrap">
                                         <img
                                             src={resource_logo_src}
                                             alt={resource_name}
-                                            style={{ width: "100%" }}
                                         />
                                     </div>
                                 )}
-                                {resource_name !== "wmi3" &&
-                                    resource_name !== "muniqc-atoms20" && (
-                                        <div className="resource_log_wrap">
-                                            <img
-                                                src={resource_logo_src}
-                                                alt={resource_name}
-                                            />
-                                        </div>
-                                    )}
-                            </div>
-                        )}
-                    </div>
-
-                    <div className="pane_desc">
-                        <div className="my-2" style={{ fontSize: resource_text_fs }}>
-                            {props.note}
                         </div>
-                    </div>
-                    <div className="resource_status mb-2">
-                        <div
-                            className="pane_subtitle"
-                            style={{ fontSize: resource_subtitle_fs }}
-                        >
-                            Status:
-                        </div>
-
-                        {props.status && (
-                            <div className=" status_icon_wrap d-flex justify-content-start">
-                                <div className="status_icon">
-                                    <span className=" offline_icon"></span>
-                                </div>
-                                <div
-                                    className="mx-2"
-                                    style={{ fontSize: resource_text_fs }}
-                                >
-                                    Offline
-                                </div>
-                            </div>
-                        )}
-                        {!props.status && (
-                            <div className=" status_icon_wrap d-flex justify-content-start">
-                                <div className="status_icon">
-                                    <span className=" online_icon"></span>
-                                </div>
-                                <div
-                                    className="mx-2"
-                                    style={{ fontSize: resource_text_fs }}
-                                >
-                                    Online
-                                </div>
-                            </div>
-                        )}
-                    </div>
-
-                    <div className="resource_qubit mb-2">
-                        <div
-                            className="pane_subtitle"
-                            style={{ fontSize: resource_subtitle_fs }}
-                        >
-                            Qubits: <b>{props.qubits}</b>
-                        </div>
-                    </div>
-                    <div className="resource_technology mb-2">
-                        <div
-                            className="pane_subtitle"
-                            style={{ fontSize: resource_subtitle_fs }}
-                        >
-                            Quantum Technology:
-                        </div>
-                        <div
-                            className="resource_value"
-                            style={{ fontSize: resource_text_fs }}
-                        >
-                            <i>{props.quantum_technology}</i>
-                        </div>
-                    </div>
-                    {/* <div className="resource_connectivity">
-                <div className="pane_subtitle">
-                    Connectivity: {props.connectivity}
+                    )}
                 </div>
-            </div>
-            <div className="resource_budgets">
-                    <div className="pane_subtitle">Budgets</div>
-                    <div className="budget_chart">
-                        <p>
-                            {" "}
-                            {props.budgets_remaining} of{" "}
-                            {props.budgets_allocation}{" "}
-                        </p>
+
+                <div className="pane_desc">
+                    <div className="my-2" style={{ fontSize: resource_text_fs }}>
+                        {props.note}
                     </div>
-                </div> 
-                */}
-                </PaneCard>
+                </div>
+                <div className="resource_status mb-2">
+                    <div
+                        className="pane_subtitle"
+                        style={{ fontSize: resource_subtitle_fs }}
+                    >
+                        Status:
+                    </div>
+
+                    {props.status && (
+                        <div className=" status_icon_wrap d-flex justify-content-start">
+                            <div className="status_icon">
+                                <span className=" offline_icon"></span>
+                            </div>
+                            <div
+                                className="mx-2"
+                                style={{ fontSize: resource_text_fs }}
+                            >
+                                Offline
+                            </div>
+                        </div>
+                    )}
+                    {!props.status && (
+                        <div className=" status_icon_wrap d-flex justify-content-start">
+                            <div className="status_icon">
+                                <span className=" online_icon"></span>
+                            </div>
+                            <div
+                                className="mx-2"
+                                style={{ fontSize: resource_text_fs }}
+                            >
+                                Online
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                <div className="resource_qubit mb-2">
+                    <div
+                        className="pane_subtitle"
+                        style={{ fontSize: resource_subtitle_fs }}
+                    >
+                        Qubits: <b>{props.qubits}</b>
+                    </div>
+                </div>
+                <div className="resource_technology mb-2">
+                    <div
+                        className="pane_subtitle"
+                        style={{ fontSize: resource_subtitle_fs }}
+                    >
+                        Quantum Technology:
+                    </div>
+                    <div
+                        className="resource_value"
+                        style={{ fontSize: resource_text_fs }}
+                    >
+                        <i>{props.quantum_technology}</i>
+                    </div>
+                </div>
+                {/* <div className="resource_connectivity">
+            <div className="pane_subtitle">
+                Connectivity: {props.connectivity}
             </div>
-        );
+        </div>
+        <div className="resource_budgets">
+                <div className="pane_subtitle">Budgets</div>
+                <div className="budget_chart">
+                    <p>
+                        {" "}
+                        {props.budgets_remaining} of{" "}
+                        {props.budgets_allocation}{" "}
+                    </p>
+                </div>
+            </div> 
+            */}
+            </PaneCard>
+        </div>
+    );
 };
 
 export default ResourceItem;

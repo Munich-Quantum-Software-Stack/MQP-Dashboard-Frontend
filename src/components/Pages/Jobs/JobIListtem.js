@@ -1,9 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-// import JobDetail from "./JobDetail";
+import { Link, useNavigate } from "react-router-dom";
 
 const JobListItem = (props) => {
+    const navigate = useNavigate();
     const fs = useSelector((state) => state.accessibilities.font_size);
     const text_fs = +fs;
 
@@ -25,57 +25,128 @@ const JobListItem = (props) => {
         status_bg = "complete_bg";
     }
 
+    // convert timestamp to datetime
+    const submitted_date = new Date(job.timestamp_submitted).toLocaleDateString("de-DE");
+    const submitted_time = new Date(job.timestamp_submitted).toLocaleTimeString("de-DE");
+
+    const jobDetailHandler = (id) => {
+        //console.log(id);
+        return navigate("/jobs/" + id);
+    }
     return (
-        <li className="job_item_row" id={`${job.id}`}>
-            <Link to={`/jobs/${job.id}`}>
-                <div className={`job_column job_view `}>
+        <>
+            <tr
+                className="job_item_row job_item_detail"
+                onClick={() => jobDetailHandler(job.id)}
+                id={`${job.id}`}
+            >
+                <td className={`job_column job_view `}>
                     <span className="view_icon"></span>
-                </div>
-                <div
+                </td>
+                <td
                     className={`job_column job_id `}
                     style={{ fontSize: text_fs }}
                 >
                     {job.id}
-                </div>
-                <div
+                </td>
+                <td
                     className={`job_column job_status ${status_bg}`}
                     style={{ fontSize: text_fs }}
                 >
                     {job.status}
-                </div>
-                <div
+                </td>
+                <td
                     className={`job_column job_shots`}
                     style={{ fontSize: text_fs }}
                 >
                     {job.shots}
-                </div>
-                <div
-                    className={`job_column job_circuit `}
+                </td>
+                <td
+                    className={`job_column job_submitted`}
                     style={{ fontSize: text_fs }}
                 >
-                    Circuit Detail &gt;&gt;
-                </div>
-                <div
+                    {submitted_date + " " + submitted_time}
+                </td>
+                <td
                     className={`job_column job_circuit_format `}
                     style={{ fontSize: text_fs }}
                 >
                     {job.circuit_format}
-                </div>
-                <div
+                </td>
+                <td
                     className={`job_column job_target `}
                     style={{ fontSize: text_fs }}
                 >
                     {job.target_specification}
-                </div>
-                <div
+                </td>
+                <td
                     className={`job_column job_note `}
                     style={{ fontSize: text_fs }}
                 >
                     {job.note}
-                </div>
-            </Link>
-        </li>
+                </td>
+            </tr>
+            {/**
+            <li className="job_item_row" id={`${job.id}`}>
+                <Link to={`/jobs/${job.id}`}>
+                    <div className={`job_column job_view `}>
+                        <span className="view_icon"></span>
+                    </div>
+                    <div
+                        className={`job_column job_id `}
+                        style={{ fontSize: text_fs }}
+                    >
+                        {job.id}
+                    </div>
+                    <div
+                        className={`job_column job_status ${status_bg}`}
+                        style={{ fontSize: text_fs }}
+                    >
+                        {job.status}
+                    </div>
+                    <div
+                        className={`job_column job_shots`}
+                        style={{ fontSize: text_fs }}
+                    >
+                        {job.shots}
+                    </div>
+                    <div
+                        className={`job_column job_submitted`}
+                        style={{ fontSize: text_fs }}
+                    >
+                        {submitted_date + " " + submitted_time}
+                    </div>
+                    <div
+                        className={`job_column job_circuit `}
+                        style={{ fontSize: text_fs }}
+                    >
+                        Circuit Detail &gt;&gt;
+                    </div>
+                    <div
+                        className={`job_column job_circuit_format `}
+                        style={{ fontSize: text_fs }}
+                    >
+                        {job.circuit_format}
+                    </div>
+                    <div
+                        className={`job_column job_target `}
+                        style={{ fontSize: text_fs }}
+                    >
+                        {job.target_specification}
+                    </div>
+                    <div
+                        className={`job_column job_note `}
+                        style={{ fontSize: text_fs }}
+                    >
+                        {job.note}
+                    </div>
+                </Link>
+            </li>
+            */}
+        </>
     );
 };
+
+
 
 export default JobListItem;

@@ -10,6 +10,8 @@ import Footer from "../Layout/Footer/Footer";
 import { authActions } from "../../store/auth-slice";
 import ToggleButton from "../UI/Button/ToggleButton";
 
+const MIN_WIDTH_SIDEBAR = 80;
+const MAX_WIDTH_SIDEBAR = 265;
 
 const RootLayout = () => {
     const dispatch = useDispatch();
@@ -41,7 +43,7 @@ const RootLayout = () => {
         setMinSidebar((prevSidebar) => !prevSidebar);
         animate(
             "div.left_sidebar_wrap, div.left_topbar",
-            { width: minSidebar ? 80 : 220 },
+            { width: minSidebar ? MIN_WIDTH_SIDEBAR : MAX_WIDTH_SIDEBAR },
             { duration: 0.6, type: "spring" }
         );
     };
@@ -62,7 +64,7 @@ const RootLayout = () => {
                 {isExpired && <UnauthoriedModal />}
             </AnimatePresence>
 
-            <div className="fluid-container" ref={scope}>
+            <div className="fluid-container body_container" ref={scope}>
                 <div className="mx-0 topbar_container">
                     <div
                         className={`left_topbar ${
