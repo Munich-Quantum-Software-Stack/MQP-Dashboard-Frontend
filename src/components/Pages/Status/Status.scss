@@ -43,6 +43,8 @@ $status_divider: #058AF7;
         background-color: white;
         background-clip: text;
     }
-
+    .status_items_list .status_item_wrap .status_item * {
+        color: black;
+    }
    
 }

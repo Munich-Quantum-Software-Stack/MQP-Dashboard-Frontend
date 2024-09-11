@@ -136,3 +136,18 @@ $basic_fs: 1em;
     -webkit-mask-size: cover;
     mask-size: cover;
 }
+
+@mixin simple_animation($name, $duration, $iteration-count) {
+    animation-name: $name;
+    -webkit-animation: $name;
+    -moz-animation: $name;
+    -o-animation: $name;
+    animation-duration: $duration;
+    -webkit-animation-duration: $duration;
+    -moz-animation-duration: $duration;
+    -o-animation-duration: $duration;
+    animation-iteration-count: $iteration-count;
+    -webkit-animation-iteration-count: $iteration-count;
+    -moz-animation-iteration-count: $iteration-count;
+    -o-animation-iteration-count: $iteration-count;
+}

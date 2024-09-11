@@ -65,7 +65,6 @@ const AccessibilitiesNavbar = ({
                         className="darkmode_btn"
                         onToggle={toggleDarkmodeHandler}
                     />
-                    
                 </motion.li>
 
                 <motion.li

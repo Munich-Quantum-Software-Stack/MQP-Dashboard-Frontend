@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 //import { queryClient } from "../../utils/query";
 import { fetchResources } from "../../utils/resources-http";
 import ResourcesList from "./ResourcesList";
+
 import LoadingIndicator from "../../UI/LoadingIndicator";
 import ErrorBlock from "../../UI/MessageBox/ErrorBlock";
 import { getAuthToken } from "../../utils/auth";
@@ -39,12 +40,12 @@ function Resources() {
     }
 
     if (data) {
-        resourcesContent = (
-            <ContentCard
-                className={`${darkmode ? "dark_bg" : "white_bg"} h-100`}
-            >                
-                <ResourcesList resources={data.resources} available_resources={data.available_resources} />
+        // console.log("Fetching data:");
+        // console.log(data);
 
+        resourcesContent = (
+            <ContentCard className={`${darkmode ? "dark_bg" : "white_bg"} h-100`}>
+                <ResourcesList resources={data.resources} available_resources={data.available_resources ? data.available_resources : null} />
             </ContentCard>
         );
     }

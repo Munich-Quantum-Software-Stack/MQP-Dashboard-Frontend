@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { getDarkmode } from "../../utils/theme";
 import '../../UI/UI.scss';
 
-const ToggleDarkmodeButton = ({ id, onToggle, className }) => {
+const ToggleDarkmodeButton = ({ id, onToggle, className, isPressed }) => {
     const isOn = getDarkmode();
     const toggleSwitchHandler = () => {
         onToggle();
@@ -15,16 +15,18 @@ const ToggleDarkmodeButton = ({ id, onToggle, className }) => {
     };
     const btnClassName = "toggle_switch_btn " + className;
     return (
-        <div
+        <button
             id={id}
             className={btnClassName}
             data-toggle={isOn}
-            title={`${isOn ? 'Disable Darkmode' : 'Enable Darkmode'}`}
+            title={`${isOn ? "Disable Darkmode" : "Enable Darkmode"}`}
             onClick={toggleSwitchHandler}
             role="button"
         >
-            <motion.div className="handle" layout transition={spring}><span className="handle_icon" /></motion.div>
-        </div>
+            <motion.div className="handle" layout transition={spring}>
+                <span className="handle_icon" />
+            </motion.div>
+        </button>
     );
 };
 

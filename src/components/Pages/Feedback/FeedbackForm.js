@@ -134,7 +134,7 @@ const FeedbackForm = () => {
                                 </Form.Label>
                                 <div className="rate_field">
                                     {ratings.map((rate) => (
-                                        <div
+                                        <button
                                             key={`rating-${rate.value}`}
                                             id={`rating-${rate.value}`}
                                             className={`rating_input_wrap ${(rate.isActive) ? "active" : "undefined"}`}
@@ -146,7 +146,7 @@ const FeedbackForm = () => {
                                             <div className="star_icon_field">
                                                 <span className="star_icon"></span>
                                             </div>
-                                        </div>
+                                        </button>
                                     ))}
                                 </div>
                             </div>

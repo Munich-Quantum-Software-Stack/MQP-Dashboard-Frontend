@@ -13,8 +13,6 @@ function Status() {
    
   return (
     <React.Fragment>
-
-
         <ContentCard
           className={`status_container`}
         >

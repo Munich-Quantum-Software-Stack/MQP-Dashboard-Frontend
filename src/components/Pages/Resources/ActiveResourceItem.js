@@ -8,7 +8,7 @@ import WMI_logo from "../../../assets/images/wmi-logo.svg";
 import AQT_logo from "../../../assets/images/Logo-AQT.png";
 import MUNICQ_Atoms_logo from "../../../assets/images/MunicQC_Atoms.png";
 
-const ResourceItem = (props) => {
+const ActiveResourceItem = (props) => {
     const fs = useSelector((state) => state.accessibilities.font_size);
     const resource_name_fs = +fs * 1.5;
     const resource_subtitle_fs = +fs * 1.05;
@@ -45,11 +45,12 @@ const ResourceItem = (props) => {
     }
     return (
         <div className="col-12 col-xs-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3 resource_item_wrap">
-            <PaneCard
-                className={`resource_item ${resource_bg} ${props.disable === "true" ? "disabled_bg" : ""}`}
-            >
-                {props.disable === "true" && (
-                    <div className="disabled_bg_layer"></div>
+            <PaneCard className={`resource_item ${resource_bg}`}>
+                {props.isRestricted === "true" && (
+                    <div className="disabled_bg_layer">
+                        <div className="disabled_icon"></div>
+                        <p className="my-3 disabled_text">This resource is not available to your budget. Please contact the MQP Admin if you are interested in it.</p>
+                    </div>
                 )}
                 <div className="d-flex justify-content-between">
                     <div className="resource_item_title">
@@ -183,4 +184,4 @@ const ResourceItem = (props) => {
     );
 };
 
-export default ResourceItem;
+export default ActiveResourceItem;

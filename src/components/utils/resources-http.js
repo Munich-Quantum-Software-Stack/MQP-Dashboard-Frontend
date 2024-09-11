@@ -18,13 +18,16 @@ export async function fetchResources({ signal, access_token }) {
         const error = new Error("Could not fetch resources!");
         error.code = response.status;
         error.message = response.error_message;
-        console.log("responsed resources:");
-        console.log(resources);
+        console.log("API responsed:");
+        console.log(response);
         throw error;
-    }
-    const { resources, available_resources } =
-        await response.json();
-    //console.log("responsed resources:");
-    //console.log(resources);
-    return { resources, available_resources };
+    }    
+    const data = await response.json();
+    
+    // console.log("API data returns:");
+    // console.log(data);
+    
+    return data;
+
+    
 }

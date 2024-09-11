@@ -8,6 +8,8 @@ import JobsSorting from "./JobsSorting";
 import { sortingJobs } from "../../utils/jobs";
 //import JobsFilter from "./JobsFilter";
 
+const NB_JOBS_PER_PAGE = 20;
+
 function JobsList({ jobs }) {
     // console.log("jobs:");
     // console.log(jobs);
@@ -15,7 +17,6 @@ function JobsList({ jobs }) {
     const fs = useSelector((state) => state.accessibilities.font_size);
     const text_fs = +fs;
 
-    const NB_JOBS_PER_PAGE = 20;
     // current page of pagination
     const [currentPage, setCurrentPage] = useState(1);
     // jobItems per page
@@ -109,7 +110,7 @@ function JobsList({ jobs }) {
                             </Pagination>
                         )}
                     </div>
-
+                     
                     <Table
                         responsive
                         bordered
@@ -148,6 +149,7 @@ function JobsList({ jobs }) {
                             ))}
                         </tbody>
                     </Table>
+             
                 </>
             )}
         </React.Fragment>

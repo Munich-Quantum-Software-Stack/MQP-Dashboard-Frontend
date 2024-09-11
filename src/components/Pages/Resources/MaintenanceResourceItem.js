@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-//import { Link } from "react-router-dom";
+//import MaintenanceIcon from "../../../assets/icons/gear_icon.svg";
 import PaneCard from "../../UI/Card/PaneCard";
 import IQM_logo from "../../../assets/images/IQM_logo.png";
 import Eviden_QLM_logo from "../../../assets/images/eviden-logo.png";
@@ -8,7 +8,7 @@ import WMI_logo from "../../../assets/images/wmi-logo.svg";
 import AQT_logo from "../../../assets/images/Logo-AQT.png";
 import MUNICQ_Atoms_logo from "../../../assets/images/MunicQC_Atoms.png";
 
-const ResourceItem = (props) => {
+const MaintenanceResourceItem = (props) => {
     const fs = useSelector((state) => state.accessibilities.font_size);
     const resource_name_fs = +fs * 1.5;
     const resource_subtitle_fs = +fs * 1.05;
@@ -45,12 +45,12 @@ const ResourceItem = (props) => {
     }
     return (
         <div className="col-12 col-xs-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3 resource_item_wrap">
-            <PaneCard
-                className={`resource_item ${resource_bg} ${props.disable === "true" ? "disabled_bg" : ""}`}
-            >
-                {props.disable === "true" && (
-                    <div className="disabled_bg_layer"></div>
-                )}
+            <PaneCard className={`resource_item ${resource_bg}`}>
+                <div className="maintenance_bg_layer">
+                    <div className="maintenance_icon"></div>
+                    <p className="my-3 maintenance_text">This resource is under maintenance.</p>
+                </div>
+
                 <div className="d-flex justify-content-between">
                     <div className="resource_item_title">
                         <h5
@@ -183,4 +183,4 @@ const ResourceItem = (props) => {
     );
 };
 
-export default ResourceItem;
+export default MaintenanceResourceItem;

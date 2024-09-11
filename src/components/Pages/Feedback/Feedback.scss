@@ -12,18 +12,20 @@
 }
 .rating_input_wrap {
     position: relative;
-    padding-right: 2.5rem;
+    padding:0;
+    width: 60px; height: 40px;
     display: flex;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    padding-bottom: 2rem;
     box-sizing: content-box;
+    border: none;
+    background-color: transparent;
     // custom rate input by star icon
     .star_icon_field {
         position: absolute;
-        top: 0; left: 0;
+        top: 5px; left: 0;
         width: 30px; height: 30px;
         z-index: 0;
         cursor: pointer;
@@ -31,7 +33,7 @@
             position: absolute;
             @include bg_mask_image("../../../assets/icons/rate_star_icon.svg");
             width: 30px;
-            height: 29px;
+            height: 30px;
             background-color: $dark_grey;
         }
         
