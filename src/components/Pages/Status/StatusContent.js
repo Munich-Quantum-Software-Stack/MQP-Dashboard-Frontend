@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
-import StatusItems from "./StatusItem";
+import StatusItems from "./StatusItems";
 
 function StatusContent() {
     const fs = useSelector((state) => state.accessibilities.font_size);

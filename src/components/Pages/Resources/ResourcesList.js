@@ -57,35 +57,14 @@ const ResourcesList = ({ resources, available_resources }) => {
         
     }
 
+    if (available_resources === null) {
+        available_resources = active_resources;
+    }
+
     return (
         <React.Fragment>
-            {available_resources === null && active_resources.length > 0 && (
-                <div className="available_resources_list">
-                    <h4
-                        className="page_header"
-                        style={{ fontSize: page_header_fs }}
-                    >
-                        Available System Resources
-                    </h4>
-                    <div className="resources_list">
-                        {active_resources.map((resource) => (
-                            <ActiveResourceItem
-                                isRestricted="false"
-                                key={resource.name}
-                                name={resource.name}
-                                status={resource.maintenance}
-                                note={resource.note}
-                                qubits={resource.qubits}
-                                quantum_technology={resource.quantum_technology}
-                                connectivity={resource.connectivity}
-                        />))}
-                    </div>
-                </div>
-            )}
-                
-        
 
-            {available_resources !== null && active_resources.length > 0 && (
+            {active_resources.length > 0 && (
                 <div className="available_resources_list">
                     <h4
                         className="page_header"

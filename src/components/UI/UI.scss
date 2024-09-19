@@ -173,9 +173,14 @@
     font-size: 1.5rem;
     font-family: 'Open_Sans-Bold';
 }
-.pane_desc { color: var(--bs-gray-800); }
+.pane_desc { color: var(--bs-gray-800); margin-bottom: 1rem;}
 .pane_subtitle { color: var(--bs-gray-700); font-size: 1.05rem; font-weight: 700; }
-
+.pane_date {
+    font-style: italic;
+    font-size: 0.8rem;
+    text-align: right;
+    margin-top: auto;
+}
 // Login Page
 .LoginPage {
     display: flex;
@@ -233,22 +238,43 @@
     animation-delay: -0.15s;
 }
 
-// PDF Document
-.pdf_link {
+// Status Item Link
+.left_icon_link {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     text-decoration: none;
     position: relative;
-    padding-left: 50px;
+    padding-left: 55px;
+    &:hover, &:focus, &:active {
+        text-decoration: underline;
+    }
+}
+// PDF Document
+.pdf_link {    
     .pdf_icon {
         position: absolute;
         top: 5px; left: 0;
         width: 45px;
         height: auto;
     }
-    &:hover, &:focus, &:active {
-        text-decoration: underline;
+    
+}
+
+// Video Link
+.video_link {
+    .video_icon_wrap {
+        position: absolute;
+        left: 0; top: 0;
+        width: 50px;
+        height: 50px;
+        .video_icon {
+            position: absolute;
+            left: 0; top: 0;
+            @include bg_mask_image("../../assets/icons/video_icon.svg");
+            background-color: red;
+            width: 50px; height: 50px;
+        }
     }
 }
 
