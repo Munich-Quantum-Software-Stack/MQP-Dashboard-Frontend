@@ -5,5 +5,6 @@
     {"id": 4, "name": "Jobs"},
     {"id": 5, "name": "Budgets"},
     {"id": 6, "name": "Resources"},
-    {"id": 7, "name": "Accessibilities"}
+    {"id": 7, "name": "Accessibilities"},
+    {"id": 8, "name": "FAQ"}
 ]

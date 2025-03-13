@@ -42,6 +42,8 @@ import Information from "./components/Pages/Information/Information";
 
 import "./App.scss";
 import Credits from "./components/Pages/Credits/Credits";
+import FAQ from './components/Pages/FAQ/FAQ';
+
 
 function App() {
     /*
@@ -157,6 +159,16 @@ function App() {
                     element: <Information />,
                     errorElement: <ErrorPage />,
                 },
+                {
+                    path: "faq",
+                    element: <FAQ/>,
+                    errorElement: <ErrorPage />,
+                    loader: checkTokenLoader,
+
+                },
+                
+
+               
                 {
                     path: "feedback",
                     element: <Feedback />,

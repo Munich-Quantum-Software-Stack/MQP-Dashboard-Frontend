@@ -89,6 +89,18 @@ const Navigation = ({ onHidden }) => {
                                 )}
                             </NavLink>
                         </li>
+                        <li className="nav-item">
+                            <NavLink 
+                                to="FAQ"
+                                className="nav-link "
+                                style={{ fontSize: navbar_fs }}
+                            >
+                                 <span className="link_icon faq_icon"></span>
+                                {onHidden && (
+                                    <span className="link_text">FAQ</span>
+                                )}
+                            </NavLink>
+                        </li>
                     </ul>
                 </nav>
             )}
