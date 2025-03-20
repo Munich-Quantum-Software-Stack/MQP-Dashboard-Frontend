@@ -52,7 +52,7 @@ function Budgets() {
     budgetsContent = (
         <BlankCard className={`${darkmode ? "dark_bg" : "white_bg"} h-100`}>
             <h4 className="page_header" style={{ fontSize: page_header_fs }}>
-                Budgets information will be updated soon.
+                Budgets information will be updated soon. Contact us for more info
             </h4>
         </BlankCard>
     );
