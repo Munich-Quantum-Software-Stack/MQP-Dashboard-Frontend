@@ -17,7 +17,7 @@ function Information() {
                     style={{ fontSize: page_header_fs }}
                 >
                     Information regarding use of the systems will be placed here
-                    shortly.
+                    shortly Please contact us via email if you need anything for now.
                 </h4>
             </ContentCard>
         </React.Fragment>
