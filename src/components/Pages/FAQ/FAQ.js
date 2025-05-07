@@ -1,0 +1,62 @@
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useSelector } from "react-redux";
+import FAQList from "./FAQList";
+import LoadingIndicator from "../../UI/LoadingIndicator";
+import ContentCard from "../../UI/Card/ContentCard";
+import { queryFetchFAQs } from "../../utils/faq-http";
+import ErrorBlock from "../../UI/MessageBox/ErrorBlock";
+import { getAuthToken } from "../../utils/auth";
+
+import "./FAQ.scss";
+
+function FAQ() {
+    const access_token = getAuthToken();
+    const darkmode = useSelector((state) => state.accessibilities.darkmode);
+    const fs = useSelector((state) => state.accessibilities.font_size);
+    const page_header_fs = +fs * 1.5;
+
+    const { data, isPending, isError, error } = useQuery({
+        queryKey: ["faqs"],
+        queryFn: ({ signal }) => queryFetchFAQs({ signal, access_token }),
+    });
+
+    if (isError) {
+        return <ErrorBlock title={error.message} message={error.code} />;
+    }
+
+    let content;
+    if (isPending) {
+        content = (
+            <ContentCard className={`${darkmode ? "dark_bg" : "white_bg"} `}>
+                <LoadingIndicator />
+                <p>Loading data...</p>
+            </ContentCard>
+        );
+    }
+    if (data) {
+        content = <FAQList faqs={data} />;
+    }
+
+    return (
+        <React.Fragment>
+            <ContentCard
+                className={`${darkmode ? "dark_bg" : "white_bg"} h-100`}
+            >
+                <div className="listFAQ_container">
+                    <div className="container_header_wrap">
+                        <h4
+                            className="page_header"
+                            style={{ fontSize: page_header_fs }}
+                        >
+                            Frequently Asked Questions
+                        </h4>
+                    </div>
+                    <div className="faq_content_container">{content}</div>
+                </div>
+            </ContentCard>
+        </React.Fragment>
+    );
+}
+
+export default FAQ;
