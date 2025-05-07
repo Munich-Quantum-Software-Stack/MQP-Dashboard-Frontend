@@ -7,6 +7,8 @@ import Eviden_QLM_logo from "../../../assets/images/eviden-logo.png";
 import WMI_logo from "../../../assets/images/wmi-logo.svg";
 import AQT_logo from "../../../assets/images/Logo-AQT.png";
 import MUNICQ_Atoms_logo from "../../../assets/images/MunicQC_Atoms.png";
+import NewLogo from "../../../assets/images/new-logo.png"; // New logo import
+
 
 const ResourceItem = (props) => {
     const fs = useSelector((state) => state.accessibilities.font_size);
@@ -43,6 +45,9 @@ const ResourceItem = (props) => {
         resource_logo_src = MUNICQ_Atoms_logo;
         resource_bg = "resource_bg_5";
     }
+    if (NewLogo_resources.indexOf(resource_name) > -1) { // New logo logic
+        resource_logo_src = NewLogo;
+        resource_bg = "resource_bg_6";
     return (
         <div className="col-12 col-xs-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3 resource_item_wrap">
             <PaneCard

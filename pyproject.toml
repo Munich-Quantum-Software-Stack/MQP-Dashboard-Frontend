@@ -1,0 +1,19 @@
+[project]
+name = "MQP_Local"
+version = "3.11"
+description = "Local server"
+authors = [
+    {name = "Parth", email = "parth.vijayvargiya@lrz.de"},
+]
+dependencies = []
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
+[tool.pdm]
+distribution = true
