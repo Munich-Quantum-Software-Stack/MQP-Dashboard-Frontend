@@ -39,18 +39,13 @@ import { tokenLoader, checkTokenLoader } from "./components/utils/auth";
 import Feedback from "./components/Pages/Feedback/Feedback";
 import RequestAccess from "./components/Pages/RequestAccess/RequestAccess";
 import Information from "./components/Pages/Information/Information";
-import FAQ from "./components/Pages/FAQ/FAQ";
-import FAQList from "./components/Pages/FAQ/FAQList";
-
-
 
 import "./App.scss";
 import Credits from "./components/Pages/Credits/Credits";
-import FAQ from './components/Pages/FAQ/FAQ';
+import FAQ from "./components/Pages/FAQ/FAQ";
 
 
-function App() 
-{
+function App() {
     /*
      * Router with Authentication
      */
@@ -165,16 +160,6 @@ function App()
                     errorElement: <ErrorPage />,
                 },
                 {
-                    path: "faq",
-                    element: <FAQ/>,
-                    errorElement: <ErrorPage />,
-                    loader: checkTokenLoader,
-
-                },
-                
-
-               
-                {
                     path: "feedback",
                     element: <Feedback />,
                     errorElement: <ErrorPage />,
@@ -187,9 +172,7 @@ function App()
                 {
                     path: "faq",
                     element: <FAQ />,
-                    errorElement: <ErrorPage />,
                 },
-            
                 // {
                 //     path: "settings",
                 //     element: <Settings />,
@@ -202,7 +185,7 @@ function App()
                     loader: checkTokenLoader,
                     action: logoutAction,
                 },
-            ]
+            ],
         },
         {
             path: "/",
@@ -232,7 +215,7 @@ function App()
             ],
         },
     ]);
-    
+
     return (
         <QueryClientProvider client={queryClient}>
             <RouterProvider router={router} />
