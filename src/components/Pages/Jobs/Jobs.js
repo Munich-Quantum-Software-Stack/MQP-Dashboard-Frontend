@@ -51,6 +51,7 @@ function Jobs() {
                         >
                             Your Jobs
                         </h4>
+                        <p className="shots_allowed_text">Shots allowed: 100</p>
                     </div>
                     <div className="jobs_content_container">
                         {content}

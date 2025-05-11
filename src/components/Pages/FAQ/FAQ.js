@@ -16,7 +16,7 @@ function FAQ() {
                     className="page_header"
                     style={{ fontSize: page_header_fs }}
                 >
-                    FAQs coming shortly. If you have any query, please send us an email. 
+                    FAQs coming shortly. If you have any query, please do send us an email. 
                 </h4>
             </ContentCard>
         </React.Fragment>
