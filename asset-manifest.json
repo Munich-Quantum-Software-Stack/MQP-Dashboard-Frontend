@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "./static/css/main.f3ade50f.css",
-    "main.js": "./static/js/main.f44ba643.js",
+    "main.css": "./static/css/main.21664c33.css",
+    "main.js": "./static/js/main.fcede576.js",
     "static/js/453.79b30e5b.chunk.js": "./static/js/453.79b30e5b.chunk.js",
     "static/media/Visual_HPC-QC_02072024_16-9.jpg": "./static/media/Visual_HPC-QC_02072024_16-9.1aa3615117c3a49fa8b6.jpg",
     "static/media/MunicQC_Atoms.png": "./static/media/MunicQC_Atoms.a07249c59d7832e0b153.png",
@@ -18,6 +18,7 @@
     "static/media/calendar_date_icon.svg": "./static/media/calendar_date_icon.709a7b0413bbcc24c91e.svg",
     "static/media/feedback_icon.svg": "./static/media/feedback_icon.39762ea4399a20286ce7.svg",
     "static/media/icon_setting.svg": "./static/media/icon_setting.2debb4e126373577c705.svg",
+    "static/media/telemetry_icon.svg": "./static/media/telemetry_icon.3bbcd85384e1c4e056e8.svg",
     "static/media/resource_data_icon.svg": "./static/media/resource_data_icon.20fde2f24131b3eae6c9.svg",
     "static/media/diagram_icon.svg": "./static/media/diagram_icon.b67673313602b6941725.svg",
     "static/media/shredder_icon.svg": "./static/media/shredder_icon.ab7828ea7f686ac8b820.svg",
@@ -34,6 +35,7 @@
     "static/media/info_icon.svg": "./static/media/info_icon.2bfccbf123819439a596.svg",
     "static/media/information_circled_icon.svg": "./static/media/information_circled_icon.2bfccbf123819439a596.svg",
     "static/media/rate_star_icon.svg": "./static/media/rate_star_icon.988e28f000f38e845fa7.svg",
+    "static/media/faq_icon.svg": "./static/media/faq_icon.572eecd79540ea0326c8.svg",
     "static/media/chart_pie_icon.svg": "./static/media/chart_pie_icon.fc2896f607623c8849aa.svg",
     "static/media/key_icon.svg": "./static/media/key_icon.10bf2f2a67d509ebe6a1.svg",
     "static/media/close_cross_icon.svg": "./static/media/close_cross_icon.d8a2484d812c0b8f825c.svg",
@@ -42,12 +44,12 @@
     "static/media/timer_icon.svg": "./static/media/timer_icon.54666351533f01dabd7f.svg",
     "static/media/add_plus_icon.svg": "./static/media/add_plus_icon.7c966efea8f01cb38e6c.svg",
     "static/media/circle_dot_icon.svg": "./static/media/circle_dot_icon.2d03e756353d2b38fdd4.svg",
-    "main.f3ade50f.css.map": "./static/css/main.f3ade50f.css.map",
-    "main.f44ba643.js.map": "./static/js/main.f44ba643.js.map",
+    "main.21664c33.css.map": "./static/css/main.21664c33.css.map",
+    "main.fcede576.js.map": "./static/js/main.fcede576.js.map",
     "453.79b30e5b.chunk.js.map": "./static/js/453.79b30e5b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f3ade50f.css",
-    "static/js/main.f44ba643.js"
+    "static/css/main.21664c33.css",
+    "static/js/main.fcede576.js"
   ]
 }
