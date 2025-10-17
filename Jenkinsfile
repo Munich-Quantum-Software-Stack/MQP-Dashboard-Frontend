@@ -5,6 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
+                sh 'npm install env-cmd'
                 sh 'npm run build:test'
             }
         }
