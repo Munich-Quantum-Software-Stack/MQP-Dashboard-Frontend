@@ -19,8 +19,8 @@ pipeline {
                 echo 'Deploying....'
                 sh 'pwd'
                 sh 'ls -la'
-                mkdir -p /var/jenkins_home/deployments/mqp-dashboard-frontend/
-                cp -r build/* /var/jenkins_home/deployments/mqp-dashboard-frontend/
+                sh 'mkdir -p /var/jenkins_home/deployments/mqp-dashboard-frontend/'
+                sh 'cp -r build/* /var/jenkins_home/deployments/mqp-dashboard-frontend/'
             }
         }
     }
