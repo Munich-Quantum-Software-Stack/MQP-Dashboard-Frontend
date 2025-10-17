@@ -1,8 +1,3 @@
-node {
-    env.NODEJS_HOME = "${tool 'NodeJS'}"
-    // on linux / mac
-    env.PATH="${env.NODEJS_HOME}/bin:${env.PATH}"
-}
 pipeline {
     agent any
 
@@ -10,6 +5,9 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
+                nodejs(nodeJSInstallationName: 'NodeJS', configId: '<config-file-provider-id>') {
+                    sh 'npm config ls'
+                }
                 sh 'npm run build:test'
             }
         }
