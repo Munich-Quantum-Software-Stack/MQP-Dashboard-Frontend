@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "./static/css/main.21664c33.css",
-    "main.js": "./static/js/main.3c56ec85.js",
+    "main.js": "./static/js/main.acb41b8a.js",
     "static/js/453.79b30e5b.chunk.js": "./static/js/453.79b30e5b.chunk.js",
     "static/media/Visual_HPC-QC_02072024_16-9.jpg": "./static/media/Visual_HPC-QC_02072024_16-9.1aa3615117c3a49fa8b6.jpg",
     "static/media/MunicQC_Atoms.png": "./static/media/MunicQC_Atoms.a07249c59d7832e0b153.png",
@@ -45,11 +45,11 @@
     "static/media/add_plus_icon.svg": "./static/media/add_plus_icon.7c966efea8f01cb38e6c.svg",
     "static/media/circle_dot_icon.svg": "./static/media/circle_dot_icon.2d03e756353d2b38fdd4.svg",
     "main.21664c33.css.map": "./static/css/main.21664c33.css.map",
-    "main.3c56ec85.js.map": "./static/js/main.3c56ec85.js.map",
+    "main.acb41b8a.js.map": "./static/js/main.acb41b8a.js.map",
     "453.79b30e5b.chunk.js.map": "./static/js/453.79b30e5b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.21664c33.css",
-    "static/js/main.3c56ec85.js"
+    "static/js/main.acb41b8a.js"
   ]
 }
