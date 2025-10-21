@@ -1,4 +1,6 @@
-import React from "react";
+// This component has been temporarily commented out
+// import React from "react";
+/*
 import { useSelector } from "react-redux";
 import ContentCard from "../../UI/Card/ContentCard";
 import InformationContent from "./InformationContent";
@@ -23,5 +25,11 @@ function Information() {
         </React.Fragment>
     );
 }
+*/
 
-export default Information;
+// Placeholder empty component
+// function Information() {
+    // return <React.Fragment />;
+//}
+
+// export default Information;

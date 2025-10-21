@@ -1,5 +1,4 @@
-/****** Left Sidebar ********/
-/****** Sidebar Navigation *********/
+
 .left_sidebar_wrap {
     position: relative;
     min-height: calc(100vh - 58px);
@@ -8,9 +7,7 @@
     padding: 1rem 0;
 }
 .left_sidebar {
-    //position: fixed;
-    //left: 0;
-    //top: 0;
+   
     height: 100%;
     width: inherit;
     background-color: black;
@@ -58,18 +55,7 @@
     }
 }
 
-/* &.mainNavbar-enter {
-        
-}
-&.mainNavbar-enter-done {
-    left: 0;
-}
-&.mainNavbar-exit {
 
-}
-&.mainNavbar-exit-done {
-    left: -100%;
-} */
 
 ul.mainNav {
     padding-left: 0;
@@ -123,6 +109,16 @@ ul.mainNav {
                         "../../../assets/icons/information_circled_icon.svg"
                     );
                 }
+                &.faq_icon {
+                    @include bg_mask_image(
+                        "../../../assets/icons/faq_icon.svg"
+                    );
+                }
+                &.telemetry_icon {
+                    @include bg_mask_image(
+                        "../../../assets/icons/telemetry_icon.svg"
+                    );
+                }
             }
 
             &:hover,
@@ -154,7 +150,7 @@ ul.userNav {
                         "../../../assets/icons/feedback_icon.svg"
                     );
                 }
-                &.credits_icon {
+                &.funding_icon {
                     @include bg_mask_image(
                         "../../../assets/icons/coins_euro_icon.svg"
                     );

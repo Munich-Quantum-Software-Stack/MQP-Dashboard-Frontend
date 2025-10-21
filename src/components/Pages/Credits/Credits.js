@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import BlankCard from "../../UI/Card/BlankCard";
 
-const Credits = () => {
+const Funding = () => {
     const darkmode = useSelector((state) => state.accessibilities.darkmode);
     const fs = useSelector((state) => state.accessibilities.font_size);
     const page_header_fs = +fs * 1.5;
@@ -15,4 +15,4 @@ const Credits = () => {
     );
 };
 
-export default Credits;
+export default Funding;

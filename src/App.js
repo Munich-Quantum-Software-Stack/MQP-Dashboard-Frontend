@@ -23,6 +23,9 @@ import Jobs, { loader as jobsLoader } from "./components/Pages/Jobs/Jobs";
 import JobDetail, {
     loader as jobDetailLoader,
 } from "./components/Pages/Jobs/JobDetail";
+import JobCircuit, {
+    loader as jobCircuitLoader,
+} from "./components/Pages/Jobs/JobCircuit";
 import Budgets from "./components/Pages/Budgets/Budgets";
 import ResourcesRoot from "./components/Pages/Resources/ResourcesRoot";
 import Resources, { loader as resourcesLoader } from "./components/Pages/Resources/Resources";
@@ -38,10 +41,14 @@ import NewToken, {
 import { tokenLoader, checkTokenLoader } from "./components/utils/auth";
 import Feedback from "./components/Pages/Feedback/Feedback";
 import RequestAccess from "./components/Pages/RequestAccess/RequestAccess";
-import Information from "./components/Pages/Information/Information";
+// import Information from "./components/Pages/Information/Information";
+import FAQ from "./components/Pages/FAQ/FAQ";
+import TelemetryRoot from "./components/Pages/Telemetry/TelemetryRoot";
+import Telemetry from "./components/Pages/Telemetry/Telemetry";
+import TelemetryRoomDetail from "./components/Pages/Telemetry/TelemetryRoomDetail";
 
 import "./App.scss";
-import Credits from "./components/Pages/Credits/Credits";
+import Funding from "./components/Pages/Funding/Funding";
 
 function App() {
     /*
@@ -119,6 +126,16 @@ function App() {
                                     element: <JobDetail />,
                                     loader: jobDetailLoader,
                                 },
+                                {
+                                    path: "circuit",
+                                    element: <JobCircuit isExecutedCircuit={false} />,
+                                    loader: jobCircuitLoader,
+                                },
+                                {
+                                    path: "executed-circuit",
+                                    element: <JobCircuit isExecutedCircuit={true} />,
+                                    loader: jobCircuitLoader,
+                                },
                             ],
                         },
                     ],
@@ -152,19 +169,41 @@ function App() {
                         },
                     ],
                 },
+                // {
+                //     path: "information",
+                //     element: <Information />,
+                //     errorElement: <ErrorPage />,
+                // },
                 {
-                    path: "information",
-                    element: <Information />,
+                    path: "faq",
+                    element: <FAQ />,
                     errorElement: <ErrorPage />,
+                    loader: checkTokenLoader,
                 },
+                // {
+                //     path: "telemetry",
+                //     element: <TelemetryRoot />,
+                //     errorElement: <ErrorPage />,
+                //     loader: checkTokenLoader,
+                //     children: [
+                //         {
+                //             index: true,
+                //             element: <Telemetry />,
+                //         },
+                //         {
+                //             path: ":roomId",
+                //             element: <TelemetryRoomDetail />,
+                //         },
+                //     ],
+                // },
                 {
                     path: "feedback",
                     element: <Feedback />,
                     errorElement: <ErrorPage />,
                 },
                 {
-                    path: "credits",
-                    element: <Credits />,
+                    path: "funding",
+                    element: <Funding />,
                     errorElement: <ErrorPage />,
                 },
                 // {

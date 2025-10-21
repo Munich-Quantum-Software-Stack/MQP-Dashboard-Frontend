@@ -42,13 +42,13 @@ const UserNavigation = ({ onHidden }) => {
                 </li>
                 <li className="nav-item">
                     <NavLink
-                        to="credits"
+                        to="funding"
                         className="nav-link "
                         style={{ fontSize: navbar_fs }}
                     >
-                        <span className="link_icon credits_icon"></span>
+                        <span className="link_icon funding_icon"></span>
                         {onHidden && (
-                            <span className="link_text">Credits</span>
+                            <span className="link_text">Funding</span>
                         )}
                     </NavLink>
                 </li>

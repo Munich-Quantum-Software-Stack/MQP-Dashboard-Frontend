@@ -16,7 +16,7 @@ const NavbarHeader = () => {
                     alt="MQP logo"
                 />
                 <span className="logo_text">
-                    <span className="small_text">(beta)</span>
+                    
                 </span>
             </motion.div>
         </div>

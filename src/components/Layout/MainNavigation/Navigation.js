@@ -53,6 +53,20 @@ const Navigation = ({ onHidden }) => {
                                 )}
                             </NavLink>
                         </li>
+                        {/* 
+                        <li className="nav-item">
+                            <NavLink
+                                to="telemetry"
+                                className="nav-link "
+                                style={{ fontSize: navbar_fs }}
+                            >
+                                <span className="link_icon telemetry_icon"></span>
+                                {onHidden && (
+                                    <span className="link_text">Telemetry</span>
+                                )}
+                            </NavLink>
+                        </li>
+                        */}
                         <li className="nav-item">
                             <NavLink
                                 to="budgets"
@@ -77,6 +91,7 @@ const Navigation = ({ onHidden }) => {
                                 )}
                             </NavLink>
                         </li>
+                        {/* 
                         <li className="nav-item">
                             <NavLink
                                 to="information"
@@ -86,6 +101,19 @@ const Navigation = ({ onHidden }) => {
                                 <span className="link_icon information_icon"></span>
                                 {onHidden && (
                                     <span className="link_text">Information</span>
+                                )}
+                            </NavLink>
+                        </li>
+                        */}
+                        <li className="nav-item">
+                            <NavLink
+                                to="faq"
+                                className="nav-link "
+                                style={{ fontSize: navbar_fs }}
+                            >
+                                <span className="link_icon faq_icon"></span>
+                                {onHidden && (
+                                    <span className="link_text">FAQ</span>
                                 )}
                             </NavLink>
                         </li>

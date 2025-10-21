@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import JobsList from "./JobsList";
 import LoadingIndicator from "../../UI/LoadingIndicator";
 import ContentCard from "../../UI/Card/ContentCard";
-import { queryFetchJobs } from "../../utils/jobs-http";
+import JobsSorting from "./JobsSorting";
 import ErrorBlock from "../../UI/MessageBox/ErrorBlock";
 import { getAuthToken } from "../../utils/auth";
-
+import { queryFetchJobs } from "../../utils/jobs-http";
 
 import "./Jobs.scss";
 
@@ -16,42 +16,211 @@ function Jobs() {
     const darkmode = useSelector((state) => state.accessibilities.darkmode);
     const fs = useSelector((state) => state.accessibilities.font_size);
     const page_header_fs = +fs * 1.5;
+    const [page, setPage] = useState(0);
+    const limit = 20;
+
+    const [sortKey, setSortKey] = useState("ID");
+    const [sortOrder, setSortOrder] = useState("DESC");
+    const [statusFilter, setStatusFilter] = useState("ALL");
+
+    const getBackendSortKey = (key) => {
+        const mapping = {
+            "ID": "ID",                           
+            "STATUS": "status",                   
+            "DATE": "timestamp_submitted"         
+        };
+        return mapping[key] || key;
+    };
 
     const { data, isPending, isError, error } = useQuery({
-        queryKey: ["jobs"],
-        queryFn: ({signal}) => queryFetchJobs({signal, access_token: access_token}),
+        queryKey: ["jobs", page, sortKey, sortOrder, statusFilter],
+        queryFn: ({ signal }) => {
+            console.log(`API call - Key: ${sortKey}, Order: ${sortOrder}, Status: ${statusFilter}`);
+            
+            return queryFetchJobs({
+                signal,
+                access_token,
+                page,
+                limit,
+                order: sortOrder,
+                order_by: getBackendSortKey(sortKey),
+                status: statusFilter, 
+            });
+        },
+        keepPreviousData: true,
+        retry: 1,
+        staleTime: 30000, 
+        onError: (err) => {
+            console.error("Query error:", err);
+        }
     });
 
     if (isError) {
-        return (<ErrorBlock title={error.message} message={error.code} />);
-    }
-    let content;
-    if (isPending) {
-        content = (
+        return (
             <ContentCard className={`${darkmode ? "dark_bg" : "white_bg"} `}>
-                <LoadingIndicator />
-                <p>Loading data...</p>
+                <ErrorBlock title="Error loading jobs" message={error?.message || "Unknown error"} />
             </ContentCard>
         );
     }
-    if (data) {
-        content = (<JobsList jobs={data} />)
+
+    let content;
+    if (isPending) {
+        content = (
+            <div className="loading-container">
+                <LoadingIndicator />
+                <p>Loading data...</p>
+            </div>
+        );
     }
+    
+    if (data) {
+        console.log("Jobs data received:", data);
+        console.log("Jobs array:", Array.isArray(data.jobs) ? `${data.jobs.length} jobs` : "No jobs array");
+        content = <JobsList jobs={data.jobs || []} />;
+    }
+    const totalJobs = data?.totalJobs || 0;
+    const totalPages = Math.ceil(totalJobs / limit) || 1; 
+    console.log(`Total jobs: ${totalJobs}, Total pages: ${totalPages}`);
+
+    const handlePreviousPage = () => {
+        if (page > 0) setPage((prev) => prev - 1);
+    };
+
+    const handleNextPage = () => {
+        if (page < totalPages - 1) setPage((prev) => prev + 1);
+    };
+
+    const handlePageChange = (newPage) => {
+        setPage(newPage);
+    };
+
+    const handleSorting = (key, order, status = "ALL") => {
+        console.log(`Setting sort parameters - Key: ${key}, Order: ${order}, Status: ${status}`);
+        
+        setSortKey(key);
+        setSortOrder(order);
+        
+        setStatusFilter(status);
+        
+        setPage(0);
+    };
+    const renderPageNumbers = () => {
+        const pageNumbers = [];
+        const maxVisiblePages = 5;
+        
+        let startPage = Math.max(0, page - Math.floor(maxVisiblePages / 2));
+        let endPage = Math.min(totalPages - 1, startPage + maxVisiblePages - 1);
+        
+        if (endPage - startPage + 1 < maxVisiblePages) {
+            startPage = Math.max(0, endPage - maxVisiblePages + 1);
+        }
+
+        // First page
+        if (startPage > 0) {
+            pageNumbers.push(
+                <button
+                    key={0}
+                    onClick={() => handlePageChange(0)}
+                    className={page === 0 ? "active" : ""}
+                >
+                    1
+                </button>
+            );
+            if (startPage > 1) {
+                pageNumbers.push(<span key="ellipsis1">...</span>);
+            }
+        }
+
+        // Page numbers
+        for (let i = startPage; i <= endPage; i++) {
+            pageNumbers.push(
+                <button
+                    key={i}
+                    onClick={() => handlePageChange(i)}
+                    className={page === i ? "active" : ""}
+                >
+                    {i + 1}
+                </button>
+            );
+        }
+
+        // Last page
+        if (endPage < totalPages - 1) {
+            if (endPage < totalPages - 2) {
+                pageNumbers.push(<span key="ellipsis2">...</span>);
+            }
+            pageNumbers.push(
+                <button
+                    key={totalPages - 1}
+                    onClick={() => handlePageChange(totalPages - 1)}
+                    className={page === totalPages - 1 ? "active" : ""}
+                >
+                    {totalPages}
+                </button>
+            );
+        }
+
+        return pageNumbers;
+    };
 
     return (
         <React.Fragment>
-            <ContentCard
-                className={`${darkmode ? "dark_bg" : "white_bg"} h-100`}
-            >
+            <ContentCard className={`${darkmode ? "dark_bg" : "white_bg"} h-100`}>
                 <div className={`listJob_container`}>
                     <div className="container_header_wrap">
-                        <h4
-                            className="page_header"
-                            style={{ fontSize: page_header_fs }}
-                        >
+                        <h4 className="page_header" style={{ fontSize: page_header_fs }}>
                             Your Jobs
                         </h4>
                     </div>
+
+                    <div className="sorting-section">
+                        <JobsSorting
+                            sortKey={sortKey}
+                            sortOrder={sortOrder}
+                            statusFilter={statusFilter}
+                            onSorting={handleSorting}
+                        />
+                    </div>
+                
+                    {!isPending && (
+                        <div className="pagination_tray">
+                            <div className="pagination_info">
+                                {data?.jobs && data.jobs.length > 0 ? (
+                                    <>
+                                        Page {page + 1} of {totalPages || 1} • Showing {data.jobs.length || 0} of {totalJobs} jobs
+                                    </>
+                                ) : (
+                                    <>
+                                        No jobs found
+                                    </>
+                                )}
+                            </div>
+                            
+                            {totalPages > 1 && (
+                                <div className="pagination_controls">
+                                    <button
+                                        onClick={handlePreviousPage}
+                                        disabled={page === 0}
+                                        className="pagination_button prev-button"
+                                    >
+                                        ← Previous
+                                    </button>
+
+                                    <div className="page-numbers">
+                                        {renderPageNumbers()}
+                                    </div>
+                                    <button
+                                        onClick={handleNextPage}
+                                        disabled={page >= totalPages - 1}
+                                        className="pagination_button next-button"
+                                    >
+                                        Next →
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
                     <div className="jobs_content_container">
                         {content}
                     </div>
@@ -62,24 +231,3 @@ function Jobs() {
 }
 
 export default Jobs;
-
-/*
- * Load all Jobs
- */
-
-// async function loaderJobsList() {
-//     // fetching to jobs
-//     const access_token = getAuthToken();
-
-//     return queryClient.fetchQuery({
-//         queryKey: ["jobs"],
-//         queryFn: ({signal}) => fetchJobs({signal, access_token: access_token}),
-//     });
-// }
-
-// export async function loader() {
-//     return defer({
-//         jobs: await loaderJobsList(),
-//     });
-// }
-
