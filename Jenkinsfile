@@ -18,6 +18,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
+                sh 'whoami'
                 sh 'rm -rf /var/jenkins_home/deployments/mqp-dashboard-frontend/*'
                 sh 'cp -r build/* /var/jenkins_home/deployments/mqp-dashboard-frontend/'
             }
