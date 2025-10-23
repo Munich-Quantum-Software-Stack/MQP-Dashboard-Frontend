@@ -12,14 +12,13 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing..'
+                echo 'Test suite not implemented yet'
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                sh 'pwd'
-                sh 'ls -la'
-                sh 'mkdir -p /var/jenkins_home/deployments/mqp-dashboard-frontend/'
+                sh 'rm -rf /var/jenkins_home/deployments/mqp-dashboard-frontend/*'
                 sh 'cp -r build/* /var/jenkins_home/deployments/mqp-dashboard-frontend/'
             }
         }
