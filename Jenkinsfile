@@ -24,7 +24,7 @@ pipeline {
         stage('Start Containers') {
             steps {
                 echo 'Starting containers...'
-                sh 'docker compose up -d --no-colors --wait'
+                sh 'docker compose up -d --no-color --wait'
                 sh 'docker compose ps'
             }
         }
