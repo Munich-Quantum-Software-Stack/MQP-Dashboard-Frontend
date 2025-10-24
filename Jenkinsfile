@@ -45,13 +45,13 @@ pipeline {
             steps {
                 echo 'Deploying....'
                 sh 'whoami'
-                sh 'rm -rf /var/jenkins_home/deployments/mqp-dashboard-frontend/*'
-                sh 'cp -r build/* /var/jenkins_home/deployments/mqp-dashboard-frontend/'
+                // sh 'rm -rf /var/jenkins_home/deployments/mqp-dashboard-frontend/*'
+                // sh 'cp -r build/* /var/jenkins_home/deployments/mqp-dashboard-frontend/'
             }
         }
     }
     post {
-        always {
+        failure {
             echo 'Cleaning up...'
             sh 'docker compose down --volumes --remove-orphans'
             sh 'docker compose ps'
