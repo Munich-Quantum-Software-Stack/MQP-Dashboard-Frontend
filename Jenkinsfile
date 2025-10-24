@@ -15,6 +15,19 @@ pipeline {
                 '''
             }
         }
+        stage('Prune Docker data') {
+            steps {
+                echo 'Cleaning up...'
+                sh 'docker system prune -a --volumes -f'
+            }
+        }
+        stage('Start Containers') {
+            steps {
+                echo 'Starting containers...'
+                sh 'docker compose up -d --no-colors --wait'
+                sh 'docker compose ps'
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Building..'
@@ -35,6 +48,13 @@ pipeline {
                 sh 'rm -rf /var/jenkins_home/deployments/mqp-dashboard-frontend/*'
                 sh 'cp -r build/* /var/jenkins_home/deployments/mqp-dashboard-frontend/'
             }
+        }
+    }
+    post {
+        always {
+            echo 'Cleaning up...'
+            sh 'docker compose down --volumes --remove-orphans'
+            sh 'docker compose ps'
         }
     }
 }
