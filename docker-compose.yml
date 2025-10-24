@@ -4,6 +4,6 @@ services:
     image: httpd:latest
     container_name: mqp-dashboard-frontend
     ports:
-    - '8080:80'
+    - '8081:80'
     volumes:
-    - ./build:/Users/di93sig/software/projects/LRZ/QIS/jenkins/www/portal.lrz.de/
+    - ./build/:/usr/local/apache2/htdocs/
