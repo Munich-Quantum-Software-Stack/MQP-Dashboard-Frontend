@@ -2,6 +2,19 @@ pipeline {
     agent any
 
     stages {
+        stage('Verify tooling') {
+            steps {
+                echo 'Verifying tooling...'
+                sh '''
+                   npm -v
+                   node -v
+                   docker info
+                   docker version
+                   docker compose version
+                   curl --version
+                '''
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Building..'
