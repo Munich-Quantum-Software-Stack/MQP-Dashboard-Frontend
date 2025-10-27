@@ -36,19 +36,20 @@ pipeline {
                 sh 'docker build -t mqp-dashboard-frontend:latest .'
             }
         }
+
         stage('Test') {
             steps {
                 echo 'Testing..'
                 echo 'Test suite not implemented yet'
             }
         }
-        // stage('Start Containers') {
-        //     steps {
-        //         echo 'Starting containers...'
-        //         sh 'docker compose up -d --no-color --wait'
-        //         sh 'docker compose ps'
-        //     }
-        // }
+        stage('Start Containers') {
+            steps {
+                echo 'Starting containers...'
+                sh 'docker compose up -d --no-color --wait'
+                sh 'docker compose ps'
+            }
+        }
         // stage('Deploy') {
         //     steps {
         //         echo 'Deploying....'
