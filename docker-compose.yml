@@ -1,8 +1,0 @@
-services:
-  apache:
-    image: rtsp/lighttpd
-    container_name: mqp-dashboard-frontend
-    ports:
-    - '8081:80'
-    volumes:
-    - ./build:/var/www/html
