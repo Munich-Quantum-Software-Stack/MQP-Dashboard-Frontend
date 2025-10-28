@@ -30,12 +30,12 @@ pipeline {
                 '''
             }
         }
-        stage('Build Docker Image') {
-            steps {
-                echo 'Building Docker Image...'
-                sh 'docker build -t mqp-dashboard-frontend:latest .'
-            }
-        }
+        // stage('Build Docker Image') {
+        //     steps {
+        //         echo 'Building Docker Image...'
+        //         sh 'docker build -t mqp-dashboard-frontend:latest .'
+        //     }
+        // }
 
         stage('Test') {
             steps {
