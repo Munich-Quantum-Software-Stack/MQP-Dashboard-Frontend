@@ -1,9 +1,8 @@
-version: '3.8'
 services:
   apache:
-    image: httpd:latest
+    image: rtsp/lighttpd
     container_name: mqp-dashboard-frontend
     ports:
     - '8081:80'
     volumes:
-    - ./build/:/usr/local/apache2/htdocs/
+    - ./build:/var/www/html
