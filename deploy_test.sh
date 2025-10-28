@@ -1,6 +1,5 @@
 #!/usr/env bash
 
-sudo su bqp
 # as bqp  user
 USER=$(whoami)
 if [ "$USER" != "bqp" ]; then
@@ -17,6 +16,7 @@ npm run build:test
 
 echo "Cleaning up old deployment..."
 rm -rf /home/bqp/www/html/mqp-dashboard-frontend-test/*
+echo "Old deployment cleaned."
 
 if [ -d /home/bqp/www/html/mqp-dashboard-frontend-test/ ]; then
   echo "Directory exists."
@@ -27,10 +27,10 @@ fi
 
 echo "Deploying to lighttpd server..."
 cp -r  build/* /home/bqp/www/html/mqp-dashboard-frontend-test/
-exit 0
+echo "Deployment completed successfully."
 
-sudo -i
-echo "Switched to root user."
-echo "Restarting lighttpd service..."
-systemctl restart lighttpd.service
+echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+echo "Please restart the lighttpd server to apply changes."
+echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+
 exit 0
