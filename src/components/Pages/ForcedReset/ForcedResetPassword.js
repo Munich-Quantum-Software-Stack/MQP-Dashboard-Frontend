@@ -4,8 +4,7 @@ import BlankCard from "../../UI/Card/BlankCard";
 import ContentCard from "../../UI/Card/ContentCard";
 import ForcedResetPasswordForm from "./ForcedResetPasswordForm";
 import SuccessReset from "./SuccessReset";
-import { getAuthentication, getForcedResetStatus } from "../../utils/auth";
-import { getDarkmode } from "../../utils/theme";
+import { getForcedResetStatus } from "../../utils/auth";
 
 function ForcedResetPassword() {
   const darkmode = useSelector((state) => state.accessibilities.darkmode);

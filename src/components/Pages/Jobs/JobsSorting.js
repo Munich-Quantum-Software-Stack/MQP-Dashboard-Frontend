@@ -15,6 +15,7 @@ const SORT_KEY_MAPPING = {
 };
 
 const JobsSorting = ({ sortKey = "ID", sortOrder = "DESC", statusFilter = "ALL", onSorting }) => {
+    // eslint-disable-next-line no-unused-vars
     const getBackendSortKey = (key) => {
         return SORT_KEY_MAPPING[key] || key;
     };

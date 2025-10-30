@@ -31,7 +31,7 @@ const Timer = () => {
             clearInterval(interval);
             clearTimeout(timeout);
         }
-    }, [tokenDuration]);
+    }, [tokenDuration, dispatch]);
 
     // const extendSessionHandler = () => {
     //     dispatch(authActions.setExpiration());

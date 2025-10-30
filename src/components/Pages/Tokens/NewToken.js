@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 //import { defer, useLoaderData, Await } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";

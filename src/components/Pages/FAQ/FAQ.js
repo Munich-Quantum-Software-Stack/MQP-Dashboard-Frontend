@@ -11,7 +11,7 @@ const FAQ_DATA = {
             q: "1. Prerequisites to get started on the MQP",
             a: (
                 <div>
-                    <a href="https://munich-quantum-software-stack.github.io/MQSS-Interfaces/qiskit/user_guide/getting_started/" target="_blank" rel="noopener noreferrer">
+                    <a href="https://munich-quantum-software-stack.github.io/MQSS-Interfaces/" target="_blank" rel="noopener noreferrer">
                         MQSS Getting Started Guide
                     </a>
                     <br />
@@ -23,7 +23,7 @@ const FAQ_DATA = {
                         MQSS Pennylane Adapter
                     </a>
                     <br />
-                    <a href="https://munich-quantum-software-stack.github.io/MQSS-Interfaces/cudaq/user_guide/getting_started/" target="_blank" rel="noopener noreferrer">
+                    <a href="https://munich-quantum-software-stack.github.io/MQSS-Interfaces/cudaq/index.html" target="_blank" rel="noopener noreferrer">
                         MQSS CUDA-Q Adapter
                     </a>
                 </div>
@@ -253,8 +253,6 @@ const FAQ_DATA = {
 
 function FAQ() {
     const darkmode = useSelector((state) => state.accessibilities.darkmode);
-    const fs = useSelector((state) => state.accessibilities.font_size);
-    const page_header_fs = +fs * 1.5;
     const navigate = useNavigate();
 
     const [expandedCategory, setExpandedCategory] = useState(null);
@@ -302,8 +300,11 @@ function FAQ() {
                                 {FAQ_DATA[cat].map((item, qidx) => (
                                     <li key={qidx} className="list-group-item faq-question" style={{ border: "none", background: "transparent", paddingLeft: 0, paddingRight: 0 }}>
                                         <div style={{ fontWeight: 500 }}>{item.q}</div>
-                                        <div className="faq-answer mt-1 mb-2" style={{ fontSize: "0.97em", color: "#555" }}>
-                                            {item.a ? item.a : <span style={{ color: "#999" }}>Answer coming soon.</span>}
+                                        <div className="faq-answer mt-1 mb-2" style={{ 
+                                            fontSize: "0.97em", 
+                                            color: darkmode ? "#e0e0e0" : "#555" 
+                                        }}>
+                                            {item.a ? item.a : <span style={{ color: darkmode ? "#888" : "#999" }}>Answer coming soon.</span>}
                                         </div>
                                         <div style={{ height: "2px", background: "#ffe066", margin: "8px 0", borderRadius: "1px" }} />
                                     </li>

@@ -19,7 +19,7 @@ import DefaultErrorPage from "./components/Pages/ErrorsHandling/DefaultError";
 import StatusRoot from "./components/Pages/Status/StatusRoot";
 import Status from "./components/Pages/Status/Status";
 import JobsRoot from "./components/Pages/Jobs/JobsRoot";
-import Jobs, { loader as jobsLoader } from "./components/Pages/Jobs/Jobs";
+import Jobs from "./components/Pages/Jobs/Jobs";
 import JobDetail, {
     loader as jobDetailLoader,
 } from "./components/Pages/Jobs/JobDetail";
@@ -28,24 +28,20 @@ import JobCircuit, {
 } from "./components/Pages/Jobs/JobCircuit";
 import Budgets from "./components/Pages/Budgets/Budgets";
 import ResourcesRoot from "./components/Pages/Resources/ResourcesRoot";
-import Resources, { loader as resourcesLoader } from "./components/Pages/Resources/Resources";
+import Resources from "./components/Pages/Resources/Resources";
 import ResourceDetail from "./components/Pages/Resources/ResourceDetail";
-import Settings from "./components/Pages/Settings/Settings";
+// import Settings from "./components/Pages/Settings/Settings";
 import TokensRootLayout from "./components/Pages/Tokens/TokensRoot";
-import Tokens, {
-    loader as tokensLoader
-} from "./components/Pages/Tokens/Tokens";
-import NewToken, {
-    loader as newTokenLoader
-} from "./components/Pages/Tokens/NewToken";
+import Tokens from "./components/Pages/Tokens/Tokens";
+import NewToken from "./components/Pages/Tokens/NewToken";
 import { tokenLoader, checkTokenLoader } from "./components/utils/auth";
 import Feedback from "./components/Pages/Feedback/Feedback";
 import RequestAccess from "./components/Pages/RequestAccess/RequestAccess";
 // import Information from "./components/Pages/Information/Information";
 import FAQ from "./components/Pages/FAQ/FAQ";
-import TelemetryRoot from "./components/Pages/Telemetry/TelemetryRoot";
-import Telemetry from "./components/Pages/Telemetry/Telemetry";
-import TelemetryRoomDetail from "./components/Pages/Telemetry/TelemetryRoomDetail";
+// import TelemetryRoot from "./components/Pages/Telemetry/TelemetryRoot";
+// import Telemetry from "./components/Pages/Telemetry/Telemetry";
+// import TelemetryRoomDetail from "./components/Pages/Telemetry/TelemetryRoomDetail";
 
 import "./App.scss";
 import Funding from "./components/Pages/Funding/Funding";

@@ -26,38 +26,25 @@ const ResourcesList = ({ resources, available_resources }) => {
     let active_resources = [];
     let maintenance_resources = [];
     let restricted_resources = [];    
+    
     for (let i = 0; i < resources.length; i++) {
-        if (resources[i].maintenance === true) {
-            maintenance_resources.push(resources[i]);
-        }
-        else {
-            active_resources.push(resources[i]);
-
-            let isRestricted = isRestrictedResource(resources[i]);
-            if (isRestricted) {
-                restricted_resources.push(resources[i]);
+        const resource = resources[i];
+        
+        if (resource.maintenance === true || resource.status === "Offline") {
+            maintenance_resources.push(resource);
+        } else {
+            // If not under maintenance and not offline, it's an active resource
+            active_resources.push(resource);
+            
+            // Check if it's restricted
+            if (available_resources && !available_resources.some(r => r.name === resource.name)) {
+                restricted_resources.push(resource);
             }
         }
-        
     }
 
-    function isRestrictedResource(resource) {
-        let isRestrictedResource = false;
-        if (available_resources !== null) {
-            let found_restricted_resource = available_resources.find(
-                (res) => res.name === resource.name
-            );
-            if (found_restricted_resource === undefined) {
-                isRestrictedResource = true;
-            } else {
-                isRestrictedResource = false;
-            }
-        }
-        return isRestrictedResource;        
-        
-    }
-
-    if (available_resources === null) {
+    // If no available_resources provided, use active_resources
+    if (!available_resources) {
         available_resources = active_resources;
     }
 
@@ -73,24 +60,12 @@ const ResourcesList = ({ resources, available_resources }) => {
                         Available System Resources
                     </h4>
                     <div className="resources_list">
-                        {available_resources.map((resource) => (
+                        {active_resources.filter(resource => !resource.maintenance && resource.status !== "Offline").map((resource) => (
                             <ActiveResourceItem
-                                isRestricted="false"
+                                isRestricted={restricted_resources.some(r => r.name === resource.name)}
                                 key={resource.name}
                                 name={resource.name}
-                                status={resource.maintenance}
-                                note={resource.note}
-                                qubits={resource.qubits}
-                                quantum_technology={resource.quantum_technology}
-                                connectivity={resource.connectivity}
-                            />
-                        ))}
-                        {restricted_resources.map((resource) => (
-                            <ActiveResourceItem
-                                isRestricted="true"
-                                key={resource.name}
-                                name={resource.name}
-                                status={resource.maintenance}
+                                status={resource.status}
                                 note={resource.note}
                                 qubits={resource.qubits}
                                 quantum_technology={resource.quantum_technology}

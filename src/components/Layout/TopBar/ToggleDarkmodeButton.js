@@ -21,7 +21,7 @@ const ToggleDarkmodeButton = ({ id, onToggle, className, isPressed }) => {
             data-toggle={isOn}
             title={`${isOn ? "Disable Darkmode" : "Enable Darkmode"}`}
             onClick={toggleSwitchHandler}
-            role="button"
+
         >
             <motion.div className="handle" layout transition={spring}>
                 <span className="handle_icon" />

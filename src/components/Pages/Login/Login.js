@@ -3,7 +3,6 @@ import React from "react";
 import {  Navigate } from "react-router-dom";
 import LoginCard from "../../UI/Card/LoginCard";
 import LoginForm from "./LoginForm";
-import Contact from "./Contact";
 import { getAuthToken } from "../../utils/auth";
 import LoginFormHeader from "../../Pages/Login/LoginFormHeader";
 import Footer from "../../Layout/Footer/Footer";

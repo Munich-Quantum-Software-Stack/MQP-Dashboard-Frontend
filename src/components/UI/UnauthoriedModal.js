@@ -20,7 +20,7 @@ const UnauthoriedModal = () => {
         }, 1000);
 
         return () => clearInterval(interval);
-    }, [countNumber]);
+    }, [countNumber, dispatch, submit]);
 
     const confirmHandler = () => {
         dispatch(authActions.logout());

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AnimatePresence, useAnimate } from "framer-motion";
 import { Outlet, useLoaderData } from "react-router-dom";
@@ -23,9 +23,9 @@ const RootLayout = () => {
     
     const [scope, animate] = useAnimate();
 
-    const triggerTokenExpired = () => {
+    const triggerTokenExpired = useCallback(() => {
         dispatch(authActions.set_expired());
-    }
+    }, [dispatch]);
     useEffect(() => {
         // check if token is valid
         if (!token) {
@@ -35,7 +35,7 @@ const RootLayout = () => {
             triggerTokenExpired();
             return;
         }
-    }, [token]);
+    }, [token, triggerTokenExpired]);
 
     
 

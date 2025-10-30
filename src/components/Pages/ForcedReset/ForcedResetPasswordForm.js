@@ -1,10 +1,8 @@
-import React, { useState, useContext } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { UNSAFE_useRouteId, json, useNavigate, useRouteLoaderData } from "react-router-dom";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { json, useNavigate, useRouteLoaderData } from "react-router-dom";
 import Button from "../../UI/Button/Button";
 import AlertCard from "../../UI/MessageBox/AlertCard";
-
-import { getAuthToken } from "../../utils/auth";
 import { authActions } from "../../../store/auth-slice";
 
 const ForcedResetPasswordForm = (props) => {

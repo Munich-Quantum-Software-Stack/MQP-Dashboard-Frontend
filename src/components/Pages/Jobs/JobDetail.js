@@ -26,20 +26,34 @@ const JobDetail = () => {
     const darkmode_class = darkmode ? "dark_bg" : "white_bg";
     
     const exportJobResultAsJSON = () => {
-        // Format the data as a proper JSON objec
-        const formattedData = {
-            "ID": job.id,
-            "STATUS": job.status,
-            "Note": job.note || job.status,
-            "Shots count": job.shots || 0,
-            "Circuit format": job.circuit_format || "unknown",
-            "Executed Resource": job.executed_resource || job.target_specification || "",
-            "Submitted Date": formatTimestampGMT(job.timestamp_submitted),
-            "Scheduled Date": formatTimestampGMT(job.timestamp_scheduled),
-            "Completed Date": formatTimestampGMT(job.timestamp_completed),
-            "Cancelled Date": formatTimestampGMT(job.timestamp_cancelled),
-            "Results": job.results || {} 
-        };
+        // Format the data as a proper JSON object with tab-separated values
+        const lines = [];
+        lines.push(`ID\t${job.id}`);
+        lines.push(`STATUS\t"${job.status}"`);
+        lines.push(`Note\t"${job.note || job.status}"`);
+        lines.push(`Shots count\t${job.shots || 0}`);
+        lines.push(`Circuit format\t"${job.circuit_format || "unknown"}"`);
+        lines.push(`Executed Resource\t"${job.executed_resource || job.target_specification || ""}"`);
+        lines.push(`Submitted Date\t"${formatTimestampGMT(job.timestamp_submitted)}"`);
+        lines.push(`Scheduled Date\t"${formatTimestampGMT(job.timestamp_scheduled)}"`);
+        lines.push(`Completed Date\t"${formatTimestampGMT(job.timestamp_completed)}"`);
+        lines.push(`Cancelled Date\t"${formatTimestampGMT(job.timestamp_cancelled)}"`);
+        
+        // Handle the result object
+        if (job.result) {
+            const resultObj = typeof job.result === 'string' ? JSON.parse(job.result) : job.result;
+            lines.push(`Result\t${JSON.stringify(resultObj)}`);
+        } else {
+            lines.push(`Result\t{}`);
+        }
+
+        // Create and download the file
+        const downloadLink = document.createElement("a");
+        const fileContent = lines.join('\n');
+        const fileBlob = new Blob([fileContent], { type: "application/json" });
+        downloadLink.href = URL.createObjectURL(fileBlob);
+        downloadLink.download = "result-job-" + job.id + ".json";
+        downloadLink.click();
         
         // Conbert to a proper JSON string with formatting for readability
         const jsonString = JSON.stringify(formattedData, null, 2);
@@ -51,55 +65,33 @@ const JobDetail = () => {
         link.click();
     }
     
+    // eslint-disable-next-line no-unused-vars
     const exportJobResultAsCSV = () => {
-        // Create CSV rows for different data structures
         const csvContent = [];
         
-        /**
-         * Adds a section header to the CSV content
-         * @param {string} title - The title for the section
-         */
-        const addSectionHeader = (title) => {
-            csvContent.push(`"${title}"`);
-            csvContent.push(''); // Empty row for spacing
-        };
-
-        /**
-         * Processes an object and adds its key-value pairs to CSV content
-         * @param {Object} obj - The object to process
-         */
-        const addObjectRows = (obj) => {
-            Object.entries(obj).forEach(([key, value]) => {
-                if (key === 'No_Modify') return;
-                
-                let formattedValue = value;
-                if (typeof value === 'object' && value !== null) {
-                    formattedValue = JSON.stringify(value);
-                }
-                csvContent.push(`"${key}","${formattedValue}"`);
-            });
-            csvContent.push(''); 
-        };
+        // Add main job details
+        csvContent.push(`ID\t${job.id}`);
+        csvContent.push(`STATUS\t"${job.status}"`);
+        csvContent.push(`Note\t"${job.note || job.status}"`);
+        csvContent.push(`Shots count\t${job.shots || 0}`);
+        csvContent.push(`Circuit format\t"${job.circuit_format || "unknown"}"`);
+        csvContent.push(`Executed Resource\t"${job.executed_resource || job.target_specification || ""}"`);
+        csvContent.push(`Submitted Date\t"${formatTimestampGMT(job.timestamp_submitted)}"`);
+        csvContent.push(`Scheduled Date\t"${formatTimestampGMT(job.timestamp_scheduled)}"`);
+        csvContent.push(`Completed Date\t"${formatTimestampGMT(job.timestamp_completed)}"`);
+        csvContent.push(`Cancelled Date\t"${formatTimestampGMT(job.timestamp_cancelled)}"`);
         
-        // Add job details section
-        addSectionHeader("Job Details");
-        addObjectRows({
-            "ID": job.id,
-            "STATUS": job.status,
-            "Note": job.note || job.status,
-            "Shots count": job.shots || 0,
-            "Circuit format": job.circuit_format || "unknown",
-            "Executed Resource": job.executed_resource || job.target_specification || "",
-            "Submitted Date": formatTimestampGMT(job.timestamp_submitted),
-            "Scheduled Date": formatTimestampGMT(job.timestamp_scheduled),
-            "Completed Date": formatTimestampGMT(job.timestamp_completed),
-            "Cancelled Date": formatTimestampGMT(job.timestamp_cancelled)
-        });
-        
-        
-        if (job.results) {
-            addSectionHeader("Results");
-            addObjectRows(job.results);
+        // Add results section
+        if (job.result) {
+            csvContent.push('Result');
+            // Parse the result if it's a string
+            const resultObj = typeof job.result === 'string' ? JSON.parse(job.result) : job.result;
+            // Sort and format results
+            Object.entries(resultObj)
+                .sort(([a], [b]) => a.localeCompare(b))
+                .forEach(([state, count]) => {
+                    csvContent.push(`${state}\t${count}`);
+                });
         }
         
         
@@ -109,7 +101,8 @@ const JobDetail = () => {
         link.href = URL.createObjectURL(file);
         link.download = "result-job-" + job.id + ".csv";
         link.click();
-
+    };
+    
     const tableRows = [
         { label: "ID:", value: job.id },
         { label: "Status:", value: job.status },
@@ -227,7 +220,6 @@ const JobDetail = () => {
         </ContentCard>
     );
 };
-}
 
 
 export default JobDetail;
