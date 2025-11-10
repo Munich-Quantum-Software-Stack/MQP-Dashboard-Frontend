@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSubmit } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import ExpirationModal from "./Modal/ExpirationModal";
-import { authActions } from "../../store/auth-slice";
+import ExpirationModal from "src/components/UI/Modal/ExpirationModal";
+import { authActions } from "src/store/auth-slice";
 
 
 const UnauthoriedModal = () => {

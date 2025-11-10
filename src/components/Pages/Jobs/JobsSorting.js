@@ -8,17 +8,7 @@ const STATUS_OPTIONS = [
     { value: "SUBMITTED", label: "Submitted" }
 ];
 
-const SORT_KEY_MAPPING = {
-    "ID": "ID",
-    "STATUS": "status",
-    "DATE": "timestamp_submitted"
-};
-
 const JobsSorting = ({ sortKey = "ID", sortOrder = "DESC", statusFilter = "ALL", onSorting }) => {
-    // eslint-disable-next-line no-unused-vars
-    const getBackendSortKey = (key) => {
-        return SORT_KEY_MAPPING[key] || key;
-    };
 
     const handleKeyChange = (e) => {
         const newKey = (e.target.value || "ID").toUpperCase();

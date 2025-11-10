@@ -1,12 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import BlankCard from "../../UI/Card/BlankCard";
-// import ContentCard from "../../UI/Card/ContentCard";
-// import BudgetsContent from "./BudgetsContent";
-// import { fetchBudgets } from "../../utils/budgets-http";
+import BlankCard from "src/components/UI/Card/BlankCard";
+// import ContentCard from "src/components/UI/Card/ContentCard";
+// import BudgetsContent from "src/components/Pages/Budgets/BudgetsContent";
+// import { fetchBudgets } from "src/components/utils/budgets-http";
 // import { useQuery } from "@tanstack/react-query";
-// import LoadingIndicator from "../../UI/LoadingIndicator";
-// import ErrorBlock from "../../UI/MessageBox/ErrorBlock";
+// import LoadingIndicator from "src/components/UI/LoadingIndicator";
+// import ErrorBlock from "src/components/UI/MessageBox/ErrorBlock";
 import './Budgets.scss';
 
 function Budgets() {

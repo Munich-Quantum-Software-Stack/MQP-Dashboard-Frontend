@@ -1,9 +1,8 @@
 import React from "react";
-//import ForgotPasswordForm from "./ForgotPasswordForm";
 import { Link } from "react-router-dom";
-import LoginCard from "../../UI/Card/LoginCard";
-import LoginFormHeader from "../../Pages/Login/LoginFormHeader";
-import Footer from "../../Layout/Footer/Footer";
+import LoginCard from "src/components/UI/Card/LoginCard";
+import LoginFormHeader from "src/components/Pages/Login/LoginFormHeader";
+import Footer from "src/components/Layout/Footer/Footer";
 
 function ForgotPassword() {
     
@@ -13,7 +12,7 @@ function ForgotPassword() {
                 <LoginFormHeader />
                 <div className="mb-4 login_content">
                     <div className=" mb-5">
-                        {/*<ForgotPasswordForm />*/}
+
                         <p>If your account is:</p>
                         <ul>
                             <li>

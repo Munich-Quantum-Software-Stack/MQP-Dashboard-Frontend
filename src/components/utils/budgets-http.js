@@ -1,4 +1,4 @@
-import { getAuthToken } from "./auth";
+import { getAuthToken } from "src/components/utils/auth";
 const access_token = getAuthToken();
 // const transformResourced = tempResources.map((resource) => ({
 //     id: resource.id,

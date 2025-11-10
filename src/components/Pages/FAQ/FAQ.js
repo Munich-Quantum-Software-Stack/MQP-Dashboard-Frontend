@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import ContentCard from "../../UI/Card/ContentCard";
-import { getAuthToken } from "../../utils/auth";
+import ContentCard from "src/components/UI/Card/ContentCard";
+import { getAuthToken } from "src/components/utils/auth";
 import "./FAQ.scss";
 
 const FAQ_DATA = {

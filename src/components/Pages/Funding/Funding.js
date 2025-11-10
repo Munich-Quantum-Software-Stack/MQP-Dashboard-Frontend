@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import BlankCard from "../../UI/Card/BlankCard";
+import BlankCard from "src/components/UI/Card/BlankCard";
 import "./Funding.scss";
 
 const Funding = () => {

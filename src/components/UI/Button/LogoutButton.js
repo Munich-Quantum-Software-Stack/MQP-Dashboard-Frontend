@@ -1,7 +1,7 @@
 import React from "react";
 import { useSubmit, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { authActions } from "../../../store/auth-slice";
+import { authActions } from "src/store/auth-slice";
 
 
 const LogoutButton = () => {

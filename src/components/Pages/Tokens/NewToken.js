@@ -1,21 +1,20 @@
 import React from "react";
-//import { defer, useLoaderData, Await } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
-import ContentCard from "../../UI/Card/ContentCard";
-import CreateTokenForm from "./CreateTokenForm";
-import { fetchUserLimits } from "../../utils/tokens-http";
-import ErrorBlock from "../../UI/MessageBox/ErrorBlock";
-import LoadingIndicator from "../../UI/LoadingIndicator";
-import { getAuthToken } from "../../utils/auth";
-//import { queryClient } from "../../utils/query";
+import ContentCard from "src/components/UI/Card/ContentCard";
+import CreateTokenForm from "src/components/Pages/Tokens/CreateTokenForm";
+import { fetchUserLimits } from "src/components/utils/tokens-http";
+import ErrorBlock from "src/components/UI/MessageBox/ErrorBlock";
+import LoadingIndicator from "src/components/UI/LoadingIndicator";
+import { getAuthToken } from "src/components/utils/auth";
+
 
 const NewToken = () => {
     const darkmode = useSelector((state) => state.accessibilities.darkmode);
     const fs = useSelector((state) => state.accessibilities.font_size);
     const page_header_fs = +fs * 1.5;
     
-    //const { userLimits } = useLoaderData();
+
     const access_token = getAuthToken();
     const { data, isPending, isError, error } = useQuery({
         queryKey: ["userLimits"],
@@ -58,16 +57,7 @@ const NewToken = () => {
                 </h4>
                 {newTokenContent}
 
-                {/* <Suspense fallback={<LoadingIndicator />}>
-                    <Await resolve={userLimits}>
-                        {(loadedUserLimits) => (
-                            <CreateTokenForm
-                                key="create_form"
-                                userLimits={loadedUserLimits}
-                            />
-                        )}
-                    </Await>
-                </Suspense> */}
+
             </div>
         </ContentCard>
     );
@@ -75,18 +65,4 @@ const NewToken = () => {
 
 export default NewToken;
 
-/*
-async function loadUserTokenLimits() {
-    const access_token = getAuthToken();
-    return queryClient.fetchQuery({
-        queryKey: ["userLimits"],
-        queryFn: ({ signal }) => fetchUserLimits({ signal, access_token }),
-    });
-}
 
-export async function loader() {
-    return defer({
-        userLimits: await loadUserTokenLimits(),
-    });
-}
-*/

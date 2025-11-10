@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLoaderData, useParams } from "react-router-dom";
-import { getAuthToken } from "../../utils/auth";
-import ContentCard from "../../UI/Card/ContentCard";
-import { queryClient } from "../../utils/query";
-import { fetchJob } from "../../utils/jobs-http";
+import { getAuthToken } from "src/components/utils/auth";
+import ContentCard from "src/components/UI/Card/ContentCard";
+import { queryClient } from "src/components/utils/query";
+import { fetchJob } from "src/components/utils/jobs-http";
 
 const JobCircuit = ({ isExecutedCircuit = false }) => {
     const job = useLoaderData();
@@ -70,7 +70,6 @@ const JobCircuit = ({ isExecutedCircuit = false }) => {
 
 export default JobCircuit;
 
-// Loader function to fetch job data
 export async function loader({ params }) {
     const access_token = getAuthToken();
     return queryClient.fetchQuery({

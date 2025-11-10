@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getTokenDuration, getSeconds, getMinutes } from "../../utils/auth";
-import { authActions } from "../../../store/auth-slice";
+import { getTokenDuration, getSeconds, getMinutes } from "src/components/utils/auth";
+import { authActions } from "src/store/auth-slice";
 
 
 const Timer = () => {
@@ -11,8 +11,7 @@ const Timer = () => {
     const tokenDuration = getTokenDuration();
     const [minutes, setMinutes] = useState(getMinutes(tokenDuration));
     const [seconds, setSeconds] = useState(getSeconds(tokenDuration));
-    //const [isExpired, setIsExpired] = useState(false);   
-    //console.log("duration: " + tokenDuration);    
+
     useEffect(() => {
         const getTime = () => {
             const tokenDuration = getTokenDuration();
@@ -33,9 +32,7 @@ const Timer = () => {
         }
     }, [tokenDuration, dispatch]);
 
-    // const extendSessionHandler = () => {
-    //     dispatch(authActions.setExpiration());
-    // };
+
 
     return (
 
@@ -45,18 +42,7 @@ const Timer = () => {
                 {minutes < 10 ? "0" + minutes : minutes} :{" "}
                 {seconds < 10 ? "0" + seconds : seconds}
             </span>
-            {/**
-             * TODO: add refresh Session feature
-             *  *
-             
-            <button
-                className="extend_session_btn"
-                title="Refresh Session"
-                onClick={extendSessionHandler}
-            >
-                <span className="refresh_icon"></span>
-            </button>
-            */}
+
         </div>
     );
 };

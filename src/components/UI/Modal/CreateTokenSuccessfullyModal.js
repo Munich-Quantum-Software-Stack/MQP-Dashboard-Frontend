@@ -1,9 +1,9 @@
 import React, { useState} from "react";
 import { motion } from "framer-motion/dist/framer-motion";
 import { createPortal } from "react-dom";
-import ContentCard from "../Card/ContentCard";
-import Button from "../Button/Button";
-import NotificationCard from "../MessageBox/NotificationCard";
+import ContentCard from "src/components/UI/Card/ContentCard";
+import Button from "src/components/UI/Button/Button";
+import NotificationCard from "src/components/UI/MessageBox/NotificationCard";
 import classes from "./Modal.module.css";
 
 const SuccessfullyTokenModal = ({ newToken, onClose }) => {

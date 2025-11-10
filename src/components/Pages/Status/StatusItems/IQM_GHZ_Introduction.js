@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import PaneCard from "../../../UI/Card/PaneCard";
-import VideoLink from "../../../UI/Document/VideoLink";
+import PaneCard from "src/components/UI/Card/PaneCard";
+import VideoLink from "src/components/UI/Document/VideoLink";
 const IQMGHZIntroduction = () => {
     const fs = useSelector((state) => state.accessibilities.font_size);
     const status_item_name_fs = +fs * 1.5;

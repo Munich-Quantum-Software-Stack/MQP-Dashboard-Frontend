@@ -1,19 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import MaintenanceResourceItem from "./MaintenanceResourceItem";
-import ActiveResourceItem from "./ActiveResourceItem";
-import BlankCard from "../../UI/Card/BlankCard";
+import MaintenanceResourceItem from "src/components/Pages/Resources/MaintenanceResourceItem";
+import ActiveResourceItem from "src/components/Pages/Resources/ActiveResourceItem";
+import BlankCard from "src/components/UI/Card/BlankCard";
 
 const ResourcesList = ({ resources, available_resources }) => {
     const darkmode = useSelector((state) => state.accessibilities.darkmode);
     const fs = useSelector((state) => state.accessibilities.font_size);
     const page_header_fs = +fs * 1.5;
 
-    // console.log("resources:");
-    // console.log(resources);
-    // console.log("available_resources:");
-    // console.log(available_resources);
-    
     if (resources.length === 0) {
         return (
             <BlankCard className={`${darkmode ? "dark_bg" : "white_bg"} h-100`}>
@@ -22,7 +17,6 @@ const ResourcesList = ({ resources, available_resources }) => {
         );
     }
 
-    // filtering Resources
     let active_resources = [];
     let maintenance_resources = [];
     let restricted_resources = [];    
@@ -33,17 +27,13 @@ const ResourcesList = ({ resources, available_resources }) => {
         if (resource.maintenance === true || resource.status === "Offline") {
             maintenance_resources.push(resource);
         } else {
-            // If not under maintenance and not offline, it's an active resource
             active_resources.push(resource);
-            
-            // Check if it's restricted
             if (available_resources && !available_resources.some(r => r.name === resource.name)) {
                 restricted_resources.push(resource);
             }
         }
     }
 
-    // If no available_resources provided, use active_resources
     if (!available_resources) {
         available_resources = active_resources;
     }

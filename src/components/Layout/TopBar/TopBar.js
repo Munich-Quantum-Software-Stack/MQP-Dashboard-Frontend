@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import NavbarHeader from "../MainNavigation/NavbarHeader";
-import Timer from "./Timer";
-import ResponsiveMainNavigation from "../MainNavigation/ResponsiveMainNavigation";
-import useOutsideClick from "../../../hooks/use-outside-click";
-import AccessibilitiesNavbar from "./AccessibilitiesNavbar";
+import NavbarHeader from "src/components/Layout/MainNavigation/NavbarHeader";
+import Timer from "src/components/Layout/TopBar/Timer";
+import ResponsiveMainNavigation from "src/components/Layout/MainNavigation/ResponsiveMainNavigation";
+import useOutsideClick from "src/hooks/use-outside-click";
+import AccessibilitiesNavbar from "src/components/Layout/TopBar/AccessibilitiesNavbar";
 import { AnimatePresence } from "framer-motion";
-import { getDarkmode } from "../../utils/theme";
-import { accessibilitiesAction } from "../../../store/accessibilities-slice";
-import { getFontsize, getDefaultFontsize } from "../../utils/theme";
-import ToggleButton from "../../UI/Button/ToggleButton";
+import { getDarkmode, getFontsize, getDefaultFontsize } from "src/components/utils/theme";
+import { accessibilitiesAction } from "src/store/accessibilities-slice";
+import ToggleButton from "src/components/UI/Button/ToggleButton";
 
 function TopBar() {
     const dispatch = useDispatch();
@@ -19,7 +18,6 @@ function TopBar() {
     const [darkmode, setDarkmode] = useState(getDarkmode());
     const [fontsize, setFontsize] = useState(defaultFS);
 
-    // Handle toggle responsive navbar
     const toggleMenuHandler = () => {
         setToggleMenu((prevState) => !prevState);
     };
@@ -28,14 +26,11 @@ function TopBar() {
     };
     const navbarRef = useOutsideClick(clickOutsideOfNavbarHandler);
 
-    // Handle darkmode
     const darkmodeHandler = () => {
         setDarkmode((prevDarkmode) => !prevDarkmode);
     };
-    // save current state
     dispatch(accessibilitiesAction.toggleDarkmode(darkmode));
 
-    // Handle Font size adjustment
     const decreaseFontSizeHandler = () => {
         const currentFontSize = getFontsize();
         const newFontSize = +currentFontSize - 2;

@@ -1,10 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import BlankCard from "../../UI/Card/BlankCard";
-import ContentCard from "../../UI/Card/ContentCard";
-import ForcedResetPasswordForm from "./ForcedResetPasswordForm";
-import SuccessReset from "./SuccessReset";
-import { getForcedResetStatus } from "../../utils/auth";
+import BlankCard from "src/components/UI/Card/BlankCard";
+import ContentCard from "src/components/UI/Card/ContentCard";
+import ForcedResetPasswordForm from "src/components/Pages/ForcedReset/ForcedResetPasswordForm";
+import SuccessReset from "src/components/Pages/ForcedReset/SuccessReset";
+import { getForcedResetStatus } from "src/components/utils/auth";
 
 function ForcedResetPassword() {
   const darkmode = useSelector((state) => state.accessibilities.darkmode);

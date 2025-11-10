@@ -5,20 +5,20 @@ import { useSelector } from "react-redux";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
 import de from "date-fns/locale/de";
 import "react-datepicker/dist/react-datepicker.module.css";
-import Button from "../../UI/Button/Button";
-import { createNewToken } from "../../utils/tokens-http";
-import CustomTooltip from "../../UI/Tooltip/Tooltip";
-import { queryClient } from "../../utils/query";
+import Button from "src/components/UI/Button/Button";
+import { createNewToken } from "src/components/utils/tokens-http";
+import CustomTooltip from "src/components/UI/Tooltip/Tooltip";
+import { queryClient } from "src/components/utils/query";
 import {
     isNotEmpty,
     maxValue
-} from "../../utils/validationUserInput";
-import { useInput } from "../../../hooks/use-input";
-import { updateExpiration } from "../../utils/tokens";
-import SuccessfullyToken from "./SuccessfullyToken";
-import AlertCard from "../../UI/MessageBox/AlertCard";
-import BlankCard from "../../UI/Card/BlankCard";
-import { getAuthToken } from "../../utils/auth";
+} from "src/components/utils/validationUserInput";
+import { useInput } from "src/hooks/use-input";
+import { updateExpiration } from "src/components/utils/tokens";
+import SuccessfullyToken from "src/components/Pages/Tokens/SuccessfullyToken";
+import AlertCard from "src/components/UI/MessageBox/AlertCard";
+import BlankCard from "src/components/UI/Card/BlankCard";
+import { getAuthToken } from "src/components/utils/auth";
 
 registerLocale("de", de);
 setDefaultLocale("de");
@@ -30,7 +30,7 @@ function CreateTokenForm({ userLimits }) {
     const small_fs = +fs * 0.8;
 
     const access_token = getAuthToken();
-    //const navigate = useNavigate();
+
     const [expiration, setExpiration] = useState("");
 
     const {
@@ -56,14 +56,14 @@ function CreateTokenForm({ userLimits }) {
         handleInputBlur: handleValidityBlur,
     } = useInput(1, (value) => maxValue(value, userLimits.max_lifetime));
 
-    // submit new token by query mutation
+
     const { mutate, data, isPending, isError, error } = useMutation({
         mutationFn: createNewToken,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["tokens"] });
         },
     });
-    // update expiration corresponding to validity
+
     useEffect(() => {
         const creation = new Date();
         const customExpiration = updateExpiration(creation, validity);
@@ -79,9 +79,7 @@ function CreateTokenForm({ userLimits }) {
             max_nb_jobs: maxJobs,
             max_budget: maxBudgets,
         };
-        // submit form handler to Backend API
         mutate({ tokenData, access_token });
-        // reset form
         event.target.reset();
     };
 

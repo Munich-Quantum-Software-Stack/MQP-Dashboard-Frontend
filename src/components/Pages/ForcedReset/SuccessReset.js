@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "../../UI/Button/Button";
+import Button from "src/components/UI/Button/Button";
 
 const SuccessReset = () => {
   // successfully request

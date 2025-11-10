@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getDarkmode, getFontsize } from "../components/utils/theme";
+import { getDarkmode, getFontsize } from "src/components/utils/theme";
 
 const initialAccessibilitiesState = {
     darkmode: getDarkmode(),

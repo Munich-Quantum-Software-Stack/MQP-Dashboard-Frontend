@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import Button from "../../UI/Button/Button";
-import ContentCard from "../../UI/Card/ContentCard";
-import NotificationCard from "../../UI/MessageBox/NotificationCard";
+import Button from "src/components/UI/Button/Button";
+import ContentCard from "src/components/UI/Card/ContentCard";
+import NotificationCard from "src/components/UI/MessageBox/NotificationCard";
 import { useNavigate } from "react-router-dom";
 const SuccessfullyToken = ({newToken}) => {
     const fs = useSelector((state) => state.accessibilities.font_size);

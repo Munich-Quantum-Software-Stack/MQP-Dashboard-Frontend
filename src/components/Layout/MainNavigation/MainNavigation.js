@@ -1,8 +1,8 @@
 import React from "react";
 //import { useAnimate } from "framer-motion";
 import { useRouteLoaderData } from "react-router-dom";
-import Navigation from "./Navigation";
-import UserNavigation from "./UserNav";
+import Navigation from "src/components/Layout/MainNavigation/Navigation";
+import UserNavigation from "src/components/Layout/MainNavigation/UserNav";
 
 
 

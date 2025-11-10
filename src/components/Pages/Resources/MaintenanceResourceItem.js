@@ -1,12 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
 //import MaintenanceIcon from "../../../assets/icons/gear_icon.svg";
-import PaneCard from "../../UI/Card/PaneCard";
-import IQM_logo from "../../../assets/images/IQM_logo.png";
-import Eviden_QLM_logo from "../../../assets/images/eviden-logo.png";
-import WMI_logo from "../../../assets/images/wmi-logo.svg";
-import AQT_logo from "../../../assets/images/Logo-AQT.png";
-import MUNICQ_Atoms_logo from "../../../assets/images/MunicQC_Atoms.png";
+import PaneCard from "src/components/UI/Card/PaneCard";
+import IQM_logo from "src/assets/images/IQM_logo.png";
+import Eviden_QLM_logo from "src/assets/images/eviden-logo.png";
+import WMI_logo from "src/assets/images/wmi-logo.svg";
+import AQT_logo from "src/assets/images/Logo-AQT.png";
+import MUNICQ_Atoms_logo from "src/assets/images/MunicQC_Atoms.png";
 
 const MaintenanceResourceItem = (props) => {
     const fs = useSelector((state) => state.accessibilities.font_size);

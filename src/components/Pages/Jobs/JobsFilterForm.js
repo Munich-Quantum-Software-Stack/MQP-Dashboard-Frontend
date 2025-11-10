@@ -21,7 +21,7 @@ const JobsFilterForm = (props) => {
             selected={filteredItem}
           >
             <option value="id">ID</option>
-            {/* <option value="status">Status</option> */}
+
             <option value="date">Date</option>
           </select>
     

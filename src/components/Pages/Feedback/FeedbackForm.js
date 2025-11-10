@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { isNotEmpty } from "../../utils/validationUserInput";
-import { useInput } from "../../../hooks/use-input";
-import Button from "../../UI/Button/Button";
-import AlertCard from "../../UI/MessageBox/AlertCard";
+import { isNotEmpty } from "src/components/utils/validationUserInput";
+import { useInput } from "src/hooks/use-input";
+import Button from "src/components/UI/Button/Button";
+import AlertCard from "src/components/UI/MessageBox/AlertCard";
 import { Form, Spinner } from "react-bootstrap";
-import SuccessMessage from "./SuccessMessage";
-import { getAuthToken } from "../../utils/auth";
-import mqp_categories from "../../../data/mqp-categories.json";
-import default_ratings from "../../../data/ratings.json";
+import SuccessMessage from "src/components/Pages/Feedback/SuccessMessage";
+import { getAuthToken } from "src/components/utils/auth";
+import mqp_categories from "src/data/mqp-categories.json";
+import default_ratings from "src/data/ratings.json";
 
 const FeedbackForm = () => {
     const fs = useSelector((state) => state.accessibilities.font_size);

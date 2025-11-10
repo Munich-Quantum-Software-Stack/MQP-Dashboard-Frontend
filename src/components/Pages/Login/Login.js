@@ -1,11 +1,10 @@
-// Importing modules
 import React from "react";
 import {  Navigate } from "react-router-dom";
-import LoginCard from "../../UI/Card/LoginCard";
-import LoginForm from "./LoginForm";
-import { getAuthToken } from "../../utils/auth";
-import LoginFormHeader from "../../Pages/Login/LoginFormHeader";
-import Footer from "../../Layout/Footer/Footer";
+import LoginCard from "src/components/UI/Card/LoginCard";
+import LoginForm from "src/components/Pages/Login/LoginForm";
+import { getAuthToken } from "src/components/utils/auth";
+import LoginFormHeader from "src/components/Pages/Login/LoginFormHeader";
+import Footer from "src/components/Layout/Footer/Footer";
 
 import "./Login.scss";
 
@@ -27,7 +26,7 @@ function Login() {
                     {!token && (
                         <div className="mb-5">
                             <LoginForm />
-                            {/* <Contact>Don't have an account?&nbsp;</Contact> */}
+
                         </div>
                     )}
                 </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import ContentCard from "../../UI/Card/ContentCard";
-import FeedbackForm from "./FeedbackForm";
+import ContentCard from "src/components/UI/Card/ContentCard";
+import FeedbackForm from "src/components/Pages/Feedback/FeedbackForm";
 import './Feedback.scss';
 
 const Feedback = () => {

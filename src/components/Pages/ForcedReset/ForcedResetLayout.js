@@ -1,10 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-import TopBar from "../../Layout/TopBar/TopBar";
-import MainNavigation from "../../Layout/MainNavigation/MainNavigation";
-import Footer from "../../Layout/Footer/Footer";
-import ForcedResetPassword from "./ForcedResetPassword";
+import TopBar from "src/components/Layout/TopBar/TopBar";
+import MainNavigation from "src/components/Layout/MainNavigation/MainNavigation";
+import Footer from "src/components/Layout/Footer/Footer";
+import ForcedResetPassword from "src/components/Pages/ForcedReset/ForcedResetPassword";
 
 const ForcedResetLayout = () => {
   const darkmode = useSelector((state) => state.accessibilities.darkmode);

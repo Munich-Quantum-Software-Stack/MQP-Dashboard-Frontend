@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { json, useNavigate, useRouteLoaderData } from "react-router-dom";
-import Button from "../../UI/Button/Button";
-import AlertCard from "../../UI/MessageBox/AlertCard";
-import { authActions } from "../../../store/auth-slice";
+import Button from "src/components/UI/Button/Button";
+import AlertCard from "src/components/UI/MessageBox/AlertCard";
+import { authActions } from "src/store/auth-slice";
 
 const ForcedResetPasswordForm = (props) => {
   const dispatch = useDispatch();

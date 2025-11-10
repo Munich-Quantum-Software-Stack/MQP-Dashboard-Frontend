@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import ContentCard from "../../UI/Card/ContentCard";
+import ContentCard from "src/components/UI/Card/ContentCard";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import AccountSettings from "./AccountSettings";
+import AccountSettings from "src/components/Pages/Settings/AccountSettings";
 //import AccessibilitiesSettings from "./AccessibilitiesSettings";
 
 import "./Settings.scss";

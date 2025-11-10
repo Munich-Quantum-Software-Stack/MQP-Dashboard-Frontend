@@ -55,16 +55,7 @@ const Navigation = ({ onHidden }) => {
                         </li>
                         {/* 
                         <li className="nav-item">
-                            <NavLink
-                                to="telemetry"
-                                className="nav-link "
-                                style={{ fontSize: navbar_fs }}
-                            >
-                                <span className="link_icon telemetry_icon"></span>
-                                {onHidden && (
-                                    <span className="link_text">Telemetry</span>
-                                )}
-                            </NavLink>
+                            
                         </li>
                         */}
                         <li className="nav-item">
@@ -91,20 +82,7 @@ const Navigation = ({ onHidden }) => {
                                 )}
                             </NavLink>
                         </li>
-                        {/* 
-                        <li className="nav-item">
-                            <NavLink
-                                to="information"
-                                className="nav-link "
-                                style={{ fontSize: navbar_fs }}
-                            >
-                                <span className="link_icon information_icon"></span>
-                                {onHidden && (
-                                    <span className="link_text">Information</span>
-                                )}
-                            </NavLink>
-                        </li>
-                        */}
+
                         <li className="nav-item">
                             <NavLink
                                 to="faq"

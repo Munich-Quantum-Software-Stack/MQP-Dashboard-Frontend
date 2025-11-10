@@ -16,12 +16,10 @@
     justify-content: flex-start;
     z-index: 1;
 
-    //     @include _transition(ease, 0.5, all);
     .main_navigation {
         height: 100%;
 
         .closeBtn_wrap {
-            //         display: flex;
             display: none;
             justify-content: flex-end;
 
@@ -104,21 +102,13 @@ ul.mainNav {
                         "../../../assets/icons/resource_data_icon.svg"
                     );
                 }
-                &.information_icon {
-                    @include bg_mask_image(
-                        "../../../assets/icons/information_circled_icon.svg"
-                    );
-                }
+
                 &.faq_icon {
                     @include bg_mask_image(
                         "../../../assets/icons/faq_icon.svg"
                     );
                 }
-                &.telemetry_icon {
-                    @include bg_mask_image(
-                        "../../../assets/icons/telemetry_icon.svg"
-                    );
-                }
+
             }
 
             &:hover,
@@ -194,9 +184,7 @@ ul.userNav {
     }
 }
 
-/*
- * Responsive Navbar
- */
+
 
 .menu_divider {
     border-color: white;

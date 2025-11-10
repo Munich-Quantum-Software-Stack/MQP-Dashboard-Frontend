@@ -1,11 +1,7 @@
 import React from "react";
 import { redirect, useSubmit } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { authActions } from "../../store/auth-slice";
-//import "../UI/UI.scss";
-
-
-
+import { authActions } from "src/store/auth-slice";
 const Logout = ({ onHidden }) => {
 	const submit = useSubmit();
 	const dispatch = useDispatch();  
@@ -13,7 +9,6 @@ const Logout = ({ onHidden }) => {
 	const navbar_fs = +fs * 1.1;
 	
     const logoutHandler = () => {      
-      	// submit hook
           dispatch(authActions.logout());
       	submit(null, { method: "POST", action: "/logout" });
     };
@@ -36,9 +31,7 @@ const Logout = ({ onHidden }) => {
 
 export default Logout;
 
-/*
- * Logout Action for submit hook
- */
+
 export function action() {
     localStorage.removeItem("isLoggedIn"); 
     localStorage.removeItem('token');    

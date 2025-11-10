@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { Link, json } from "react-router-dom";
 //import Message from "../../UI/MessageBox/AlertCard";
-import Button from "../../UI/Button/Button";
+import Button from "src/components/UI/Button/Button";
 
 const ForgotPasswordForm = () => {
     const [email, setEmail] = useState("");

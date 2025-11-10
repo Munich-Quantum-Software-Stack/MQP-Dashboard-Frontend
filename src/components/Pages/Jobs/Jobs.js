@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import JobsList from "./JobsList";
-import LoadingIndicator from "../../UI/LoadingIndicator";
-import ContentCard from "../../UI/Card/ContentCard";
-import JobsSorting from "./JobsSorting";
-import ErrorBlock from "../../UI/MessageBox/ErrorBlock";
-import { getAuthToken } from "../../utils/auth";
-import { queryFetchJobs } from "../../utils/jobs-http";
+import LoadingIndicator from "src/components/UI/LoadingIndicator";
+import ContentCard from "src/components/UI/Card/ContentCard";
+import JobsSorting from "src/components/Pages/Jobs/JobsSorting";
+import ErrorBlock from "src/components/UI/MessageBox/ErrorBlock";
+import { getAuthToken } from "src/components/utils/auth";
+import { queryFetchJobs } from "src/components/utils/jobs-http";
 
 import "./Jobs.scss";
 
@@ -115,7 +115,6 @@ function Jobs() {
             startPage = Math.max(0, endPage - maxVisiblePages + 1);
         }
 
-        // First page
         if (startPage > 0) {
             pageNumbers.push(
                 <button
@@ -131,7 +130,6 @@ function Jobs() {
             }
         }
 
-        // Page numbers
         for (let i = startPage; i <= endPage; i++) {
             pageNumbers.push(
                 <button
@@ -144,7 +142,6 @@ function Jobs() {
             );
         }
 
-        // Last page
         if (endPage < totalPages - 1) {
             if (endPage < totalPages - 2) {
                 pageNumbers.push(<span key="ellipsis2">...</span>);

@@ -1,8 +1,8 @@
 import React from "react";
-import LoginCard from "../../UI/Card/LoginCard";
-import RequestAccessForm from "./RequestAccessForm";
-import LoginFormHeader from "../../Pages/Login/LoginFormHeader";
-import Footer from "../../Layout/Footer/Footer";
+import LoginCard from "src/components/UI/Card/LoginCard";
+import RequestAccessForm from "src/components/Pages/RequestAccess/RequestAccessForm";
+import LoginFormHeader from "src/components/Pages/Login/LoginFormHeader";
+import Footer from "src/components/Layout/Footer/Footer";
 
 import "./RequestAccess.scss";
 

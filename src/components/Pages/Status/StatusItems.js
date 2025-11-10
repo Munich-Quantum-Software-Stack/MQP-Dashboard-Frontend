@@ -1,7 +1,7 @@
 import React from "react";
-import ComingSoon from "./StatusItems/ComingSoon";
-import SoftwareStackIntroduction from "./StatusItems/Software_Stack_Introduction";
-import IQMGHZIntroduction from "./StatusItems/IQM_GHZ_Introduction";
+import ComingSoon from "src/components/Pages/Status/StatusItems/ComingSoon";
+import SoftwareStackIntroduction from "src/components/Pages/Status/StatusItems/Software_Stack_Introduction";
+import IQMGHZIntroduction from "src/components/Pages/Status/StatusItems/IQM_GHZ_Introduction";
 
 
 const StatusItems = () => {

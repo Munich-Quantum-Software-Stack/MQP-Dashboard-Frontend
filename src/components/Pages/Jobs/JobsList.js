@@ -1,8 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import Table from "react-bootstrap/Table";
-import BlankCard from "../../UI/Card/BlankCard";
-import JobListItem from "./JobIListtem";
+import BlankCard from "src/components/UI/Card/BlankCard";
+import JobListItem from "src/components/Pages/Jobs/JobListItem";
 
 function JobsList({ jobs }) {
     const darkmode = useSelector((state) => state.accessibilities.darkmode);
