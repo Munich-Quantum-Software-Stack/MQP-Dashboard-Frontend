@@ -1,84 +1,82 @@
 // Importing modules
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import AlertCard from "src/components/UI/MessageBox/AlertCard";
-import Button from "src/components/UI/Button/Button";
-import { authActions } from "src/store/auth-slice";
-import { setExpiration } from "src/components/utils/auth";
-import { hasMinLength, isNotEmpty } from "src/components/utils/validationUserInput";
-import { useInput } from "src/hooks/use-input";
-import { fetchLogin } from "src/components/utils/authentication-http";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import AlertCard from 'src/components/UI/MessageBox/AlertCard';
+import Button from 'src/components/UI/Button/Button';
+import { authActions } from 'src/store/auth-slice';
+import { setExpiration } from 'src/components/utils/auth';
+import { hasMinLength, isNotEmpty } from 'src/components/utils/validationUserInput';
+import { useInput } from 'src/hooks/use-input';
+import { fetchLogin } from 'src/components/utils/authentication-http';
 
 function LoginForm() {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const [validationError, setValidationError] = useState(null);
-    const [isSubmitting, setIsSubmitting] = useState(false);
+  const [validationError, setValidationError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const {
-        value: identityValue,
-        handleInputChange: handleIdentityChange,
-        handleInputBlur: handleIdenttiyBlur,
-        hasError: identityHasError,
-    } = useInput("", (value) => isNotEmpty(value));
+  const {
+    value: identityValue,
+    handleInputChange: handleIdentityChange,
+    handleInputBlur: handleIdenttiyBlur,
+    hasError: identityHasError,
+  } = useInput('', (value) => isNotEmpty(value));
 
-    const {
-        value: passwordValue,
-        handleInputChange: handlePasswordChange,
-        handleInputBlur: handlePasswordBlue,
-        hasError: passwordHasError,
-    } = useInput("", (value) => hasMinLength(value, 8));
+  const {
+    value: passwordValue,
+    handleInputChange: handlePasswordChange,
+    handleInputBlur: handlePasswordBlue,
+    hasError: passwordHasError,
+  } = useInput('', (value) => hasMinLength(value, 8));
 
-    const loginHandler = async (event) => {
-        event.preventDefault();
-        setIsSubmitting(true);
+  const loginHandler = async (event) => {
+    event.preventDefault();
+    setIsSubmitting(true);
 
-        // Validation
-        const isIdentityValid = isNotEmpty(identityValue);
-        const isPasswordValid = isNotEmpty(passwordValue);
-        if (!isIdentityValid || !isPasswordValid) {
-            setIsSubmitting(false);
-            setValidationError("Identity and Password must not be empty.");
-            return;
-        }
+    // Validation
+    const isIdentityValid = isNotEmpty(identityValue);
+    const isPasswordValid = isNotEmpty(passwordValue);
+    if (!isIdentityValid || !isPasswordValid) {
+      setIsSubmitting(false);
+      setValidationError('Identity and Password must not be empty.');
+      return;
+    }
 
-        if (identityHasError || passwordHasError) {
-            setIsSubmitting(false);
-            return;
-        }
+    if (identityHasError || passwordHasError) {
+      setIsSubmitting(false);
+      return;
+    }
 
-        
+    const authData = {
+      identity: identityValue,
+      secret: passwordValue,
+    };
 
-        const authData = {
-            identity: identityValue,
-            secret: passwordValue,
-        };
+    try {
+      // send HTTP request
+      const data = await fetchLogin(authData);
 
-        try {
-            // send HTTP request
-            const data = await fetchLogin(authData);
-
-            const access_token = data.access_token;
-            dispatch(authActions.logged_in({ access_token }));
-            // forced reset password
-            const forcedResetPwd = data.force_secret_reset;
-            if (forcedResetPwd) {
-                // forced to reset password
-                dispatch(authActions.enable_reset());
-                setIsSubmitting(false);
-                return navigate("/forced_reset_password");
-            } else {
-                // set expiration
-                setExpiration();
-                // reset form data
-                event.target.reset();
-                setIsSubmitting(false);
-                // redirect to Status page
-                return navigate("/status");
-            }
-            /*
+      const access_token = data.access_token;
+      dispatch(authActions.logged_in({ access_token }));
+      // forced reset password
+      const forcedResetPwd = data.force_secret_reset;
+      if (forcedResetPwd) {
+        // forced to reset password
+        dispatch(authActions.enable_reset());
+        setIsSubmitting(false);
+        return navigate('/forced_reset_password');
+      } else {
+        // set expiration
+        setExpiration();
+        // reset form data
+        event.target.reset();
+        setIsSubmitting(false);
+        // redirect to Status page
+        return navigate('/status');
+      }
+      /*
             const response = await fetch(login_url, {
                 method: "POST",
                 headers: {
@@ -116,80 +114,64 @@ function LoginForm() {
                 }
             }
             */
-        } catch (error) {
-            //setValidationError(error.message);
-            setValidationError("Internal Server Error! Please try again later.");
-            setIsSubmitting(false);
-        }
-    };
+    } catch (error) {
+      //setValidationError(error.message);
+      setValidationError('Internal Server Error! Please try again later.');
+      setIsSubmitting(false);
+    }
+  };
 
-    return (
-        <form id="LoginForm" method="POST" onSubmit={loginHandler}>
-            {validationError && (
-                <AlertCard variant="danger">
-                    {validationError}
-                </AlertCard>
-            )}
-            {identityHasError && (
-                <AlertCard variant="danger">
-                    Identity must not be empty.
-                </AlertCard>
-            )}
-            {passwordHasError && (
-                <AlertCard variant="danger">
-                    Password must not be empty and has min length 8 characters.
-                </AlertCard>
-            )}
-            <div className="form-field my-3">
-                <label htmlFor="identity">Identity *</label>
-                <input
-                    type="text"
-                    id="identity"
-                    name="identity"
-                    value={identityValue}
-                    onBlur={handleIdenttiyBlur}
-                    onChange={handleIdentityChange}
-                    className={`${
-                        identityHasError
-                            ? "form-control invalid_input"
-                            : "form-control"
-                    }`}
-                />
-            </div>
-            <div className="form-field my-3">
-                <label htmlFor="password">Password *</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    value={passwordValue}
-                    onBlur={handlePasswordBlue}
-                    onChange={handlePasswordChange}
-                    className={`${
-                        passwordHasError
-                            ? "form-control invalid_input"
-                            : "form-control"
-                    }`}
-                />
+  return (
+    <form id="LoginForm" method="POST" onSubmit={loginHandler}>
+      {validationError && <AlertCard variant="danger">{validationError}</AlertCard>}
+      {identityHasError && <AlertCard variant="danger">Identity must not be empty.</AlertCard>}
+      {passwordHasError && (
+        <AlertCard variant="danger">
+          Password must not be empty and has min length 8 characters.
+        </AlertCard>
+      )}
+      <div className="form-field my-3">
+        <label htmlFor="identity">Identity *</label>
+        <input
+          type="text"
+          id="identity"
+          name="identity"
+          value={identityValue}
+          onBlur={handleIdenttiyBlur}
+          onChange={handleIdentityChange}
+          className={`${identityHasError ? 'form-control invalid_input' : 'form-control'}`}
+        />
+      </div>
+      <div className="form-field my-3">
+        <label htmlFor="password">Password *</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value={passwordValue}
+          onBlur={handlePasswordBlue}
+          onChange={handlePasswordChange}
+          className={`${passwordHasError ? 'form-control invalid_input' : 'form-control'}`}
+        />
 
-                <div className="mt-2 d-flex justify-content-end">
-                    <Link
-                        to="/forgot_password"
-                        className="dashboard_link text_color_grey fs-7"
-                        title="Forgot Password"
-                    >
-                        Forgot your password?
-                    </Link>
-                </div>
-            </div>
+        <div className="mt-2 d-flex justify-content-end">
+          <Link
+            to="/forgot_password"
+            className="dashboard_link text_color_grey fs-7"
+            title="Forgot Password"
+          >
+            Forgot your password?
+          </Link>
+        </div>
+      </div>
 
-            <div className="text-center mt-4">
-                <Button type="submit" className="login_btn">
-                    {isSubmitting ? "Logging..." : "Login"}
-                </Button>
-            </div>
-        </form>
-    );
+      <div className="text-center mt-4">
+        <Button type="submit" className="login_btn">
+          {isSubmitting ? 'Logging...' : 'Login'}
+        </Button>
+      </div>
+    </form>
+  );
 }
 
 export default LoginForm;

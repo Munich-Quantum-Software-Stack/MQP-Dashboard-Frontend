@@ -1,31 +1,30 @@
-
 /* components/Pages/FAQ/FAQ.scss */
 .faq_container {
-    padding: 20px;
-    border-radius: 8px;
+  padding: 20px;
+  border-radius: 8px;
 
-    // Light mode styles
-    &.white_bg {
-        background-color: #ffffff; // White background for light mode
-        color: #000000; // Black text for light mode
+  // Light mode styles
+  &.white_bg {
+    background-color: #ffffff; // White background for light mode
+    color: #000000; // Black text for light mode
+  }
+
+  // Dark mode styles
+  &.dark_bg {
+    background-color: #1e1e1e; // Dark background for dark mode
+    color: #ffffff; // White text for dark mode
+  }
+
+  a {
+    color: #007bff; // Link color for light mode
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
     }
+  }
 
-    // Dark mode styles
-    &.dark_bg {
-        background-color: #1e1e1e; // Dark background for dark mode
-        color: #ffffff; // White text for dark mode
-    }
-
-    a {
-        color: #007bff; // Link color for light mode
-        text-decoration: none;
-
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-
-    &.dark_bg a {
-        color: #4da6ff; // Link color for dark mode
-    }
+  &.dark_bg a {
+    color: #4da6ff; // Link color for dark mode
+  }
 }

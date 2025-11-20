@@ -1,16 +1,13 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 
-
-import "./Jobs.scss";
+import './Jobs.scss';
 
 function JobsRoot() {
-
   return (
-
-      <div className={` jobs_container `}>
-        <Outlet />
-      </div>
+    <div className={` jobs_container `}>
+      <Outlet />
+    </div>
   );
 }
 

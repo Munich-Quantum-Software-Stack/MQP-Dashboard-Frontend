@@ -1,17 +1,13 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 
-
-
-import "./Resources.scss";
-
+import './Resources.scss';
 
 function ResourcesRoot() {
-  
   return (
-      <div className={`resources_container flex-grow-1`}>
-        <Outlet />
-      </div>
+    <div className={`resources_container flex-grow-1`}>
+      <Outlet />
+    </div>
   );
 }
 

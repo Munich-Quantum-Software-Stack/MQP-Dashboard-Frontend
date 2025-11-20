@@ -4,51 +4,53 @@
 @import '../../../assets/scss/variables.scss';
 
 .rate_field {
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: row;
-    align-items: center;
-    
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: center;
 }
 .rating_input_wrap {
-    position: relative;
-    padding:0;
-    width: 60px; height: 40px;
-    display: flex;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    box-sizing: content-box;
-    border: none;
-    background-color: transparent;
-    // custom rate input by star icon
+  position: relative;
+  padding: 0;
+  width: 60px;
+  height: 40px;
+  display: flex;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  box-sizing: content-box;
+  border: none;
+  background-color: transparent;
+  // custom rate input by star icon
+  .star_icon_field {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    z-index: 0;
+    cursor: pointer;
+    .star_icon {
+      position: absolute;
+      @include bg_mask_image('../../../assets/icons/rate_star_icon.svg');
+      width: 30px;
+      height: 30px;
+      background-color: $dark_grey;
+    }
+  }
+
+  &:hover,
+  &:focus,
+  &.active {
     .star_icon_field {
-        position: absolute;
-        top: 5px; left: 0;
-        width: 30px; height: 30px;
-        z-index: 0;
-        cursor: pointer;
-        .star_icon {
-            position: absolute;
-            @include bg_mask_image("../../../assets/icons/rate_star_icon.svg");
-            width: 30px;
-            height: 30px;
-            background-color: $dark_grey;
-        }
-        
+      .star_icon {
+        background-color: $yellow;
+      }
     }
-
-    &:hover, &:focus, &.active {
-        .star_icon_field {
-            .star_icon {
-                background-color: $yellow;
-            }
-        }
-    }
-
+  }
 }
 
 .category_input_wrap {
-    max-width: 350px;
+  max-width: 350px;
 }

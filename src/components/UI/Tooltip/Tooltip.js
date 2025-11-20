@@ -1,21 +1,18 @@
-import React from "react";
-import Tooltip from "react-bootstrap/Tooltip";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import React from 'react';
+import Tooltip from 'react-bootstrap/Tooltip';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
 const CustomTooltip = (props) => {
-    const renderTooltip = (
-        <Tooltip id={props.id}>{props.tooltip}</Tooltip>
-    );
-    return (
-      <OverlayTrigger
-        overlay={renderTooltip}
-        placement={props.placement}
-        delay={{ show: 300, hide: 150 }}
-      >
-        {props.children}
-      </OverlayTrigger>
-    );
-
-}
+  const renderTooltip = <Tooltip id={props.id}>{props.tooltip}</Tooltip>;
+  return (
+    <OverlayTrigger
+      overlay={renderTooltip}
+      placement={props.placement}
+      delay={{ show: 300, hide: 150 }}
+    >
+      {props.children}
+    </OverlayTrigger>
+  );
+};
 
 export default CustomTooltip;

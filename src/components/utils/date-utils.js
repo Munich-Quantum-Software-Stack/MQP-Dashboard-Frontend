@@ -6,25 +6,25 @@
  */
 export const formatTimestampGMT = (timestamp, includeSeconds = true) => {
   if (!timestamp) return '';
-  
+
   const date = new Date(timestamp);
-  
+
   // Format date part as YYYY-MM-DD
   const dateStr = date.toISOString().split('T')[0];
-  
+
   // Format time part in GMT/UTC
-  const timeFormat = { 
-    hour: '2-digit', 
+  const timeFormat = {
+    hour: '2-digit',
     minute: '2-digit',
-    timeZone: 'UTC'
+    timeZone: 'UTC',
   };
-  
+
   if (includeSeconds) {
     timeFormat.second = '2-digit';
   }
-  
+
   const timeStr = date.toLocaleTimeString('en-GB', timeFormat);
-  
+
   // Return formatted date and time with GMT indicator
   return `${dateStr} ${timeStr} GMT`;
 };

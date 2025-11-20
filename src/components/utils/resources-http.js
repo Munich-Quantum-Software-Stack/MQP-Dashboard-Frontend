@@ -1,33 +1,41 @@
-
-
 export async function fetchResources({ signal, access_token }) {
-    const url = process.env.REACT_APP_API_ENDPOINT + "/resources";
-    const response = await fetch(
-        url,
-        {
-            method: "GET",
-            headers: {
-                Authorization: "Bearer " + access_token,
-                "Content-Type": "application/json",
-            },
-        },
-        { signal }
-    );
+  const url = process.env.REACT_APP_API_ENDPOINT + '/resources';
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Authorization: 'Bearer ' + access_token,
+      'Content-Type': 'application/json',
+    },
+    signal,
+  });
 
-    if (!response.ok) {
-        const error = new Error("Could not fetch resources!");
-        error.code = response.status;
-        error.message = response.error_message;
-        console.log("API responsed:");
-        console.log(response);
-        throw error;
-    }    
-    const data = await response.json();
-    
-    // console.log("API data returns:");
-    // console.log(data);
-    
-    return data;
+  if (!response.ok) {
+    let errorMessage = 'Could not fetch resources!';
+    let errorDetails;
 
-    
+    try {
+      const errorBody = await response.json();
+      if (errorBody && typeof errorBody.error_message === 'string') {
+        errorDetails = errorBody.error_message;
+      }
+    } catch (parseError) {
+      // Swallow JSON parsing issues and fallback to default error message.
+    }
+
+    const error = new Error(errorMessage);
+    error.code = response.status;
+    if (errorDetails) {
+      error.details = errorDetails;
+    }
+    console.log('API responsed:');
+    console.log(response);
+    throw error;
+  }
+
+  const data = await response.json();
+
+  // console.log("API data returns:");
+  // console.log(data);
+
+  return data;
 }

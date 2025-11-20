@@ -1,6 +1,6 @@
 // Importing modules
-import React, {useState} from "react";
-import Alert from "react-bootstrap/Alert";
+import React, { useState } from 'react';
+import Alert from 'react-bootstrap/Alert';
 // import { useSelector } from "react-redux";
 
 function AlertCard(props) {
@@ -11,15 +11,15 @@ function AlertCard(props) {
   const closeHandler = () => {
     setShow(false);
     props.onClear();
-  }
+  };
   return (
-      <div className="my-3 flashMsg_wrap">
-          {show && (
-              <Alert variant={props.variant} onClose={closeHandler}>
+    <div className="my-3 flashMsg_wrap">
+      {show && (
+        <Alert variant={props.variant} onClose={closeHandler}>
           {props.children}
-              </Alert>
-          )}
-      </div>
+        </Alert>
+      )}
+    </div>
   );
 }
 

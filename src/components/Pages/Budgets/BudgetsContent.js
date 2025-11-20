@@ -1,6 +1,6 @@
-import React from "react";
-import BlankCard from "src/components/UI/Card/BlankCard";
-import BudgetItem from "src/components/Pages/Budgets/BudgetItem";
+import React from 'react';
+import BlankCard from 'src/components/UI/Card/BlankCard';
+import BudgetItem from 'src/components/Pages/Budgets/BudgetItem';
 
 function BudgetsContent(props) {
   if (props.items.length === 0) {

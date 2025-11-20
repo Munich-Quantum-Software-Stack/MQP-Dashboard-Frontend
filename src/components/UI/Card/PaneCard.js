@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
 const PaneCard = (props) => {
-  const classes = "pane_card " + props.className;
+  const classes = 'pane_card ' + props.className;
 
   return <div className={classes}>{props.children}</div>;
 };
