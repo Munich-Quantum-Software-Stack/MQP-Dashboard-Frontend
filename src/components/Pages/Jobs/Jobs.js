@@ -38,10 +38,8 @@ function Jobs() {
 
   const { data, isPending, isError, error } = useQuery({
     queryKey: ['jobs', page, sortKey, sortOrder, statusFilter],
-    queryFn: ({ signal }) => {
-      console.log(`API call - Key: ${sortKey}, Order: ${sortOrder}, Status: ${statusFilter}`);
-
-      return queryFetchJobs({
+    queryFn: ({ signal }) =>
+      queryFetchJobs({
         signal,
         access_token,
         page,
@@ -49,8 +47,7 @@ function Jobs() {
         order: sortOrder,
         order_by: getBackendSortKey(sortKey),
         status: statusFilter,
-      });
-    },
+      }),
     keepPreviousData: true,
     retry: 1,
     staleTime: 30000,
@@ -78,16 +75,10 @@ function Jobs() {
   }
 
   if (data) {
-    console.log('Jobs data received:', data);
-    console.log(
-      'Jobs array:',
-      Array.isArray(data.jobs) ? `${data.jobs.length} jobs` : 'No jobs array',
-    );
     content = <JobsList jobs={data.jobs || []} />;
   }
   const totalJobs = data?.totalJobs || 0;
   const totalPages = Math.ceil(totalJobs / limit) || 1;
-  console.log(`Total jobs: ${totalJobs}, Total pages: ${totalPages}`);
 
   const handlePreviousPage = () => {
     if (page > 0) setPage((prev) => prev - 1);
@@ -102,8 +93,6 @@ function Jobs() {
   };
 
   const handleSorting = (key, order, status = 'ALL') => {
-    console.log(`Setting sort parameters - Key: ${key}, Order: ${order}, Status: ${status}`);
-
     setSortKey(key);
     setSortOrder(order);
 

@@ -10,7 +10,6 @@ function JobsList({ jobs }) {
   const text_fs = +fs;
 
   const jobsArray = Array.isArray(jobs) ? jobs : [];
-  console.log(`JobsList received ${jobsArray.length} jobs`);
 
   return (
     <React.Fragment>

@@ -102,7 +102,7 @@ const FeedbackForm = () => {
       }
     } catch (error) {
       setIsSubmitting(false);
-      console.log(error);
+      console.error(error);
       setHttpErr('Could not save feedback due to an internal server error.');
     }
   };

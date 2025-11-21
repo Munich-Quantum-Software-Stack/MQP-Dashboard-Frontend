@@ -5,7 +5,6 @@ import Button from '../../UI/Button/Button';
 
 const ResourceDetail = () => {
   const params = useParams();
-  //console.log(params);
   const navigate = useNavigate();
   const backToHandler = () => {
     navigate('..');

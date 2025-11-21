@@ -34,18 +34,13 @@ const ForgotPasswordForm = () => {
       }
       // successfully login
       const resData = await response.json();
-      console.log('Response Data:');
-      console.log(resData);
       if (resData.status !== 200) {
         return resData;
       }
-      const newResetPwd = resData.newResetPwd;
-      console.log('New Password:');
-      console.log(newResetPwd);
       // send response to identity addresses
     } catch (error) {
-      console.log('Catch errors:');
-      console.log(error);
+      console.error('Password reset request failed.');
+      console.error(error);
       throw json(error);
     }
   };

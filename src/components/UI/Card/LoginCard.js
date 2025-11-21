@@ -9,8 +9,6 @@ const LoginCard = (props) => {
     const content_container = document.getElementsByClassName('LoginForm_container');
     if (content_container.length > 0) {
       content_height = content_container[0].offsetHeight;
-      // console.log("content height: " + content_height);
-      // console.log("window height: " + window_height);
       setBackgroundHeight(window_height > content_height ? '100vh' : '100%');
     }
   };

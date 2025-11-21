@@ -9,12 +9,10 @@ const SuccessfullyToken = ({ newToken }) => {
   const page_subheader_fs = +fs * 1.25;
   const text_fs = +fs;
 
-  // console.log(newToken);
   const navigate = useNavigate();
   const [isCopied, setIsCopied] = useState(false);
   const copyHandler = () => {
     navigator.clipboard.writeText(newToken.token_value);
-    //console.log("text is copied");
     setIsCopied(true);
   };
   const onClickHandler = () => {

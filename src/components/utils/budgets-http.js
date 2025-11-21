@@ -25,7 +25,5 @@ export async function fetchBudgets() {
     throw error;
   }
   const { budgets } = await response.json();
-  console.log('responsed budgets:');
-  console.log(budgets);
   return budgets;
 }

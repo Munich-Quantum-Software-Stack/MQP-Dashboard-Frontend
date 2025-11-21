@@ -105,7 +105,7 @@ function RequestAccessForm() {
       }
     } catch (error) {
       setIsSubmitting(false);
-      console.log(error);
+      console.error(error);
       setHttpErr('Could not process your data due to an internal server error.');
     }
   };

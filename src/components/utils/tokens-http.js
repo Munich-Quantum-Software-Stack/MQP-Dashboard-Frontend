@@ -15,16 +15,12 @@ export async function fetchUserLimits({ signal, access_token }) {
     throw error;
   } else {
     const data = await response.json();
-    // console.log("responsed user limits:");
-    // console.log(data);
     return data;
   }
 }
 
 export async function fetchTokens({ signal, access_token }) {
   const url = process.env.REACT_APP_API_ENDPOINT + '/tokens';
-  // console.log("access token: ");
-  // console.log(access_token);
   const response = await fetch(url, {
     method: 'GET',
     headers: {
@@ -33,8 +29,6 @@ export async function fetchTokens({ signal, access_token }) {
     },
     signal,
   });
-  // console.log("response: ");
-  // console.log(response);
   if (!response.ok) {
     const error = new Error('Could not fetch tokens.');
     error.code = response.status;
@@ -42,8 +36,6 @@ export async function fetchTokens({ signal, access_token }) {
   }
 
   const { tokens } = await response.json();
-  // console.log("responsed tokens:");
-  // console.log(tokens);
   return tokens;
 }
 
@@ -57,11 +49,8 @@ export async function createNewToken({ tokenData, access_token }) {
     },
     body: JSON.stringify(tokenData),
   });
-  console.log('response:');
-  console.log(response);
-  console.log('error message: ');
-  console.log(response.error_message);
   if (!response.ok) {
+    console.error('Token creation failed:', response);
     const error = new Error();
     if (response.status === 403) {
       error.message = 'Token Name is invalid. Please try another one.';
@@ -73,8 +62,6 @@ export async function createNewToken({ tokenData, access_token }) {
   }
 
   const { token_data } = await response.json();
-  // console.log("responsed tokens:");
-  // console.log(token_data);
   return token_data;
 }
 
@@ -88,8 +75,6 @@ export async function revokeToken({ tokenName, access_token }) {
     },
     body: JSON.stringify({ token_name: tokenName }),
   });
-  // console.log("response:");
-  // console.log(response);
   if (!response.ok) {
     const resData = await response.json();
     //const error = new Error("Could not revoke token");

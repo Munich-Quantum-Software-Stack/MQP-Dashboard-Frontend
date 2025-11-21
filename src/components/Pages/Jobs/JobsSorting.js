@@ -21,7 +21,6 @@ const JobsSorting = ({ sortKey = 'ID', sortOrder = 'DESC', statusFilter = 'ALL',
 
   const handleOrderChange = (e) => {
     const newOrder = e.target.value || 'DESC';
-    console.log('Order changed to:', newOrder);
     onSorting(sortKey, newOrder, statusFilter);
   };
 

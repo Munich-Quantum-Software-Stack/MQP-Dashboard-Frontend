@@ -1,7 +1,5 @@
 // fetch jobs by sending HTTP request
 export async function fetchJobs(access_token) {
-  // console.log("token: ");
-  // console.log(access_token);
   const url = process.env.REACT_APP_API_ENDPOINT + '/jobs';
   const response = await fetch(url, {
     method: 'GET',
@@ -21,8 +19,7 @@ export async function fetchJobs(access_token) {
     }
     error.code = response.status;
     //error.message = response.error_message;
-    console.log('Response: ');
-    console.log(response);
+    console.error('Job list request failed:', response);
     throw error;
   }
   const { jobs } = await response.json();
@@ -57,7 +54,6 @@ export async function queryFetchJobs({
   }
 
   const url = `${process.env.REACT_APP_API_ENDPOINT}/jobs?${params.toString()}`;
-  console.log('Fetching jobs with URL:', url);
 
   const response = await fetch(url, {
     method: 'GET',
@@ -72,17 +68,14 @@ export async function queryFetchJobs({
     const error = new Error('Could not fetch jobs!');
     error.code = response.status;
     error.message = response.error_message;
-    console.log('Response error:', response);
+    console.error('Job query error response:', response);
     throw error;
   }
 
   const data = await response.json();
-  console.log('API response:', data);
 
   // Perform client-side numerical sorting for ID if needed
   if (order_by === 'ID' && data.jobs && data.jobs.length > 0) {
-    console.log('Performing client-side numerical ID sorting');
-
     // Sort by ID numerically
     data.jobs.sort((a, b) => {
       const idA = parseInt(a.id, 10);

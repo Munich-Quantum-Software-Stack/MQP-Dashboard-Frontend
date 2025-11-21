@@ -8,9 +8,7 @@ import { getForcedResetStatus } from 'src/components/utils/auth';
 
 function ForcedResetPassword() {
   const darkmode = useSelector((state) => state.accessibilities.darkmode);
-  //const darkmode = useSelector((state) => state.darkmode.darkmode);
   const isForcedReset = getForcedResetStatus();
-  //console.log("is resetted: " + storedIsResetted);
 
   return (
     <div className={`main_content`}>

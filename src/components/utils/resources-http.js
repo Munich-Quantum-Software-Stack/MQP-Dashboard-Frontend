@@ -27,15 +27,11 @@ export async function fetchResources({ signal, access_token }) {
     if (errorDetails) {
       error.details = errorDetails;
     }
-    console.log('API responsed:');
-    console.log(response);
+    console.error('Resource request failed:', response);
     throw error;
   }
 
   const data = await response.json();
-
-  // console.log("API data returns:");
-  // console.log(data);
 
   return data;
 }

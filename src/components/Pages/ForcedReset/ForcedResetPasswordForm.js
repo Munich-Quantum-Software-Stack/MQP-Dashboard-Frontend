@@ -33,9 +33,6 @@ const ForcedResetPasswordForm = (props) => {
   };
 
   const navigate = useNavigate();
-  //const access_token = getAuthToken();
-
-  //console.log(token);
   const resetPwdHandler = async (event) => {
     event.preventDefault();
     setIsSubmitting(true);
@@ -85,11 +82,7 @@ const ForcedResetPasswordForm = (props) => {
         },
         body: JSON.stringify(data),
       });
-      /* console.log("Response:");
-      console.log(response); */
       const resData = await response.json();
-      /* console.log("Response Data:");
-      console.log(resData); */
       // check errors
       if (!response.ok) {
         setIsSubmitting(false);
@@ -109,8 +102,8 @@ const ForcedResetPasswordForm = (props) => {
       // redirect
       return navigate('/status');
     } catch (error) {
-      console.log('Catch errors:');
-      console.log(error);
+      console.error('Forced reset request failed.');
+      console.error(error);
       throw json(error);
     }
   };
