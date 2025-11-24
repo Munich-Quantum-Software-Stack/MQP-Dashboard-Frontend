@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
-import StatusItems from 'src/components/Pages/Status/StatusItems';
+import StatusItems from './StatusItems';
 
 function StatusContent() {
   const fs = useSelector((state) => state.accessibilities.font_size);
@@ -15,7 +15,7 @@ function StatusContent() {
           style={{ fontSize: h1_fs }}
           className="welcome_text"
         >
-          Welcome to Munich Quantum Portal
+          Welcome to the Munich Quantum Portal
         </motion.h1>
       </div>
       <div className="status_items_list">

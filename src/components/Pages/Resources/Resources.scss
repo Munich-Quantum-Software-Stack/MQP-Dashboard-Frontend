@@ -10,12 +10,16 @@ $resource_bg_3: #e5f8e6; // light green
 $resource_bg_4: #faf1bd; // gold
 $resource_bg_5: #f9a2e3; // lyft pink
 $resource_bg_6: #ae73ae; // purple
+$resource_bg_7: #6a9eda; // dark blue
+$resource_bg_8: #dcd0ff; // light purple
 $resource_divider_1: #de5215;
 $resource_divider_2: #058af7;
 $resource_divider_3: #05fa12;
 $resource_divider_4: #ffd700;
 $resource_divider_5: #ff00bf;
 $resource_divider_6: #800080;
+$resource_divider_7: #2f5597;
+$resource_divider_8: #800080;
 
 @keyframes layer_top_to_bottom {
   from {
@@ -45,6 +49,28 @@ $resource_divider_6: #800080;
     flex: 1;
     color: black;
     position: relative;
+    &.resource_beta {
+      .resource_beta_watermark {
+        position: absolute;
+        top: 1.2rem;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: 800;
+        letter-spacing: 0.1rem;
+        color: rgba(5, 16, 35, 0.4);
+        text-transform: uppercase;
+        pointer-events: none;
+        user-select: none;
+        z-index: 1;
+      }
+    }
+    .resource_item_body {
+      position: relative;
+      z-index: 2;
+    }
     .resource_item_logo {
       width: 60%;
       .resource_log_wrap {
@@ -139,11 +165,23 @@ $resource_divider_6: #800080;
         @include short_devider(40px, $resource_divider_6);
       }
     }
+    &.resource_bg_7 {
+      background-image: linear-gradient($resource_bg_7, white);
+      .short_divider {
+        @include short_devider(40px, $resource_divider_7);
+      }
+    }
+    &.resource_bg_8 {
+      background-image: linear-gradient($resource_bg_8, white);
+      .short_divider {
+        @include short_devider(40px, $resource_divider_8);
+      }
+    }
     .maintenance_bg_layer {
       position: absolute;
       top: 0;
       left: 0;
-      z-index: 2;
+      z-index: 3;
       background-color: rgba(0, 0, 0, 0.85);
       width: 100%;
       height: 100%;
