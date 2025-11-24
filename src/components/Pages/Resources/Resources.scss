@@ -1,7 +1,7 @@
 /*************
  * Resources 
  ************/
-@import '../../../assets/scss/variables.scss';
+@import "../../../assets/scss/variables.scss";
 
 // Resources
 $resource_bg_1: #fbc398; // light orange
@@ -18,7 +18,7 @@ $resource_divider_3: #05fa12;
 $resource_divider_4: #ffd700;
 $resource_divider_5: #ff00bf;
 $resource_divider_6: #800080;
-$resource_divider_7: #2f5597;
+$resource_divider_7: #2F5597;
 $resource_divider_8: #800080;
 
 @keyframes layer_top_to_bottom {
@@ -49,7 +49,24 @@ $resource_divider_8: #800080;
     flex: 1;
     color: black;
     position: relative;
-
+    &.resource_beta {
+      .resource_beta_watermark {
+        position: absolute;
+        top: 1.2rem;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: 800;
+        letter-spacing: 0.1rem;
+        color: rgba(5, 16, 35, 0.4);
+        text-transform: uppercase;
+        pointer-events: none;
+        user-select: none;
+        z-index: 1;
+      }
+    }
     .resource_item_body {
       position: relative;
       z-index: 2;
@@ -83,7 +100,7 @@ $resource_divider_8: #800080;
           border: 1px solid $dark_grey;
           background-color: white;
           @include border_radius(50%, 50%, 50%, 50%);
-          @include bg_mask_image('/assets/icons/circle_dot_icon.svg');
+          @include bg_mask_image("/assets/icons/circle_dot_icon.svg");
           .offline_icon {
             background-color: red;
             width: 20px;
@@ -177,7 +194,7 @@ $resource_divider_8: #800080;
       .maintenance_icon {
         width: 50px;
         height: 50px;
-        @include bg_mask_image('../../../assets/icons/gear_icon.svg');
+        @include bg_mask_image("../../../assets/icons/gear_icon.svg");
         background-color: white;
       }
       .maintenance_text {
@@ -192,7 +209,7 @@ $resource_divider_8: #800080;
       .disabled_icon {
         width: 50px;
         height: 50px;
-        @include bg_mask_image('../../../assets/icons/disabled_icon.svg');
+        @include bg_mask_image("../../../assets/icons/disabled_icon.svg");
         background-color: white;
       }
       .disabled_text {
@@ -216,51 +233,19 @@ $resource_divider_8: #800080;
  */
 .dark_bg {
   .resource_item {
-    // Keep text dark/readable on light card backgrounds
     .pane_title {
       color: black;
     }
-    .pane_desc,
     .pane_desc *,
-    .resource_qubit,
     .resource_qubit *,
-    .resource_technology,
     .resource_technology *,
-    .resource_budgets,
     .resource_budgets * {
       color: $dark_grey;
     }
     .resource_status {
-      .status_icon_wrap,
       .status_icon_wrap > * {
         color: black;
       }
-    }
-    // Dark mode: keep cards light, fade to white (same as light mode)
-    // This ensures text remains readable
-    &.resource_bg_1 {
-      background-image: linear-gradient($resource_bg_1, white);
-    }
-    &.resource_bg_2 {
-      background-image: linear-gradient($resource_bg_2, white);
-    }
-    &.resource_bg_3 {
-      background-image: linear-gradient($resource_bg_3, white);
-    }
-    &.resource_bg_4 {
-      background-image: linear-gradient($resource_bg_4, white);
-    }
-    &.resource_bg_5 {
-      background-image: linear-gradient($resource_bg_5, white);
-    }
-    &.resource_bg_6 {
-      background-image: linear-gradient($resource_bg_6, white);
-    }
-    &.resource_bg_7 {
-      background-image: linear-gradient($resource_bg_7, white);
-    }
-    &.resource_bg_8 {
-      background-image: linear-gradient($resource_bg_8, white);
     }
   }
 }
