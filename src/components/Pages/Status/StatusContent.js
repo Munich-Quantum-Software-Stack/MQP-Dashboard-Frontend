@@ -15,7 +15,7 @@ function StatusContent() {
                     style={{ fontSize: h1_fs }}
                     className="welcome_text"
                 >
-                    Welcome to Munich Quantum Portal
+                    Welcome to the Munich Quantum Portal
                 </motion.h1>
             </div>
             <div className="status_items_list">
