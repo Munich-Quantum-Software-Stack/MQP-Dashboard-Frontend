@@ -55,7 +55,7 @@ const JobDetail = () => {
         downloadLink.download = "result-job-" + job.id + ".json";
         downloadLink.click();
         
-        // Conbert to a proper JSON string with formatting for readability
+        // Convert to a proper JSON string with formatting for readability
         const jsonString = JSON.stringify(formattedData, null, 2);
 
         const link = document.createElement("a");
