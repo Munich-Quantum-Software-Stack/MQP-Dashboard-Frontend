@@ -9,9 +9,6 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: MQP-Dashboard-Frontend
 
     strategy:
       matrix:
@@ -25,7 +22,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-          cache-dependency-path: MQP-Dashboard-Frontend/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Install Dependencies
         run: npm ci
@@ -49,9 +46,6 @@ jobs:
   e2e-tests:
     runs-on: ubuntu-latest
     needs: build-and-test
-    defaults:
-      run:
-        working-directory: MQP-Dashboard-Frontend
 
     steps:
       - uses: actions/checkout@v3
@@ -61,7 +55,7 @@ jobs:
         with:
           node-version: 22.x
           cache: 'npm'
-          cache-dependency-path: MQP-Dashboard-Frontend/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Install Dependencies
         run: npm ci
