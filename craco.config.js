@@ -1,1 +1,1 @@
-module.exports = require('./config/build/craco.config.js');
+module.exports = require('./config/webpack/craco.config.js');
