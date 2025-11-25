@@ -26,4 +26,4 @@ Deployment scripts are provided to ease this action in a non-development environ
 
 Thank you for your interest in contributing to our project! 
 
-Please refer to the [./CONTRIBUTING.md](CONTRIBUTING) guidelines.
+Please refer to the [CONTRIBUTING](./CONTRIBUTING.md) guidelines.
