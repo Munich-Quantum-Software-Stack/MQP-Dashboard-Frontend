@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 import { server } from 'src/test/server';
-import { fetchLogin } from '../authentication-http';
+import { fetchLogin } from '@utils/authentication-http';
 import { loginSuccessResponse } from 'src/test/fixtures/authentication-response';
 
 const API_BASE = 'https://api.test';

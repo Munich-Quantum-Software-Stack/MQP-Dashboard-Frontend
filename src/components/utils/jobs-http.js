@@ -1,4 +1,3 @@
-// fetch jobs by sending HTTP request
 export async function fetchJobs(access_token) {
   const url = process.env.REACT_APP_API_ENDPOINT + '/jobs';
   const response = await fetch(url, {
@@ -18,7 +17,6 @@ export async function fetchJobs(access_token) {
       error.message = 'Forbidden!';
     }
     error.code = response.status;
-    //error.message = response.error_message;
     console.error('Job list request failed:', response);
     throw error;
   }
@@ -26,7 +24,6 @@ export async function fetchJobs(access_token) {
   return jobs;
 }
 
-// fetch jobs by useQuery()
 export async function queryFetchJobs({
   signal,
   access_token,
@@ -36,13 +33,11 @@ export async function queryFetchJobs({
   order_by = 'ID',
   status,
 }) {
-  // Build query parameters
   const params = new URLSearchParams();
   params.append('p', page);
   params.append('jpp', limit);
   params.append('order', order);
 
-  // Special handling for ID sorting
   if (order_by === 'ID') {
     params.append('order_by', 'ID');
   } else {
@@ -74,7 +69,6 @@ export async function queryFetchJobs({
 
   const data = await response.json();
 
-  // Perform client-side numerical sorting for ID if needed
   if (order_by === 'ID' && data.jobs && data.jobs.length > 0) {
     // Sort by ID numerically
     data.jobs.sort((a, b) => {

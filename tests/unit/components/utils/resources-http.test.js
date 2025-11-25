@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 import { server } from 'src/test/server';
-import { fetchResources } from '../resources-http';
+import { fetchResources } from '@utils/resources-http';
 import { resourcesResponse } from 'src/test/fixtures/resources-response';
 
 const API_BASE = 'https://api.test';

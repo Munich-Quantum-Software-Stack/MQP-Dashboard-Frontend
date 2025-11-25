@@ -77,7 +77,6 @@ export async function revokeToken({ tokenName, access_token }) {
   });
   if (!response.ok) {
     const resData = await response.json();
-    //const error = new Error("Could not revoke token");
     const error = new Error(JSON.stringify(resData.error_message));
     error.code = response.status;
     throw error;

@@ -100,7 +100,6 @@ code {
 }
 .flashMsg_wrap {
   color: red;
-  //display: none;
   max-width: 100%;
   width: auto;
 
@@ -143,8 +142,6 @@ code {
   background-color: var(--bs-gray-200);
   display: flex;
   flex-direction: column;
-  // justify-content: flex-start;
-  // flex-grow: 1;
   width: 100%;
   &.darkgrey_bg {
     background-color: $dark_grey;
@@ -155,8 +152,6 @@ code {
 .main_content_container {
   padding: 0.75rem 0.75rem 0 0.75rem;
   height: 100%;
-  // overflow-x: auto;
-  //flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -212,6 +207,4 @@ code {
   }
 }
 @media screen and (min-width: 992px) {
-  // .left_sidebar_wrap { width: 250px;}
-  // .right_content {}
 }

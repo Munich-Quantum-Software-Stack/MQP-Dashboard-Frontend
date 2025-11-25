@@ -15,6 +15,4 @@ root.render(
   </React.StrictMode>,
 );
 
-// If you want to start measuring performance in your app, pass a callback to reportWebVitals
-// or send the results to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

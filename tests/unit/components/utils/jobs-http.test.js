@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 import { server } from 'src/test/server';
-import { fetchJobs, queryFetchJobs, fetchJob } from '../jobs-http';
+import { fetchJobs, queryFetchJobs, fetchJob } from '@utils/jobs-http';
 import { jobsResponse, jobDetailResponse } from 'src/test/fixtures/jobs-response';
 
 const API_BASE = 'https://api.test';

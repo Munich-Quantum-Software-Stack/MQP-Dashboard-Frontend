@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 import { server } from 'src/test/server';
-import { fetchUserLimits, fetchTokens, createNewToken, revokeToken } from '../tokens-http';
+import { fetchUserLimits, fetchTokens, createNewToken, revokeToken } from '@utils/tokens-http';
 import {
   tokensUserLimitsResponse,
   tokensListResponse,

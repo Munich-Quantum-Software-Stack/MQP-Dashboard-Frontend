@@ -1,5 +1,8 @@
 #!/usr/env bash
 
+# Ensure we are in the project root
+cd "$(dirname "$0")/.."
+
 # as bqp  user
 USER=$(whoami)
 if [ "$USER" != "bqp" ]; then

@@ -1,5 +1,4 @@
 export async function fetchLogin(authData) {
-  // fetch API
   console.info('current server: ' + process.env.REACT_APP_API_ENDPOINT);
   const login_url = process.env.REACT_APP_API_ENDPOINT + '/login';
   const response = await fetch(login_url, {
