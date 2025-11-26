@@ -12,6 +12,16 @@ module.exports = {
       '@data': path.resolve(__dirname, '../../src/data'),
     },
   },
+  style: {
+    sass: {
+      loaderOptions: {
+        sassOptions: {
+          quietDeps: true, // Suppress warnings from dependencies (Bootstrap)
+          silenceDeprecations: ['import', 'global-builtin', 'color-functions', 'legacy-js-api'],
+        },
+      },
+    },
+  },
   jest: {
     configure: {
       roots: ['<rootDir>/src', '<rootDir>/tests/unit'],

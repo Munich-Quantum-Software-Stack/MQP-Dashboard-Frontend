@@ -247,6 +247,31 @@ $resource_divider_8: #800080;
         color: black;
       }
     }
+    // Dark mode background overrides - fade to dark instead of white
+    &.resource_bg_1 {
+      background-image: linear-gradient($resource_bg_1, #1a1a2e);
+    }
+    &.resource_bg_2 {
+      background-image: linear-gradient($resource_bg_2, #1a1a2e);
+    }
+    &.resource_bg_3 {
+      background-image: linear-gradient($resource_bg_3, #1a1a2e);
+    }
+    &.resource_bg_4 {
+      background-image: linear-gradient($resource_bg_4, #1a1a2e);
+    }
+    &.resource_bg_5 {
+      background-image: linear-gradient($resource_bg_5, #1a1a2e);
+    }
+    &.resource_bg_6 {
+      background-image: linear-gradient($resource_bg_6, #1a1a2e);
+    }
+    &.resource_bg_7 {
+      background-image: linear-gradient($resource_bg_7, #1a1a2e);
+    }
+    &.resource_bg_8 {
+      background-image: linear-gradient($resource_bg_8, #1a1a2e);
+    }
   }
 }
 

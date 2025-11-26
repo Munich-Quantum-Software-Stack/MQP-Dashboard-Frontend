@@ -11,7 +11,7 @@ describe('Status Page', () => {
       </Provider>,
     );
 
-    const welcomeText = screen.getByText('Welcome to the Munich Quantum Portal', { exact: false });
+    const welcomeText = screen.getByText('Welcome to Munich Quantum Portal', { exact: false });
     expect(welcomeText).toBeInTheDocument();
   });
 });

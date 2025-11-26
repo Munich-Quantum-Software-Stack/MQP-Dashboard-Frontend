@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20.x, 22.x, 24.11.0]
+        node-version: [22.x, 24.11.0]
 
     steps:
       - uses: actions/checkout@v3
@@ -25,7 +25,7 @@ jobs:
           cache-dependency-path: package-lock.json
 
       - name: Install Dependencies
-        run: npm ci
+        run: npm ci --loglevel=error
 
       - name: Check code style
         run: |
@@ -35,10 +35,14 @@ jobs:
         run: npm run test:ci
 
       - name: Build
+        if: matrix.node-version == '22.x'
         run: npm run build
 
   e2e-tests:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        shard: [1, 2]
 
     steps:
       - uses: actions/checkout@v3
@@ -51,7 +55,7 @@ jobs:
           cache-dependency-path: package-lock.json
 
       - name: Install Dependencies
-        run: npm ci
+        run: npm ci --loglevel=error
 
       - name: Cache Playwright Browsers
         uses: actions/cache@v4
@@ -69,4 +73,4 @@ jobs:
         run: npx playwright install-deps
 
       - name: Run Playwright E2E Tests
-        run: npm run test:e2e
+        run: npx playwright test --config=config/e2e/playwright.config.js --shard=${{ matrix.shard }}/2

@@ -7,7 +7,6 @@
   "proxy": "http://127.0.0.1:5000",
   "homepage": ".",
   "dependencies": {
-    "@nextui-org/pagination": "^2.0.33",
     "@reduxjs/toolkit": "^2.2.5",
     "@tanstack/react-query": "^5.90.6",
     "@testing-library/jest-dom": "^6.4.2",

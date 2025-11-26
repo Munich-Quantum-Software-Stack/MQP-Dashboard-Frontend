@@ -3,6 +3,12 @@ import { useSelector } from 'react-redux';
 import BlankCard from 'src/components/UI/Card/BlankCard';
 import './Funding.scss';
 
+// Import logos from assets
+import StMWiLogo from 'src/assets/images/stmwi.png';
+import BMFTRLogo from 'src/assets/images/bmftr.png';
+import BMWKLogo from 'src/assets/images/bmwk.png';
+import EULogo from 'src/assets/images/EU.png';
+
 const Funding = () => {
   const darkmode = useSelector((state) => state.accessibilities.darkmode);
   const fs = useSelector((state) => state.accessibilities.font_size);
@@ -12,17 +18,25 @@ const Funding = () => {
   // Array of funders with their logo paths and names
   const funders = [
     {
-      name: 'Bayerisches Staatsministerium für Wissenschaft und Kunst',
+      name: 'Bavarian State Ministry of Science and Art',
       logo: '/images/funding/bavarian_ministry.png',
       className: 'bavarian-ministry-logo',
     },
     {
-      name: 'Federal Ministry of Education and Research',
-      logo: '/images/funding/federal_education_ministry.png',
+      name: 'Bavarian State Ministry for Economic Affairs, Regional Development and Energy',
+      logo: StMWiLogo,
     },
     {
-      name: 'Federal Ministry for Economic Affairs and Climate Action',
-      logo: '/images/funding/federal_economic_ministry.png',
+      name: 'Federal Ministry of Research, Technology and Space ',
+      logo: BMFTRLogo,
+    },
+    {
+      name: 'Federal Ministry for Economic Affairs and Energy ',
+      logo: BMWKLogo,
+    },
+    {
+      name: 'European Union ',
+      logo: EULogo,
     },
     {
       name: 'EuroHPC Joint Undertaking',
@@ -31,10 +45,6 @@ const Funding = () => {
     {
       name: 'European Commission',
       logo: '/images/funding/european_commission.png',
-    },
-    {
-      name: 'European Research Council',
-      logo: '/images/funding/european_research_council.png',
     },
     {
       name: 'Quantum Flagship',
