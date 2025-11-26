@@ -7,12 +7,16 @@ const API_BASE = 'https://api.test';
 const ORIGINAL_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 describe('authentication-http API helper', () => {
+  let consoleInfoSpy;
+
   beforeAll(() => {
     process.env.REACT_APP_API_ENDPOINT = API_BASE;
+    consoleInfoSpy = jest.spyOn(console, 'info').mockImplementation(() => {});
   });
 
   afterAll(() => {
     process.env.REACT_APP_API_ENDPOINT = ORIGINAL_ENDPOINT;
+    consoleInfoSpy.mockRestore();
   });
 
   it('fetchLogin posts credentials and returns response JSON', async () => {

@@ -74,10 +74,7 @@ async function performLogin(page) {
   const loginButton = page.getByRole('button', { name: 'Login' });
   await loginButton.waitFor({ state: 'visible' });
 
-  await Promise.all([
-    page.waitForURL(/\/status$/),
-    loginButton.click({ force: true }),
-  ]);
+  await Promise.all([page.waitForURL(/\/status$/), loginButton.click({ force: true })]);
   await expect(page).toHaveURL(/\/status$/);
   await expect(page.getByRole('heading', { name: /Munich Quantum Portal/i })).toBeVisible();
 }

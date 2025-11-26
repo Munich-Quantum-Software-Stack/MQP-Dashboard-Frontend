@@ -32,6 +32,8 @@ describe('resources-http API helper', () => {
   });
 
   it('fetchResources throws descriptive error when backend fails', async () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
     server.use(
       rest.get(`${API_BASE}/resources`, (_req, res, ctx) => {
         return res(
@@ -48,5 +50,7 @@ describe('resources-http API helper', () => {
       code: 500,
       details: 'Inventory service unavailable – please retry.',
     });
+
+    consoleSpy.mockRestore();
   });
 });

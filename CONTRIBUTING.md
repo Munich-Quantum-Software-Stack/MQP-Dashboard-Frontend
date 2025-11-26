@@ -12,9 +12,9 @@ Please note that all participants are required to adhere to our
 
 Using the following [Issue Tracker][issues] you can:
 
-* Report bugs in the project.
-* Propose new features or improvements.
-* Write code and documentation.
+- Report bugs in the project.
+- Propose new features or improvements.
+- Write code and documentation.
 
 [issues]: https://github.com/Munich-Quantum-Software-Stack/MQSS-Benchmarking-Framework/issues/new?template=contact_mqp_dashboard_frontend.yml
 
@@ -35,16 +35,16 @@ reported.
    installing all necessary dependencies and make the dashboard available
    at [http://localhost:3000](http://localhost:3000).
 3. **Create a branch:**
-   * when fixing a bug: `git switch -c fix/<BUG>`
-   * when introducing a feature: `git switch -c feat/<FEATURE>`
+   - when fixing a bug: `git switch -c fix/<BUG>`
+   - when introducing a feature: `git switch -c feat/<FEATURE>`
 4. **Make changes and commit:** Use clear, descriptive commit messages.
 5. **Run tests and linting:** `npm test`
 6. **Push your branch** and open a Pull Request.
 
 ## ✅ Pull Request Guidelines
 
-* **Title:** Be descriptive (e.g., `FEAT: Add dark mode toggle`).
-* **Reference Issues:** Add `Closes #XYZ` to the description if it fixes
+- **Title:** Be descriptive (e.g., `FEAT: Add dark mode toggle`).
+- **Reference Issues:** Add `Closes #XYZ` to the description if it fixes
   an issue.
-* **Single Focus:** Keep the PR limited to one concern or feature.
-* **Tests:** New features must have corresponding tests.
+- **Single Focus:** Keep the PR limited to one concern or feature.
+- **Tests:** New features must have corresponding tests.

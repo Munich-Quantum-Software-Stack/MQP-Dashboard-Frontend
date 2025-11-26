@@ -103,6 +103,8 @@ describe('tokens-http API helpers', () => {
   });
 
   it('createNewToken maps 403 to friendly error', async () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
     server.use(
       rest.post(`${API_BASE}/tokens/new`, (_req, res, ctx) => {
         return res(
@@ -115,6 +117,8 @@ describe('tokens-http API helpers', () => {
     await expect(
       createNewToken({ tokenData: { token_name: 'dupe' }, access_token: 'token-abc' }),
     ).rejects.toMatchObject({ message: 'Token Name is invalid. Please try another one.' });
+
+    consoleSpy.mockRestore();
   });
 
   it('revokeToken sends token payload and returns message', async () => {

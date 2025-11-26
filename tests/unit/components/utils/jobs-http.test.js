@@ -48,6 +48,8 @@ describe('jobs-http API helpers', () => {
   });
 
   it('fetchJobs maps 403 into Forbidden! error message', async () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
     server.use(
       rest.get(`${API_BASE}/jobs`, (_req, res, ctx) => {
         return res(ctx.status(403));
@@ -55,6 +57,8 @@ describe('jobs-http API helpers', () => {
     );
 
     await expect(fetchJobs('token')).rejects.toMatchObject({ message: 'Forbidden!', code: 403 });
+
+    consoleSpy.mockRestore();
   });
 
   it('queryFetchJobs forwards paging params and sorts IDs numerically in DESC order', async () => {

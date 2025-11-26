@@ -3,7 +3,14 @@ import { motion } from 'framer-motion';
 import { getFontsize } from 'src/components/utils/theme';
 import ToggleDarkmodeButton from 'src/components/Layout/TopBar/ToggleDarkmodeButton';
 
-const AccessibilitiesNavbar = ({ id, onDarkmode, onDecreaseFS, onResetFS, onIncreaseFS }) => {
+const AccessibilitiesNavbar = ({
+  id,
+  darkmode,
+  onDarkmode,
+  onDecreaseFS,
+  onResetFS,
+  onIncreaseFS,
+}) => {
   const [limitMinFS, setLimitMinFS] = useState(false);
   const [limitMaxFS, setLimitMaxFS] = useState(false);
 
@@ -57,6 +64,7 @@ const AccessibilitiesNavbar = ({ id, onDarkmode, onDecreaseFS, onResetFS, onIncr
           <ToggleDarkmodeButton
             id="darkmode_toggle"
             className="darkmode_btn"
+            darkmode={darkmode}
             onToggle={toggleDarkmodeHandler}
           />
         </motion.li>

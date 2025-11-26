@@ -39,9 +39,7 @@ module.exports = {
         '^@utils/(.*)$': '<rootDir>/src/components/utils/$1',
         '^@data/(.*)$': '<rootDir>/src/data/$1',
       },
-      transformIgnorePatterns: [
-        'node_modules/(?!(date-fns|msw|@mswjs|@open-draft|strict-event-emitter|until-async|headers-polyfill|@bundled-esm)/)',
-      ],
+      transformIgnorePatterns: ['node_modules/(?!(date-fns)/)'],
     },
   },
 };

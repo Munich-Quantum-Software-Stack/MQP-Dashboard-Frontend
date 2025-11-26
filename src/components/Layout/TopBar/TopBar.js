@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import NavbarHeader from 'src/components/Layout/MainNavigation/NavbarHeader';
 import Timer from 'src/components/Layout/TopBar/Timer';
@@ -29,7 +29,10 @@ function TopBar() {
   const darkmodeHandler = () => {
     setDarkmode((prevDarkmode) => !prevDarkmode);
   };
-  dispatch(accessibilitiesAction.toggleDarkmode(darkmode));
+
+  useEffect(() => {
+    dispatch(accessibilitiesAction.toggleDarkmode(darkmode));
+  }, [darkmode, dispatch]);
 
   const decreaseFontSizeHandler = () => {
     const currentFontSize = getFontsize();
@@ -47,7 +50,10 @@ function TopBar() {
     const newFontsize = +currentFontSize + 2;
     setFontsize(newFontsize);
   };
-  dispatch(accessibilitiesAction.toggleFontsize(fontsize));
+
+  useEffect(() => {
+    dispatch(accessibilitiesAction.toggleFontsize(fontsize));
+  }, [fontsize, dispatch]);
 
   return (
     <React.Fragment>
@@ -81,6 +87,7 @@ function TopBar() {
 
         <AccessibilitiesNavbar
           id="access_top"
+          darkmode={darkmode}
           onDarkmode={darkmodeHandler}
           onDecreaseFS={decreaseFontSizeHandler}
           onResetFS={resetFontSizeHandler}
