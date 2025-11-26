@@ -67,5 +67,8 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit == 'true'
         run: npx playwright install-deps
 
+      - name: Build for E2E Tests
+        run: npm run build:test
+
       - name: Run Playwright E2E Tests
         run: npx playwright test --config=config/e2e/playwright.config.js --shard=${{ matrix.shard }}/2

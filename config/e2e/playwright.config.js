@@ -37,7 +37,7 @@ module.exports = defineConfig({
     },
   ],
   webServer: {
-    command: process.env.CI ? 'npm run start:test' : 'npm run start:test',
+    command: process.env.CI ? 'npm run serve:test' : 'npm run start:test',
     url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
