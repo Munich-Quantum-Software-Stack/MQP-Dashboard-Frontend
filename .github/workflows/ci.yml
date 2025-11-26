@@ -24,43 +24,17 @@ jobs:
       - name: Install Dependencies
         run: npm ci --loglevel=error
 
-      - name: Check code style
+      - name: Lint & Test
         run: |
-          npm run lint
-
-      - name: Run Tests
-        run: npm run test:ci
+          npm run lint &
+          npm run test:ci &
+          wait
 
       - name: Build
         run: npm run build
 
-  e2e-build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Use Node.js 22.x
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22.x
-          cache: 'npm'
-
-      - name: Install Dependencies
-        run: npm ci --loglevel=error
-
-      - name: Build for E2E Tests
-        run: npm run build:test
-
-      - name: Upload Build Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: e2e-build
-          path: build/
-          retention-days: 1
-
   e2e-tests:
     runs-on: ubuntu-latest
-    needs: e2e-build
     strategy:
       matrix:
         shard: [1, 2]
@@ -77,12 +51,6 @@ jobs:
       - name: Install Dependencies
         run: npm ci --loglevel=error
 
-      - name: Download Build Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: e2e-build
-          path: build/
-
       - name: Cache Playwright Browsers
         uses: actions/cache@v4
         id: playwright-cache
@@ -98,5 +66,7 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit == 'true'
         run: npx playwright install-deps
 
-      - name: Run Playwright E2E Tests
-        run: npx playwright test --config=config/e2e/playwright.config.js --shard=${{ matrix.shard }}/2
+      - name: Build & Test
+        run: |
+          npm run build:test
+          npx playwright test --config=config/e2e/playwright.config.js --shard=${{ matrix.shard }}/2
