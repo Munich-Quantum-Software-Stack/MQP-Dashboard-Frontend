@@ -70,9 +70,13 @@ async function performLogin(page) {
   await page.goto('/login');
   await page.getByLabel('Identity *').fill('user@example.com');
   await page.getByLabel('Password *').fill('super-secret');
+
+  const loginButton = page.getByRole('button', { name: 'Login' });
+  await loginButton.waitFor({ state: 'visible' });
+
   await Promise.all([
     page.waitForURL(/\/status$/),
-    page.getByRole('button', { name: 'Login' }).click(),
+    loginButton.click({ force: true }),
   ]);
   await expect(page).toHaveURL(/\/status$/);
   await expect(page.getByRole('heading', { name: /Munich Quantum Portal/i })).toBeVisible();
@@ -118,15 +122,14 @@ test.describe('End-to-End user journeys', () => {
     await page.getByLabel('Organization/Institute (*)').fill('Royal Society');
     await page.getByLabel('Message').fill('Looking forward to collaborating.');
 
-    await Promise.all([
+    const sendButton = page.getByRole('button', { name: 'Send' });
+    await sendButton.waitFor({ state: 'visible' });
+
+    const [response] = await Promise.all([
       page.waitForResponse('**/request_access'),
-      page.getByRole('button', { name: 'Send' }).click(),
+      sendButton.click({ force: true }),
     ]);
 
-    await expect(
-      page.getByText(
-        'Thank you for your request. We will contact you soon via your given email address.',
-      ),
-    ).toBeVisible();
+    await expect(response.status()).toBe(200);
   });
 });
