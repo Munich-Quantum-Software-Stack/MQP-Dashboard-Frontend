@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ContentCard from '../../UI/Card/ContentCard';
+import ContentCard from '@components/UI/Card/ContentCard';
 
 function DefaultErrorPage({ status, title, message }) {
   switch (status) {

@@ -4,7 +4,7 @@ import { useRouteLoaderData } from 'react-router-dom';
 
 import Navigation from './Navigation';
 import UserNavigation from './UserNav';
-import AccessibilitiesNavbar from '../TopBar/AccessibilitiesNavbar';
+import AccessibilitiesNavbar from '@components/Layout/TopBar/AccessibilitiesNavbar';
 
 function ResponsiveMainNavigation({ onDarkmode, onDecreaseFS, onResetFS, onIncreaseFS }) {
   const token = useRouteLoaderData('home');

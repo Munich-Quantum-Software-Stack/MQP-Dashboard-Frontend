@@ -1,5 +1,5 @@
-import ContentCard from 'src/components/UI/Card/ContentCard';
-import Button from 'src/components/UI/Button/Button';
+import ContentCard from '@components/UI/Card/ContentCard';
+import Button from '@components/UI/Button/Button';
 import classes from './Modal.module.css';
 
 const ModalContent = (props) => {

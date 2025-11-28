@@ -1,12 +1,17 @@
+/**
+ * jobs-http.test.js - Unit tests for jobs API helpers (fetchJobs, queryFetchJobs, fetchJob)
+ */
+
 import { rest } from 'msw';
-import { server } from 'src/test/server';
+import { server } from '@test/server';
 import { fetchJobs, queryFetchJobs, fetchJob } from '@utils/jobs-http';
-import { jobsResponse, jobDetailResponse } from 'src/test/fixtures/jobs-response';
+import { jobsResponse, jobDetailResponse } from '@test/fixtures/jobs-response';
 
 const API_BASE = 'https://api.test';
 const ORIGINAL_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 describe('jobs-http API helpers', () => {
+  // Set up and restore test API endpoint environment variable
   beforeAll(() => {
     process.env.REACT_APP_API_ENDPOINT = API_BASE;
   });
@@ -19,6 +24,7 @@ describe('jobs-http API helpers', () => {
     jest.clearAllMocks();
   });
 
+  // Test fetchJobs returns jobs array and includes Bearer token in auth header
   it('fetchJobs returns jobs payload and enforces auth header', async () => {
     const jobs = [{ id: '1' }, { id: '2' }];
 
@@ -33,6 +39,7 @@ describe('jobs-http API helpers', () => {
     expect(result).toEqual(jobs);
   });
 
+  // Test fetchJobs preserves all job properties from backend response
   it('fetchJobs preserves every job returned by the backend', async () => {
     server.use(
       rest.get(`${API_BASE}/jobs`, (req, res, ctx) => {
@@ -47,6 +54,7 @@ describe('jobs-http API helpers', () => {
     expect(result.every((job) => job.executed_resource)).toBe(true);
   });
 
+  // Test fetchJobs maps 403 status to Forbidden error message
   it('fetchJobs maps 403 into Forbidden! error message', async () => {
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
@@ -61,6 +69,7 @@ describe('jobs-http API helpers', () => {
     consoleSpy.mockRestore();
   });
 
+  // Test queryFetchJobs passes pagination params and sorts job IDs numerically descending
   it('queryFetchJobs forwards paging params and sorts IDs numerically in DESC order', async () => {
     server.use(
       rest.get(`${API_BASE}/jobs`, (req, res, ctx) => {
@@ -97,6 +106,7 @@ describe('jobs-http API helpers', () => {
     expect(result.jobs.map((job) => job.id)).toEqual(['10', '2', '1']);
   });
 
+  // Test fetchJob adds default circuit when missing and removes internal no_modify field
   it('fetchJob returns job with default circuit when missing and strips no_modify fields', async () => {
     server.use(
       rest.get(`${API_BASE}/jobs/42`, (_req, res, ctx) => {
@@ -121,6 +131,7 @@ describe('jobs-http API helpers', () => {
     expect(job.no_modify).toBeUndefined();
   });
 
+  // Test fetchJob throws error with code when backend returns error status
   it('fetchJob throws when backend responds with error code', async () => {
     server.use(
       rest.get(`${API_BASE}/jobs/99`, (_req, res, ctx) => {
@@ -133,6 +144,7 @@ describe('jobs-http API helpers', () => {
     ).rejects.toMatchObject({ message: 'Could not fetch job!', code: 404 });
   });
 
+  // Test fetchJob correctly exposes result payload including quantum measurement counts
   it('fetchJob exposes the backend result payload for job detail consumers', async () => {
     const { job } = jobDetailResponse;
 

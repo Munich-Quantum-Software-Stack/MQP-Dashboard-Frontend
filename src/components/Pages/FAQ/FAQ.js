@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import ContentCard from 'src/components/UI/Card/ContentCard';
-import { getAuthToken } from 'src/components/utils/auth';
+import ContentCard from '@components/UI/Card/ContentCard';
+import { getAuthToken } from '@utils/auth';
 import './FAQ.scss';
 
+/**
+ * FAQ_DATA - Static FAQ content organized by category with questions and answers
+ */
 const FAQ_DATA = {
   'Getting Started': [
     {
@@ -433,6 +436,7 @@ const FAQ_DATA = {
   ],
 };
 
+// Transform FAQ_DATA into an array of category objects for rendering
 const FAQ_SECTIONS = Object.freeze(
   Object.entries(FAQ_DATA).map(([category, items]) => ({
     category,
@@ -440,12 +444,19 @@ const FAQ_SECTIONS = Object.freeze(
   })),
 );
 
+/**
+ * FAQ - Displays expandable FAQ sections organized by category
+ */
 function FAQ() {
   const darkmode = useSelector((state) => state.accessibilities.darkmode);
   const navigate = useNavigate();
 
   const [expandedCategory, setExpandedCategory] = useState(null);
 
+  // Softer gold for dark mode, bright yellow for light mode
+  const accentColor = darkmode ? '#c9a227' : '#ffe066';
+
+  // Redirect to login if session is expired
   React.useEffect(() => {
     const token = getAuthToken();
     if (!token || token === 'EXPIRED') {
@@ -454,6 +465,7 @@ function FAQ() {
     }
   }, [navigate]);
 
+  // Toggle category expansion on click
   const handleCategoryClick = (cat) => {
     setExpandedCategory(expandedCategory === cat ? null : cat);
   };
@@ -470,7 +482,8 @@ function FAQ() {
                 fontWeight: 600,
                 fontSize: '1.15rem',
                 cursor: 'pointer',
-                background: expandedCategory === category ? '#ffe066' : 'transparent',
+                background: expandedCategory === category ? accentColor : 'transparent',
+                color: expandedCategory === category && !darkmode ? '#333' : undefined,
                 borderRadius: '5px',
                 padding: '8px 12px',
                 transition: 'background 0.2s',
@@ -512,7 +525,7 @@ function FAQ() {
                     <div
                       style={{
                         height: '2px',
-                        background: '#ffe066',
+                        background: accentColor,
                         margin: '8px 0',
                         borderRadius: '1px',
                       }}

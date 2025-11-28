@@ -2,12 +2,12 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useLoaderData } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
-import { getAuthToken } from '../../utils/auth';
-import ContentCard from '../../UI/Card/ContentCard';
+import { getAuthToken } from '@utils/auth';
+import ContentCard from '@components/UI/Card/ContentCard';
 
-import { queryClient } from '../../utils/query';
-import { fetchJob } from '../../utils/jobs-http';
-import { formatTimestampGMT } from '../../utils/date-utils';
+import { queryClient } from '@utils/query';
+import { fetchJob } from '@utils/jobs-http';
+import { formatTimestampGMT } from '@utils/date-utils';
 
 const JobDetail = () => {
   // Get job data loaded by the loader function

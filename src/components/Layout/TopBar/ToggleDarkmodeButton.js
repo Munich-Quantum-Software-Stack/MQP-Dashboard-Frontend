@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import 'src/components/UI/UI.scss';
+import '@components/UI/UI.scss';
 
 const ToggleDarkmodeButton = ({ id, onToggle, className, darkmode }) => {
   const isOn = darkmode;

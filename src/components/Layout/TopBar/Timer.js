@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTokenDuration, getSeconds, getMinutes } from 'src/components/utils/auth';
-import { authActions } from 'src/store/auth-slice';
+import { getTokenDuration, getSeconds, getMinutes } from '@utils/auth';
+import { authActions } from '@store/auth-slice';
 
 const Timer = () => {
   const dispatch = useDispatch();

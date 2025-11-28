@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { createPortal } from 'react-dom';
-import Button from 'src/components/UI/Button/Button';
+import Button from '@components/UI/Button/Button';
 
 //import Backdrop from "./Backdrop";
 //import ModalOverlay from "./ModalContent";

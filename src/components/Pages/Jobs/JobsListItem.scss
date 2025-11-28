@@ -1,3 +1,6 @@
+// JobsListItem styles - button and action styling for job list rows
+
+// Container for cancel job button centering
 cancel-job-box {
   display: flex;
   justify-content: center;
@@ -5,6 +8,7 @@ cancel-job-box {
   padding: 5px;
 }
 
+// Red cancel button with hover effect
 .cancel-job-button {
   background-color: #ff4d4f;
   color: white;
@@ -19,6 +23,8 @@ cancel-job-box {
 .cancel-job-button:hover {
   background-color: #d9363e;
 }
+
+// Blue download CSV button with hover effect
 .download-csv-button {
   background-color: #007bff;
   color: white;
@@ -33,6 +39,8 @@ cancel-job-box {
 .download-csv-button:hover {
   background-color: #0056b3;
 }
+
+// Telemetry data table styling with download link button
 .telemetry_table {
   margin-top: 1rem;
 

@@ -1,6 +1,3 @@
-// Snapshot of a successful /login response from the staging API captured on
-// 2025-11-04. Token strings are shortened to avoid leaking secrets while the
-// payload structure remains identical to production.
 export const loginSuccessResponse = {
   access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.stage-access-token',
   refresh_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.stage-refresh-token',

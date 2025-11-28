@@ -1,13 +1,17 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import BlankCard from 'src/components/UI/Card/BlankCard';
+import BlankCard from '@components/UI/Card/BlankCard';
 import './Funding.scss';
 
 // Import logos from assets
-import StMWiLogo from 'src/assets/images/stmwi.png';
-import BMFTRLogo from 'src/assets/images/bmftr.png';
-import BMWKLogo from 'src/assets/images/bmwk.png';
-import EULogo from 'src/assets/images/EU.png';
+import BavarianMinistryLogo from '@assets/images/bavarian_ministry.png';
+import StMWiLogo from '@assets/images/stmwi.png';
+import BMFTRLogo from '@assets/images/bmftr.png';
+import BMWKLogo from '@assets/images/bmwk.png';
+import EULogo from '@assets/images/EU.png';
+import EuroHPCLogo from '@assets/images/euro_hpc.png';
+import EuropeanCommissionLogo from '@assets/images/european_commission.png';
+import QuantumFlagshipLogo from '@assets/images/quantum_flagship.png';
 
 const Funding = () => {
   const darkmode = useSelector((state) => state.accessibilities.darkmode);
@@ -19,7 +23,7 @@ const Funding = () => {
   const funders = [
     {
       name: 'Bavarian State Ministry of Science and Art',
-      logo: '/images/funding/bavarian_ministry.png',
+      logo: BavarianMinistryLogo,
       className: 'bavarian-ministry-logo',
     },
     {
@@ -40,15 +44,15 @@ const Funding = () => {
     },
     {
       name: 'EuroHPC Joint Undertaking',
-      logo: '/images/funding/euro_hpc.png',
+      logo: EuroHPCLogo,
     },
     {
       name: 'European Commission',
-      logo: '/images/funding/european_commission.png',
+      logo: EuropeanCommissionLogo,
     },
     {
       name: 'Quantum Flagship',
-      logo: '/images/funding/quantum_flagship.png',
+      logo: QuantumFlagshipLogo,
     },
   ];
 

@@ -1,6 +1,9 @@
 //filepath: /src/components/Pages/Jobs/JobCircuits.js
 import React from 'react';
 
+/**
+ * JobCircuits - Displays both submitted and executed quantum circuit code side by side
+ */
 const JobCircuits = ({ circuit, executedCircuit }) => {
   return (
     <div className="job_circuits">

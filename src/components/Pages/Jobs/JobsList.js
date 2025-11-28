@@ -1,9 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Table from 'react-bootstrap/Table';
-import BlankCard from 'src/components/UI/Card/BlankCard';
-import JobListItem from 'src/components/Pages/Jobs/JobListItem';
+import BlankCard from '@components/UI/Card/BlankCard';
+import JobListItem from '@components/Pages/Jobs/JobListItem';
 
+/**
+ * JobsList - Renders a table of jobs or empty state message when no jobs exist
+ */
 function JobsList({ jobs }) {
   const darkmode = useSelector((state) => state.accessibilities.darkmode);
   const fs = useSelector((state) => state.accessibilities.font_size);
@@ -13,6 +16,7 @@ function JobsList({ jobs }) {
 
   return (
     <React.Fragment>
+      {/* Show empty state or jobs table based on data availability */}
       {!jobsArray || jobsArray.length === 0 ? (
         <BlankCard className={`${darkmode ? 'dark_bg' : 'white_bg'} h-100`}>
           <h5>No Job found.</h5>
@@ -26,6 +30,7 @@ function JobsList({ jobs }) {
           variant={`${darkmode ? 'dark' : 'light'} `}
           className="jobsList_table"
         >
+          {/* Table header with column labels */}
           <thead>
             <tr
               className="job_item_row job_row_header"
@@ -43,6 +48,7 @@ function JobsList({ jobs }) {
               <td className="job_column job_actions">Actions</td>
             </tr>
           </thead>
+          {/* Render each job as a clickable row */}
           <tbody>
             {jobsArray.map((job) => (
               <JobListItem key={job.id} job={job} />

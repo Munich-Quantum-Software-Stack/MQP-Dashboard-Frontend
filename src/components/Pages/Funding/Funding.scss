@@ -1,6 +1,8 @@
+// Funding page styles - displays funding organization logos in a responsive grid
 .funding-page {
   padding: 1rem;
 
+  // Logo grid container with responsive flex layout
   .funding-logos-container {
     display: flex;
     flex-wrap: wrap;
@@ -8,6 +10,7 @@
     justify-content: center;
     margin-top: 2rem;
 
+    // Individual logo card with responsive width breakpoints
     .funding-logo-item {
       display: flex;
       flex-direction: column;
@@ -23,6 +26,7 @@
         width: 100%;
       }
 
+      // Logo image with hover scale effect
       .funding-logo {
         height: 120px;
         max-width: 100%;

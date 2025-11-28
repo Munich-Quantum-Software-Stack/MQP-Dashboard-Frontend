@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import BlankCard from '../../UI/Card/BlankCard';
-import Button from '../../UI/Button/Button';
+import BlankCard from '@components/UI/Card/BlankCard';
+import Button from '@components/UI/Button/Button';
 
 const ResourceDetail = () => {
   const params = useParams();

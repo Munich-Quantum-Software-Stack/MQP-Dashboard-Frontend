@@ -1,11 +1,14 @@
 import React from 'react';
-import LoginCard from 'src/components/UI/Card/LoginCard';
-import RequestAccessForm from 'src/components/Pages/RequestAccess/RequestAccessForm';
-import LoginFormHeader from 'src/components/Pages/Login/LoginFormHeader';
-import Footer from 'src/components/Layout/Footer/Footer';
+import LoginCard from '@components/UI/Card/LoginCard';
+import RequestAccessForm from '@components/Pages/RequestAccess/RequestAccessForm';
+import LoginFormHeader from '@components/Pages/Login/LoginFormHeader';
+import Footer from '@components/Layout/Footer/Footer';
 
 import './RequestAccess.scss';
 
+/**
+ * RequestAccess - Page for new users to request access to the quantum computing platform
+ */
 const RequestAccess = () => {
   return (
     <LoginCard>

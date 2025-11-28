@@ -2,13 +2,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import AlertCard from 'src/components/UI/MessageBox/AlertCard';
-import Button from 'src/components/UI/Button/Button';
-import { authActions } from 'src/store/auth-slice';
-import { setExpiration } from 'src/components/utils/auth';
-import { hasMinLength, isNotEmpty } from 'src/components/utils/validationUserInput';
-import { useInput } from 'src/hooks/use-input';
-import { fetchLogin } from 'src/components/utils/authentication-http';
+import AlertCard from '@components/UI/MessageBox/AlertCard';
+import Button from '@components/UI/Button/Button';
+import { authActions } from '@store/auth-slice';
+import { setExpiration } from '@utils/auth';
+import { hasMinLength, isNotEmpty } from '@utils/validationUserInput';
+import { useInput } from '@hooks/use-input';
+import { fetchLogin } from '@utils/authentication-http';
 
 function LoginForm() {
   const dispatch = useDispatch();

@@ -1,6 +1,3 @@
-// Snapshot of token-related endpoints captured from the staging API on
-// 2025-11-04. These fixtures preserve the production schema for user limits,
-// list retrieval, creation, and revocation flows.
 export const tokensUserLimitsResponse = {
   max_nb_jobs: 200,
   max_budget: 1000,

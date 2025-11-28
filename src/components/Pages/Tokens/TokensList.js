@@ -1,15 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import ActivedTokenListItem from 'src/components/Pages/Tokens/ActivedTokenListItem';
+import ActivedTokenListItem from '@components/Pages/Tokens/ActivedTokenListItem';
 // import RevokedTokenListItem from "./RevokedTokenListItem";
-import { queryClient } from 'src/components/utils/query';
+import { queryClient } from '@utils/query';
 import { useMutation } from '@tanstack/react-query';
-import { revokeToken } from 'src/components/utils/tokens-http';
-import NotificationCard from 'src/components/UI/MessageBox/NotificationCard';
-import BlankCard from 'src/components/UI/Card/BlankCard';
-import AlertCard from 'src/components/UI/MessageBox/AlertCard';
-import { getAuthToken } from 'src/components/utils/auth';
+import { revokeToken } from '@utils/tokens-http';
+import NotificationCard from '@components/UI/MessageBox/NotificationCard';
+import BlankCard from '@components/UI/Card/BlankCard';
+import AlertCard from '@components/UI/MessageBox/AlertCard';
+import { getAuthToken } from '@utils/auth';
 
 function TokensList({ tokens }) {
   const darkmode = useSelector((state) => state.accessibilities.darkmode);

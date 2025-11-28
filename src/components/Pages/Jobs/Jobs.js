@@ -2,20 +2,25 @@ import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import JobsList from './JobsList';
-import LoadingIndicator from 'src/components/UI/LoadingIndicator';
-import ContentCard from 'src/components/UI/Card/ContentCard';
-import JobsSorting from 'src/components/Pages/Jobs/JobsSorting';
-import ErrorBlock from 'src/components/UI/MessageBox/ErrorBlock';
-import { getAuthToken } from 'src/components/utils/auth';
-import { queryFetchJobs } from 'src/components/utils/jobs-http';
+import LoadingIndicator from '@components/UI/LoadingIndicator';
+import ContentCard from '@components/UI/Card/ContentCard';
+import JobsSorting from '@components/Pages/Jobs/JobsSorting';
+import ErrorBlock from '@components/UI/MessageBox/ErrorBlock';
+import { getAuthToken } from '@utils/auth';
+import { queryFetchJobs } from '@utils/jobs-http';
 
 import './Jobs.scss';
 
+/**
+ * Jobs - Main jobs listing page with pagination, sorting, and status filtering
+ */
 function Jobs() {
   const access_token = getAuthToken();
   const darkmode = useSelector((state) => state.accessibilities.darkmode);
   const fs = useSelector((state) => state.accessibilities.font_size);
   const page_header_fs = +fs * 1.5;
+
+  // Pagination and sorting state
   const [page, setPage] = useState(0);
   const limit = 20;
 
@@ -23,6 +28,7 @@ function Jobs() {
   const [sortOrder, setSortOrder] = useState('DESC');
   const [statusFilter, setStatusFilter] = useState('ALL');
 
+  // Map UI sort keys to backend API field names
   const getBackendSortKey = (key) => {
     switch (key) {
       case 'ID':
@@ -36,6 +42,7 @@ function Jobs() {
     }
   };
 
+  // Fetch jobs with React Query, auto-refetches when filters/pagination change
   const { data, isPending, isError, error } = useQuery({
     queryKey: ['jobs', page, sortKey, sortOrder, statusFilter],
     queryFn: ({ signal }) =>
@@ -80,6 +87,7 @@ function Jobs() {
   const totalJobs = data?.totalJobs || 0;
   const totalPages = Math.ceil(totalJobs / limit) || 1;
 
+  // Pagination handlers
   const handlePreviousPage = () => {
     if (page > 0) setPage((prev) => prev - 1);
   };
@@ -92,6 +100,7 @@ function Jobs() {
     setPage(newPage);
   };
 
+  // Update sorting/filtering and reset to first page
   const handleSorting = (key, order, status = 'ALL') => {
     setSortKey(key);
     setSortOrder(order);
@@ -100,6 +109,8 @@ function Jobs() {
 
     setPage(0);
   };
+
+  // Render pagination buttons with ellipsis for large page counts
   const renderPageNumbers = () => {
     const pageNumbers = [];
     const maxVisiblePages = 5;
@@ -158,6 +169,7 @@ function Jobs() {
             </h4>
           </div>
 
+          {/* Sorting and status filter controls */}
           <div className="sorting-section">
             <JobsSorting
               sortKey={sortKey}
@@ -167,6 +179,7 @@ function Jobs() {
             />
           </div>
 
+          {/* Pagination info and navigation controls */}
           {!isPending && (
             <div className="pagination_tray">
               <div className="pagination_info">

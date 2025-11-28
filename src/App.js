@@ -1,40 +1,46 @@
+/**
+ * App.js - Main application component defining routes and provider wrappers
+ */
+
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { queryClient } from 'src/components/utils/query';
-import RootLayout from 'src/components/Pages/RootLayout';
-import DefaultLayout from 'src/components/Pages/DefaultLayout';
-import Login from 'src/components/Pages/Login/Login';
-import Logout, { action as logoutAction } from 'src/components/Pages/Logout';
-import ForceResetLayout from 'src/components/Pages/ForcedReset/ForcedResetLayout';
-import ForcedResetPassword from 'src/components/Pages/ForcedReset/ForcedResetPassword';
-import ForgotPassword from 'src/components/Pages/ForgotPassword/ForgotPassword';
-import Blocked from 'src/components/Pages/ErrorsHandling/Blocked';
-import ErrorPage from 'src/components/Pages/ErrorsHandling/Error';
-import DefaultErrorPage from 'src/components/Pages/ErrorsHandling/DefaultError';
-import StatusRoot from 'src/components/Pages/Status/StatusRoot';
-import Status from 'src/components/Pages/Status/Status';
-import JobsRoot from 'src/components/Pages/Jobs/JobsRoot';
-import Jobs from 'src/components/Pages/Jobs/Jobs';
-import JobDetail, { loader as jobDetailLoader } from 'src/components/Pages/Jobs/JobDetail';
-import JobCircuit, { loader as jobCircuitLoader } from 'src/components/Pages/Jobs/JobCircuit';
-import Budgets from 'src/components/Pages/Budgets/Budgets';
-import ResourcesRoot from 'src/components/Pages/Resources/ResourcesRoot';
-import Resources from 'src/components/Pages/Resources/Resources';
-import ResourceDetail from 'src/components/Pages/Resources/ResourceDetail';
-import TokensRootLayout from 'src/components/Pages/Tokens/TokensRoot';
-import Tokens from 'src/components/Pages/Tokens/Tokens';
-import NewToken from 'src/components/Pages/Tokens/NewToken';
-import { tokenLoader, checkTokenLoader } from 'src/components/utils/auth';
-import Feedback from 'src/components/Pages/Feedback/Feedback';
-import RequestAccess from 'src/components/Pages/RequestAccess/RequestAccess';
-import FAQ from 'src/components/Pages/FAQ/FAQ';
+import { queryClient } from '@utils/query';
+import RootLayout from '@components/Pages/RootLayout';
+import DefaultLayout from '@components/Pages/DefaultLayout';
+import Login from '@components/Pages/Login/Login';
+import Logout, { action as logoutAction } from '@components/Pages/Logout';
+import ForceResetLayout from '@components/Pages/ForcedReset/ForcedResetLayout';
+import ForcedResetPassword from '@components/Pages/ForcedReset/ForcedResetPassword';
+import ForgotPassword from '@components/Pages/ForgotPassword/ForgotPassword';
+import Blocked from '@components/Pages/ErrorsHandling/Blocked';
+import ErrorPage from '@components/Pages/ErrorsHandling/Error';
+import DefaultErrorPage from '@components/Pages/ErrorsHandling/DefaultError';
+import StatusRoot from '@components/Pages/Status/StatusRoot';
+import Status from '@components/Pages/Status/Status';
+import JobsRoot from '@components/Pages/Jobs/JobsRoot';
+import Jobs from '@components/Pages/Jobs/Jobs';
+import JobDetail, { loader as jobDetailLoader } from '@components/Pages/Jobs/JobDetail';
+import JobCircuit, { loader as jobCircuitLoader } from '@components/Pages/Jobs/JobCircuit';
+import Budgets from '@components/Pages/Budgets/Budgets';
+import ResourcesRoot from '@components/Pages/Resources/ResourcesRoot';
+import Resources from '@components/Pages/Resources/Resources';
+import ResourceDetail from '@components/Pages/Resources/ResourceDetail';
+import TokensRootLayout from '@components/Pages/Tokens/TokensRoot';
+import Tokens from '@components/Pages/Tokens/Tokens';
+import NewToken from '@components/Pages/Tokens/NewToken';
+import { tokenLoader, checkTokenLoader } from '@utils/auth';
+import Feedback from '@components/Pages/Feedback/Feedback';
+import RequestAccess from '@components/Pages/RequestAccess/RequestAccess';
+import FAQ from '@components/Pages/FAQ/FAQ';
 import './App.scss';
-import Funding from 'src/components/Pages/Funding/Funding';
+import Funding from '@components/Pages/Funding/Funding';
 
 function App() {
+  // Define all application routes with nested layouts, loaders, and error boundaries
   const router = createBrowserRouter([
     {
+      // Protected routes under RootLayout requiring authentication via tokenLoader
       path: '/',
       element: <RootLayout />,
       errorElement: <ErrorPage />,
@@ -83,6 +89,7 @@ function App() {
           ],
         },
         {
+          // Jobs section with nested detail and circuit visualization routes
           path: 'jobs',
           element: <JobsRoot />,
           errorElement: <ErrorPage />,
@@ -122,6 +129,7 @@ function App() {
           loader: checkTokenLoader,
         },
         {
+          // Resources section with list and detail views
           path: 'resources',
           element: <ResourcesRoot />,
           errorElement: <ErrorPage />,
@@ -168,6 +176,7 @@ function App() {
       ],
     },
     {
+      // Public routes under DefaultLayout for unauthenticated users
       path: '/',
       element: <DefaultLayout />,
       errorElement: <DefaultErrorPage />,
@@ -196,6 +205,7 @@ function App() {
     },
   ]);
 
+  // Wrap app with React Query provider for data fetching and router for navigation
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />

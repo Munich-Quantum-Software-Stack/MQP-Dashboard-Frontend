@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-import Logout from 'src/components/Pages/Logout';
+import Logout from '@components/Pages/Logout';
 
 const UserNavigation = ({ onHidden }) => {
   //const token = useRouteLoaderData("home");

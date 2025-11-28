@@ -1,6 +1,3 @@
-// Snapshot of the /jobs and /jobs/:id responses captured from the staging API
-// on 2025-11-04. Sensitive fields were removed, otherwise the payloads mirror
-// the backend so the tests exercise real-world data shapes.
 export const jobsResponse = {
   totaljob_nr: 12,
   jobs: [

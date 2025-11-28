@@ -1,13 +1,17 @@
+# CI/CD Pipeline - Runs linting, unit tests, build, and E2E tests on push/PR
 name: CI/CD Pipeline
 
+# Trigger on all pushes and pull requests
 on:
   push:
   pull_request:
 
 jobs:
+  # Main job: runs lint, unit tests, and production build across Node versions
   build-and-test:
     runs-on: ubuntu-latest
 
+    # Test against multiple Node.js versions for compatibility
     strategy:
       matrix:
         node-version: [22.x, 24.11.0]
@@ -24,6 +28,7 @@ jobs:
       - name: Install Dependencies
         run: npm ci --loglevel=error
 
+      # Run lint and tests in parallel for faster CI execution
       - name: Lint & Test
         run: |
           npm run lint &
@@ -33,8 +38,10 @@ jobs:
       - name: Build
         run: npm run build
 
+  # E2E job: runs Playwright browser tests with sharding for parallelization
   e2e-tests:
     runs-on: ubuntu-latest
+    # Split E2E tests into 2 shards for parallel execution
     strategy:
       matrix:
         shard: [1, 2]
@@ -51,6 +58,7 @@ jobs:
       - name: Install Dependencies
         run: npm ci --loglevel=error
 
+      # Cache Playwright browsers to speed up subsequent runs
       - name: Cache Playwright Browsers
         uses: actions/cache@v4
         id: playwright-cache
@@ -66,6 +74,7 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit == 'true'
         run: npx playwright install-deps
 
+      # Build test version and run sharded E2E tests
       - name: Build & Test
         run: |
           npm run build:test

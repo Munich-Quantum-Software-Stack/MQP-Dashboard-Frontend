@@ -1,7 +1,7 @@
 import React from 'react';
 import { redirect, useSubmit } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { authActions } from 'src/store/auth-slice';
+import { authActions } from '@store/auth-slice';
 const Logout = ({ onHidden }) => {
   const submit = useSubmit();
   const dispatch = useDispatch();

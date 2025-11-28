@@ -1,3 +1,8 @@
+/**
+ * resources-http.js - HTTP utility for fetching quantum computing resources from the API
+ */
+
+// Fetch all available quantum resources with their status and specifications
 export async function fetchResources({ signal, access_token }) {
   const url = process.env.REACT_APP_API_ENDPOINT + '/resources';
   const response = await fetch(url, {
@@ -10,6 +15,7 @@ export async function fetchResources({ signal, access_token }) {
   });
 
   if (!response.ok) {
+    // Extract error details from response body if available
     let errorMessage = 'Could not fetch resources!';
     let errorDetails;
 

@@ -1,3 +1,8 @@
+/**
+ * jobs-http.js - HTTP utility functions for fetching and querying quantum jobs from the API
+ */
+
+// Fetch all jobs for the authenticated user (simple version without pagination)
 export async function fetchJobs(access_token) {
   const url = process.env.REACT_APP_API_ENDPOINT + '/jobs';
   const response = await fetch(url, {
@@ -24,6 +29,7 @@ export async function fetchJobs(access_token) {
   return jobs;
 }
 
+// Fetch paginated jobs with sorting and filtering options for React Query
 export async function queryFetchJobs({
   signal,
   access_token,
@@ -33,6 +39,7 @@ export async function queryFetchJobs({
   order_by = 'ID',
   status,
 }) {
+  // Build query parameters for pagination, sorting, and filtering
   const params = new URLSearchParams();
   params.append('p', page);
   params.append('jpp', limit);
@@ -69,6 +76,7 @@ export async function queryFetchJobs({
 
   const data = await response.json();
 
+  // Client-side numeric sorting for ID column since API returns string IDs
   if (order_by === 'ID' && data.jobs && data.jobs.length > 0) {
     // Sort by ID numerically
     data.jobs.sort((a, b) => {
@@ -92,6 +100,7 @@ export async function queryFetchJobs({
   };
 }
 
+// Fetch a single job by ID with circuit data normalization
 export async function fetchJob({ signal, access_token, id }) {
   const url = process.env.REACT_APP_API_ENDPOINT + '/jobs/' + id;
   const response = await fetch(url, {
@@ -109,6 +118,8 @@ export async function fetchJob({ signal, access_token, id }) {
     throw error;
   }
   const { job } = await response.json();
+
+  // Provide default circuit if none exists
   if (!job.circuit) {
     job.circuit =
       'OPENQASM 2.0;\ninclude "qelib1.inc";\n\nqreg q[2];\ncreg c[2];\n\nh q[0];\ncx q[0],q[1];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];';
@@ -118,7 +129,7 @@ export async function fetchJob({ signal, access_token, id }) {
     job.executed_circuit = job.circuit;
   }
 
-  // Remove the No Modify field
+  // Remove the No Modify field (cleanup internal API fields)
   if (job.no_modify !== undefined) {
     delete job.no_modify;
   }

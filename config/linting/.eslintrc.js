@@ -18,6 +18,7 @@ module.exports = {
           ['@store', path.resolve(__dirname, '../../src/store')],
           ['@utils', path.resolve(__dirname, '../../src/components/utils')],
           ['@data', path.resolve(__dirname, '../../src/data')],
+          ['@test', path.resolve(__dirname, '../../src/test')],
         ],
         extensions: ['.js', '.jsx', '.json'],
       },
@@ -25,6 +26,23 @@ module.exports = {
   },
   rules: {
     'import/no-unresolved': 'error',
+    'no-restricted-imports': [
+      'error',
+      {
+        patterns: [
+          {
+            group: ['../*'],
+            message:
+              'Use path aliases (@components, @utils, @assets, @hooks, @store, @data) instead of relative imports.',
+          },
+          {
+            group: ['src/*'],
+            message:
+              'Use path aliases (@components, @utils, @assets, @hooks, @store, @data) instead of src/ prefix.',
+          },
+        ],
+      },
+    ],
     'prettier/prettier': ['error', prettierConfig],
   },
   overrides: [

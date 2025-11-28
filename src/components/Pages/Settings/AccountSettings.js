@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import BlankCard from 'src/components/UI/Card/BlankCard';
+import BlankCard from '@components/UI/Card/BlankCard';
 import { Form } from 'react-router-dom';
-import FormMessage from 'src/components/UI/MessageBox/AlertCard';
-import Button from 'src/components/UI/Button/Button';
+import FormMessage from '@components/UI/MessageBox/AlertCard';
+import Button from '@components/UI/Button/Button';
 
 const AccountSettings = () => {
   //const data = useActionData();

@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
-import PaneCard from 'src/components/UI/Card/PaneCard';
-import PDFLink from 'src/components/UI/Document/PDFLink';
+import PaneCard from '@components/UI/Card/PaneCard';
+import PDFLink from '@components/UI/Document/PDFLink';
 
 const SoftwareStackIntroduction = () => {
   const fs = useSelector((state) => state.accessibilities.font_size);

@@ -1,8 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { formatTimestampGMT } from 'src/components/utils/date-utils';
+import { formatTimestampGMT } from '@utils/date-utils';
 
+/**
+ * JobListItem - Renders a single job row in the jobs table with status styling and actions
+ */
 const JobListItem = (props) => {
   const navigate = useNavigate();
   const fs = useSelector((state) => state.accessibilities.font_size);
@@ -10,6 +13,7 @@ const JobListItem = (props) => {
 
   const job = props.job;
 
+  // Map job status to corresponding background color class
   let status_bg = '';
   if (job.status === 'RUNNING') {
     status_bg = 'running_bg';
@@ -26,9 +30,12 @@ const JobListItem = (props) => {
 
   const formattedSubmissionDate = formatTimestampGMT(job.timestamp_submitted, false);
 
+  // Navigate to job details page on row click
   const jobDetailHandler = (id) => {
     return navigate('/jobs/' + id);
   };
+
+  // Cancel job with confirmation dialog and API call
   const cancelJobHandler = async (event) => {
     event.stopPropagation();
     const confirmCancel = window.confirm(`Are you sure you want to cancel Job ID: ${job.id}?`);
@@ -51,6 +58,7 @@ const JobListItem = (props) => {
     }
   };
 
+  // Keyboard accessibility handler for Enter/Space key navigation
   const keyboardJobDetailHandler = (event) => {
     if (event.key === 'Enter' || event.key === ' ' || event.key === 'Spacebar') {
       jobDetailHandler(event.target.id);

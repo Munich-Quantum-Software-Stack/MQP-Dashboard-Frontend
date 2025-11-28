@@ -1,12 +1,17 @@
+/**
+ * resources-http.test.js - Unit tests for resources API helper (fetchResources)
+ */
+
 import { rest } from 'msw';
-import { server } from 'src/test/server';
+import { server } from '@test/server';
 import { fetchResources } from '@utils/resources-http';
-import { resourcesResponse } from 'src/test/fixtures/resources-response';
+import { resourcesResponse } from '@test/fixtures/resources-response';
 
 const API_BASE = 'https://api.test';
 const ORIGINAL_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 describe('resources-http API helper', () => {
+  // Set up and restore test API endpoint environment variable
   beforeAll(() => {
     process.env.REACT_APP_API_ENDPOINT = API_BASE;
   });
@@ -19,6 +24,7 @@ describe('resources-http API helper', () => {
     jest.clearAllMocks();
   });
 
+  // Test successful fetch: verify auth header is sent and JSON payload is returned
   it('fetchResources returns JSON payload', async () => {
     server.use(
       rest.get(`${API_BASE}/resources`, (req, res, ctx) => {
@@ -31,6 +37,7 @@ describe('resources-http API helper', () => {
     expect(data).toEqual(resourcesResponse);
   });
 
+  // Test error handling: verify descriptive error with code and backend details is thrown
   it('fetchResources throws descriptive error when backend fails', async () => {
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 

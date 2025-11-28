@@ -1,15 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import LoginCard from 'src/components/UI/Card/LoginCard';
-import LoginFormHeader from 'src/components/Pages/Login/LoginFormHeader';
-import Footer from 'src/components/Layout/Footer/Footer';
+import LoginCard from '@components/UI/Card/LoginCard';
+import LoginFormHeader from '@components/Pages/Login/LoginFormHeader';
+import Footer from '@components/Layout/Footer/Footer';
 
+/**
+ * ForgotPassword - Displays password recovery instructions based on account type
+ */
 function ForgotPassword() {
   return (
     <LoginCard>
       <div className="col-md-8 col-lg-5 ml-lg-0 LoginForm_wrap">
         <LoginFormHeader />
         <div className="mb-4 login_content">
+          {/* Instructions for LRZ-ID users (IDM-Portal) and Quantum account users (contact admin) */}
           <div className=" mb-5">
             <p>If your account is:</p>
             <ul>

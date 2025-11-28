@@ -1,7 +1,11 @@
+/**
+ * authentication-http.test.js - Unit tests for login API helper function with various response scenarios
+ */
+
 import { rest } from 'msw';
-import { server } from 'src/test/server';
+import { server } from '@test/server';
 import { fetchLogin } from '@utils/authentication-http';
-import { loginSuccessResponse } from 'src/test/fixtures/authentication-response';
+import { loginSuccessResponse } from '@test/fixtures/authentication-response';
 
 const API_BASE = 'https://api.test';
 const ORIGINAL_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
@@ -9,6 +13,7 @@ const ORIGINAL_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 describe('authentication-http API helper', () => {
   let consoleInfoSpy;
 
+  // Set up test API endpoint and suppress console.info during tests
   beforeAll(() => {
     process.env.REACT_APP_API_ENDPOINT = API_BASE;
     consoleInfoSpy = jest.spyOn(console, 'info').mockImplementation(() => {});
@@ -19,6 +24,7 @@ describe('authentication-http API helper', () => {
     consoleInfoSpy.mockRestore();
   });
 
+  // Test successful login: verify credentials are posted and response JSON is returned
   it('fetchLogin posts credentials and returns response JSON', async () => {
     const credentials = {
       identity: 'researcher@example.com',
@@ -38,6 +44,7 @@ describe('authentication-http API helper', () => {
     expect(result).toEqual(loginSuccessResponse);
   });
 
+  // Test 401 unauthorized: verify friendly authentication error is thrown
   it('fetchLogin throws a friendly message for 401 responses', async () => {
     server.use(
       rest.post(`${API_BASE}/login`, (_req, res, ctx) => {
@@ -53,6 +60,7 @@ describe('authentication-http API helper', () => {
     });
   });
 
+  // Test 500 server error: verify generic error message is thrown
   it('fetchLogin throws a generic error for other failures', async () => {
     server.use(
       rest.post(`${API_BASE}/login`, (_req, res, ctx) => {

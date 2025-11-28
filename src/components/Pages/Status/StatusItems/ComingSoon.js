@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import PaneCard from 'src/components/UI/Card/PaneCard';
+import PaneCard from '@components/UI/Card/PaneCard';
 
 const ComingSoon = () => {
   const fs = useSelector((state) => state.accessibilities.font_size);

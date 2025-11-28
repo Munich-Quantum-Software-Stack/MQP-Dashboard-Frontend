@@ -1,6 +1,7 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 
+// Available status filter options for job filtering
 const STATUS_OPTIONS = [
   { value: 'ALL', label: 'All' },
   { value: 'CANCELLED', label: 'Cancelled' },
@@ -8,7 +9,11 @@ const STATUS_OPTIONS = [
   { value: 'SUBMITTED', label: 'Submitted' },
 ];
 
+/**
+ * JobsSorting - Sorting and filtering controls for the jobs list (sort by ID/Status/Date)
+ */
 const JobsSorting = ({ sortKey = 'ID', sortOrder = 'DESC', statusFilter = 'ALL', onSorting }) => {
+  // Handle sort key change, reset to status filter when sorting by status
   const handleKeyChange = (e) => {
     const newKey = (e.target.value || 'ID').toUpperCase();
 
@@ -36,6 +41,7 @@ const JobsSorting = ({ sortKey = 'ID', sortOrder = 'DESC', statusFilter = 'ALL',
         style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}
       >
         <Form.Label style={{ marginBottom: 0, whiteSpace: 'nowrap' }}>Sorting by:</Form.Label>
+        {/* Sort key selector: ID, Status, or Date */}
         <Form.Select
           aria-label="Sorting Items"
           value={sortKey}
@@ -47,6 +53,7 @@ const JobsSorting = ({ sortKey = 'ID', sortOrder = 'DESC', statusFilter = 'ALL',
           <option value="DATE">Date</option>
         </Form.Select>
 
+        {/* Show ASC/DESC order selector for ID and Date sorting */}
         {(sortKey === 'ID' || sortKey === 'DATE') && (
           <Form.Select
             aria-label="Sorting Order"
@@ -59,6 +66,7 @@ const JobsSorting = ({ sortKey = 'ID', sortOrder = 'DESC', statusFilter = 'ALL',
           </Form.Select>
         )}
 
+        {/* Show status filter dropdown when sorting by Status */}
         {sortKey === 'STATUS' && (
           <>
             <Form.Label style={{ marginBottom: 0, whiteSpace: 'nowrap', marginLeft: '0.5rem' }}>

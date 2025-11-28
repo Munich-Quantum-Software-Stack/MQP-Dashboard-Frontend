@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { isNotEmpty, isEmail } from 'src/components/utils/validationUserInput';
-import { useInput } from 'src/hooks/use-input';
-import Button from 'src/components/UI/Button/Button';
-import AlertCard from 'src/components/UI/MessageBox/AlertCard';
+import { isNotEmpty, isEmail } from '@utils/validationUserInput';
+import { useInput } from '@hooks/use-input';
+import Button from '@components/UI/Button/Button';
+import AlertCard from '@components/UI/MessageBox/AlertCard';
 import { Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import titles from 'src/data/titles.json';
-import countries from 'src/data/countries.json';
-import SuccessMessage from 'src/components/Pages/RequestAccess/SuccessMessage';
+import titles from '@data/titles.json';
+import countries from '@data/countries.json';
+import SuccessMessage from '@components/Pages/RequestAccess/SuccessMessage';
 
 function RequestAccessForm() {
   const [httpErr, setHttpErr] = useState(null);

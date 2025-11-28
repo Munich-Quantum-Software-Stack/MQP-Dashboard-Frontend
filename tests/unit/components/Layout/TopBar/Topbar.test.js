@@ -1,10 +1,15 @@
+/**
+ * Topbar.test.js - Unit tests for TopBar component accessibility features (darkmode toggle)
+ */
+
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
-import store from 'src/store';
-import TopBar from 'src/components/Layout/TopBar/TopBar';
+import store from '@store/index';
+import TopBar from '@components/Layout/TopBar/TopBar';
 
-jest.mock('src/hooks/use-outside-click', () => ({
+// Mock the outside click hook to prevent side effects during testing
+jest.mock('@hooks/use-outside-click', () => ({
   __esModule: true,
   default: jest.fn(() => ({ current: null })),
 }));
@@ -12,8 +17,8 @@ jest.mock('src/hooks/use-outside-click', () => ({
 describe('Accessibilities component', () => {
   let consoleSpy;
 
+  // Suppress React act() warnings that occur during async state updates
   beforeEach(() => {
-    // Suppress React act() warning - this is a known issue with useEffect + Redux dispatch
     consoleSpy = jest.spyOn(console, 'error').mockImplementation((msg) => {
       if (!msg.includes('not wrapped in act')) {
         console.warn(msg);
@@ -25,6 +30,7 @@ describe('Accessibilities component', () => {
     consoleSpy.mockRestore();
   });
 
+  // Test that clicking darkmode button toggles between enable/disable states
   test('render Darkmode toggle was clicked', async () => {
     const user = userEvent.setup();
 

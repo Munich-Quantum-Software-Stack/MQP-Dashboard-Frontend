@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useLoaderData, useParams } from 'react-router-dom';
-import { getAuthToken } from 'src/components/utils/auth';
-import ContentCard from 'src/components/UI/Card/ContentCard';
-import { queryClient } from 'src/components/utils/query';
-import { fetchJob } from 'src/components/utils/jobs-http';
+import { getAuthToken } from '@utils/auth';
+import ContentCard from '@components/UI/Card/ContentCard';
+import { queryClient } from '@utils/query';
+import { fetchJob } from '@utils/jobs-http';
 
+/**
+ * JobCircuit - Displays the submitted or executed quantum circuit code for a job
+ */
 const JobCircuit = ({ isExecutedCircuit = false }) => {
   const job = useLoaderData();
   const params = useParams();
@@ -17,6 +20,7 @@ const JobCircuit = ({ isExecutedCircuit = false }) => {
 
   const [circuit, setCircuit] = useState('');
 
+  // Set circuit content based on whether showing executed or submitted circuit
   useEffect(() => {
     if (job) {
       if (isExecutedCircuit) {
@@ -32,6 +36,7 @@ const JobCircuit = ({ isExecutedCircuit = false }) => {
       <h4 style={{ fontSize: page_header_fs }}>
         {isExecutedCircuit ? 'Executed Circuit' : 'Submitted Circuit'} for Job {params.jobId}
       </h4>
+      {/* Scrollable code block displaying the circuit content */}
       <div className={`${darkmode_class}`} style={{ margin: '2rem 0' }}>
         <div
           style={{
@@ -70,6 +75,7 @@ const JobCircuit = ({ isExecutedCircuit = false }) => {
 
 export default JobCircuit;
 
+// React Router loader - fetches job data before component renders
 export async function loader({ params }) {
   const access_token = getAuthToken();
   return queryClient.fetchQuery({

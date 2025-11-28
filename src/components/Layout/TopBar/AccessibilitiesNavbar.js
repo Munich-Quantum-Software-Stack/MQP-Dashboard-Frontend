@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { getFontsize } from 'src/components/utils/theme';
-import ToggleDarkmodeButton from 'src/components/Layout/TopBar/ToggleDarkmodeButton';
+import { getFontsize } from '@utils/theme';
+import ToggleDarkmodeButton from '@components/Layout/TopBar/ToggleDarkmodeButton';
 
 const AccessibilitiesNavbar = ({
   id,

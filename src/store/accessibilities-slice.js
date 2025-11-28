@@ -1,11 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { getDarkmode, getFontsize } from 'src/components/utils/theme';
+/**
+ * accessibilities-slice.js - Redux slice for managing UI accessibility preferences (darkmode, font size)
+ */
 
+import { createSlice } from '@reduxjs/toolkit';
+import { getDarkmode, getFontsize } from '@utils/theme';
+
+// Initialize state with persisted preferences from localStorage via theme utils
 const initialAccessibilitiesState = {
   darkmode: getDarkmode(),
   font_size: getFontsize(),
 };
 
+// Redux slice with reducers to toggle accessibility settings and persist to localStorage
 const AccessibilitiesSlice = createSlice({
   name: 'accessibilities',
   initialState: initialAccessibilitiesState,

@@ -1,10 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import ContentCard from 'src/components/UI/Card/ContentCard';
-import FeedbackForm from 'src/components/Pages/Feedback/FeedbackForm';
+import ContentCard from '@components/UI/Card/ContentCard';
+import FeedbackForm from '@components/Pages/Feedback/FeedbackForm';
 import './Feedback.scss';
 
+/**
+ * Feedback - Page wrapper that displays the feedback submission form
+ */
 const Feedback = () => {
+  // Get accessibility settings from Redux store
   const darkmode = useSelector((state) => state.accessibilities.darkmode);
   const fs = useSelector((state) => state.accessibilities.font_size);
   const page_header_fs = +fs * 1.5;

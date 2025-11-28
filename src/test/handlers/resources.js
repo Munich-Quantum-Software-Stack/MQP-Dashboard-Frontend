@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import { resourcesResponse } from '../fixtures/resources-response';
+import { resourcesResponse } from '@test/fixtures/resources-response';
 
 export const resourcesHandlers = [
   rest.get('*/resources', (_req, res, ctx) => {

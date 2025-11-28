@@ -2,13 +2,13 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import ContentCard from 'src/components/UI/Card/ContentCard';
+import ContentCard from '@components/UI/Card/ContentCard';
 
-import ErrorBlock from 'src/components/UI/MessageBox/ErrorBlock';
-import TokensList from 'src/components/Pages/Tokens/TokensList';
-import LoadingIndicator from 'src/components/UI/LoadingIndicator';
-import { fetchTokens } from 'src/components/utils/tokens-http';
-import { getAuthToken } from 'src/components/utils/auth';
+import ErrorBlock from '@components/UI/MessageBox/ErrorBlock';
+import TokensList from '@components/Pages/Tokens/TokensList';
+import LoadingIndicator from '@components/UI/LoadingIndicator';
+import { fetchTokens } from '@utils/tokens-http';
+import { getAuthToken } from '@utils/auth';
 
 import './Tokens.scss';
 

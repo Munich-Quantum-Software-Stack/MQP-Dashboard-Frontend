@@ -1,4 +1,4 @@
-import Button from 'src/components/UI/Button/Button';
+import Button from '@components/UI/Button/Button';
 const SuccessMessage = () => {
   const clearPageHandler = () => {
     window.location.reload();

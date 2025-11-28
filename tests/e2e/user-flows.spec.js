@@ -1,5 +1,10 @@
+/**
+ * user-flows.spec.js - End-to-end Playwright tests for critical user journeys (login, tokens, access request)
+ */
+
 const { test, expect } = require('@playwright/test');
 
+// Mock API response data for login, tokens list, and user limits
 const loginResponse = {
   access_token: 'test-access-token',
   force_secret_reset: false,
@@ -20,6 +25,7 @@ const userLimitsResponse = {
   remaining: 4,
 };
 
+// Intercept login API calls and return mock auth token response
 async function mockLogin(page) {
   await page.route('**/login', async (route) => {
     if (route.request().resourceType() === 'document') {
@@ -34,6 +40,7 @@ async function mockLogin(page) {
   });
 }
 
+// Intercept token-related API calls (user limits and token list) with mock data
 async function mockTokenQueries(page) {
   await page.route('**/tokens/user_limits', async (route) => {
     if (route.request().resourceType() === 'document') {
@@ -65,6 +72,7 @@ async function mockTokenQueries(page) {
   });
 }
 
+// Reusable helper that performs full login flow and verifies redirect to status page
 async function performLogin(page) {
   await mockLogin(page);
   await page.goto('/login');
@@ -79,11 +87,13 @@ async function performLogin(page) {
   await expect(page.getByRole('heading', { name: /Munich Quantum Portal/i })).toBeVisible();
 }
 
+// Test suite covering main user journeys: login, token viewing, and access request
 test.describe('End-to-End user journeys', () => {
   test('user can log in and reach the status page', async ({ page }) => {
     await performLogin(page);
   });
 
+  // Test authenticated navigation to tokens page and verify token list display
   test('authenticated user can navigate to tokens and view active tokens', async ({ page }) => {
     await mockTokenQueries(page);
     await performLogin(page);
@@ -95,6 +105,7 @@ test.describe('End-to-End user journeys', () => {
     await expect(page.getByText('alpha-token')).toBeVisible();
   });
 
+  // Test unauthenticated visitor filling and submitting the access request form
   test('visitor can request portal access', async ({ page }) => {
     await page.route('**/request_access', async (route) => {
       if (route.request().resourceType() === 'document') {

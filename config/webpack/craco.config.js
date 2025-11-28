@@ -1,5 +1,14 @@
 const path = require('path');
 
+// Suppress postcss.plugin deprecation warnings from legacy PostCSS plugins
+// eslint-disable-next-line no-console
+const originalConsoleWarn = console.warn;
+// eslint-disable-next-line no-console
+console.warn = (...args) => {
+  if (args[0]?.includes?.('postcss.plugin was deprecated')) return;
+  originalConsoleWarn.apply(console, args);
+};
+
 module.exports = {
   webpack: {
     alias: {
@@ -10,7 +19,15 @@ module.exports = {
       '@store': path.resolve(__dirname, '../../src/store'),
       '@utils': path.resolve(__dirname, '../../src/components/utils'),
       '@data': path.resolve(__dirname, '../../src/data'),
+      '@test': path.resolve(__dirname, '../../src/test'),
     },
+  },
+  devServer: (devServerConfig) => {
+    // Remove deprecated options for webpack-dev-server v5
+    delete devServerConfig.onAfterSetupMiddleware;
+    delete devServerConfig.onBeforeSetupMiddleware;
+    delete devServerConfig.https;
+    return devServerConfig;
   },
   style: {
     sass: {
@@ -38,6 +55,7 @@ module.exports = {
         '^@store/(.*)$': '<rootDir>/src/store/$1',
         '^@utils/(.*)$': '<rootDir>/src/components/utils/$1',
         '^@data/(.*)$': '<rootDir>/src/data/$1',
+        '^@test/(.*)$': '<rootDir>/src/test/$1',
       },
       transformIgnorePatterns: ['node_modules/(?!(date-fns)/)'],
     },

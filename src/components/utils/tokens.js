@@ -1,3 +1,8 @@
+/**
+ * tokens.js - Utility functions for transforming and calculating token data
+ */
+
+// Transform API token response into simplified array with name and revocation status
 export const transformedTokens = (tokensObj) => {
   if (!tokensObj || !Array.isArray(tokensObj.tokens)) {
     return [];
@@ -10,6 +15,7 @@ export const transformedTokens = (tokensObj) => {
   }));
 };
 
+// Calculate token expiration date from creation date and validity period in days
 export const updateExpiration = (creation, validity) => {
   let expiredMsec = Date.parse(creation) + parseInt(validity) * 86400000;
   const options = {

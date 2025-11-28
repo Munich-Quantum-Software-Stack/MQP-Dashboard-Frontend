@@ -1,9 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import MaintenanceResourceItem from 'src/components/Pages/Resources/MaintenanceResourceItem';
-import ActiveResourceItem from 'src/components/Pages/Resources/ActiveResourceItem';
-import BlankCard from 'src/components/UI/Card/BlankCard';
+import MaintenanceResourceItem from '@components/Pages/Resources/MaintenanceResourceItem';
+import ActiveResourceItem from '@components/Pages/Resources/ActiveResourceItem';
+import BlankCard from '@components/UI/Card/BlankCard';
 
+/**
+ * ResourcesList - Displays available and maintenance quantum resources in separate sections
+ */
 const ResourcesList = ({ resources, available_resources }) => {
   const darkmode = useSelector((state) => state.accessibilities.darkmode);
   const fs = useSelector((state) => state.accessibilities.font_size);
@@ -17,11 +20,13 @@ const ResourcesList = ({ resources, available_resources }) => {
     );
   }
 
+  // Separate resources into active and maintenance lists
   const active_resources = [];
   const maintenance_resources = [];
   const restrictedNames = new Set();
   let availableLookup = null;
 
+  // Build lookup set of resources available to user's budget
   if (Array.isArray(available_resources)) {
     availableLookup = new Set();
     available_resources.forEach((resource) => {
@@ -31,6 +36,7 @@ const ResourcesList = ({ resources, available_resources }) => {
     });
   }
 
+  // Categorize resources and mark restricted ones not in user's budget
   for (const resource of resources) {
     if (resource.maintenance === true || resource.status === 'Offline') {
       maintenance_resources.push(resource);
@@ -44,6 +50,7 @@ const ResourcesList = ({ resources, available_resources }) => {
 
   return (
     <React.Fragment>
+      {/* Available resources section */}
       {active_resources.length > 0 && (
         <div className="available_resources_list">
           <h4 className="page_header" style={{ fontSize: page_header_fs }}>
@@ -68,6 +75,7 @@ const ResourcesList = ({ resources, available_resources }) => {
         </div>
       )}
 
+      {/* Maintenance resources section */}
       {maintenance_resources.length > 0 && (
         <div className="mt-5 other_resources_list">
           <h4 className="page_header" style={{ fontSize: page_header_fs }}>

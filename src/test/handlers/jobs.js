@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import { jobsResponse, jobDetailResponse } from '../fixtures/jobs-response';
+import { jobsResponse, jobDetailResponse } from '@test/fixtures/jobs-response';
 
 export const jobsHandlers = [
   rest.get('*/jobs', (_req, res, ctx) => {

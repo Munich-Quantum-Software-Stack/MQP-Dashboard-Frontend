@@ -1,8 +1,8 @@
 import React from 'react';
 //import { useAnimate } from "framer-motion";
 import { useRouteLoaderData } from 'react-router-dom';
-import Navigation from 'src/components/Layout/MainNavigation/Navigation';
-import UserNavigation from 'src/components/Layout/MainNavigation/UserNav';
+import Navigation from '@components/Layout/MainNavigation/Navigation';
+import UserNavigation from '@components/Layout/MainNavigation/UserNav';
 
 function MainNavigation({ id, onHidden }) {
   const token = useRouteLoaderData('home');

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useRouteError } from 'react-router-dom';
-import BlankCard from '../../UI/Card/BlankCard';
+import BlankCard from '@components/UI/Card/BlankCard';
 function ErrorPage() {
   const error = useRouteError();
   const fs = useSelector((state) => state.accessibilities.font_size);

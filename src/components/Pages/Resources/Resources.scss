@@ -49,24 +49,7 @@ $resource_divider_8: #800080;
     flex: 1;
     color: black;
     position: relative;
-    &.resource_beta {
-      .resource_beta_watermark {
-        position: absolute;
-        top: 1.2rem;
-        left: 0;
-        right: 0;
-        display: flex;
-        justify-content: center;
-        font-size: 1.5rem;
-        font-weight: 800;
-        letter-spacing: 0.1rem;
-        color: rgba(5, 16, 35, 0.4);
-        text-transform: uppercase;
-        pointer-events: none;
-        user-select: none;
-        z-index: 1;
-      }
-    }
+
     .resource_item_body {
       position: relative;
       z-index: 2;

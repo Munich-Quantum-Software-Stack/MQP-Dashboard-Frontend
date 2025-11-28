@@ -1,4 +1,7 @@
-import { getAuthToken } from 'src/components/utils/auth';
+/**
+ * budgets-http.js - HTTP utility functions for fetching user budget allocations from the API
+ */
+import { getAuthToken } from '@utils/auth';
 const access_token = getAuthToken();
 // const transformResourced = tempResources.map((resource) => ({
 //     id: resource.id,
@@ -9,6 +12,7 @@ const access_token = getAuthToken();
 //     remaining_color: resource.remaining_color,
 // }));
 
+// Fetch all budgets for the authenticated user
 export async function fetchBudgets() {
   const url = process.env.REACT_APP_API_ENDPOINT + '/budgets';
   const response = await fetch(url, {

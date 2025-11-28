@@ -1,3 +1,8 @@
+/**
+ * authentication-http.js - HTTP utility for user login authentication
+ */
+
+// Authenticate user credentials and return access token on success
 export async function fetchLogin(authData) {
   console.info('current server: ' + process.env.REACT_APP_API_ENDPOINT);
   const login_url = process.env.REACT_APP_API_ENDPOINT + '/login';

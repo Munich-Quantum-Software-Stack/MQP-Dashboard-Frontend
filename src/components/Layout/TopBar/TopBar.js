@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import NavbarHeader from 'src/components/Layout/MainNavigation/NavbarHeader';
-import Timer from 'src/components/Layout/TopBar/Timer';
-import ResponsiveMainNavigation from 'src/components/Layout/MainNavigation/ResponsiveMainNavigation';
-import useOutsideClick from 'src/hooks/use-outside-click';
-import AccessibilitiesNavbar from 'src/components/Layout/TopBar/AccessibilitiesNavbar';
+import NavbarHeader from '@components/Layout/MainNavigation/NavbarHeader';
+import Timer from '@components/Layout/TopBar/Timer';
+import ResponsiveMainNavigation from '@components/Layout/MainNavigation/ResponsiveMainNavigation';
+import useOutsideClick from '@hooks/use-outside-click';
+import AccessibilitiesNavbar from '@components/Layout/TopBar/AccessibilitiesNavbar';
 import { AnimatePresence } from 'framer-motion';
-import { getDarkmode, getFontsize, getDefaultFontsize } from 'src/components/utils/theme';
-import { accessibilitiesAction } from 'src/store/accessibilities-slice';
-import ToggleButton from 'src/components/UI/Button/ToggleButton';
+import { getDarkmode, getFontsize, getDefaultFontsize } from '@utils/theme';
+import { accessibilitiesAction } from '@store/accessibilities-slice';
+import ToggleButton from '@components/UI/Button/ToggleButton';
 
 function TopBar() {
   const dispatch = useDispatch();

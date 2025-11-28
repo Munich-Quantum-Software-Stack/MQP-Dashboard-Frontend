@@ -1,12 +1,12 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
-import ContentCard from 'src/components/UI/Card/ContentCard';
-import CreateTokenForm from 'src/components/Pages/Tokens/CreateTokenForm';
-import { fetchUserLimits } from 'src/components/utils/tokens-http';
-import ErrorBlock from 'src/components/UI/MessageBox/ErrorBlock';
-import LoadingIndicator from 'src/components/UI/LoadingIndicator';
-import { getAuthToken } from 'src/components/utils/auth';
+import ContentCard from '@components/UI/Card/ContentCard';
+import CreateTokenForm from '@components/Pages/Tokens/CreateTokenForm';
+import { fetchUserLimits } from '@utils/tokens-http';
+import ErrorBlock from '@components/UI/MessageBox/ErrorBlock';
+import LoadingIndicator from '@components/UI/LoadingIndicator';
+import { getAuthToken } from '@utils/auth';
 
 const NewToken = () => {
   const darkmode = useSelector((state) => state.accessibilities.darkmode);
