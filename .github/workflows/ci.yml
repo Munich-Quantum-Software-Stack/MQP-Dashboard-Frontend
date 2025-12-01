@@ -13,16 +13,20 @@ concurrency:
 
 jobs:
   # Main job: runs lint, unit tests, security audit, and production build
+  # Both Node versions run in parallel (matrix), not sequentially
   build-and-test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x, 24.11.1]
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js 22.x
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
-          node-version: 22.x
+          node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
       - name: Install Dependencies
@@ -82,10 +86,10 @@ jobs:
           npm run build:test
           npx playwright test --config=config/e2e/playwright.config.js --shard=${{ matrix.shard }}/2
 
-      # Upload test artifacts on failure for debugging
+      # Upload test artifacts only on failure for debugging
       - name: Upload Playwright Report
         uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
+        if: failure()
         with:
           name: playwright-report-shard-${{ matrix.shard }}
           path: playwright-report/
@@ -93,7 +97,7 @@ jobs:
 
       - name: Upload Test Results
         uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
+        if: failure()
         with:
           name: test-results-shard-${{ matrix.shard }}
           path: test-results/
