@@ -33,6 +33,9 @@ import { tokenLoader, checkTokenLoader } from '@utils/auth';
 import Feedback from '@components/Pages/Feedback/Feedback';
 import RequestAccess from '@components/Pages/RequestAccess/RequestAccess';
 import FAQ from '@components/Pages/FAQ/FAQ';
+import TelemetryRoot from '@components/Pages/Telemetry/TelemetryRoot';
+import Telemetry from '@components/Pages/Telemetry/Telemetry';
+import TelemetryRoomDetail from '@components/Pages/Telemetry/TelemetryRoomDetail';
 import './App.scss';
 import Funding from '@components/Pages/Funding/Funding';
 
@@ -148,6 +151,23 @@ function App() {
                   element: <ResourceDetail />,
                 },
               ],
+            },
+          ],
+        },
+        {
+          // Telemetry section with dashboard and room detail views
+          path: 'telemetry',
+          element: <TelemetryRoot />,
+          errorElement: <ErrorPage />,
+          loader: checkTokenLoader,
+          children: [
+            {
+              index: true,
+              element: <Telemetry />,
+            },
+            {
+              path: ':roomId',
+              element: <TelemetryRoomDetail />,
             },
           ],
         },
