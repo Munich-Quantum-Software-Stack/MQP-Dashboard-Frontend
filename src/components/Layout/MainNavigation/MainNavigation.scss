@@ -1,233 +1,193 @@
-
 .left_sidebar_wrap {
-    position: relative;
-    min-height: calc(100vh - 58px);
-    width: 265px;
-    background-color: black;
-    padding: 1rem 0;
+  position: relative;
+  min-height: calc(100vh - 58px);
+  width: 265px;
+  background-color: black;
+  padding: 1rem 0;
 }
 .left_sidebar {
-   
+  height: 100%;
+  width: inherit;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  z-index: 1;
+
+  .main_navigation {
     height: 100%;
-    width: inherit;
-    background-color: black;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    z-index: 1;
 
-    //     @include _transition(ease, 0.5, all);
-    .main_navigation {
-        height: 100%;
+    .closeBtn_wrap {
+      display: none;
+      justify-content: flex-end;
 
-        .closeBtn_wrap {
-            //         display: flex;
-            display: none;
-            justify-content: flex-end;
-
-            .closeBtn {
-                border: none;
-                text-decoration: none;
-                color: $dark_grey;
-                background-color: transparent;
-                padding: 8px 12px;
-                font-size: 2.5rem;
-            }
-        }
-
-        .left_navbar {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            height: 100%;
-
-            .dashboard_header {
-                color: white;
-                margin: 1rem 1.5rem;
-            }
-            .user_acc {
-                margin-top: 3rem;
-                margin-bottom: 1rem;
-                padding-top: 1rem;
-                border-top: 1px solid #333333;
-            }
-        }
+      .closeBtn {
+        border: none;
+        text-decoration: none;
+        color: $dark_grey;
+        background-color: transparent;
+        padding: 8px 12px;
+        font-size: 2.5rem;
+      }
     }
+
+    .left_navbar {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      height: 100%;
+
+      .dashboard_header {
+        color: white;
+        margin: 1rem 1.5rem;
+      }
+      .user_acc {
+        margin-top: 3rem;
+        margin-bottom: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #333333;
+      }
+    }
+  }
 }
-
-
 
 ul.mainNav {
-    padding-left: 0;
-    width: 100%;
-    margin: 0;
-    li.nav-item {
-        list-style-type: none;
-        a {
-            position: relative;
-            padding: 0.75rem 1.5rem;
-            color: white;
-            font-size: 1.1rem;
-            font-family: "Open_Sans-Regular";
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            .link_text {
-                margin-left: 10px;
-            }
-            .link_icon {
-                width: 25px;
-                height: 25px;
-                background-color: white;
-                &.status_icon {
-                    @include bg_mask_image(
-                        "../../../assets/icons/diagram_icon.svg"
-                    );
-                }
-                &.tokens_icon {
-                    @include bg_mask_image(
-                        "../../../assets/icons/key_icon.svg"
-                    );
-                }
-                &.jobs_icon {
-                    @include bg_mask_image(
-                        "../../../assets/icons/job_icon.svg"
-                    );
-                }
-                &.budgets_icon {
-                    @include bg_mask_image(
-                        "../../../assets/icons/chart_pie_icon.svg"
-                    );
-                }
-                &.resources_icon {
-                    @include bg_mask_image(
-                        "../../../assets/icons/resource_data_icon.svg"
-                    );
-                }
-                &.information_icon {
-                    @include bg_mask_image(
-                        "../../../assets/icons/information_circled_icon.svg"
-                    );
-                }
-                &.faq_icon {
-                    @include bg_mask_image(
-                        "../../../assets/icons/faq_icon.svg"
-                    );
-                }
-                &.telemetry_icon {
-                    @include bg_mask_image(
-                        "../../../assets/icons/telemetry_icon.svg"
-                    );
-                }
-            }
-
-            &:hover,
-            &:focus,
-            &.active {
-                @include _transition(ease, 0.2s, all);
-                background-color: $dark_grey;
-                color: $yellow;
-                font-family: "Open_Sans-Regular";
-                .link_icon {
-                    background-color: $yellow;
-                }
-            }
+  padding-left: 0;
+  width: 100%;
+  margin: 0;
+  li.nav-item {
+    list-style-type: none;
+    a {
+      position: relative;
+      padding: 0.75rem 1.5rem;
+      color: white;
+      font-size: 1.1rem;
+      font-family: 'Open_Sans-Regular';
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      .link_text {
+        margin-left: 10px;
+      }
+      .link_icon {
+        width: 25px;
+        height: 25px;
+        background-color: white;
+        &.status_icon {
+          @include bg_mask_image('../../../assets/icons/diagram_icon.svg');
         }
+        &.tokens_icon {
+          @include bg_mask_image('../../../assets/icons/key_icon.svg');
+        }
+        &.jobs_icon {
+          @include bg_mask_image('../../../assets/icons/job_icon.svg');
+        }
+        &.budgets_icon {
+          @include bg_mask_image('../../../assets/icons/chart_pie_icon.svg');
+        }
+        &.resources_icon {
+          @include bg_mask_image('../../../assets/icons/resource_data_icon.svg');
+        }
+
+        &.faq_icon {
+          @include bg_mask_image('../../../assets/icons/faq_icon.svg');
+        }
+      }
+
+      &:hover,
+      &:focus,
+      &.active {
+        @include _transition(ease, 0.2s, all);
+        background-color: $dark_grey;
+        color: $yellow;
+        font-family: 'Open_Sans-Regular';
+        .link_icon {
+          background-color: $yellow;
+        }
+      }
     }
+  }
 }
 ul.userNav {
-    @extend .mainNav;
-    li {
-        a {
-            .link_icon {
-                &.settings_icon {
-                    @include bg_mask_image(
-                        "../../../assets/icons/icon_setting.svg"
-                    );
-                }
-                &.feedback_icon {
-                    @include bg_mask_image(
-                        "../../../assets/icons/feedback_icon.svg"
-                    );
-                }
-                &.funding_icon {
-                    @include bg_mask_image(
-                        "../../../assets/icons/coins_euro_icon.svg"
-                    );
-
-                }
-            }
+  @extend .mainNav;
+  li {
+    a {
+      .link_icon {
+        &.settings_icon {
+          @include bg_mask_image('../../../assets/icons/icon_setting.svg');
         }
-        .logout_btn {
-            position: relative;
-            padding: 0.75rem 1.5rem;
-            color: white;
-            background-color: transparent;
-            border: none;
-            font-size: 1.1rem;
-            font-family: "Open_Sans-Regular";
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            width: 100%;
-            .link_text {
-                margin-left: 10px;
-            }
-            .logout_icon {
-                width: 25px;
-                height: 25px;
-                background-color: white;
-                @include bg_mask_image(
-                    "../../../assets/icons/logout_icon_white.svg"
-                );
-            }
-            &:hover,
-            &:focus {
-                color: $yellow;
-                @include _transition(ease, 0.2s, all);
-                background-color: $dark_grey;
-                .logout_icon {
-                    background-color: $yellow;
-                }
-            }
+        &.feedback_icon {
+          @include bg_mask_image('../../../assets/icons/feedback_icon.svg');
         }
+        &.funding_icon {
+          @include bg_mask_image('../../../assets/icons/coins_euro_icon.svg');
+        }
+      }
     }
+    .logout_btn {
+      position: relative;
+      padding: 0.75rem 1.5rem;
+      color: white;
+      background-color: transparent;
+      border: none;
+      font-size: 1.1rem;
+      font-family: 'Open_Sans-Regular';
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      width: 100%;
+      .link_text {
+        margin-left: 10px;
+      }
+      .logout_icon {
+        width: 25px;
+        height: 25px;
+        background-color: white;
+        @include bg_mask_image('../../../assets/icons/logout_icon_white.svg');
+      }
+      &:hover,
+      &:focus {
+        color: $yellow;
+        @include _transition(ease, 0.2s, all);
+        background-color: $dark_grey;
+        .logout_icon {
+          background-color: $yellow;
+        }
+      }
+    }
+  }
 }
-
-/*
- * Responsive Navbar
- */
 
 .menu_divider {
-    border-color: white;
+  border-color: white;
 }
 @media screen and (max-width: 991px) {
-    .responsive_sidebar {
-        position: absolute;
-        top: 60px;
-        left: 0;
-        width: 100%;
-        height: auto;
-        overflow-y: hidden;
-        z-index: 3;
-        background-color: rgba(0, 0, 0, 0.9);
-        @include box_shadow(3px 3px 10px 0, #666666);
-        &.show {
-            @include _transition(height, 1s, ease-in-out);
-            height: auto;
-            overflow-y: visible;
-        }
+  .responsive_sidebar {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: auto;
+    overflow-y: hidden;
+    z-index: 3;
+    background-color: rgba(0, 0, 0, 0.9);
+    @include box_shadow(3px 3px 10px 0, #666666);
+    &.show {
+      @include _transition(height, 1s, ease-in-out);
+      height: auto;
+      overflow-y: visible;
     }
-    .left_sidebar_wrap {
-        display: none;
-    }
-    .responsive_navbar {
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-    }
+  }
+  .left_sidebar_wrap {
+    display: none;
+  }
+  .responsive_navbar {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
 }
 @media screen and (min-width: 992px) {
-    .responsive_sidebar {
-        display: none;
-    }
+  .responsive_sidebar {
+    display: none;
+  }
 }

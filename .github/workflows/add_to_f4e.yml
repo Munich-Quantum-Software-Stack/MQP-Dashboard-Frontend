@@ -5,7 +5,7 @@ on:
     types: [labeled]
 
 jobs:
-  add-to-project:    
+  add-to-project:
     if: ${{ contains(github.event.issue.labels.*.name, 'Contact_F4-E') }}
     name: Copy issue to MQSS management platform
     runs-on: ubuntu-latest

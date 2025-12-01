@@ -1,0 +1,104 @@
+# CI/CD Pipeline - Runs linting, unit tests, build, and E2E tests on push/PR
+name: CI/CD Pipeline
+
+# Trigger on all pushes and pull requests
+on:
+  push:
+  pull_request:
+
+# Cancel redundant runs on same branch/PR to save CI minutes
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Main job: runs lint, unit tests, security audit, and production build
+  # Both Node versions run in parallel (matrix), not sequentially
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x, 24.11.1]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci --loglevel=error
+
+      # Run lint, tests, and security audit in parallel
+      - name: Lint, Test & Audit
+        run: |
+          npm run lint &
+          npm run test:ci &
+          npm audit --audit-level=high &
+          wait
+
+      - name: Build
+        run: npm run build
+
+  # E2E job: runs Playwright browser tests (runs in parallel with build-and-test)
+  e2e-tests:
+    runs-on: ubuntu-latest
+    # Split E2E tests into 2 shards for parallel execution
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci --loglevel=error
+
+      # Cache Playwright browsers to speed up subsequent runs
+      - name: Cache Playwright Browsers
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install Playwright Browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps
+
+      - name: Install Playwright Dependencies (cached)
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps
+
+      # Build test version and run sharded E2E tests
+      - name: Build & Test
+        run: |
+          npm run build:test
+          npx playwright test --config=config/e2e/playwright.config.js --shard=${{ matrix.shard }}/2
+
+      # Upload test artifacts only on failure for debugging
+      - name: Upload Playwright Report
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report-shard-${{ matrix.shard }}
+          path: playwright-report/
+          retention-days: 7
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: test-results-shard-${{ matrix.shard }}
+          path: test-results/
+          retention-days: 7

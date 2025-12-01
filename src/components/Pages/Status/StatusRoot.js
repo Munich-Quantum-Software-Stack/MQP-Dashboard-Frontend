@@ -1,9 +1,7 @@
-import { Outlet } from "react-router-dom";
+import { Outlet } from 'react-router-dom';
 
 const StatusRoot = () => {
-    return (
-        <Outlet />
-    );
-}
+  return <Outlet />;
+};
 
 export default StatusRoot;

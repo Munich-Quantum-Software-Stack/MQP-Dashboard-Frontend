@@ -1,7 +1,7 @@
 [
-    { "value": 1, "isActive": false },
-    { "value": 2, "isActive": false },
-    { "value": 3, "isActive": false },
-    { "value": 4, "isActive": false },
-    { "value": 5, "isActive": false }
+  { "value": 1, "isActive": false },
+  { "value": 2, "isActive": false },
+  { "value": 3, "isActive": false },
+  { "value": 4, "isActive": false },
+  { "value": 5, "isActive": false }
 ]

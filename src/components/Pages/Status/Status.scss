@@ -1,50 +1,55 @@
 @import '../../../assets/scss/variables.scss';
 
-$status_bg: #D5E9F8; // light blue
-$status_divider: #058AF7;
+$status_bg: #d5e9f8; // light blue
+$status_divider: #058af7;
 
-.status_container { 
-    //flex-grow: 1;
-    height: 100%;
+.status_container {
+  //flex-grow: 1;
+  height: 100%;
 }
 .welcome_text {
-    background: rgb(255,190,0);
-    background: linear-gradient(90deg, rgba(255,190,0,1) 0%, rgba(180,138,88,1) 47%, rgba(20,30,55,1) 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  background: rgb(255, 190, 0);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 190, 0, 1) 0%,
+    rgba(180, 138, 88, 1) 47%,
+    rgba(20, 30, 55, 1) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .status_items_list {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  .status_item_wrap {
+    padding: 1rem;
     display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;       
-    flex-grow: 1; 
-    .status_item_wrap {
-        padding: 1rem;
-        display: flex;
-        flex-direction: column;
-        .status_item {   
-            display: flex;
-            flex-direction: column;
-            flex: 1;      
-            &.status_item_bg {
-                background-image: linear-gradient($status_bg, white);
-                .short_divider { @include short_devider(40px, $status_divider); }
-            }
+    flex-direction: column;
+    .status_item {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      &.status_item_bg {
+        background-image: linear-gradient($status_bg, white);
+        .short_divider {
+          @include short_devider(40px, $status_divider);
         }
-        
+      }
     }
+  }
 }
 
-.dark_bg {    
-    .welcome_text { 
-        background-image: none;
-        color: white;
-        background-color: white;
-        background-clip: text;
-    }
-    .status_items_list .status_item_wrap .status_item * {
-        color: black;
-    }
-   
+.dark_bg {
+  .welcome_text {
+    background-image: none;
+    color: white;
+    background-color: white;
+    background-clip: text;
+  }
+  .status_items_list .status_item_wrap .status_item * {
+    color: black;
+  }
 }

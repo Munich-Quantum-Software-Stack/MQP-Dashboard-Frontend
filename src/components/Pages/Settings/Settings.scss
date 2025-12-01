@@ -4,38 +4,43 @@
 @import '../../../assets/scss/variables.scss';
 
 .nav-tabs {
-    .nav-link {
-        font-size: 1.1rem;
-        color: #666666;
-        &:hover, &:focus { color: black;}
-
+  .nav-link {
+    font-size: 1.1rem;
+    color: #666666;
+    &:hover,
+    &:focus {
+      color: black;
     }
+  }
 }
 .tab-content {
-    border: 1px solid var(--bs-border-color);
-    border-top: none;
-    padding: 0.5rem 1rem;
+  border: 1px solid var(--bs-border-color);
+  border-top: none;
+  padding: 0.5rem 1rem;
 }
 
 #AccountSettingForm {
-    max-width: 500px;
+  max-width: 500px;
 }
 .editPwd_btn {
-    background-color: transparent;
-    border: none;
-    float: right;
-    position: relative;
-    padding-left: 22px;
-    .edit_icon {
-        width: 20px; height: 20px;        
-        background-color: $dark_grey;
-        position: absolute;
-        top: 1px; left: 0;
-        @include bg_mask_image('../../../assets/icons/edit_icon.svg');
-    }
-    &:hover, &:focus {
-        text-decoration: underline;
-    }
+  background-color: transparent;
+  border: none;
+  float: right;
+  position: relative;
+  padding-left: 22px;
+  .edit_icon {
+    width: 20px;
+    height: 20px;
+    background-color: $dark_grey;
+    position: absolute;
+    top: 1px;
+    left: 0;
+    @include bg_mask_image('../../../assets/icons/edit_icon.svg');
+  }
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
 }
 
 /*
@@ -43,17 +48,21 @@
  */
 
 .dark_bg {
-    .editPwd_btn .edit_icon { background-color: white;}
-    .nav-tabs {
-        .nav-link.active { background-color: #444444; color: white;}
-        
+  .editPwd_btn .edit_icon {
+    background-color: white;
+  }
+  .nav-tabs {
+    .nav-link.active {
+      background-color: #444444;
+      color: white;
     }
-    .form-control { 
-        background-color: $light_grey; color: black;
-        &:disabled {
-            background-color: $dark_grey;
-            color: #dddddd;
-        }
+  }
+  .form-control {
+    background-color: $light_grey;
+    color: black;
+    &:disabled {
+      background-color: $dark_grey;
+      color: #dddddd;
     }
-    
+  }
 }

@@ -1,5 +1,5 @@
 [
-    {"name": "", "value": "none"},
-    {"name": "Dr.", "value": "dr"},
-    {"name": "Prof. Dr.", "value": "prof_dr"}
+  { "name": "", "value": "none" },
+  { "name": "Dr.", "value": "dr" },
+  { "name": "Prof. Dr.", "value": "prof_dr" }
 ]

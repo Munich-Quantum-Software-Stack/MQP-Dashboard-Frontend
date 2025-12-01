@@ -1,7 +1,8 @@
-import ContentCard from "../Card/ContentCard";
-import Button from "../Button/Button";
-import classes from "./Modal.module.css";
+import ContentCard from '@components/UI/Card/ContentCard';
+import Button from '@components/UI/Button/Button';
+import classes from './Modal.module.css';
 
+/** Basic modal layout with title, message, and action button */
 const ModalContent = (props) => {
   return (
     <ContentCard className={classes.modal}>

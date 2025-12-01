@@ -9,7 +9,10 @@
   }
 }
 
-dialog { padding: 0; border: 1px solid #dddddd;}
+dialog {
+  padding: 0;
+  border: 1px solid #dddddd;
+}
 .tokenModal {
   border: none;
   border-radius: 8px;
@@ -21,7 +24,6 @@ dialog { padding: 0; border: 1px solid #dddddd;}
   z-index: 100;
   overflow: hidden;
 }
-
 
 .modal {
   top: 30vh;

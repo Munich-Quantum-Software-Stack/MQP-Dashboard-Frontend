@@ -1,78 +1,94 @@
-import React from "react";
-import Form from "react-bootstrap/Form";
+import React from 'react';
+import Form from 'react-bootstrap/Form';
 
+// Available status filter options for job filtering
 const STATUS_OPTIONS = [
-    { value: "ALL", label: "All" },
-    { value: "CANCELLED", label: "Cancelled" },
-    { value: "COMPLETED", label: "Completed" },
-    { value: "SUBMITTED", label: "Submitted" }
+  { value: 'ALL', label: 'All' },
+  { value: 'CANCELLED', label: 'Cancelled' },
+  { value: 'COMPLETED', label: 'Completed' },
+  { value: 'SUBMITTED', label: 'Submitted' },
 ];
 
-const SORT_KEY_MAPPING = {
-    "ID": "ID",
-    "STATUS": "status",
-    "DATE": "timestamp_submitted"
-};
+/**
+ * JobsSorting - Sorting and filtering controls for the jobs list (sort by ID/Status/Date)
+ */
+const JobsSorting = ({ sortKey = 'ID', sortOrder = 'DESC', statusFilter = 'ALL', onSorting }) => {
+  // Handle sort key change, reset to status filter when sorting by status
+  const handleKeyChange = (e) => {
+    const newKey = (e.target.value || 'ID').toUpperCase();
 
-const JobsSorting = ({ sortKey = "ID", sortOrder = "DESC", statusFilter = "ALL", onSorting }) => {
-    // eslint-disable-next-line no-unused-vars
-    const getBackendSortKey = (key) => {
-        return SORT_KEY_MAPPING[key] || key;
-    };
+    if (newKey === 'STATUS') {
+      onSorting(newKey, 'DESC', 'SUBMITTED');
+    } else {
+      onSorting(newKey, sortOrder, 'ALL');
+    }
+  };
 
-    const handleKeyChange = (e) => {
-        const newKey = (e.target.value || "ID").toUpperCase();
-        
-        if (newKey === "STATUS") {
-            onSorting(newKey, "DESC", "SUBMITTED");
-        } else {
-            onSorting(newKey, sortOrder, "ALL");
-        }
-    };
-    
-    const handleOrderChange = (e) => {
-        const newOrder = e.target.value || "DESC";
-        console.log("Order changed to:", newOrder);
-        onSorting(sortKey, newOrder, statusFilter);
-    };
-    
-    const handleStatusChange = (e) => {
-        const newFilter = e.target.value || "ALL";
-        onSorting(sortKey, sortOrder, newFilter);
-    };
+  const handleOrderChange = (e) => {
+    const newOrder = e.target.value || 'DESC';
+    onSorting(sortKey, newOrder, statusFilter);
+  };
 
-    return (
-        <div className="action_container sorting_container">
-            <div className="sorting_items_wrap" style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                <Form.Label style={{ marginBottom: 0, whiteSpace: "nowrap" }}>Sorting by:</Form.Label>
-                <Form.Select aria-label="Sorting Items" value={sortKey} onChange={handleKeyChange} style={{ width: "160px" }}>
-                    <option value="ID">ID</option>
-                    <option value="STATUS">Status</option>
-                    <option value="DATE">Date</option>
-                </Form.Select>
+  const handleStatusChange = (e) => {
+    const newFilter = e.target.value || 'ALL';
+    onSorting(sortKey, sortOrder, newFilter);
+  };
 
-                {(sortKey === "ID" || sortKey === "DATE") && (
-                    <Form.Select aria-label="Sorting Order" value={sortOrder} onChange={handleOrderChange} style={{ width: "140px" }}>
-                        <option value="DESC">Descending</option>
-                        <option value="ASC">Ascending</option>
-                    </Form.Select>
-                )}
+  return (
+    <div className="action_container sorting_container">
+      <div
+        className="sorting_items_wrap"
+        style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}
+      >
+        <Form.Label style={{ marginBottom: 0, whiteSpace: 'nowrap' }}>Sorting by:</Form.Label>
+        {/* Sort key selector: ID, Status, or Date */}
+        <Form.Select
+          aria-label="Sorting Items"
+          value={sortKey}
+          onChange={handleKeyChange}
+          style={{ width: '160px' }}
+        >
+          <option value="ID">ID</option>
+          <option value="STATUS">Status</option>
+          <option value="DATE">Date</option>
+        </Form.Select>
 
-                {sortKey === "STATUS" && (
-                    <>
-                        <Form.Label style={{ marginBottom: 0, whiteSpace: "nowrap", marginLeft: "0.5rem" }}>Filter:</Form.Label>
-                        <Form.Select aria-label="Status Filter" value={statusFilter} onChange={handleStatusChange} style={{ minWidth: "160px" }}>
-                            {STATUS_OPTIONS.map((option) => (
-                                <option key={option.value} value={option.value}>
-                                    {option.label}
-                                </option>
-                            ))}
-                        </Form.Select>
-                    </>
-                )}
-            </div>
-        </div>
-    );
+        {/* Show ASC/DESC order selector for ID and Date sorting */}
+        {(sortKey === 'ID' || sortKey === 'DATE') && (
+          <Form.Select
+            aria-label="Sorting Order"
+            value={sortOrder}
+            onChange={handleOrderChange}
+            style={{ width: '140px' }}
+          >
+            <option value="DESC">Descending</option>
+            <option value="ASC">Ascending</option>
+          </Form.Select>
+        )}
+
+        {/* Show status filter dropdown when sorting by Status */}
+        {sortKey === 'STATUS' && (
+          <>
+            <Form.Label style={{ marginBottom: 0, whiteSpace: 'nowrap', marginLeft: '0.5rem' }}>
+              Filter:
+            </Form.Label>
+            <Form.Select
+              aria-label="Status Filter"
+              value={statusFilter}
+              onChange={handleStatusChange}
+              style={{ minWidth: '160px' }}
+            >
+              {STATUS_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </Form.Select>
+          </>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default JobsSorting;
