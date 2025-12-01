@@ -2,6 +2,7 @@ import React from 'react';
 import Tooltip from 'react-bootstrap/Tooltip';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
+/** Wrapper for Bootstrap tooltip with hover delay */
 const CustomTooltip = (props) => {
   const renderTooltip = <Tooltip id={props.id}>{props.tooltip}</Tooltip>;
   return (

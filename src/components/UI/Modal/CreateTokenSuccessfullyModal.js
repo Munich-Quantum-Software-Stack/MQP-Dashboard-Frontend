@@ -5,6 +5,7 @@ import Button from '@components/UI/Button/Button';
 import NotificationCard from '@components/UI/MessageBox/NotificationCard';
 import classes from './Modal.module.css';
 
+/** Modal showing newly created token with copy button */
 const SuccessfullyTokenModal = ({ newToken, onClose }) => {
   const [isCopied, setIsCopied] = useState(false);
 

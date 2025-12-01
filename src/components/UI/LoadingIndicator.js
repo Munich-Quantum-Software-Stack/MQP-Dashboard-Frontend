@@ -1,3 +1,4 @@
+/** Animated loading spinner */
 export default function LoadingIndicator() {
   return (
     <div className="text-left">

@@ -1,3 +1,4 @@
+/** PDF document link with icon */
 const PDFLink = ({ src, pdf_link_class, pdf_text, target }) => {
   return (
     <a href={src} className={`${pdf_link_class} pdf_link`} target={target}>

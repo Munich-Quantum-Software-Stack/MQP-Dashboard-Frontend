@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import '@components/UI/UI.scss';
 
+/** Animated dark mode toggle switch */
 const ToggleDarkmodeButton = ({ id, onToggle, className, darkmode }) => {
   const isOn = darkmode;
   const toggleSwitchHandler = () => {

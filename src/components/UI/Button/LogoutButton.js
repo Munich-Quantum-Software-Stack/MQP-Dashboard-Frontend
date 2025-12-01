@@ -3,6 +3,7 @@ import { useSubmit, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '@store/auth-slice';
 
+/** Logout button with session cleanup */
 const LogoutButton = () => {
   const submit = useSubmit();
   const navigate = useNavigate();

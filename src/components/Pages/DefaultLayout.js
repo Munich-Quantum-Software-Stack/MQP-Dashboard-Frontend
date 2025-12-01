@@ -1,5 +1,5 @@
-/*
- * Fullwidth Template Page
+/**
+ * Full-width layout wrapper
  */
 
 import React from 'react';

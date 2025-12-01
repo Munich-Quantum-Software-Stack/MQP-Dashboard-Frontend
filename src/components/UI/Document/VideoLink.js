@@ -1,3 +1,4 @@
+/** External video link with icon */
 const VideoLink = ({ src, video_link_class, video_text, target }) => {
   return (
     <a href={src} className={`${video_link_class} video_link`} target={target}>

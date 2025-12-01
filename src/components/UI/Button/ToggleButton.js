@@ -1,5 +1,6 @@
 import React from 'react';
 
+/** Hamburger menu toggle button */
 const ToggleButton = ({ id, controls, target, label, className, onToggle }) => {
   return (
     <button

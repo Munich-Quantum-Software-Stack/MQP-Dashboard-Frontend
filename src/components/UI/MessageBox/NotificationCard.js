@@ -1,6 +1,7 @@
 import React from 'react';
 import Alert from 'react-bootstrap/Alert';
 
+/** Static notification banner */
 const NotificationCard = (props) => {
   return (
     <div className="my-3 flashMsg_wrap">

@@ -1,5 +1,7 @@
+/**
+ * Hook for HTTP requests with loading/error state
+ */
 import { useState, useCallback } from 'react';
-//import { json } from "react-router-dom";
 
 const useHttp = () => {
   const [isLoading, setIsLoading] = useState(false);

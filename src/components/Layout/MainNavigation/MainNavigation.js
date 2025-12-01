@@ -1,9 +1,9 @@
 import React from 'react';
-//import { useAnimate } from "framer-motion";
 import { useRouteLoaderData } from 'react-router-dom';
 import Navigation from '@components/Layout/MainNavigation/Navigation';
 import UserNavigation from '@components/Layout/MainNavigation/UserNav';
 
+/** Left sidebar with main and user navigation */
 function MainNavigation({ id, onHidden }) {
   const token = useRouteLoaderData('home');
 

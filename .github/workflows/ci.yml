@@ -6,6 +6,11 @@ on:
   push:
   pull_request:
 
+# Cancel redundant runs on same branch/PR to save CI minutes
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   # Main job: runs lint, unit tests, and production build across Node versions
   build-and-test:
@@ -28,6 +33,10 @@ jobs:
       - name: Install Dependencies
         run: npm ci --loglevel=error
 
+      # Run security audit on dependency changes
+      - name: Security Audit
+        run: npm audit --audit-level=high
+
       # Run lint and tests in parallel for faster CI execution
       - name: Lint & Test
         run: |
@@ -41,8 +50,11 @@ jobs:
   # E2E job: runs Playwright browser tests with sharding for parallelization
   e2e-tests:
     runs-on: ubuntu-latest
+    # Only run E2E if build-and-test passes
+    needs: build-and-test
     # Split E2E tests into 2 shards for parallel execution
     strategy:
+      fail-fast: false
       matrix:
         shard: [1, 2]
 
@@ -79,3 +91,20 @@ jobs:
         run: |
           npm run build:test
           npx playwright test --config=config/e2e/playwright.config.js --shard=${{ matrix.shard }}/2
+
+      # Upload test artifacts on failure for debugging
+      - name: Upload Playwright Report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report-shard-${{ matrix.shard }}
+          path: playwright-report/
+          retention-days: 7
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: test-results-shard-${{ matrix.shard }}
+          path: test-results/
+          retention-days: 7

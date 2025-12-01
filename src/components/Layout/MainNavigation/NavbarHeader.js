@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+/** Animated MQP logo header */
 const NavbarHeader = () => {
   return (
     <div className="topbar_mqp_logo_wrap" title="Munich Quantum Portal">

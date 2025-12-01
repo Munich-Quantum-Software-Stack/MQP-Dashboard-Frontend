@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 import Logout from '@components/Pages/Logout';
 
+/** User-related navigation (Feedback, Funding, Logout) */
 const UserNavigation = ({ onHidden }) => {
   //const token = useRouteLoaderData("home");
   const fs = useSelector((state) => state.accessibilities.font_size);

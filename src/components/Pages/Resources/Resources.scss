@@ -216,44 +216,51 @@ $resource_divider_8: #800080;
  */
 .dark_bg {
   .resource_item {
+    // Keep text dark/readable on light card backgrounds
     .pane_title {
       color: black;
     }
+    .pane_desc,
     .pane_desc *,
+    .resource_qubit,
     .resource_qubit *,
+    .resource_technology,
     .resource_technology *,
+    .resource_budgets,
     .resource_budgets * {
       color: $dark_grey;
     }
     .resource_status {
+      .status_icon_wrap,
       .status_icon_wrap > * {
         color: black;
       }
     }
-    // Dark mode background overrides - fade to dark instead of white
+    // Dark mode: keep cards light, fade to white (same as light mode)
+    // This ensures text remains readable
     &.resource_bg_1 {
-      background-image: linear-gradient($resource_bg_1, #1a1a2e);
+      background-image: linear-gradient($resource_bg_1, white);
     }
     &.resource_bg_2 {
-      background-image: linear-gradient($resource_bg_2, #1a1a2e);
+      background-image: linear-gradient($resource_bg_2, white);
     }
     &.resource_bg_3 {
-      background-image: linear-gradient($resource_bg_3, #1a1a2e);
+      background-image: linear-gradient($resource_bg_3, white);
     }
     &.resource_bg_4 {
-      background-image: linear-gradient($resource_bg_4, #1a1a2e);
+      background-image: linear-gradient($resource_bg_4, white);
     }
     &.resource_bg_5 {
-      background-image: linear-gradient($resource_bg_5, #1a1a2e);
+      background-image: linear-gradient($resource_bg_5, white);
     }
     &.resource_bg_6 {
-      background-image: linear-gradient($resource_bg_6, #1a1a2e);
+      background-image: linear-gradient($resource_bg_6, white);
     }
     &.resource_bg_7 {
-      background-image: linear-gradient($resource_bg_7, #1a1a2e);
+      background-image: linear-gradient($resource_bg_7, white);
     }
     &.resource_bg_8 {
-      background-image: linear-gradient($resource_bg_8, #1a1a2e);
+      background-image: linear-gradient($resource_bg_8, white);
     }
   }
 }

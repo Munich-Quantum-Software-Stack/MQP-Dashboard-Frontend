@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
+/** Main content container with dark mode support */
 const ContentCard = (props) => {
   const darkmode = useSelector((state) => state.accessibilities.darkmode);
   const darkmode_class = darkmode ? 'dark_bg' : 'white_bg';

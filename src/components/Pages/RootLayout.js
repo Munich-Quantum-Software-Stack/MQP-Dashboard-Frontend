@@ -14,6 +14,7 @@ const MIN_WIDTH_SIDEBAR = 80;
 const MAX_WIDTH_SIDEBAR = 265;
 const isExpiredToken = (value) => typeof value === 'string' && value.localeCompare('EXPIRED') === 0;
 
+/** Main authenticated layout with sidebar, topbar, and session handling */
 const RootLayout = () => {
   const dispatch = useDispatch();
   const token = useLoaderData();

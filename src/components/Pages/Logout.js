@@ -2,6 +2,8 @@ import React from 'react';
 import { redirect, useSubmit } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '@store/auth-slice';
+
+/** Logout button component */
 const Logout = ({ onHidden }) => {
   const submit = useSubmit();
   const dispatch = useDispatch();
@@ -27,6 +29,7 @@ const Logout = ({ onHidden }) => {
 
 export default Logout;
 
+/** Route action - clears session data and redirects to login */
 export function action() {
   localStorage.removeItem('isLoggedIn');
   localStorage.removeItem('token');

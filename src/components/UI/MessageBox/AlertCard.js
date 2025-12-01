@@ -1,7 +1,8 @@
-// Importing modules
+/**
+ * Dismissible alert card
+ */
 import React, { useState } from 'react';
 import Alert from 'react-bootstrap/Alert';
-// import { useSelector } from "react-redux";
 
 function AlertCard(props) {
   // const fs = useSelector((state) => state.accessibilities.font_size);

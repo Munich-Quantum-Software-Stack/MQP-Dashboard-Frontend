@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux';
 import { getAuthToken } from '@utils/auth';
+
+/** Page footer with copyright and legal links */
 function Footer() {
   const fs = useSelector((state) => state.accessibilities.font_size);
   const token = getAuthToken();

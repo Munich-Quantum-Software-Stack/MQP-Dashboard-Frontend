@@ -1,3 +1,6 @@
+/**
+ * Hook for form inputs with validation
+ */
 import { useState } from 'react';
 
 export function useInput(defaulValue, validationFn) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Contact from './../Login/Contact';
+import Contact from '@components/Pages/Login/Contact';
 
 function Blocked() {
   return (

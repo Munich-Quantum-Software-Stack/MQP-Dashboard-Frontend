@@ -1,4 +1,8 @@
-// sorting by ID
+/**
+ * Job sorting utilities
+ */
+
+// Sort jobs by ID
 function sortingJobsByID(jobs, sortOrder) {
   let sortedJobs = [...jobs];
   // ascending
@@ -35,6 +39,7 @@ function sortingJobsByDate(jobs, sortOrder) {
   return sortedJobs;
 }
 
+/** Sort jobs by the specified key (id or date) and order */
 export function sortingJobs(sortItems, jobs) {
   let sortedJobs;
   if (sortItems.sortKey.trim() === 'id') {

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getTokenDuration, getSeconds, getMinutes } from '@utils/auth';
 import { authActions } from '@store/auth-slice';
 
+/** Session countdown timer - triggers expiration modal before timeout */
 const Timer = () => {
   const dispatch = useDispatch();
   const fs = useSelector((state) => state.accessibilities.font_size);

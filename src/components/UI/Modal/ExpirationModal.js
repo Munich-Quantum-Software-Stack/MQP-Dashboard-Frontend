@@ -3,10 +3,9 @@ import { motion } from 'framer-motion';
 import { createPortal } from 'react-dom';
 import Button from '@components/UI/Button/Button';
 
-//import Backdrop from "./Backdrop";
-//import ModalOverlay from "./ModalContent";
 import classes from './Modal.module.css';
 
+/** Animated modal for session expiration warnings */
 const ExpirationModal = (props) => {
   return createPortal(
     <React.Fragment>

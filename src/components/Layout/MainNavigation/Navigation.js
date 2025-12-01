@@ -3,6 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink, useRouteLoaderData } from 'react-router-dom';
 
+/** Main app navigation links (Status, Tokens, Jobs, etc.) */
 const Navigation = ({ onHidden }) => {
   const token = useRouteLoaderData('home');
   const fs = useSelector((state) => state.accessibilities.font_size);

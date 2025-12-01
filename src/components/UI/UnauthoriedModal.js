@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import ExpirationModal from '@components/UI/Modal/ExpirationModal';
 import { authActions } from '@store/auth-slice';
 
+/** Session expiration modal with countdown and auto-logout */
 const UnauthoriedModal = () => {
   const submit = useSubmit();
   const startTimer = 10; // 10 seconds

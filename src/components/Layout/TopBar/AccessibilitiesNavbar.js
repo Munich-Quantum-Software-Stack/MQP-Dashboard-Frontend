@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { getFontsize } from '@utils/theme';
 import ToggleDarkmodeButton from '@components/Layout/TopBar/ToggleDarkmodeButton';
 
+/** Toolbar with dark mode toggle and font size controls */
 const AccessibilitiesNavbar = ({
   id,
   darkmode,

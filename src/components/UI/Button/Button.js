@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+/** Primary animated button component */
 const Button = (props) => {
   let classes = 'dashboard_btn ' + props.className;
   return (

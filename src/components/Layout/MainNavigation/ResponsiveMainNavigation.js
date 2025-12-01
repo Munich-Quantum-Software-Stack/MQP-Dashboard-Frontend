@@ -6,6 +6,7 @@ import Navigation from './Navigation';
 import UserNavigation from './UserNav';
 import AccessibilitiesNavbar from '@components/Layout/TopBar/AccessibilitiesNavbar';
 
+/** Mobile navigation menu with slide-down animation */
 function ResponsiveMainNavigation({ onDarkmode, onDecreaseFS, onResetFS, onIncreaseFS }) {
   const token = useRouteLoaderData('home');
 

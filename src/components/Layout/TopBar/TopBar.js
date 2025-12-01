@@ -10,6 +10,7 @@ import { getDarkmode, getFontsize, getDefaultFontsize } from '@utils/theme';
 import { accessibilitiesAction } from '@store/accessibilities-slice';
 import ToggleButton from '@components/UI/Button/ToggleButton';
 
+/** Top navigation bar with accessibility controls and session timer */
 function TopBar() {
   const dispatch = useDispatch();
   const defaultFS = getFontsize();
