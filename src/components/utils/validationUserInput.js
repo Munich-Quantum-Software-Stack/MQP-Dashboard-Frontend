@@ -1,15 +1,15 @@
 export function isNotEmpty(value) {
-    return value.trim() !== "";
+  return value.trim() !== '';
 }
 
 export function hasMinLength(value, minLength) {
-    return value.length >= minLength;
+  return value.length >= minLength;
 }
 
 export function isEmail(value) {
-    return value.includes("@");
+  return value.includes('@');
 }
 
 export function maxValue(value, max) {
-    return value <= max;
+  return value <= max;
 }

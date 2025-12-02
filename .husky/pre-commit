@@ -1,0 +1,5 @@
+set -e
+
+npm run precommit:guards
+npm run lint:staged
+npm run security:audit

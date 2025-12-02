@@ -1,11 +1,7 @@
-import BlankCard from "../../UI/Card/BlankCard";
+import BlankCard from '@components/UI/Card/BlankCard';
 
 const AccessibilitiesSettings = () => {
-    return (
-        <BlankCard>
-            
-        </BlankCard>
-    );
-}
+  return <BlankCard></BlankCard>;
+};
 
 export default AccessibilitiesSettings;

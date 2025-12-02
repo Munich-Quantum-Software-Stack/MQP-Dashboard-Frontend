@@ -3,26 +3,25 @@
  *************/
 @import '../../../assets/scss/variables.scss';
 
-
 /* TOKEN LIST */
 .listTokens_container {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 .nb_tokens_wrap {
-    padding: 10px 15px;
-    background-color: $light_grey;
-    @include border_radius(5px, 5px, 5px, 5px);
-    text-align: center;
-    vertical-align: middle;
+  padding: 10px 15px;
+  background-color: $light_grey;
+  @include border_radius(5px, 5px, 5px, 5px);
+  text-align: center;
+  vertical-align: middle;
 }
 .tokensList_container {
-    overflow: hidden;
-    min-height: 350px;
-    
-    @include border_radius(3px, 3px, 3px, 3px);
+  overflow: hidden;
+  min-height: 350px;
 
-    // table
-    /*
+  @include border_radius(3px, 3px, 3px, 3px);
+
+  // table
+  /*
     table.tokensList {
         overflow-x: auto;
         padding: 1rem 0;
@@ -57,103 +56,121 @@
         
     }
     */
-    ul.subTokensList {
-        padding: 0;
-        border: 1px solid #eeeeee;
-        li {
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-start;
-            align-items: center;
-            text-decoration: none;
-            color: $dark_grey;
-            &.token_row_header {
-                font-family: "Open_Sans-Bold";
-                font-size: 1.05rem;
-                color: white;
-                background-color: $medium_blue;
-            }
-            &.token_item_row {  
-                border-bottom: 1px inset $light_grey;      
-                margin-bottom: -1px;  
-                &:nth-child(odd) { background-color: var(--bs-gray-200);}                 
-            }
-            .token_column {
-                border: none;
-                padding: 0.5rem 1rem;
-                &.token_name { width: 220px; min-width: 150px;}
-                &.token_expired, &.token_revoked_time { width: 220px; min-width: 120px;}
-                &.token_note, &.token_revoked_reason { width: 220px; min-width: 100px;}
-                &.token_actions { 
-                    width: 180px; min-width: 150px;
-                    //button { visibility: hidden;}
-                }
-                // &.token_view {
-                //     width: 50px; height: 40px;
-                //     position: relative;
-                // }
-                // .view_icon {
-                //     position: absolute;
-                //     width: 25px; height: 25px;
-                //     background-color: $dark_grey;
-                //     opacity: 0;
-                //     @include bg_mask_image('../../../assets/icons/view_icon.svg');
-                // }
-                
-            }
-            &:hover, &:focus {
-                @include _transition(all, .2s, ease-out);
-                // .token_view .view_icon { opacity: 1;}
-                // .token_actions > button { visibility: visible;}
-            }
+  ul.subTokensList {
+    padding: 0;
+    border: 1px solid #eeeeee;
+    li {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      text-decoration: none;
+      color: $dark_grey;
+      &.token_row_header {
+        font-family: 'Open_Sans-Bold';
+        font-size: 1.05rem;
+        color: white;
+        background-color: $medium_blue;
+      }
+      &.token_item_row {
+        border-bottom: 1px inset $light_grey;
+        margin-bottom: -1px;
+        &:nth-child(odd) {
+          background-color: var(--bs-gray-200);
         }
+      }
+      .token_column {
+        border: none;
+        padding: 0.5rem 1rem;
+        &.token_name {
+          width: 220px;
+          min-width: 150px;
+        }
+        &.token_expired,
+        &.token_revoked_time {
+          width: 220px;
+          min-width: 120px;
+        }
+        &.token_note,
+        &.token_revoked_reason {
+          width: 220px;
+          min-width: 100px;
+        }
+        &.token_actions {
+          width: 180px;
+          min-width: 150px;
+          //button { visibility: hidden;}
+        }
+        // &.token_view {
+        //     width: 50px; height: 40px;
+        //     position: relative;
+        // }
+        // .view_icon {
+        //     position: absolute;
+        //     width: 25px; height: 25px;
+        //     background-color: $dark_grey;
+        //     opacity: 0;
+        //     @include bg_mask_image('../../../assets/icons/view_icon.svg');
+        // }
+      }
+      &:hover,
+      &:focus {
+        @include _transition(all, 0.2s, ease-out);
+        // .token_view .view_icon { opacity: 1;}
+        // .token_actions > button { visibility: visible;}
+      }
     }
+  }
 }
 
 .actions {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .token_btn {
-    padding: 12px 20px;
-    background-color: transparent;
-    color: $dark_grey;
-    position: relative;
-    margin: 0 10px;
-    font-size: 1rem;
-    border: none;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    
+  padding: 12px 20px;
+  background-color: transparent;
+  color: $dark_grey;
+  position: relative;
+  margin: 0 10px;
+  font-size: 1rem;
+  border: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  .button_icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 8px;
+    background-color: $dark_grey;
+    &.edit_icon {
+      @include bg_mask_image('../../../assets/icons/edit_icon.svg');
+    }
+    &.delete_icon {
+      width: 28px;
+      height: 28px;
+      @include bg_mask_image('../../../assets/icons/shredder_icon.svg');
+    }
+  }
+  &:hover,
+  &:focus {
+    text-decoration: underline;
     .button_icon {
-        width: 25px; height: 25px;
-        margin-right: 8px;
-        background-color: $dark_grey;
-        &.edit_icon {
-            @include bg_mask_image('../../../assets/icons/edit_icon.svg');
-        }
-        &.delete_icon {
-            width: 28px; height: 28px;
-            @include bg_mask_image('../../../assets/icons/shredder_icon.svg');
-        }
+      background-color: $dark_grey;
     }
-    &:hover, &:focus { 
-        text-decoration: underline;
-        .button_icon { background-color: $dark_grey;}
-    }
-    
+  }
 }
 
 /* CREATE TOKEN */
 .form_indication_text {
-    font-size: 0.8rem;
-    color: red;
+  font-size: 0.8rem;
+  color: red;
 }
 .create_token {
-    /*
+  /*
     @extend .token_btn;
     color: #666666;
     margin-right: 0;
@@ -175,227 +192,257 @@
         color: #666666;
     }
     */
-    // width: 200px;
-    height: 50px;                                                                                                                                                   
-    font-size: 1.2rem;
-    font-family: 'Open_Sans-Bold';
-    text-transform: capitalize;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    @include border_radius(5px, 5px, 5px, 5px);
-    border: 1px solid $light_yellow;
-    // color: black;
-    text-decoration: none;
-    padding-left: 50px;
-    padding-right: 25px;
-    background-color: white;
-    //background: linear-gradient(to right bottom, $yellow, white) left;
-    @include _transition(all, 1s, ease);
-    position: relative;
-    .create_btn_text {
-        background: rgb(255,190,0);
-        background: linear-gradient(90deg, rgba(255,190,0,1) 0%, rgba(180,138,88,1) 47%);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-    &:hover, &:focus {
-        //background: linear-gradient(to right bottom, $yellow, $light_yellow) right;
-        @include _transition(width, 0.5s, ease-out);
-        //@include box_shadow(0 2px 8px 0 inset, #a3a3a3);
-    }
-    .plus_icon {
-        width: 30px;
-        height: 30px;
-        position: absolute;
-        left: 16px;
-        background-color: $dark_gold;
-        
-        @include bg_mask_image('../../../assets/icons/add_plus_icon.svg');
-    }
-    .minus_icon {
-        @extend .plus_icon;
-        @include bg_mask_image('../../../assets/icons/close_cross_icon.svg');
-    }
+  // width: 200px;
+  height: 50px;
+  font-size: 1.2rem;
+  font-family: 'Open_Sans-Bold';
+  text-transform: capitalize;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  @include border_radius(5px, 5px, 5px, 5px);
+  border: 1px solid $light_yellow;
+  // color: black;
+  text-decoration: none;
+  padding-left: 50px;
+  padding-right: 25px;
+  background-color: white;
+  //background: linear-gradient(to right bottom, $yellow, white) left;
+  @include _transition(all, 1s, ease);
+  position: relative;
+  .create_btn_text {
+    background: rgb(255, 190, 0);
+    background: linear-gradient(90deg, rgba(255, 190, 0, 1) 0%, rgba(180, 138, 88, 1) 47%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  &:hover,
+  &:focus {
+    //background: linear-gradient(to right bottom, $yellow, $light_yellow) right;
+    @include _transition(width, 0.5s, ease-out);
+    //@include box_shadow(0 2px 8px 0 inset, #a3a3a3);
+  }
+  .plus_icon {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    left: 16px;
+    background-color: $dark_gold;
+
+    @include bg_mask_image('../../../assets/icons/add_plus_icon.svg');
+  }
+  .minus_icon {
+    @extend .plus_icon;
+    @include bg_mask_image('../../../assets/icons/close_cross_icon.svg');
+  }
 }
 .cancel_btn {
-    background-color: transparent;
-    border: none;
-    height: 40px;
-    margin: 0 20px;
-    color: var(--bs-gray-600);
-    &:hover, &:focus {
-        text-decoration: underline;
-    }
+  background-color: transparent;
+  border: none;
+  height: 40px;
+  margin: 0 20px;
+  color: var(--bs-gray-600);
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
 }
 .closeTokenForm_btn {
-    width: 30px; height: 30px;
-    background-color: transparent;
-    border: none;
-    position: relative;
-    .close_icon {
-        position: absolute;
-        left: 0; top: 0;
-        width: 30px; height: 30px;
-        @include bg_mask_image('../../../assets/icons/close_cross_icon.svg');
-        background-color: $dark_grey;
-    }
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+  position: relative;
+  .close_icon {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    @include bg_mask_image('../../../assets/icons/close_cross_icon.svg');
+    background-color: $dark_grey;
+  }
 }
 .token_detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 10px 0;
+  .token_detail_item {
+    margin-right: 10px;
+  }
+  .token_detail_value {
+    font-weight: 600;
+    &.token_hash {
+      padding: 6px 20px;
+      color: red;
+      border: 1px solid #dddddd;
+      word-break: break-all;
+      @include border_radius(5px, 0, 0, 5px);
+    }
+  }
+  &.token_detail_btn_wrap {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    margin: 10px 0;
-    .token_detail_item { margin-right: 10px;}
-    .token_detail_value { 
-        font-weight: 600;
-        &.token_hash {
-            padding: 6px 20px;
-            color: red;
-            border: 1px solid #dddddd;
-            word-break: break-all;
-            @include border_radius(5px, 0, 0, 5px);
-        }
+    justify-content: center;
+  }
+  .copy_btn {
+    // width: 70px; height: 38px;
+    margin-right: 8px;
+    background-color: $light_grey;
+    border: 1px solid #dddddd;
+    // margin-left: -1px;
+    position: relative;
+    padding: 8px 12px;
+    .copy_icon {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 30px;
+      height: 30px;
+      background-color: $dark_grey;
+      @include bg_mask_image('../../../assets/icons/copy_icon.svg');
     }
-    &.token_detail_btn_wrap { display: flex; justify-content: center;}
-    .copy_btn {
-        // width: 70px; height: 38px;
-        margin-right: 8px;
-        background-color: $light_grey;
-        border: 1px solid #dddddd;
-        // margin-left: -1px;
-        position: relative;
-        padding: 8px 12px;
-        .copy_icon {
-            position: absolute;
-            top: 3px; left: 3px;
-            width: 30px; height: 30px;
-            background-color: $dark_grey;
-            @include bg_mask_image('../../../assets/icons/copy_icon.svg');
-        }
-        
-    }
+  }
 }
 
-
 .tokenForm_container {
-    border: 1px solid #eeeeee;
-    @include border_radius(3px, 3px, 3px, 3px);
-    padding: 1rem 0.5rem;
-    position: relative;
-    @include _transition(height, 0.8s, ease-out);
+  border: 1px solid #eeeeee;
+  @include border_radius(3px, 3px, 3px, 3px);
+  padding: 1rem 0.5rem;
+  position: relative;
+  @include _transition(height, 0.8s, ease-out);
 }
 
 #token_form {
-    .token_input {
-        position: relative;
-        margin: 1rem 0;
+  .token_input {
+    position: relative;
+    margin: 1rem 0;
 
-        label {
-            display: inline-block;
-            margin-bottom: 10px;
-            margin-right: 12px;
-        }
-        .range_value_wrap {
-            text-align: right;
-            margin-top: -8px;
-        }
-        &.token_date_input {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-
-            .creation_field {
-                margin-right: 15px;
-                width: 200px;
-            }
-
-            .expiration_field {
-                width: 200px;
-
-                .token_expiration {
-                    padding: 0.375rem 0.75rem;
-                    border: 1px solid #dddddd;
-                    background-color: $light_grey;
-                    @include border_radius(5px, 5px, 5px, 5px);
-                }
-            }
-
-        }
-
+    label {
+      display: inline-block;
+      margin-bottom: 10px;
+      margin-right: 12px;
     }
+    .range_value_wrap {
+      text-align: right;
+      margin-top: -8px;
+    }
+    &.token_date_input {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
 
+      .creation_field {
+        margin-right: 15px;
+        width: 200px;
+      }
 
+      .expiration_field {
+        width: 200px;
+
+        .token_expiration {
+          padding: 0.375rem 0.75rem;
+          border: 1px solid #dddddd;
+          background-color: $light_grey;
+          @include border_radius(5px, 5px, 5px, 5px);
+        }
+      }
+    }
+  }
 }
 
 input.token_name_field {
-    min-width: 300px;
-    //     max-width: 500px;
-    display: inline-block;
+  min-width: 300px;
+  //     max-width: 500px;
+  display: inline-block;
 }
 
 input.token_number_field {
-    min-width: 50px;
-    max-width: 100px;
+  min-width: 50px;
+  max-width: 100px;
 }
 
-
-
 .datepicker_wrap {
-    position: relative;
+  position: relative;
 
-    .calendar_icon {
-        content: "";
-        @include _background(contain, 100% 100%);
-        background-image: url("../../../assets/icons/calendar_date_icon.svg");
-        width: 25px;
-        height: 25px;
-        position: absolute;
-        top: 0.375rem;
-        right: 0.75rem;
+  .calendar_icon {
+    content: '';
+    @include _background(contain, 100% 100%);
+    background-image: url('../../../assets/icons/calendar_date_icon.svg');
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 0.375rem;
+    right: 0.75rem;
 
-        &:hover {
-            cursor: pointer;
-        }
+    &:hover {
+      cursor: pointer;
     }
+  }
 }
 
 /*
  * Darkmode
  */
 .dark_bg {
-    .closeTokenForm_btn .close_icon { background-color: $light_grey;}
-    .create_token, .createToken_btn:hover, .createToken_btn:focus, .cancel_btn:hover, .cancel_btn:focus, .save_btn:hover, .save_btn:focus {
-        background-color: white;
-        background-image: none;
-        color: black;
+  .closeTokenForm_btn .close_icon {
+    background-color: $light_grey;
+  }
+  .create_token,
+  .createToken_btn:hover,
+  .createToken_btn:focus,
+  .cancel_btn:hover,
+  .cancel_btn:focus,
+  .save_btn:hover,
+  .save_btn:focus {
+    background-color: white;
+    background-image: none;
+    color: black;
+  }
+  .create_token {
+    .plus_icon {
+      background-color: black;
     }
-    .create_token {
-        .plus_icon { background-color: black;}
-        .create_btn_text { background: black; background-clip: text;}
+    .create_btn_text {
+      background: black;
+      background-clip: text;
     }
-    .createToken_btn, .save_btn { color: black;}
-    // .back_btn { color: white;}
-    
-    .tokensList_container {
-        ul.subTokensList {
-            li.token_row_header { background-color: $dark_grey;}
-            li.token_item_row {
-                &:nth-child(odd) {
-                    background-color: black;
-                    div {color: white;}
-                    .token_btn { color: $light_grey;}
-                    .token_btn .button_icon { background-color: $light_grey;}
-                }
-                &:nth-child(even) {
-                    background-color: $light_grey;
-                    div {color: black;}
-                }
-            }
+  }
+  .createToken_btn,
+  .save_btn {
+    color: black;
+  }
+  // .back_btn { color: white;}
+
+  .tokensList_container {
+    ul.subTokensList {
+      li.token_row_header {
+        background-color: $dark_grey;
+      }
+      li.token_item_row {
+        &:nth-child(odd) {
+          background-color: black;
+          div {
+            color: white;
+          }
+          .token_btn {
+            color: $light_grey;
+          }
+          .token_btn .button_icon {
+            background-color: $light_grey;
+          }
         }
-        /*
+        &:nth-child(even) {
+          background-color: $light_grey;
+          div {
+            color: black;
+          }
+        }
+      }
+    }
+    /*
         table.tokensList {
             border-color: $dark_grey;
             thead th { background-color: $dark_grey;}
@@ -418,6 +465,5 @@ input.token_number_field {
             }
         }
         */
-
-    }
+  }
 }

@@ -1,8 +1,8 @@
 name: Contact the Dashboard Team of the MQSS
 description: File a request to the "Munich Quantum Software Stack (MQSS)" team
-title: "[Contact F4-E: Dashboard team]: "
-labels: ["Contact_F4-E"]
-projects: ["F4-E: Dashboard team"]
+title: '[Contact F4-E: Dashboard team]: '
+labels: ['Contact_F4-E']
+projects: ['F4-E: Dashboard team']
 assignees:
   - mdepasca-lrz
 body:

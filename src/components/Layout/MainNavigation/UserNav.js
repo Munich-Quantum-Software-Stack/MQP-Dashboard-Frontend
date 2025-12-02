@@ -1,18 +1,18 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
-import Logout from "../../Pages/Logout";
+import Logout from '@components/Pages/Logout';
 
-
+/** User-related navigation (Feedback, Funding, Logout) */
 const UserNavigation = ({ onHidden }) => {
-    //const token = useRouteLoaderData("home");
-    const fs = useSelector((state) => state.accessibilities.font_size);
-    const navbar_fs = +fs * 1.1;
-    return (
-        <div className="user_acc">
-            <ul className="mainNav userNav">
-                {/* {token && (
+  //const token = useRouteLoaderData("home");
+  const fs = useSelector((state) => state.accessibilities.font_size);
+  const navbar_fs = +fs * 1.1;
+  return (
+    <div className="user_acc">
+      <ul className="mainNav userNav">
+        {/* {token && (
                     <li className="nav-item ">
                         <NavLink
                             to="settings"
@@ -28,36 +28,24 @@ const UserNavigation = ({ onHidden }) => {
                         </NavLink>
                     </li>
                 )} */}
-                <li className="nav-item">
-                    <NavLink
-                        to="feedback"
-                        className="nav-link "
-                        style={{ fontSize: navbar_fs }}
-                    >
-                        <span className="link_icon feedback_icon"></span>
-                        {onHidden && (
-                            <span className="link_text">Feedback</span>
-                        )}
-                    </NavLink>
-                </li>
-                <li className="nav-item">
-                    <NavLink
-                        to="credits"
-                        className="nav-link "
-                        style={{ fontSize: navbar_fs }}
-                    >
-                        <span className="link_icon credits_icon"></span>
-                        {onHidden && (
-                            <span className="link_text">Credits</span>
-                        )}
-                    </NavLink>
-                </li>
-                <li className="nav-item ">
-                    <Logout onHidden={onHidden} />
-                </li>
-            </ul>
-        </div>
-    );
+        <li className="nav-item">
+          <NavLink to="feedback" className="nav-link " style={{ fontSize: navbar_fs }}>
+            <span className="link_icon feedback_icon"></span>
+            {onHidden && <span className="link_text">Feedback</span>}
+          </NavLink>
+        </li>
+        <li className="nav-item">
+          <NavLink to="funding" className="nav-link " style={{ fontSize: navbar_fs }}>
+            <span className="link_icon funding_icon"></span>
+            {onHidden && <span className="link_text">Funding</span>}
+          </NavLink>
+        </li>
+        <li className="nav-item ">
+          <Logout onHidden={onHidden} />
+        </li>
+      </ul>
+    </div>
+  );
 };
 
 export default UserNavigation;
