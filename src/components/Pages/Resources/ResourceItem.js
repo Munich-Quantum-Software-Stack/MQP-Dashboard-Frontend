@@ -7,6 +7,7 @@ import Eviden_QLM_logo from '@assets/images/eviden-logo.png';
 import WMI_logo from '@assets/images/wmi-logo.svg';
 import AQT_logo from '@assets/images/Logo-AQT.png';
 import MUNICQ_Atoms_logo from '@assets/images/MunicQC_Atoms.png';
+import PlanQC_logo from '@assets/images/planqc_logo.png';
 
 /**
  * ResourceItem - Base component for displaying a quantum resource card with vendor branding
@@ -47,6 +48,14 @@ const ResourceItem = (props) => {
   if (Atom_resources.indexOf(resource_name) > -1) {
     resource_logo_src = MUNICQ_Atoms_logo;
     resource_bg = 'resource_bg_5';
+  }
+  if (resource_name === 'maqcs') {
+    resource_logo_src = PlanQC_logo;
+    resource_bg = 'resource_bg_7';
+  }
+  if (resource_name === 'eqe1') {
+    resource_logo_src = IQM_logo;
+    resource_bg = 'resource_bg_8';
   }
   return (
     <div className="col-12 col-xs-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3 resource_item_wrap">

@@ -57,10 +57,6 @@ const ActiveResourceItem = (props) => {
     resource_logo_src = IQM_logo;
     resource_bg = 'resource_bg_8';
   }
-  if (resource_name === 'planqc') {
-    resource_logo_src = PlanQC_logo;
-    resource_bg = 'resource_bg_6';
-  }
   return (
     <div className="col-12 col-xs-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3 resource_item_wrap">
       <PaneCard className={`resource_item ${resource_bg}`}>
@@ -80,6 +76,7 @@ const ActiveResourceItem = (props) => {
             <div className="resource_item_title">
               <h5 className="pane_title resource_title" style={{ fontSize: resource_name_fs }}>
                 {props.name}
+                {resource_name === 'eqe1' && <span className="beta_badge">BETA</span>}
               </h5>
               <div className="short_divider"></div>
             </div>
