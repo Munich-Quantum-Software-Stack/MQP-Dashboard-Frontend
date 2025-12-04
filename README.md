@@ -1,4 +1,7 @@
-# README
+# MQP Dashboard Frontend
+
+[![CI/CD Pipeline](https://github.com/Munich-Quantum-Software-Stack/MQP-Dashboard-Frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/Munich-Quantum-Software-Stack/MQP-Dashboard-Frontend/actions/workflows/ci.yml)
+![Coverage](./.github/badges/coverage.svg)
 
 This is the repository for MQP Dashboard Frontend MQSS Component, developed in React.
 

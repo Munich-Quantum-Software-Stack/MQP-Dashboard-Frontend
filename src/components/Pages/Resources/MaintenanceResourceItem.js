@@ -7,6 +7,7 @@ import Eviden_QLM_logo from '@assets/images/eviden-logo.png';
 import WMI_logo from '@assets/images/wmi-logo.svg';
 import AQT_logo from '@assets/images/Logo-AQT.png';
 import MUNICQ_Atoms_logo from '@assets/images/MunicQC_Atoms.png';
+import PlanQC_logo from '@assets/images/planqc_logo.png';
 
 /**
  * MaintenanceResourceItem - Displays a resource card with maintenance overlay when resource is unavailable
@@ -48,6 +49,14 @@ const MaintenanceResourceItem = (props) => {
     resource_logo_src = MUNICQ_Atoms_logo;
     resource_bg = 'resource_bg_5';
   }
+  if (resource_name === 'maqcs') {
+    resource_logo_src = PlanQC_logo;
+    resource_bg = 'resource_bg_7';
+  }
+  if (resource_name === 'eqe1') {
+    resource_logo_src = IQM_logo;
+    resource_bg = 'resource_bg_8';
+  }
   return (
     <div className="col-12 col-xs-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3 resource_item_wrap">
       <PaneCard className={`resource_item ${resource_bg}`}>
@@ -62,6 +71,7 @@ const MaintenanceResourceItem = (props) => {
           <div className="resource_item_title">
             <h5 className="pane_title resource_title" style={{ fontSize: resource_name_fs }}>
               {props.name}
+              {resource_name === 'eqe1' && <span className="beta_badge">BETA</span>}
             </h5>
             <div className="short_divider"></div>
           </div>
