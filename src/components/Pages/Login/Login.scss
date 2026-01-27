@@ -29,67 +29,68 @@
   width: 100%;
   height: 100%;
 }
+    align-items: center;
+    flex: 1;
+    position: relative;
+=======
+    .login_form_background {
+      max-width: 420px;
+      min-height: 500px;
+      padding: 1rem 2rem;
+      margin: 0 1rem;
+      @include box_shadow(0px 8px 20px 0px, #000);
+      background-color: white;
+    }
 
-.LoginForm_container {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-  position: relative;
-}
+    .LoginForm_wrap {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      color: $dark_grey;
 
-.login_form_background {
-  max-width: 420px;
-  min-height: 500px;
-  padding: 1rem 2rem;
-  margin: 0 1rem;
-  @include box_shadow(0px 8px 20px 0px, #000);
-  background-color: white;
-}
+      .login_content {
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+      }
+    }
+    .login_footer_container {
+      margin-top: 3rem;
+      display: flex;
+      flex-direction: column;
+      color: $dark_grey;
+    }
+    .login_logo {
+      margin-bottom: 3rem;
+      margin-top: 1rem;
+      img {
+        width: auto;
+        max-width: 320px;
+        height: auto;
+        max-height: 120px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        object-fit: contain;
+      }
 
-.LoginForm_wrap {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  color: $dark_grey;
+      text-align: center;
+    }
 
-  .login_content {
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-  }
-}
-.login_footer_container {
-  margin-top: 3rem;
-  display: flex;
-  flex-direction: column;
-  color: $dark_grey;
-}
-.login_logo {
-  margin-bottom: 3rem;
-  margin-top: 1rem;
-  img {
-    width: auto;
-    max-width: 320px;
-    height: auto;
-    max-height: 120px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    object-fit: contain;
-  }
+    //
 
-  text-align: center;
-}
 
 // iPhone SE
 @media screen and (max-width: 375px) {
   .LoginForm_wrap {
     margin: 0 18px;
     padding: 2rem 12px 1rem;
+<<<<<<< HEAD
     .mqp_logo,
     .login_logo {
+=======
+    .mqp_logo, .login_logo {
+>>>>>>> 84f8f12 (Add LRZ logo, MQV and MQSS logos on Login page, update copyright text)
       margin-bottom: 2rem;
     }
   }
