@@ -1,11 +1,10 @@
 /****** Footer *********/
 .footer_container {
-  padding: 0.75rem 1rem;
-
+  max-width: 600px;
   .footer_navbar {
     text-align: center;
 
-    .footer_nav {
+    ul.footer_nav {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -33,6 +32,18 @@
   .copyright {
     color: $text_grey;
     font-size: 0.85rem;
+  }
+  // Footer Logos
+  .footer_logos {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+    a { display: contents;}
+    .footer_logo_img {
+      max-width: 130px;
+      padding: 0.5rem 1rem;
+    }
   }
 }
 
