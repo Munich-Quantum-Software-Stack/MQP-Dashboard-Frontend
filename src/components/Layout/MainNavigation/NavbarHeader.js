@@ -5,7 +5,6 @@ import { getSidebarLogo } from '@utils/get-user-logos';
 /** Animated MQP logo header */
 const NavbarHeader = () => {
   const user_logos_path = process.env.PUBLIC_URL + '/user_logos/';
-  const default_image = `${user_logos_path}lrz_wortbild_square.png`;
   const sidebar_logo = getSidebarLogo();
 
   return (
@@ -16,7 +15,7 @@ const NavbarHeader = () => {
         animate={{ opacity: 1, width: 'auto' }}
         transition={{ duration: 0.2 }}
       >
-        <img src="/images/lrz_wortbild_square.png" className="topbar_logo_img" alt="LRZ" />
+        <a href={sidebar_logo.link} rel="noopener noreferrer"><img src={user_logos_path + sidebar_logo.file_name + sidebar_logo.file_ext} className="topbar_logo_img" alt={sidebar_logo.alt} /></a>
         <span className="logo_text"></span>
       </motion.div>
     </div>
