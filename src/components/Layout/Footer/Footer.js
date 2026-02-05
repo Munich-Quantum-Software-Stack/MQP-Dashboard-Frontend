@@ -15,7 +15,7 @@ function Footer() {
       <div className="copyright text-center">
         <span
           style={{
-            fontSize: token ? footer_fs : STANDARD_FOOTER_FS + "rem",
+            fontSize: token ? footer_fs : STANDARD_FOOTER_FS + 'rem',
           }}
         >
           <CopyrightText />
@@ -30,7 +30,7 @@ function Footer() {
               target="_blank"
               rel="noreferrer"
               style={{
-                fontSize: token ? footer_fs : STANDARD_FOOTER_FS + "rem",
+                fontSize: token ? footer_fs : STANDARD_FOOTER_FS + 'rem',
               }}
             >
               Data Privacy
@@ -42,7 +42,7 @@ function Footer() {
               target="_blank"
               rel="noreferrer"
               style={{
-                fontSize: token ? footer_fs : STANDARD_FOOTER_FS + "rem",
+                fontSize: token ? footer_fs : STANDARD_FOOTER_FS + 'rem',
               }}
             >
               Imprint
@@ -54,7 +54,7 @@ function Footer() {
               target="_blank"
               rel="noreferrer"
               style={{
-                fontSize: token ? footer_fs : STANDARD_FOOTER_FS + "rem",
+                fontSize: token ? footer_fs : STANDARD_FOOTER_FS + 'rem',
               }}
             >
               Accessibility

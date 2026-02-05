@@ -59,6 +59,7 @@
 }
 >>>>>>> 4bc6818 (feat: update user logos)
 
+<<<<<<< HEAD
       .login_content {
         display: flex;
         flex-grow: 1;
@@ -91,17 +92,65 @@
     //
 
 
+=======
+.login_form_background {
+  max-width: 420px;
+  min-height: 500px;
+  padding: 1rem 2rem;
+  margin: 0 1rem;
+  @include box_shadow(0px 8px 20px 0px, #000);
+  // background-color: rgba(0,0,0,0.7);
+  background-color: white;
+  // background: #3f99bf;
+  //   background: linear-gradient(3deg, rgba(63, 153, 191, 1) 0%, rgba(223, 236, 247, 1) 0%, rgba(255, 255, 255, 1) 90%);
+}
+
+.LoginForm_wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  color: $dark_grey;
+
+  .login_content {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+  }
+}
+.login_footer_container {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  color: $dark_grey;
+}
+.login_logo {
+  margin-bottom: 3rem;
+  margin-top: 1rem;
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  text-align: center;
+}
+
+>>>>>>> ce34594 (feat: update user logos)
 // iPhone SE
 @media screen and (max-width: 375px) {
   .LoginForm_wrap {
     margin: 0 18px;
     padding: 2rem 12px 1rem;
 <<<<<<< HEAD
+<<<<<<< HEAD
     .mqp_logo,
     .login_logo {
 =======
     .mqp_logo, .login_logo {
 >>>>>>> 84f8f12 (Add LRZ logo, MQV and MQSS logos on Login page, update copyright text)
+=======
+    .mqp_logo,
+    .login_logo {
+>>>>>>> ce34594 (feat: update user logos)
       margin-bottom: 2rem;
     }
   }

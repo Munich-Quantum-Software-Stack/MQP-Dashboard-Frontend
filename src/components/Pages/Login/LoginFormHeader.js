@@ -3,15 +3,22 @@ import { getLandingPageLogo } from '@utils/get-user-logos';
 
 function LoginFormHeader() {
   const user_logos_path = process.env.PUBLIC_URL + '/user_logos/';
-  const default_image = `${user_logos_path}lrz_wortbild_e_rgb.svg`;
+  const default_image = `${process.env.PUBLIC_URL}/images/lrz_wortbild_e_rgb.svg`;
   const landing_logo = getLandingPageLogo();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 14b7fd5 (feat: update user logos)
   return (
     <div>
       <div className="login_logo">
         <a href={landing_logo.link} target="_blank" rel="noopener noreferrer">
           <img
+<<<<<<< HEAD
             src={`${user_logos_path}${landing_logo.file_name}${landing_logo.file_ext}`}
+=======
+            src={user_logos_path + landing_logo.file_name + landing_logo.file_ext}
+>>>>>>> 14b7fd5 (feat: update user logos)
             className="header_logo_img"
             alt={landing_logo.alt}
             width={landing_logo.width}
