@@ -1,6 +1,6 @@
 // Importing modules
-import React from "react";
-import { getLandingPageLogo } from "@utils/get-user-logos";
+import React from 'react';
+import { getLandingPageLogo } from '@utils/get-user-logos';
 
 function LoginFormHeader() {
   const user_logos_path = process.env.PUBLIC_URL + '/user_logos/';

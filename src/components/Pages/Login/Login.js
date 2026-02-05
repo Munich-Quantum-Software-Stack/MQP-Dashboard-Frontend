@@ -1,12 +1,12 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
-import LoginCard from "@components/UI/Card/LoginCard";
-import LoginForm from "@components/Pages/Login/LoginForm";
-import { getAuthToken } from "@utils/auth";
-import LoginFormHeader from "@components/Pages/Login/LoginFormHeader";
-import Footer from "@components/Layout/Footer/Footer";
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import LoginCard from '@components/UI/Card/LoginCard';
+import LoginForm from '@components/Pages/Login/LoginForm';
+import { getAuthToken } from '@utils/auth';
+import LoginFormHeader from '@components/Pages/Login/LoginFormHeader';
+import Footer from '@components/Layout/Footer/Footer';
 
-import "./Login.scss";
+import './Login.scss';
 
 /**
  * Login - Login page that redirects authenticated users to /status or shows login form
