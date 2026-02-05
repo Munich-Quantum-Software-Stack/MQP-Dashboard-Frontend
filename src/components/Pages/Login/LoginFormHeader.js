@@ -1,15 +1,18 @@
 // Importing modules
 import React from "react";
+import { getLandingPageLogo } from "@utils/get-user-logos";
 
 function LoginFormHeader() {
+  const user_logos_path = process.env.PUBLIC_URL + '/user_logos/';
+  const landing_logo = getLandingPageLogo();
   return (
     <div>
       <div className="login_logo">
-        <a href="https://www.lrz.de/" target="_blank" rel="noopener noreferrer">
+        <a href={landing_logo.link} target="_blank" rel="noopener noreferrer">
           <img
-            src="/images/lrz_wortbild_e_rgb.svg"
+            src={user_logos_path + landing_logo.file_name + landing_logo.file_ext}
             className="header_logo_img"
-            alt="LRZ logo"
+            alt={landing_logo.alt}
           />
         </a>
       </div>

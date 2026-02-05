@@ -2,7 +2,7 @@ import { useState } from "react";
 
 /** Full-page container for login/auth screens */
 const LoginCard = (props) => {
-  let window_height = window.innerHeight;
+  let window_height = window.outerHeight;
   const [backgroundHeight, setBackgroundHeight] = useState(window_height);
 
   const customHeightBackground = () => {
