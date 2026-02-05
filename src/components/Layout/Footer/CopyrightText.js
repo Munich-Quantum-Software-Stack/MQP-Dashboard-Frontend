@@ -8,6 +8,7 @@ const CopyrightText = () => {
           <a href="https://github.com/Munich-Quantum-Software-Stack" target="_blank" rel="noopener noreferrer">open-source software</a>{' '}
           developed by the Munich Quantum Software Stack (MQSS) Team
         </div>
+        </div>
       </div>
     </div>
   );

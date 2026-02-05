@@ -5,6 +5,7 @@ function LoginFormHeader() {
   const user_logos_path = process.env.PUBLIC_URL + '/user_logos/';
   const default_image = `${user_logos_path}lrz_wortbild_e_rgb.svg`;
   const landing_logo = getLandingPageLogo();
+
   return (
     <div>
       <div className="login_logo">

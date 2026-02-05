@@ -1,19 +1,19 @@
 [
   {
     "name": "landing_page_logo",
-    "file_name": "placeholder_landing",
+    "file_name": "lrz_wortbild_e_rgb",
     "file_ext": ".svg",
-    "alt": "Organization Logo",
-    "link": "",
+    "alt": "LRZ",
+    "link": "https://www.lrz.de",
     "width": "100%",
     "height": "auto"
   },
   {
     "name": "sidebar_logo",
-    "file_name": "placeholder_sidebar",
-    "file_ext": ".svg",
-    "alt": "Organization Icon",
-    "link": "",
+    "file_name": "lrz_wortbild_square",
+    "file_ext": ".png",
+    "alt": "LRZ",
+    "link": "/",
     "width": "100%",
     "height": "auto"
   }

@@ -42,11 +42,22 @@
       background-color: white;
     }
 
+<<<<<<< HEAD
     .LoginForm_wrap {
       width: 100%;
       display: flex;
       flex-direction: column;
       color: $dark_grey;
+=======
+.LoginForm_container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+}
+>>>>>>> 4bc6818 (feat: update user logos)
 
       .login_content {
         display: flex;

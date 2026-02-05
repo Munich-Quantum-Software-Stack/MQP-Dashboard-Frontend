@@ -1,7 +1,7 @@
 import user_logos from '@data/user_logos';
 
 export function getLandingPageLogo() {
-  var landing_logo = '';
+  let landing_logo = '';
   user_logos.forEach((logo) => {
     if (logo.name === 'landing_page_logo') {
       landing_logo = logo;
@@ -11,7 +11,7 @@ export function getLandingPageLogo() {
 }
 
 export function getSidebarLogo() {
-  var sidebar_logo = '';
+  let sidebar_logo = '';
   user_logos.forEach((logo) => {
     if (logo.name === 'sidebar_logo') {
       sidebar_logo = logo;

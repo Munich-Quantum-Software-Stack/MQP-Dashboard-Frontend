@@ -21,7 +21,7 @@ function FooterLogos() {
           rel="noopener noreferrer"
         >
           <img
-            src="/images/MQV_Logo_Blue.svg"
+            src="/images/MQV_LOGO_F_BUNT.png"
             className="footer_logo_img"
             alt="Munich Quantum Valley"
           />
