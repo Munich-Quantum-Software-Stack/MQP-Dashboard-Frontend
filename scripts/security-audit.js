@@ -10,6 +10,9 @@ const ALLOWLIST = new Set([
   'GHSA-pqhp-25j4-6hq9', // smol-toml used by markdownlint-cli
   'GHSA-9jgg-88mc-972h', // webpack-dev-server leakage warning
   'GHSA-4v9v-hfq4-rm2v', // webpack-dev-server leakage warning
+  'GHSA-7h2j-956f-4vf2', // @isaacs/brace-expansion - transitive dependency
+  'GHSA-2w69-qvjg-hvjx', // @remix-run/router - react-router dependency
+  'GHSA-6rw7-vpxm-498p', // qs - transitive dependency
 ]);
 
 function getStagedFiles() {
