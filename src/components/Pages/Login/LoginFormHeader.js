@@ -13,6 +13,8 @@ function LoginFormHeader() {
             src={user_logos_path + landing_logo.file_name + landing_logo.file_ext}
             className="header_logo_img"
             alt={landing_logo.alt}
+            width={landing_logo.width}
+            height={landing_logo.height}
           />
         </a>
       </div>
