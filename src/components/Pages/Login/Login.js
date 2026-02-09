@@ -16,20 +16,23 @@ function Login() {
 
   return (
     <LoginCard>
-      <div className="col-md-8 col-lg-5 ml-lg-0 LoginForm_wrap">
-        <LoginFormHeader />
+      <div className="mx-auto login_form_background">
+        <div className="LoginForm_wrap">
+          <LoginFormHeader />
 
-        <div className="mb-4 login_content">
-          {/* Redirect to status page if already authenticated, otherwise show login form */}
-          {token && <Navigate to="/status" />}
-          {!token && (
-            <div className="mb-5">
-              <LoginForm />
-            </div>
-          )}
+          <div className="login_content">
+            {/* Redirect to status page if already authenticated, otherwise show login form */}
+            {token && <Navigate to="/status" />}
+            {!token && (
+              <div className="mb-2">
+                <LoginForm />
+              </div>
+            )}
+          </div>
         </div>
-
-        <Footer />
+        <div className="login_footer_container">
+          <Footer />
+        </div>
       </div>
     </LoginCard>
   );

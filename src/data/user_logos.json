@@ -1,0 +1,20 @@
+[
+  {
+    "name": "landing_page_logo",
+    "file_name": "UserLandingPageLogo",
+    "file_ext": ".png",
+    "alt": "",
+    "link": "",
+    "width": "100%",
+    "height": "auto"
+  },
+  {
+    "name": "sidebar_logo",
+    "file_name": "UserTopSidebarLogo",
+    "file_ext": ".png",
+    "alt": "",
+    "link": "/",
+    "width": "180px",
+    "height": "auto"
+  }
+]
