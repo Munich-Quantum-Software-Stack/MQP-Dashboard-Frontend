@@ -20,6 +20,8 @@ const NavbarHeader = () => {
             src={user_logos_path + sidebar_logo.file_name + sidebar_logo.file_ext}
             className="topbar_logo_img"
             alt={sidebar_logo.alt}
+            width={sidebar_logo.width}
+            height={sidebar_logo.height}
           />
         </a>
         <span className="logo_text"></span>

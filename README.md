@@ -25,6 +25,14 @@ MQP Dashboard Frontend can be deployed in three configurations:
 
 Deployment scripts are provided to ease this action in a non-development environment.
 
+## Update User's logo
+
+- There are two places need to be updated:
+  - On Landing Page (or Login Page): the logo should have light background color
+  - On Top sidebar: here should be a dark version of logo
+- Replace draft logo files by your own logos in folder /public/user_logos
+- Update information about these logos at /src/data/user_logos.json
+
 ## 🤝 Contributing
 
 Thank you for your interest in contributing to our project!
