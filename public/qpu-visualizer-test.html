@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>QPU Circuit Visualizer Test</title>
+</head>
+<body>
+  <div id="qpu-visualizer" style="width:400px;height:400px;background:#fff;border:2px solid #888; margin:32px auto;"></div>
+  <div id="qpu-error" style="color:red; font-weight:bold; margin:16px;"></div>
+  <script>
+    // Dynamically load the visualizer script from both possible locations
+    function loadScript(src, onload, onerror) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.onload = onload;
+      s.onerror = onerror;
+      document.body.appendChild(s);
+    }
+    function tryLoadVisualizerScript(callback) {
+      loadScript('/qpuCircuitVisualizer.js', callback, function() {
+        loadScript('/scripts/qpuCircuitVisualizer.js', callback, function() {
+          document.getElementById('qpu-error').textContent = 'QPU visualizer script failed to load from both locations.';
+        });
+      });
+    }
+    // Example data
+    const components = [
+      { id: 'q1', type: 'qubit', position: [0.2, 0.3], neighbors: ['r1'] },
+      { id: 'r1', type: 'resonator', position: [0.5, 0.5], neighbors: ['q1'] }
+    ];
+    function renderQPU() {
+      const container = document.getElementById('qpu-visualizer');
+      const errorDiv = document.getElementById('qpu-error');
+      if (!container) {
+        errorDiv.textContent = 'QPU visualizer container not found.';
+        console.error('QPU visualizer container not found.');
+        return;
+      }
+      if (window.QPUCircuitVisualizer && typeof window.QPUCircuitVisualizer.render === 'function') {
+        try {
+          errorDiv.textContent = '';
+          window.QPUCircuitVisualizer.render(container, components);
+          // Check if SVG was rendered
+          if (!container.querySelector('svg')) {
+            errorDiv.textContent = 'QPU visualizer failed to render SVG.';
+            container.innerHTML = '<span style="color:red">QPU visualizer failed to render.</span>';
+          }
+        } catch (e) {
+          errorDiv.textContent = 'QPU visualizer render error: ' + e.message;
+          container.innerHTML = '<span style="color:red">QPU visualizer render error.</span>';
+          console.error('QPU visualizer render error:', e);
+        }
+      } else {
+        errorDiv.textContent = 'QPUCircuitVisualizer is not available after script load.';
+        container.innerHTML = '<span style="color:red">QPUCircuitVisualizer is not available after script load.</span>';
+        console.error('QPUCircuitVisualizer is not available after script load.', window.QPUCircuitVisualizer);
+      }
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        tryLoadVisualizerScript(renderQPU);
+      });
+    } else {
+      tryLoadVisualizerScript(renderQPU);
+    }
+  </script>
+</body>
+</html>

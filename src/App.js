@@ -158,6 +158,12 @@ function App() {
           loader: checkTokenLoader,
         },
         {
+          path: 'visualisation',
+          element: require('@components/Pages/Visualisation').default(),
+          errorElement: <ErrorPage />,
+          loader: checkTokenLoader,
+        },
+        {
           path: 'feedback',
           element: <Feedback />,
           errorElement: <ErrorPage />,
