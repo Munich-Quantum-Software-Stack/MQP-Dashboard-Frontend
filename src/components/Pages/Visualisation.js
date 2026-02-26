@@ -2,6 +2,11 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import ContentCard from '@components/UI/Card/ContentCard';
 import './Visualisation.scss';
+// allow dynamic object access in this helper/visualizer glue code
+// prefer project alias imports, but tests resolve relative paths; use relative import
+// eslint-disable-next-line import/no-unresolved, no-restricted-imports
+// allow dynamic object access in this helper/visualizer glue code
+// eslint-disable-next-line import/no-unresolved, no-restricted-imports
 import '../../utils/qpuCircuitVisualizer';
 
 /** QPU Visualisation Tab - renders QPU circuit visualizer */
@@ -28,6 +33,7 @@ function Visualisation() {
         return;
       }
       if (!containerEl) {
+        console.warn('[QPU DEBUG] could not find visualizer container after retries');
         return;
       }
       // Try to load an IQM-style layout from `public/data/iqm-layout.json`.
@@ -37,15 +43,15 @@ function Visualisation() {
       async function loadLayoutOrFallback() {
         // helper: normalize absolute coordinates to 0..1
         function normalizePoints(nodes) {
-          const xs = nodes.map(n => n.x);
-          const ys = nodes.map(n => n.y);
+          const xs = nodes.map((n) => n.x);
+          const ys = nodes.map((n) => n.y);
           const xmin = Math.min(...xs);
           const xmax = Math.max(...xs);
           const ymin = Math.min(...ys);
           const ymax = Math.max(...ys);
           const dx = xmax - xmin || 1;
           const dy = ymax - ymin || 1;
-          return nodes.map(n => ({
+          return nodes.map((n) => ({
             id: String(n.id),
             x: (n.x - xmin) / dx,
             y: (n.y - ymin) / dy,
@@ -54,7 +60,11 @@ function Visualisation() {
 
         try {
           // Try several locations to avoid dev-server proxy collisions (some servers proxy /data/* paths)
-          const tryUrls = ['/data/iqm-layout.json', '/iqm-layout.json', '/public/data/iqm-layout.json'];
+          const tryUrls = [
+            '/data/iqm-layout.json',
+            '/iqm-layout.json',
+            '/public/data/iqm-layout.json',
+          ];
           let res = null;
           for (const url of tryUrls) {
             try {
@@ -73,9 +83,20 @@ function Visualisation() {
             const nodes = iqm.qubits || iqm.nodes || iqm.points || [];
             const couplers = iqm.couplers || iqm.edges || iqm.connections || [];
             if (nodes.length > 0) {
-              const norm = normalizePoints(nodes.map(n => ({ id: n.id ?? n.name ?? n.index ?? n.label ?? n.qubitId, x: n.x ?? n.coord_x ?? n.cx ?? n[0], y: n.y ?? n.coord_y ?? n.cy ?? n[1] })));
+              const norm = normalizePoints(
+                nodes.map((n) => ({
+                  id: n.id ?? n.name ?? n.index ?? n.label ?? n.qubitId,
+                  x: n.x ?? n.coord_x ?? n.cx ?? n[0],
+                  y: n.y ?? n.coord_y ?? n.cy ?? n[1],
+                })),
+              );
               // create components with neighbors from couplers
-              const compById = new Map(norm.map(p => [String(p.id), { id: String(p.id), type: 'qubit', position: [p.x, p.y], neighbors: [] }]));
+              const compById = new Map(
+                norm.map((p) => [
+                  String(p.id),
+                  { id: String(p.id), type: 'qubit', position: [p.x, p.y], neighbors: [] },
+                ]),
+              );
               for (const e of couplers) {
                 const a = String(e[0]);
                 const b = String(e[1]);
@@ -87,11 +108,12 @@ function Visualisation() {
                 }
               }
               components = Array.from(compById.values());
+              // IQM layout loaded; components prepared
               return;
             }
           }
         } catch (e) {
-          // ignore load errors
+          console.warn('[QPU DEBUG] Could not load /data/iqm-layout.json:', e.message);
         }
 
         // Fallback: generate 20 qubits arranged in a square grid (5 rows x 4 cols)
@@ -113,8 +135,8 @@ function Visualisation() {
         }
         // Add random connections (1-3 neighbors per node), undirected
         function addUndirected(aId, bId) {
-          const a = components.find(c => c.id === aId);
-          const b = components.find(c => c.id === bId);
+          const a = components.find((c) => c.id === aId);
+          const b = components.find((c) => c.id === bId);
           if (!a || !b || aId === bId) return;
           if (!a.neighbors.includes(bId)) a.neighbors.push(bId);
           if (!b.neighbors.includes(aId)) b.neighbors.push(aId);
@@ -137,7 +159,7 @@ function Visualisation() {
 
       // Defensive: if layout failed to produce components, ensure we have a fallback set
       if (!components || components.length === 0) {
-        // components empty - generate fallback
+        console.warn('[QPU DEBUG] components empty after layout load — generating fallback grid');
         components = [];
         const rows = 5;
         const cols = 4;
@@ -151,8 +173,8 @@ function Visualisation() {
           }
         }
         function addUndirectedFallback(aId, bId) {
-          const a = components.find(c => c.id === aId);
-          const b = components.find(c => c.id === bId);
+          const a = components.find((c) => c.id === aId);
+          const b = components.find((c) => c.id === bId);
           if (!a || !b || aId === bId) return;
           if (!a.neighbors.includes(bId)) a.neighbors.push(bId);
           if (!b.neighbors.includes(aId)) b.neighbors.push(aId);
@@ -169,33 +191,59 @@ function Visualisation() {
         }
       }
       // 1. Check that the visualizer script is loaded
-      // 2. Check that data is passed
-      // 3. Check that the container ref is set
+      // Visualizer loaded and data ready
+      // cleanup any legacy legend overlays injected by older visualizer builds
+      try {
+        const containerNode = containerEl;
+        const legacyLegend =
+          containerNode &&
+          containerNode.querySelector &&
+          containerNode.querySelector('[data-qpu-legend]');
+        if (legacyLegend && legacyLegend.remove) legacyLegend.remove();
+        // remove any global overlay id from previous scripts
+        const globalLegend = document.getElementById('qpu-legend-overlay');
+        if (globalLegend && globalLegend.remove) globalLegend.remove();
+      } catch (e) {
+        /* ignore */
+      }
       // 4. Manually test SVG rendering if visualizer not ready
       if (window.QPUCircuitVisualizer) {
         try {
           window.QPUCircuitVisualizer.render(containerEl, components);
           didRender = true;
         } catch (e) {
-            containerEl.innerHTML = '<span style="color:red">QPU visualizer render error: ' + e.message + '</span>';
+          containerEl.innerHTML =
+            '<span style="color:red">QPU visualizer render error: ' + e.message + '</span>';
+          console.error('[QPU DEBUG] QPU visualizer render error:', e);
         }
       } else if (containerEl) {
         // Fallback: render a simple SVG to confirm container is visible
-        containerEl.innerHTML = '<svg width="100" height="100"><circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" /></svg><div style="color:red">QPU visualizer not ready. Fallback SVG rendered.</div>';
+        containerEl.innerHTML =
+          '<svg width="100" height="100"><circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" /></svg><div style="color:red">QPU visualizer not ready. Fallback SVG rendered.</div>';
+        console.warn('[QPU DEBUG] QPU visualizer not ready. Fallback SVG rendered.');
       }
       // 5. Check CSS
       // update stat counts: qubits and unique connections
       const qubits = components.length;
       // connections counted as undirected edges: sum neighbor counts / 2
-      const totalNeighborRefs = components.reduce((s, c) => s + (c.neighbors ? c.neighbors.length : 0), 0);
+      const totalNeighborRefs = components.reduce(
+        (s, c) => s + (c.neighbors ? c.neighbors.length : 0),
+        0,
+      );
       const connections = Math.floor(totalNeighborRefs / 2);
       setStats({ qubits, connections });
+      // stats updated
 
       // 5. Check CSS
       if (containerRef.current) {
         const style = window.getComputedStyle(containerRef.current);
-        if (style.display === 'none' || style.opacity === '0' || style.width === '0px' || style.height === '0px') {
-          // container may be hidden or have zero size
+        if (
+          style.display === 'none' ||
+          style.opacity === '0' ||
+          style.width === '0px' ||
+          style.height === '0px'
+        ) {
+          console.warn('[QPU DEBUG] Container may be hidden or have zero size.');
         }
         // Ensure default background (don't overwrite site styling)
         containerRef.current.style.background = '';
@@ -207,7 +255,8 @@ function Visualisation() {
       // The visualizer module is bundled and imported above.
       // If it's not present here, show a helpful message.
       if (containerRef.current) {
-        containerRef.current.innerHTML = '<span style="color:red">QPU visualizer not available.</span>';
+        containerRef.current.innerHTML =
+          '<span style="color:red">QPU visualizer not available.</span>';
       }
     }
     // Fix: copy ref to variable for cleanup (may be null)
@@ -220,25 +269,44 @@ function Visualisation() {
   }, []);
 
   return (
-    <ContentCard className="visualisation_container h-100">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+    <ContentCard className="visualisation_container h-100" style={{ position: 'relative' }}>
+      <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
         <h2 style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>QPU Circuit Visualisation</h2>
-        <div style={{ marginLeft: 16 }}>
-          <div style={{
-            padding: '8px 12px',
-            background: 'rgba(255,255,255,0.95)',
-            color: '#111',
+      </div>
+      {/* Simple top-right legend */}
+      <div style={{ position: 'absolute', top: 12, right: 16, zIndex: 40 }}>
+        <div
+          style={{
+            minWidth: 140,
+            background: '#fff',
+            padding: '10px 12px',
             borderRadius: 8,
             boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
             border: '1px solid rgba(0,0,0,0.08)',
-            textAlign: 'right',
-            minWidth: 140
-          }}>
-            <div style={{ fontSize: 12, color: '#666' }}>Qubits</div>
-            <div style={{ fontSize: 20, fontWeight: 600 }}>{stats.qubits}</div>
-            <div style={{ height: 6 }} />
-            <div style={{ fontSize: 12, color: '#666' }}>Connections</div>
-            <div style={{ fontSize: 16, fontWeight: 600 }}>{stats.connections}</div>
+            color: '#000',
+            fontSize: 13,
+          }}
+        >
+          <div style={{ fontWeight: 700, marginBottom: 8, color: '#007bff', fontSize: 14 }}>
+            Legend
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#000' }}>
+            <div
+              style={{
+                width: 14,
+                height: 14,
+                background: '#4A90E2',
+                borderRadius: '50%',
+                border: '2px solid #333',
+              }}
+            />
+            <div style={{ color: '#000' }}>Qubit</div>
+          </div>
+          <div
+            style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 8, color: '#000' }}
+          >
+            <div style={{ width: 22, height: 6, background: '#888', borderRadius: 2 }} />
+            <div style={{ color: '#000' }}>Connection</div>
           </div>
         </div>
       </div>
@@ -258,9 +326,15 @@ function Visualisation() {
           position: 'relative',
         }}
       />
+      {/* Render qubit and connection counts below the diagram (simple text) */}
+      <div style={{ textAlign: 'center', marginTop: 12, color: '#000', fontSize: 15 }}>
+        <span style={{ fontWeight: 600, color: '#000' }}>Qubits:</span>&nbsp;{stats.qubits}
+        &nbsp;&nbsp;•&nbsp;&nbsp;
+        <span style={{ fontWeight: 600, color: '#000' }}>Connections:</span>&nbsp;
+        {stats.connections}
+      </div>
     </ContentCard>
   );
-
 }
 
 export default Visualisation;
