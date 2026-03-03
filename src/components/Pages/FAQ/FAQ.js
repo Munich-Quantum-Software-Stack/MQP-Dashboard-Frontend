@@ -120,8 +120,19 @@ const FAQ_DATA = {
       ),
     },
     {
-      q: '5. Are there sample jobs or example notebooks to help me get started?',
-      a: 'Yes, some example scripts on this github link {}',
+      q: '5. Are there sample jobs or example scripts to help me get started?',
+      a: (
+        <div>
+          Yes, some example scripts are available on GitHub:{' '}
+          <a
+            href="https://github.com/Munich-Quantum-Software-Stack/MQSS-Qiskit-Adapter/tree/develop/examples"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            MQSS Qiskit Adapter examples
+          </a>
+        </div>
+      ),
     },
   ],
   'Job Submission and Execution': [
