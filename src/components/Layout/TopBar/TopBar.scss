@@ -41,6 +41,17 @@
       justify-content: flex-start;
       align-items: center;
 
+      img {
+        height: 60px;
+        width: auto;
+
+        &.topbar_logo_img {
+          width: auto;
+        }
+
+        margin-right: 15px;
+      }
+
       .logo_text {
         font-size: 1.5rem;
         font-family: 'Open_Sans-Bold';
@@ -73,12 +84,17 @@
   align-items: center;
   .responsive_logo {
     margin-right: 10px;
-    .topbar_logo_wrap {
+    .topbar_mqp_logo_wrap {
       padding: 0;
-      .topbar_logo {
+      .mqp_logo {
         display: flex;
         align-items: center;
         justify-content: flex-start;
+        img.mqp_logo_img {
+          width: 40px;
+          height: 40px;
+          margin-right: 5px;
+        }
 
         .logo_text {
           color: $lrz_blue;
