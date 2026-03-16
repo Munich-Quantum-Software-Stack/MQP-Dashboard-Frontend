@@ -99,10 +99,7 @@
   padding: 1rem 2rem;
   margin: 0 1rem;
   @include box_shadow(0px 8px 20px 0px, #000);
-  // background-color: rgba(0,0,0,0.7);
   background-color: white;
-  // background: #3f99bf;
-  //   background: linear-gradient(3deg, rgba(63, 153, 191, 1) 0%, rgba(223, 236, 247, 1) 0%, rgba(255, 255, 255, 1) 90%);
 }
 
 .LoginForm_wrap {
@@ -127,8 +124,14 @@
   margin-bottom: 3rem;
   margin-top: 1rem;
   img {
-    width: 100%;
+    width: auto;
+    max-width: 320px;
     height: auto;
+    max-height: 120px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    object-fit: contain;
   }
 
   text-align: center;
