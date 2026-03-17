@@ -20,12 +20,11 @@ $status_divider: #058af7;
   -webkit-text-fill-color: transparent;
 }
 .status_items_list {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  flex-grow: 1;
+  display: grid;
+  gap: 1.5rem;
+  width: 100%;
   .status_item_wrap {
-    padding: 1rem;
+    padding: 0;
     display: flex;
     flex-direction: column;
     .status_item {
@@ -40,6 +39,12 @@ $status_divider: #058af7;
       }
     }
   }
+}
+
+.status_group_title {
+  margin-top: 0.25rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
 }
 
 .dark_bg {

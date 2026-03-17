@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import PaneCard from '@components/UI/Card/PaneCard';
 import PDFLink from '@components/UI/Document/PDFLink';
+import UpdatedDate from '@components/UI/UpdatedDate';
 
 const SoftwareStackIntroduction = () => {
   const fs = useSelector((state) => state.accessibilities.font_size);
@@ -28,7 +29,7 @@ const SoftwareStackIntroduction = () => {
         </div>
       </div>
       <div className="pane_date">
-        <div className="updated_date">Updated: Aug 23, 2024</div>
+        <UpdatedDate date="2024-08-23" />
       </div>
     </PaneCard>
   );

@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import PaneCard from '@components/UI/Card/PaneCard';
+import UpdatedDate from '@components/UI/UpdatedDate';
 
 const ComingSoon = () => {
   const fs = useSelector((state) => state.accessibilities.font_size);
@@ -22,7 +23,7 @@ const ComingSoon = () => {
         </div>
       </div>
       <div className="pane_date">
-        <div className="updated_date">Updated: Aug 23, 2024</div>
+        <UpdatedDate />
       </div>
     </PaneCard>
   );
