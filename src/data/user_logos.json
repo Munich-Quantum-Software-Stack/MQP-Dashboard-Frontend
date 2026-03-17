@@ -4,7 +4,7 @@
     "file_name": "lrz_wortbild_e_rgb",
     "file_ext": ".svg",
     "alt": "MQV",
-    "link": "https://www.lrz.de",
+    "link": "",
     "width": "100%",
     "height": "auto"
   },
@@ -13,7 +13,7 @@
     "file_name": "lrz_wortbild_square",
     "file_ext": ".png",
     "alt": "LRZ",
-    "link": "/",
+    "link": "",
     "width": "100%",
     "height": "auto"
   }
