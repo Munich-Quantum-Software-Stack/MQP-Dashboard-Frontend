@@ -1,4 +1,3 @@
-// Importing modules
 import React from 'react';
 import { getLandingPageLogo } from '@utils/get-user-logos';
 
