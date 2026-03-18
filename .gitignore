@@ -31,3 +31,10 @@ package-lock.json
 
 # assets
 *.mp4
+
+# Local env files
+.env
+.env.*
+
+# Local host-specific user logos
+public/user_logos/
