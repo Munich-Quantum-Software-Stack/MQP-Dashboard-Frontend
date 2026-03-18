@@ -1,0 +1,20 @@
+[
+  {
+    "name": "landing_page_logo",
+    "file_name": "placeholder_landing",
+    "file_ext": ".svg",
+    "alt": "Organization Logo",
+    "link": "",
+    "width": "100%",
+    "height": "auto"
+  },
+  {
+    "name": "sidebar_logo",
+    "file_name": "placeholder_sidebar",
+    "file_ext": ".svg",
+    "alt": "Organization Icon",
+    "link": "",
+    "width": "100%",
+    "height": "auto"
+  }
+]

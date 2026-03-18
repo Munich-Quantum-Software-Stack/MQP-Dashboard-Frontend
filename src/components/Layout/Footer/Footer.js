@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { getAuthToken } from '@utils/auth';
-
+import CopyrightText from './CopyrightText';
+import FooterLogos from './FooterLogos';
 /** Page footer with copyright and legal links */
 function Footer() {
   const fs = useSelector((state) => state.accessibilities.font_size);
@@ -8,17 +9,19 @@ function Footer() {
   const window_width = window.innerWidth;
   const STANDARD_FOOTER_FS = window_width <= 375 ? 0.8 : 0.85;
   const footer_fs = +fs * STANDARD_FOOTER_FS;
+
   return (
-    <div className="mt-auto footer_container">
+    <div className="mx-auto footer_container">
       <div className="copyright text-center">
         <span
           style={{
             fontSize: token ? footer_fs : STANDARD_FOOTER_FS + 'rem',
           }}
         >
-          &copy; 2024 Developed and operated by Leibniz Supercomputing Centre
+          <CopyrightText />
         </span>
       </div>
+      <FooterLogos />
       <div className="footer_navbar">
         <ul className="footer_nav">
           <li>

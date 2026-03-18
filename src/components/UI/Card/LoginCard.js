@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 /** Full-page container for login/auth screens */
 const LoginCard = (props) => {
-  let window_height = window.innerHeight;
+  let window_height = window.outerHeight;
   const [backgroundHeight, setBackgroundHeight] = useState(window_height);
 
   const customHeightBackground = () => {
@@ -20,7 +20,7 @@ const LoginCard = (props) => {
   return (
     <div className="LoginPage" style={{ height: backgroundHeight }}>
       <div className="LoginPage_bg"></div>
-      <div className="LoginForm_container flex-fill">{props.children}</div>
+      <div className="container LoginForm_container flex-fill">{props.children}</div>
     </div>
   );
 };
