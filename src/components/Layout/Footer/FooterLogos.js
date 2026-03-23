@@ -16,7 +16,6 @@ function FooterLogos() {
         <a href="https://www.munich-quantum-valley.de" target="_blank" rel="noopener noreferrer">
           <img src={MQVLogo} className="footer_logo_img" alt="Munich Quantum Valley" />
         </a>
-        </a>
       </div>
     </div>
   );
