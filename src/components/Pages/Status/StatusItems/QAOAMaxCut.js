@@ -21,10 +21,10 @@ const QAOA_MaxCut = () => {
       <div className="pane_desc">
         <div className="my-2" style={{ fontSize: status_item_text_fs }}>
           <PDFLink
-            src="/documents/MaxCut_LRZ_FUPP.ipynb"
+            src="/documents/MaxCut_FUPP.pdf"
             target="_blank"
             pdf_link_class="left_icon_link"
-            pdf_text="MaxCut_LRZ_FUPP.ipynb"
+            pdf_text="MaxCut (PDF)"
           />
         </div>
       </div>
