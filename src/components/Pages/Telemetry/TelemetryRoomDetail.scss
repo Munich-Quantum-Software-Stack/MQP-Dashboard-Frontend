@@ -1,0 +1,110 @@
+/* Telemetry quantum resource card styling */
+
+/* Back button styling */
+
+.telemetry-back-btn-bottom {
+  margin-top: 30px;
+  text-align: center;
+
+  .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #f8c129;
+    border-color: #f8c129;
+    color: #000;
+
+    &:hover {
+      background-color: #f0b30c;
+      border-color: #f0b30c;
+    }
+  }
+}
+
+.quantum-resource-card {
+  background-color: #f9e8d9;
+  border-radius: 4px;
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.quantum-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+
+.quantum-card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 5px 0;
+  color: #000;
+}
+
+.quantum-card-divider {
+  width: 40px;
+  height: 2px;
+  background-color: #de5215;
+  margin-bottom: 16px;
+}
+
+.quantum-card-vendor {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-weight: 500;
+}
+
+.quantum-card-status {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #5cb85c;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.offline .status-dot {
+  background-color: #d9534f;
+}
+
+.quantum-card-info {
+  margin-bottom: 10px;
+}
+
+.quantum-card-property {
+  margin-bottom: 8px;
+  font-size: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.property-label {
+  font-weight: 500;
+  margin-right: 5px;
+}
+
+.property-value {
+  font-weight: 400;
+}
+
+@media (max-width: 576px) {
+  .quantum-card-title {
+    font-size: 1.25rem;
+  }
+
+  .quantum-card-property {
+    font-size: 0.9rem;
+  }
+}
