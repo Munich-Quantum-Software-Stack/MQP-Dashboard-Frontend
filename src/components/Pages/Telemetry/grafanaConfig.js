@@ -93,15 +93,11 @@ export function buildRoomDashboardUrl(roomId, from, to) {
   const { GRAFANA_URL } = getConfig();
   if (!GRAFANA_URL) return null;
 
-  const ROOM_DASHBOARDS = {
-    'warm-lab': { uid: '55b99d46-9e7d-4b1c-b5dc-592592f60031', slug: 'warmlab' },
-    'cold-lab': null,
-    'compute-cube': null,
-    cloud: null,
-  };
+  const ROOM_DASHBOARDS = new Map([
+    ['warm-lab', { uid: '55b99d46-9e7d-4b1c-b5dc-592592f60031', slug: 'warmlab' }],
+  ]);
 
-  // eslint-disable-next-line security/detect-object-injection
-  const dashboard = ROOM_DASHBOARDS[roomId];
+  const dashboard = ROOM_DASHBOARDS.get(roomId) ?? null;
   if (!dashboard) return null;
   const { uid, slug } = dashboard;
 
