@@ -9,6 +9,19 @@
 import React, { useState } from 'react';
 import { exportCSV } from '@components/Pages/Telemetry/telemetryService';
 
+// Maps sensor ID prefixes to short label abbreviations used in CSV filenames.
+const SENSOR_ABBREV_MAP = [
+  [/^(temp|cold-temp|cc-temp|cloud-temp)/, 'temp'],
+  [/^(humid|cc-humid)/, 'hum'],
+  [/^pressure|cloud-pressure|cold-pressure/, 'pres'],
+  [/^(magnetometer|cold-magnetometer|cc-magnetometer|cloud-magnetometer)/, 'mag'],
+  [/^(light|cold-light|cc-light|cloud-light)/, 'light'],
+  [/^(loudness|cold-loudness|cc-loudness|cloud-loudness)/, 'loud'],
+  [/^he-/, 'he'],
+  [/^cc-power/, 'power'],
+  [/^cloud-network/, 'net'],
+];
+
 /**
  * @param {Object}   props
  * @param {string[]} props.selectedIds  Array of selected sensor IDs.
@@ -34,7 +47,20 @@ const DownloadBar = ({ selectedIds, from, to, darkmode }) => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `telemetry-export-${Date.now()}.csv`;
+
+      // Build a short label from the categories present in selectedIds
+      const seen = new Set();
+      selectedIds.forEach((id) => {
+        for (const [pattern, abbrev] of SENSOR_ABBREV_MAP) {
+          if (pattern.test(id)) {
+            seen.add(abbrev);
+            break;
+          }
+        }
+      });
+      const label = seen.size > 0 ? Array.from(seen).join('') : 'data';
+      a.download = `telemetry-export-${label}.csv`;
+
       document.body.appendChild(a);
       a.click();
       a.remove();

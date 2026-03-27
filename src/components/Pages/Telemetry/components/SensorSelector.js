@@ -34,7 +34,9 @@ const CATEGORIES = [
   { key: 'temperature', label: 'Temperature Sensors', emoji: '🌡️', color: '#f59e0b' },
   { key: 'humidity', label: 'Humidity Sensors', emoji: '💧', color: '#3b82f6' },
   { key: 'pressure', label: 'Pressure Sensors', emoji: '🔵', color: '#7c3aed' },
-  { key: 'dust', label: 'Dust / Particle Sensors', emoji: '🌫️', color: '#ef4444' },
+  { key: 'magnetometer', label: 'Magnetometer', emoji: '🧲', color: '#ec4899' },
+  { key: 'lightIntensity', label: 'Light Intensity', emoji: '💡', color: '#f59e0b' },
+  { key: 'loudness', label: 'Loudness', emoji: '🔊', color: '#8b5cf6' },
   { key: 'helium', label: 'Helium Sensors', emoji: '🧪', color: '#10b981' },
   { key: 'power', label: 'Power Monitoring', emoji: '⚡', color: '#ca8a04' },
   { key: 'network', label: 'Network Monitoring', emoji: '🌐', color: '#16a34a' },
@@ -79,8 +81,12 @@ function flattenSensors(sensors, categoryKey) {
       return sensors.humidity || [];
     case 'pressure':
       return sensors.pressure || [];
-    case 'dust':
-      return sensors.dust || [];
+    case 'magnetometer':
+      return sensors.magnetometer || [];
+    case 'lightIntensity':
+      return sensors.lightIntensity || [];
+    case 'loudness':
+      return sensors.loudness || [];
     case 'helium':
       return sensors.helium || [];
     case 'power':
@@ -96,7 +102,13 @@ function flattenSensors(sensors, categoryKey) {
 // DateRangePicker — compact from/to inputs
 // ---------------------------------------------------------------------------
 
-const DateRangePicker = ({ from, to, onChange, darkmode }) => {
+// Formats a Date to the yyyy-MM-ddTHH:mm string required by datetime-local inputs.
+function fmt(d) {
+  const pad = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+const DateRangePicker = ({ from, to, onChange, darkmode, children }) => {
   const inputStyle = {
     background: darkmode ? '#111827' : '#ffffff',
     color: darkmode ? '#f3f4f6' : '#1f2937',
@@ -105,12 +117,6 @@ const DateRangePicker = ({ from, to, onChange, darkmode }) => {
     padding: '6px 10px',
     fontSize: '13px',
     cursor: 'pointer',
-  };
-
-  const fmt = (d) => {
-    // yyyy-MM-ddTHH:mm format required by datetime-local inputs
-    const pad = (n) => String(n).padStart(2, '0');
-    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
   };
 
   return (
@@ -168,6 +174,7 @@ const DateRangePicker = ({ from, to, onChange, darkmode }) => {
           style={inputStyle}
         />
       </label>
+      {children && <div style={{ marginLeft: 'auto' }}>{children}</div>}
     </div>
   );
 };
@@ -245,6 +252,25 @@ const SensorSelector = ({ environmentSensors, darkmode, onChange, onSensorClick 
     [selectedIds, dateRange, notify],
   );
 
+  const toggleAllSensors = useCallback(() => {
+    const allIds = CATEGORIES.flatMap(({ key }) =>
+      flattenSensors(environmentSensors, key).map((s) => s.id),
+    );
+    const allChecked = allIds.every((id) => selectedIds.has(id));
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (allChecked) allIds.forEach((id) => next.delete(id));
+      else allIds.forEach((id) => next.add(id));
+      notify(next, dateRange);
+      return next;
+    });
+  }, [environmentSensors, selectedIds, dateRange, notify]);
+
+  const allSensorsSelected =
+    CATEGORIES.flatMap(({ key }) =>
+      flattenSensors(environmentSensors, key).map((s) => s.id),
+    ).every((id) => selectedIds.has(id));
+
   if (!environmentSensors) return null;
 
   return (
@@ -254,7 +280,24 @@ const SensorSelector = ({ environmentSensors, darkmode, onChange, onSensorClick 
         to={dateRange.to}
         onChange={handleDateChange}
         darkmode={darkmode}
-      />
+      >
+        <button
+          onClick={toggleAllSensors}
+          style={{
+            padding: '6px 14px',
+            borderRadius: '6px',
+            border: '1px solid #3b82f6',
+            background: 'transparent',
+            color: '#3b82f6',
+            fontSize: '13px',
+            fontWeight: '600',
+            cursor: 'pointer',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {allSensorsSelected ? 'Deselect All' : 'Select All'}
+        </button>
+      </DateRangePicker>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         {CATEGORIES.map(({ key, label, emoji, color }) => {
@@ -334,26 +377,6 @@ const SensorSelector = ({ environmentSensors, darkmode, onChange, onSensorClick 
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  {/* Select All / Deselect All */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleAll(environmentSensors, key);
-                    }}
-                    style={{
-                      padding: '4px 10px',
-                      borderRadius: '6px',
-                      border: `1px solid ${color}`,
-                      background: 'transparent',
-                      color,
-                      fontSize: '12px',
-                      fontWeight: '600',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    {allChecked ? 'Deselect All' : 'Select All'}
-                  </button>
-
                   {/* Chevron */}
                   <svg
                     width="18"
@@ -442,7 +465,7 @@ const SensorSelector = ({ environmentSensors, darkmode, onChange, onSensorClick 
                           }}
                           title="View graph"
                         >
-                          {sensor.value} ↗
+                          ↗
                         </button>
                       </div>
                     );

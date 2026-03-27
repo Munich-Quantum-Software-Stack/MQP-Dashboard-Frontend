@@ -1,28 +1,5 @@
-/**
- * telemetryService.js
- *
- * Single source of truth for all telemetry data.
- * When TELEMETRY_API_URL is set in runtime config this module hits real endpoints.
- * When it is absent every function returns mock data — components never change.
- *
- * Mock / real mode is evaluated at call time from runtimeConfig so that
- * Docker/K8s deployments can switch behaviour without a rebuild.
- */
-
 import { getConfig } from './runtimeConfig';
 
-// ---------------------------------------------------------------------------
-// Mock room catalogue
-// ---------------------------------------------------------------------------
-
-/**
- * DEMO NOTE — Path B Verification State
- * All sensors in a category currently share one Grafana panel (TestData).
- * In production, each sensor will have a unique panelId pointing to
- * a panel fed by real time-series data for that specific sensor ID.
- * The grafanaPanelRef shape below is the final production contract —
- * only the values change, not the structure.
- */
 export const MOCK_ROOMS = {
   'warm-lab': {
     id: 'warm-lab',
@@ -47,21 +24,10 @@ export const MOCK_ROOMS = {
       temperature: {
         floor: [
           {
-            id: 'temp-floor-1',
-            name: 'Floor Temp 1',
+            id: 'temp-1',
+            name: 'Temp 1',
             value: '22.4°C',
-            sensorKey: 'temp_floor_1',
-            grafanaPanelRef: {
-              dashboardUid: '55b99d46-9e7d-4b1c-b5dc-592592f60031',
-              slug: 'warmlab',
-              panelId: 5,
-            },
-          },
-          {
-            id: 'temp-floor-2',
-            name: 'Floor Temp 2',
-            value: '21.8°C',
-            sensorKey: 'temp_floor_2',
+            sensorKey: 'temp_1',
             grafanaPanelRef: {
               dashboardUid: '55b99d46-9e7d-4b1c-b5dc-592592f60031',
               slug: 'warmlab',
@@ -69,61 +35,15 @@ export const MOCK_ROOMS = {
             },
           },
         ],
-        wall: [
-          {
-            id: 'temp-wall-1',
-            name: 'Wall Temp 1',
-            value: '23.1°C',
-            sensorKey: 'temp_wall_1',
-            grafanaPanelRef: {
-              dashboardUid: '55b99d46-9e7d-4b1c-b5dc-592592f60031',
-              slug: 'warmlab',
-              panelId: 5,
-            },
-          },
-          {
-            id: 'temp-wall-2',
-            name: 'Wall Temp 2',
-            value: '22.9°C',
-            sensorKey: 'temp_wall_2',
-            grafanaPanelRef: {
-              dashboardUid: '55b99d46-9e7d-4b1c-b5dc-592592f60031',
-              slug: 'warmlab',
-              panelId: 5,
-            },
-          },
-        ],
-        roof: [
-          {
-            id: 'temp-roof-1',
-            name: 'Roof Temp 1',
-            value: '24.2°C',
-            sensorKey: 'temp_roof_1',
-            grafanaPanelRef: {
-              dashboardUid: '55b99d46-9e7d-4b1c-b5dc-592592f60031',
-              slug: 'warmlab',
-              panelId: 5,
-            },
-          },
-        ],
+        wall: [],
+        roof: [],
       },
       humidity: [
         {
           id: 'humid-1',
-          name: 'Humidity Sensor 1',
+          name: 'Humidity 1',
           value: '45%',
           sensorKey: 'humidity_1',
-          grafanaPanelRef: {
-            dashboardUid: '55b99d46-9e7d-4b1c-b5dc-592592f60031',
-            slug: 'warmlab',
-            panelId: 6,
-          },
-        },
-        {
-          id: 'humid-2',
-          name: 'Humidity Sensor 2',
-          value: '42%',
-          sensorKey: 'humidity_2',
           grafanaPanelRef: {
             dashboardUid: '55b99d46-9e7d-4b1c-b5dc-592592f60031',
             slug: 'warmlab',
@@ -134,7 +54,7 @@ export const MOCK_ROOMS = {
       pressure: [
         {
           id: 'pressure-1',
-          name: 'Pressure Sensor 1',
+          name: 'Pressure 1',
           value: '1013 hPa',
           sensorKey: 'pressure_1',
           grafanaPanelRef: {
@@ -144,16 +64,42 @@ export const MOCK_ROOMS = {
           },
         },
       ],
-      dust: [
+      magnetometer: [
         {
-          id: 'dust-1',
-          name: 'Dust Sensor 1',
-          value: '0.02 µg/m³',
-          sensorKey: 'dust_1',
+          id: 'magnetometer-1',
+          name: 'Magnetometer 1',
+          value: '48 µT',
+          sensorKey: 'magnetometer_1',
+          grafanaPanelRef: {
+            dashboardUid: '55b99d46-9e7d-4b1c-b5dc-592592f60031',
+            slug: 'warmlab',
+            panelId: 1,
+          },
+        },
+      ],
+      lightIntensity: [
+        {
+          id: 'light-1',
+          name: 'Light Intensity 1',
+          value: '320 lux',
+          sensorKey: 'light_1',
           grafanaPanelRef: {
             dashboardUid: '55b99d46-9e7d-4b1c-b5dc-592592f60031',
             slug: 'warmlab',
             panelId: 3,
+          },
+        },
+      ],
+      loudness: [
+        {
+          id: 'loudness-1',
+          name: 'Loudness 1',
+          value: '42 dB',
+          sensorKey: 'loudness_1',
+          grafanaPanelRef: {
+            dashboardUid: '55b99d46-9e7d-4b1c-b5dc-592592f60031',
+            slug: 'warmlab',
+            panelId: 4,
           },
         },
       ],
@@ -203,68 +149,58 @@ export const MOCK_ROOMS = {
       temperature: {
         floor: [
           {
-            id: 'cold-temp-floor-1',
-            name: 'Floor Temp 1',
+            id: 'cold-temp-1',
+            name: 'Temp 1',
             value: '4.2K',
-            sensorKey: 'cold_temp_floor_1',
-            grafanaPanelRef: null,
-          },
-          {
-            id: 'cold-temp-floor-2',
-            name: 'Floor Temp 2',
-            value: '4.1K',
-            sensorKey: 'cold_temp_floor_2',
+            sensorKey: 'cold_temp_1',
             grafanaPanelRef: null,
           },
         ],
-        wall: [
-          {
-            id: 'cold-temp-wall-1',
-            name: 'Wall Temp 1',
-            value: '4.3K',
-            sensorKey: 'cold_temp_wall_1',
-            grafanaPanelRef: null,
-          },
-        ],
-        roof: [
-          {
-            id: 'cold-temp-roof-1',
-            name: 'Roof Temp 1',
-            value: '4.5K',
-            sensorKey: 'cold_temp_roof_1',
-            grafanaPanelRef: null,
-          },
-        ],
+        wall: [],
+        roof: [],
       },
       pressure: [
         {
           id: 'cold-pressure-1',
-          name: 'Pressure Sensor 1',
+          name: 'Pressure 1',
           value: '1.2 mbar',
           sensorKey: 'cold_pressure_1',
-          grafanaPanelRef: null,
-        },
-        {
-          id: 'cold-pressure-2',
-          name: 'Pressure Sensor 2',
-          value: '0.8 mbar',
-          sensorKey: 'cold_pressure_2',
           grafanaPanelRef: null,
         },
       ],
       helium: [
         {
           id: 'he-level-1',
-          name: 'Helium Level 1',
+          name: 'Helium 1',
           value: '85%',
           sensorKey: 'helium_1',
           grafanaPanelRef: null,
         },
+      ],
+      magnetometer: [
         {
-          id: 'he-level-2',
-          name: 'Helium Level 2',
-          value: '92%',
-          sensorKey: 'helium_2',
+          id: 'cold-magnetometer-1',
+          name: 'Magnetometer 1',
+          value: '48 µT',
+          sensorKey: 'cold_magnetometer_1',
+          grafanaPanelRef: null,
+        },
+      ],
+      lightIntensity: [
+        {
+          id: 'cold-light-1',
+          name: 'Light Intensity 1',
+          value: '320 lux',
+          sensorKey: 'cold_light_1',
+          grafanaPanelRef: null,
+        },
+      ],
+      loudness: [
+        {
+          id: 'cold-loudness-1',
+          name: 'Loudness 1',
+          value: '42 dB',
+          sensorKey: 'cold_loudness_1',
           grafanaPanelRef: null,
         },
       ],
@@ -314,43 +250,20 @@ export const MOCK_ROOMS = {
       temperature: {
         floor: [
           {
-            id: 'cc-temp-floor-1',
-            name: 'Floor Temp 1',
+            id: 'cc-temp-1',
+            name: 'Temp 1',
             value: '20.1°C',
-            sensorKey: 'cc_temp_floor_1',
+            sensorKey: 'cc_temp_1',
             grafanaPanelRef: null,
           },
         ],
-        wall: [
-          {
-            id: 'cc-temp-wall-1',
-            name: 'Wall Temp 1',
-            value: '21.3°C',
-            sensorKey: 'cc_temp_wall_1',
-            grafanaPanelRef: null,
-          },
-          {
-            id: 'cc-temp-wall-2',
-            name: 'Wall Temp 2',
-            value: '20.8°C',
-            sensorKey: 'cc_temp_wall_2',
-            grafanaPanelRef: null,
-          },
-        ],
-        roof: [
-          {
-            id: 'cc-temp-roof-1',
-            name: 'Roof Temp 1',
-            value: '22.1°C',
-            sensorKey: 'cc_temp_roof_1',
-            grafanaPanelRef: null,
-          },
-        ],
+        wall: [],
+        roof: [],
       },
       humidity: [
         {
           id: 'cc-humid-1',
-          name: 'Humidity Sensor 1',
+          name: 'Humidity 1',
           value: '38%',
           sensorKey: 'cc_humidity_1',
           grafanaPanelRef: null,
@@ -359,16 +272,36 @@ export const MOCK_ROOMS = {
       power: [
         {
           id: 'cc-power-1',
-          name: 'Power Monitor 1',
+          name: 'Power 1',
           value: '45.2 kW',
           sensorKey: 'cc_power_1',
           grafanaPanelRef: null,
         },
+      ],
+      magnetometer: [
         {
-          id: 'cc-power-2',
-          name: 'Power Monitor 2',
-          value: '38.7 kW',
-          sensorKey: 'cc_power_2',
+          id: 'cc-magnetometer-1',
+          name: 'Magnetometer 1',
+          value: '48 µT',
+          sensorKey: 'cc_magnetometer_1',
+          grafanaPanelRef: null,
+        },
+      ],
+      lightIntensity: [
+        {
+          id: 'cc-light-1',
+          name: 'Light Intensity 1',
+          value: '320 lux',
+          sensorKey: 'cc_light_1',
+          grafanaPanelRef: null,
+        },
+      ],
+      loudness: [
+        {
+          id: 'cc-loudness-1',
+          name: 'Loudness 1',
+          value: '42 dB',
+          sensorKey: 'cc_loudness_1',
           grafanaPanelRef: null,
         },
       ],
@@ -408,36 +341,20 @@ export const MOCK_ROOMS = {
       temperature: {
         floor: [
           {
-            id: 'cloud-temp-floor-1',
-            name: 'Floor Temp 1',
+            id: 'cloud-temp-1',
+            name: 'Temp 1',
             value: '19.8°C',
-            sensorKey: 'cloud_temp_floor_1',
+            sensorKey: 'cloud_temp_1',
             grafanaPanelRef: null,
           },
         ],
-        wall: [
-          {
-            id: 'cloud-temp-wall-1',
-            name: 'Wall Temp 1',
-            value: '20.2°C',
-            sensorKey: 'cloud_temp_wall_1',
-            grafanaPanelRef: null,
-          },
-        ],
-        roof: [
-          {
-            id: 'cloud-temp-roof-1',
-            name: 'Roof Temp 1',
-            value: '21.0°C',
-            sensorKey: 'cloud_temp_roof_1',
-            grafanaPanelRef: null,
-          },
-        ],
+        wall: [],
+        roof: [],
       },
       pressure: [
         {
           id: 'cloud-pressure-1',
-          name: 'Pressure Sensor 1',
+          name: 'Pressure 1',
           value: '1015 hPa',
           sensorKey: 'cloud_pressure_1',
           grafanaPanelRef: null,
@@ -446,16 +363,36 @@ export const MOCK_ROOMS = {
       network: [
         {
           id: 'cloud-network-1',
-          name: 'Network Latency',
+          name: 'Network 1',
           value: '12ms',
           sensorKey: 'cloud_network_1',
           grafanaPanelRef: null,
         },
+      ],
+      magnetometer: [
         {
-          id: 'cloud-network-2',
-          name: 'Bandwidth Usage',
-          value: '2.4 Gbps',
-          sensorKey: 'cloud_network_2',
+          id: 'cloud-magnetometer-1',
+          name: 'Magnetometer 1',
+          value: '48 µT',
+          sensorKey: 'cloud_magnetometer_1',
+          grafanaPanelRef: null,
+        },
+      ],
+      lightIntensity: [
+        {
+          id: 'cloud-light-1',
+          name: 'Light Intensity 1',
+          value: '320 lux',
+          sensorKey: 'cloud_light_1',
+          grafanaPanelRef: null,
+        },
+      ],
+      loudness: [
+        {
+          id: 'cloud-loudness-1',
+          name: 'Loudness 1',
+          value: '42 dB',
+          sensorKey: 'cloud_loudness_1',
           grafanaPanelRef: null,
         },
       ],
@@ -463,28 +400,13 @@ export const MOCK_ROOMS = {
   },
 };
 
-// ---------------------------------------------------------------------------
-// Helpers for mock data generation
-// ---------------------------------------------------------------------------
-
-/* eslint-disable */
-/*
- * Telemetry service performs controlled data shaping for mock and real
- * APIs. Disable linting for object-injection here to avoid false positives
- * from the security plugin during build.
- */
-
-/**
- * Generate a plausible numeric drift for a sensor mock value.
- * Returns { value, unit } parsed from the canonical string stored in MOCK_ROOMS.
- */
 export function parseSensorValue(valueStr) {
   const match = valueStr.match(/^([\d.]+)\s*(.*)$/);
   if (!match) return { num: 0, unit: valueStr };
   return { num: parseFloat(match[1]), unit: match[2] };
 }
 
-/** Generate a 24-point timeseries between `from` and `to` for CSV / DummyGraph. */
+/** Generate a 24-point timeseries between `from` and `to` for CSV export. */
 function generateDummyTimeseries(sensorId, from, to, points = 24) {
   const start = from instanceof Date ? from.getTime() : new Date(from).getTime();
   const end = to instanceof Date ? to.getTime() : new Date(to).getTime();
@@ -498,12 +420,6 @@ function generateDummyTimeseries(sensorId, from, to, points = 24) {
   }
   return series;
 }
-
-// (Removed unused buildMockCSV helper — exportCSV implements chunked mock export)
-
-// ---------------------------------------------------------------------------
-// Public API
-// ---------------------------------------------------------------------------
 
 /**
  * Fetch full room data (devices + sensors) for a given roomId.
@@ -555,7 +471,6 @@ export async function getSensorHistory(sensorId, from, to) {
 export async function exportCSV(sensorIds, from, to, onProgress) {
   const { TELEMETRY_API_URL } = getConfig();
   if (!TELEMETRY_API_URL) {
-    // Mock: export one sensor at a time so progress callbacks fire
     const total = sensorIds.length;
     const header = 'sensor_id,timestamp,value\n';
     const allRows = [];
@@ -572,16 +487,9 @@ export async function exportCSV(sensorIds, from, to, onProgress) {
     }
     return new Blob([header + allRows.join('\n')], { type: 'text/csv' });
   }
-
-  // Real API: single bulk request (server streams all sensors)
   const res = await fetch(`${TELEMETRY_API_URL}/export/csv`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    // The payload contains developer-provided sensorIds/from/to values. This
-    // is intentionally sent as JSON to the backend. Disable the object-injection
-    // rule here because the fields are controlled within the app (not user
-    // supplied free-form keys).
-    // eslint-disable-next-line security/detect-object-injection
     body: JSON.stringify({
       sensorIds,
       from: new Date(from).toISOString(),

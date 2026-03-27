@@ -9,14 +9,10 @@ import GrafanaPanel from './components/GrafanaPanel';
 import SensorSelector from './components/SensorSelector';
 import DownloadBar from './components/DownloadBar';
 import { getRoomData } from './telemetryService';
-import { buildRoomDashboardUrl } from '@components/Pages/Telemetry/grafanaConfig';
+import { buildPanelViewUrl } from '@components/Pages/Telemetry/grafanaConfig';
 import './Telemetry.scss';
 import '@components/Pages/Resources/Resources.scss';
 import './TelemetryResources.scss';
-
-// ---------------------------------------------------------------------------
-// RoomDetailSkeleton — layout-stable pulsing placeholder while data loads
-// ---------------------------------------------------------------------------
 
 const RoomDetailSkeleton = ({ darkmode }) => {
   const shimmer = {
@@ -29,12 +25,10 @@ const RoomDetailSkeleton = ({ darkmode }) => {
   };
   return (
     <ContentCard className={`${darkmode ? 'dark_bg' : 'white_bg'}`}>
-      {/* Room header */}
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px', gap: '12px' }}>
         <div style={{ ...shimmer, width: '32px', height: '32px', borderRadius: '50%' }} />
         <div style={{ ...shimmer, width: '240px', height: '28px' }} />
       </div>
-      {/* Device cards */}
       <div style={{ ...shimmer, width: '160px', height: '22px', marginBottom: '16px' }} />
       <div className="resources_list" style={{ marginBottom: '32px' }}>
         {[0, 1, 2].map((i) => (
@@ -43,7 +37,6 @@ const RoomDetailSkeleton = ({ darkmode }) => {
           </div>
         ))}
       </div>
-      {/* Sensor selector placeholder */}
       <div style={{ ...shimmer, width: '200px', height: '22px', marginBottom: '16px' }} />
       <div style={{ ...shimmer, height: '120px', borderRadius: '10px' }} />
     </ContentCard>
@@ -123,12 +116,13 @@ const TelemetryRoomDetail = () => {
 
   const roomData = roomState.data;
 
-  // Runtime-aware link to the full room dashboard in Grafana
-  const grafanaDashboardUrl = buildRoomDashboardUrl(roomId, selection.from, selection.to);
+  const panelViewUrl =
+    showGraphModal && selectedSensor
+      ? buildPanelViewUrl(selectedSensor.grafanaPanelRef, selection.from, selection.to)
+      : null;
 
   return (
     <ContentCard className={`${darkmode ? 'dark_bg' : 'white_bg'}`}>
-      {/* Room header */}
       <div
         className="room-header"
         style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}
@@ -139,7 +133,6 @@ const TelemetryRoomDetail = () => {
         </h2>
       </div>
 
-      {/* Quantum Devices */}
       {roomData.quantumDevices?.length > 0 && (
         <div>
           <h3>Quantum Devices</h3>
@@ -206,7 +199,6 @@ const TelemetryRoomDetail = () => {
         </div>
       )}
 
-      {/* Environment Monitoring — collapsible sensor selector */}
       <div className="mt-5">
         <h3 style={{ marginBottom: '20px', color: darkmode ? '#f3f4f6' : '#1f2937' }}>
           Environment Monitoring
@@ -221,7 +213,6 @@ const TelemetryRoomDetail = () => {
         )}
       </div>
 
-      {/* Sticky download bar — visible when ≥1 sensor selected */}
       <DownloadBar
         selectedIds={selection.selectedIds}
         from={selection.from}
@@ -229,7 +220,6 @@ const TelemetryRoomDetail = () => {
         darkmode={darkmode}
       />
 
-      {/* Graph modal */}
       {showGraphModal && selectedSensor && (
         <div
           style={{
@@ -305,28 +295,28 @@ const TelemetryRoomDetail = () => {
                 Last updated: {new Date().toLocaleTimeString()}
               </span>
               <button
-                className={`btn-open-grafana${!grafanaDashboardUrl ? ' btn-disabled' : ''}`}
-                disabled={!grafanaDashboardUrl}
+                className={`btn-open-grafana${!panelViewUrl ? ' btn-disabled' : ''}`}
+                disabled={!panelViewUrl}
                 title={
-                  grafanaDashboardUrl
-                    ? `Open full ${roomData.name} dashboard in Grafana`
-                    : 'Grafana not configured — set GRAFANA_URL in config.json'
+                  panelViewUrl
+                    ? `Open ${selectedSensor?.name} panel in Grafana`
+                    : 'No Grafana panel configured for this sensor'
                 }
                 onClick={() => {
-                  if (grafanaDashboardUrl) {
-                    window.open(grafanaDashboardUrl, '_blank', 'noopener,noreferrer');
+                  if (panelViewUrl) {
+                    window.open(panelViewUrl, '_blank', 'noopener,noreferrer');
                   }
                 }}
                 style={{
                   padding: '8px 16px',
                   borderRadius: '6px',
-                  background: grafanaDashboardUrl ? '#3b82f6' : '#9ca3af',
+                  background: panelViewUrl ? '#3b82f6' : '#9ca3af',
                   color: '#ffffff',
                   border: 'none',
                   fontSize: '14px',
                   fontWeight: '600',
-                  cursor: grafanaDashboardUrl ? 'pointer' : 'not-allowed',
-                  opacity: grafanaDashboardUrl ? 1 : 0.6,
+                  cursor: panelViewUrl ? 'pointer' : 'not-allowed',
+                  opacity: panelViewUrl ? 1 : 0.6,
                 }}
               >
                 Open in Grafana ↗
