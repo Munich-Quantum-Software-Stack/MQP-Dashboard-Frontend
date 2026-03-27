@@ -168,7 +168,7 @@ const Telemetry = () => {
             <span className="stat-label">Monitored Locations</span>
           </div>
           <div className="stat-item">
-            <span className="stat-number">24+</span>
+            <span className="stat-number">6</span>
             <span className="stat-label">Active Sensors</span>
             <span className="stat-note">(more to come)</span>
           </div>

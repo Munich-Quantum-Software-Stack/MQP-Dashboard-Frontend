@@ -16,8 +16,12 @@ function getTypeColor(type) {
       return '#2563eb';
     case 'pressure':
       return '#7c3aed';
-    case 'dust':
-      return '#dc2626';
+    case 'magnetometer':
+      return '#ec4899';
+    case 'lightIntensity':
+      return '#f59e0b';
+    case 'loudness':
+      return '#8b5cf6';
     case 'helium':
       return '#059669';
     case 'power':
