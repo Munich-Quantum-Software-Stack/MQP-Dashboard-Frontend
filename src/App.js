@@ -2,7 +2,7 @@
  * App.js - Main application component defining routes and provider wrappers
  */
 
-import React from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@utils/query';
@@ -35,127 +35,203 @@ import RequestAccess from '@components/Pages/RequestAccess/RequestAccess';
 import FAQ from '@components/Pages/FAQ/FAQ';
 import './App.scss';
 import Funding from '@components/Pages/Funding/Funding';
+import TelemetryRoot from '@components/Pages/Telemetry/TelemetryRoot';
+import Telemetry from '@components/Pages/Telemetry/Telemetry';
+import TelemetryRoomDetail from '@components/Pages/Telemetry/TelemetryRoomDetail';
+import { loadRuntimeConfig } from '@components/Pages/Telemetry/runtimeConfig';
 
 function App() {
-  // Define all application routes with nested layouts, loaders, and error boundaries
-  const router = createBrowserRouter([
-    {
-      // Protected routes under RootLayout requiring authentication via tokenLoader
-      path: '/',
-      element: <RootLayout />,
-      errorElement: <ErrorPage />,
-      id: 'home',
-      loader: tokenLoader,
-      children: [
+  const [configReady, setConfigReady] = useState(false);
+
+  useEffect(() => {
+    loadRuntimeConfig().then(() => setConfigReady(true));
+  }, []);
+
+  // Define all application routes with nested layouts, loaders, and error boundaries.
+  // Created once (via useMemo) so React Router never receives a new router object
+  // on re-renders, which would reset navigation state.
+  const router = useMemo(
+    () =>
+      createBrowserRouter([
         {
-          path: 'forced_reset_password',
-          element: <ForceResetLayout />,
+          // Protected routes under RootLayout requiring authentication via tokenLoader
+          path: '/',
+          element: <RootLayout />,
           errorElement: <ErrorPage />,
-          loader: checkTokenLoader,
+          id: 'home',
+          loader: tokenLoader,
           children: [
             {
-              index: true,
-              element: <ForcedResetPassword />,
-            },
-          ],
-        },
-        {
-          path: 'status',
-          element: <StatusRoot />,
-          errorElement: <ErrorPage />,
-          id: 'status',
-          loader: checkTokenLoader,
-          children: [
-            {
-              index: true,
-              element: <Status />,
-            },
-          ],
-        },
-        {
-          path: 'tokens',
-          element: <TokensRootLayout />,
-          errorElement: <ErrorPage />,
-          loader: checkTokenLoader,
-          children: [
-            {
-              index: true,
-              element: <Tokens />,
-            },
-            {
-              path: 'new',
-              element: <NewToken />,
-            },
-          ],
-        },
-        {
-          // Jobs section with nested detail and circuit visualization routes
-          path: 'jobs',
-          element: <JobsRoot />,
-          errorElement: <ErrorPage />,
-          loader: checkTokenLoader,
-          children: [
-            {
-              index: true,
-              element: <Jobs />,
-            },
-            {
-              path: ':jobId',
-              id: 'job-detail',
+              path: 'forced_reset_password',
+              element: <ForceResetLayout />,
+              errorElement: <ErrorPage />,
+              loader: checkTokenLoader,
               children: [
                 {
                   index: true,
-                  element: <JobDetail />,
-                  loader: jobDetailLoader,
-                },
-                {
-                  path: 'circuit',
-                  element: <JobCircuit isExecutedCircuit={false} />,
-                  loader: jobCircuitLoader,
-                },
-                {
-                  path: 'executed-circuit',
-                  element: <JobCircuit isExecutedCircuit={true} />,
-                  loader: jobCircuitLoader,
+                  element: <ForcedResetPassword />,
                 },
               ],
             },
-          ],
-        },
-        {
-          path: 'budgets',
-          element: <Budgets />,
-          errorElement: <ErrorPage />,
-          loader: checkTokenLoader,
-        },
-        {
-          // Resources section with list and detail views
-          path: 'resources',
-          element: <ResourcesRoot />,
-          errorElement: <ErrorPage />,
-          loader: checkTokenLoader,
-          children: [
             {
-              index: true,
-              element: <Resources />,
-            },
-            {
-              path: ':resourceId',
-              id: 'resource-detail',
+              path: 'status',
+              element: <StatusRoot />,
+              errorElement: <ErrorPage />,
+              id: 'status',
+              loader: checkTokenLoader,
               children: [
                 {
                   index: true,
-                  element: <ResourceDetail />,
+                  element: <Status />,
                 },
               ],
+            },
+            {
+              path: 'tokens',
+              element: <TokensRootLayout />,
+              errorElement: <ErrorPage />,
+              loader: checkTokenLoader,
+              children: [
+                {
+                  index: true,
+                  element: <Tokens />,
+                },
+                {
+                  path: 'new',
+                  element: <NewToken />,
+                },
+              ],
+            },
+            {
+              // Jobs section with nested detail and circuit visualization routes
+              path: 'jobs',
+              element: <JobsRoot />,
+              errorElement: <ErrorPage />,
+              loader: checkTokenLoader,
+              children: [
+                {
+                  index: true,
+                  element: <Jobs />,
+                },
+                {
+                  path: ':jobId',
+                  id: 'job-detail',
+                  children: [
+                    {
+                      index: true,
+                      element: <JobDetail />,
+                      loader: jobDetailLoader,
+                    },
+                    {
+                      path: 'circuit',
+                      element: <JobCircuit isExecutedCircuit={false} />,
+                      loader: jobCircuitLoader,
+                    },
+                    {
+                      path: 'executed-circuit',
+                      element: <JobCircuit isExecutedCircuit={true} />,
+                      loader: jobCircuitLoader,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              path: 'budgets',
+              element: <Budgets />,
+              errorElement: <ErrorPage />,
+              loader: checkTokenLoader,
+            },
+            {
+              // Resources section with list and detail views
+              path: 'resources',
+              element: <ResourcesRoot />,
+              errorElement: <ErrorPage />,
+              loader: checkTokenLoader,
+              children: [
+                {
+                  index: true,
+                  element: <Resources />,
+                },
+                {
+                  path: ':resourceId',
+                  id: 'resource-detail',
+                  children: [
+                    {
+                      index: true,
+                      element: <ResourceDetail />,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              path: 'faq',
+              element: <FAQ />,
+              errorElement: <ErrorPage />,
+              loader: checkTokenLoader,
+            },
+            {
+              path: 'feedback',
+              element: <Feedback />,
+              errorElement: <ErrorPage />,
+            },
+            {
+              path: 'funding',
+              element: <Funding />,
+              errorElement: <ErrorPage />,
+            },
+            {
+              path: 'telemetry',
+              element: <TelemetryRoot />,
+              errorElement: <ErrorPage />,
+              loader: checkTokenLoader,
+              children: [
+                {
+                  index: true,
+                  element: <Telemetry />,
+                },
+                {
+                  path: ':roomId',
+                  element: <TelemetryRoomDetail />,
+                },
+              ],
+            },
+            {
+              path: 'logout',
+              element: <Logout />,
+              loader: checkTokenLoader,
+              action: logoutAction,
             },
           ],
         },
         {
-          path: 'faq',
-          element: <FAQ />,
-          errorElement: <ErrorPage />,
-          loader: checkTokenLoader,
+          // Public routes under DefaultLayout for unauthenticated users
+          path: '/',
+          element: <DefaultLayout />,
+          errorElement: <DefaultErrorPage />,
+          children: [
+            {
+              index: true,
+              element: <Login />,
+            },
+            {
+              path: 'login',
+              element: <Login />,
+            },
+            {
+              path: 'blocked',
+              element: <Blocked />,
+            },
+            {
+              path: 'forgot_password',
+              element: <ForgotPassword />,
+            },
+            {
+              path: 'request_access',
+              element: <RequestAccess />,
+            },
+          ],
         },
         {
           path: 'visualisation',

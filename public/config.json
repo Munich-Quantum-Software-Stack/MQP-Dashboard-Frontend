@@ -1,0 +1,6 @@
+{
+  "TELEMETRY_API_URL": "",
+  "GRAFANA_URL": "http://portal-telemetry.quantum.lrz.de:3000",
+  "WS_URL": "",
+  "GRAFANA_PANEL_TIMEOUT_MS": 10000
+}

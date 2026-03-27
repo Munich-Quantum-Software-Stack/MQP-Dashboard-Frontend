@@ -236,3 +236,107 @@
     gap: 20px;
   }
 }
+
+// ─── Sensor Card ───────────────────────────────────────────────────
+.sensor-card {
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+}
+
+// ─── Grafana panel / skeleton ──────────────────────────────────────
+.grafana-panel-wrapper {
+  min-height: 220px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.grafana-panel-iframe {
+  display: block;
+  width: 100%;
+  height: 220px;
+  border: none;
+}
+
+.grafana-skeleton {
+  width: 100%;
+  height: 220px;
+  border-radius: 8px;
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+// ─── Sensor selector tree ─────────────────────────────────────────
+.sensor-selector {
+  .sensor-category-block {
+    transition: box-shadow 0.2s ease;
+
+    &:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    &.dark:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .sensor-category-header {
+    &:focus-visible {
+      outline: 2px solid #3b82f6;
+      outline-offset: -2px;
+    }
+  }
+}
+
+// ─── Date range picker ─────────────────────────────────────────────
+.date-range-picker {
+  input[type='datetime-local'] {
+    &:focus {
+      outline: 2px solid #3b82f6;
+      outline-offset: 1px;
+    }
+  }
+}
+
+// ─── Download bar ──────────────────────────────────────────────────
+.download-bar {
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  button:hover:not(:disabled) {
+    background: #1d4ed8 !important;
+  }
+}
+
+// ─── Live badge pulse ──────────────────────────────────────────────
+.live-badge {
+  animation: pulse-opacity 2s ease-in-out infinite;
+}
+
+@keyframes pulse-opacity {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
