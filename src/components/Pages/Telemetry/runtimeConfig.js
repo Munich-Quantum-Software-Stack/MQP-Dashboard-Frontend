@@ -1,26 +1,4 @@
-/**
- * runtimeConfig.js
- *
- * Loads runtime configuration from /config.json at application startup.
- *
- * This means Docker/K8s deployments can volume-mount a config.json with real
- * values (API URLs, Grafana URL, WS URL) without rebuilding the React bundle —
- * the file is a plain static asset served by the same web server.
- *
- * Loading order (first non-empty value wins):
- *   1. /config.json values (runtime — set by deployment)
- *   2. REACT_APP_* environment variables (build-time — for local dev convenience)
- *   3. Empty string → isMock() returns true → mock/offline mode
- *
- * Typical usage
- * -------------
- *   // App.js (once, before first render):
- *   await loadRuntimeConfig();
- *
- *   // Anywhere else (always synchronous after load):
- *   const { GRAFANA_URL } = getConfig();
- *   if (isMock('TELEMETRY_API_URL')) { ... use mock data ... }
- */
+
 
 let _config = {
   TELEMETRY_API_URL: '',
@@ -46,10 +24,8 @@ export async function loadRuntimeConfig() {
       _config = { ..._config, ...json };
     }
   } catch {
-    // config.json may not exist in some local dev setups — fall through to env vars
   }
 
-  // Fallback: build-time env vars (useful for `npm start` without a config.json)
   if (!_config.TELEMETRY_API_URL) {
     _config.TELEMETRY_API_URL = process.env.REACT_APP_TELEMETRY_API_URL || '';
   }
@@ -58,6 +34,16 @@ export async function loadRuntimeConfig() {
   }
   if (!_config.WS_URL) {
     _config.WS_URL = process.env.REACT_APP_WS_URL || '';
+  }
+
+  // If the app is served over HTTPS, upgrade any http:// service URLs to
+  // https:// so the browser doesn't block them as Mixed Content.
+  if (typeof window !== 'undefined' && window.location.protocol === 'https:') {
+    ['GRAFANA_URL', 'TELEMETRY_API_URL', 'WS_URL'].forEach((key) => {
+      if (_config[key] && _config[key].startsWith('http:')) {
+        _config[key] = _config[key].replace(/^http:/, 'https:');
+      }
+    });
   }
 
   _loaded = true;
