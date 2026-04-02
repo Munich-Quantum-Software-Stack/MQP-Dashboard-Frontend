@@ -86,11 +86,10 @@ jobs:
           key: playwright-${{ runner.os }}-${{ hashFiles('package.json') }}
 
       - name: Install Playwright Browsers
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps
+        run: npx playwright install
 
-      - name: Install Playwright Dependencies (cached)
-        if: steps.playwright-cache.outputs.cache-hit == 'true'
+      - name: Install Playwright System Dependencies
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install-deps
 
       # Build test version and run sharded E2E tests
