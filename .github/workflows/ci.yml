@@ -89,7 +89,6 @@ jobs:
         run: npx playwright install
 
       - name: Install Playwright System Dependencies
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install-deps
 
       # Build test version and run sharded E2E tests
