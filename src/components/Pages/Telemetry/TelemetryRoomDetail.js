@@ -25,10 +25,12 @@ const RoomDetailSkeleton = ({ darkmode }) => {
   };
   return (
     <ContentCard className={`${darkmode ? 'dark_bg' : 'white_bg'}`}>
+      {/* Room header */}
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px', gap: '12px' }}>
         <div style={{ ...shimmer, width: '32px', height: '32px', borderRadius: '50%' }} />
         <div style={{ ...shimmer, width: '240px', height: '28px' }} />
       </div>
+      {/* Device cards */}
       <div style={{ ...shimmer, width: '160px', height: '22px', marginBottom: '16px' }} />
       <div className="resources_list" style={{ marginBottom: '32px' }}>
         {[0, 1, 2].map((i) => (
@@ -37,6 +39,7 @@ const RoomDetailSkeleton = ({ darkmode }) => {
           </div>
         ))}
       </div>
+      {/* Sensor selector placeholder */}
       <div style={{ ...shimmer, width: '200px', height: '22px', marginBottom: '16px' }} />
       <div style={{ ...shimmer, height: '120px', borderRadius: '10px' }} />
     </ContentCard>
@@ -116,6 +119,9 @@ const TelemetryRoomDetail = () => {
 
   const roomData = roomState.data;
 
+  // Keep this variable for future Grafana button restore. ESLint: it may be unused while the
+  // button is commented out — suppress the unused-vars warning so commits pass linting.
+  // eslint-disable-next-line no-unused-vars
   const panelViewUrl =
     showGraphModal && selectedSensor
       ? buildPanelViewUrl(selectedSensor.grafanaPanelRef, selection.from, selection.to)
@@ -123,6 +129,7 @@ const TelemetryRoomDetail = () => {
 
   return (
     <ContentCard className={`${darkmode ? 'dark_bg' : 'white_bg'}`}>
+      {/* Room header */}
       <div
         className="room-header"
         style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}
@@ -133,6 +140,7 @@ const TelemetryRoomDetail = () => {
         </h2>
       </div>
 
+      {/* Quantum Devices */}
       {roomData.quantumDevices?.length > 0 && (
         <div>
           <h3>Quantum Devices</h3>
@@ -199,6 +207,7 @@ const TelemetryRoomDetail = () => {
         </div>
       )}
 
+      {/* Environment Monitoring — collapsible sensor selector */}
       <div className="mt-5">
         <h3 style={{ marginBottom: '20px', color: darkmode ? '#f3f4f6' : '#1f2937' }}>
           Environment Monitoring
@@ -213,6 +222,7 @@ const TelemetryRoomDetail = () => {
         )}
       </div>
 
+      {/* Sticky download bar — visible when ≥1 sensor selected */}
       <DownloadBar
         selectedIds={selection.selectedIds}
         from={selection.from}
@@ -220,6 +230,7 @@ const TelemetryRoomDetail = () => {
         darkmode={darkmode}
       />
 
+      {/* Graph modal */}
       {showGraphModal && selectedSensor && (
         <div
           style={{
@@ -294,6 +305,7 @@ const TelemetryRoomDetail = () => {
               <span style={{ fontSize: '12px', color: darkmode ? '#9ca3af' : '#6b7280' }}>
                 Last updated: {new Date().toLocaleTimeString()}
               </span>
+              {/*
               <button
                 className={`btn-open-grafana${!panelViewUrl ? ' btn-disabled' : ''}`}
                 disabled={!panelViewUrl}
@@ -321,6 +333,7 @@ const TelemetryRoomDetail = () => {
               >
                 Open in Grafana ↗
               </button>
+              */}
             </div>
           </div>
         </div>
