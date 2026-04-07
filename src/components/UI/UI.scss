@@ -171,7 +171,9 @@
 .pane_card {
   @include border_radius(5px, 5px, 5px, 5px);
   @include box_shadow(0px 1px 3px -1px, $dark_grey);
-  padding: 1rem;
+  padding: 1rem 0.75rem 0.6rem 0.75rem; /* slightly larger top padding so icons don't get clipped */
+  display: flex;
+  flex-direction: column;
 }
 
 .pane_title {
@@ -192,6 +194,90 @@
   font-size: 0.8rem;
   text-align: right;
   margin-top: auto;
+}
+
+/* Status items layout tweaks */
+.status_items_list {
+  display: grid;
+  gap: 1.5rem; /* a bit more breathing room so cards span the width */
+  width: 100%;
+}
+
+.status_item {
+  display: flex;
+  height: auto;
+  min-height: 130px;
+}
+
+/* Ensure grid child wrapper fills grid cell and doesn't carry Bootstrap widths */
+.status_items_list > .status_item_wrap {
+  width: 100%;
+}
+
+.status_item .pane_desc {
+  margin-bottom: 0.5rem;
+}
+
+/* three / two column variants */
+
+.status_items_list.three-cols {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  justify-items: stretch;
+  align-items: stretch;
+}
+
+.status_items_list.two-cols {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  justify-items: stretch;
+  align-items: stretch;
+}
+
+/* Apply a slightly shorter aspect ratio to all grid child wrappers so cards are uniformly shorter */
+.status_items_list > .status_item_wrap {
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  /* default: let specific row rules decide height */
+}
+
+/* Fix a consistent card height so 3/2 rows appear visually aligned */
+.status_items_list > .status_item_wrap {
+  /* Make every status card square - controlled by inline style */
+  min-height: 140px;
+}
+
+.status_item_wrap > .pane_card {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 1.1rem 0.9rem 0.8rem 0.9rem; /* extra top padding for icon clearance */
+  min-height: 0; /* allow aspect-ratio to control height */
+  overflow: auto; /* allow internal scrolling instead of clipping */
+  width: 100%;
+  height: 100%;
+}
+
+.status_item_wrap > .pane_card .pane_desc {
+  flex: 1 1 auto;
+  overflow: auto;
+}
+
+/* Slightly reduce title size inside status grids to avoid wrapping */
+.status_items_list .pane_title {
+  font-size: 1.15rem;
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 768px) {
+  .status_items_list.three-cols,
+  .status_items_list.two-cols {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .status_item .pane_card {
+    aspect-ratio: auto;
+  }
 }
 // Login Page
 .LoginPage {
@@ -254,10 +340,12 @@
 .left_icon_link {
   display: flex;
   flex-direction: row;
+  align-items: center; /* center icon and text vertically */
+  gap: 12px;
   justify-content: flex-start;
   text-decoration: none;
   position: relative;
-  padding-left: 55px;
+  padding-left: 0; /* use natural flow instead of absolute positioning */
   &:hover,
   &:focus,
   &:active {
@@ -266,31 +354,45 @@
 }
 // PDF Document
 .pdf_link {
+  display: flex;
+  align-items: center; /* vertically center icon and text */
   .pdf_icon {
-    position: absolute;
-    top: 5px;
+    position: relative;
+    top: 0; /* avoid negative offset that can push icon outside container */
     left: 0;
-    width: 45px;
+    width: 48px;
     height: auto;
+    margin-right: 12px;
+    z-index: 3;
+    display: block;
+    max-height: 56px;
+  }
+  .pdf_text {
+    line-height: 1.4;
+    margin-top: 0;
   }
 }
 
 // Video Link
 .video_link {
   .video_icon_wrap {
-    position: absolute;
+    position: relative;
     left: 0;
     top: 0;
     width: 50px;
     height: 50px;
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
     .video_icon {
-      position: absolute;
+      position: relative;
       left: 0;
       top: 0;
       @include bg_mask_image('../../assets/icons/video_icon.svg');
       background-color: red;
-      width: 50px;
-      height: 50px;
+      width: 40px;
+      height: 40px;
+      display: block;
     }
   }
 }
