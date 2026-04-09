@@ -87,7 +87,7 @@ const TelemetryRoomDetail = () => {
     setSelection(newSelection);
   }, []);
 
-  const handleBackClick = () => navigate('/telemetry');
+  const handleBackClick = () => navigate('/telemetry/institution/lrz');
 
   const closeModal = () => {
     setShowGraphModal(false);
@@ -129,6 +129,17 @@ const TelemetryRoomDetail = () => {
 
   return (
     <ContentCard className={`${darkmode ? 'dark_bg' : 'white_bg'}`}>
+      {/* Back button — top left */}
+      <div style={{ marginBottom: '16px', textAlign: 'left' }}>
+        <button
+          onClick={handleBackClick}
+          className="btn btn-warning btn-lg"
+          style={{ padding: '10px 20px', fontSize: '16px' }}
+        >
+          ← Back to Rooms
+        </button>
+      </div>
+
       {/* Room header */}
       <div
         className="room-header"
@@ -338,16 +349,6 @@ const TelemetryRoomDetail = () => {
           </div>
         </div>
       )}
-
-      <div className="telemetry-back-btn-bottom" style={{ marginTop: '30px', textAlign: 'left' }}>
-        <button
-          onClick={handleBackClick}
-          className="btn btn-warning btn-lg"
-          style={{ padding: '10px 20px', fontSize: '16px' }}
-        >
-          ← Back to Telemetry
-        </button>
-      </div>
     </ContentCard>
   );
 };

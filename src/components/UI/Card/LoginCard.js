@@ -17,9 +17,17 @@ const LoginCard = (props) => {
   window.addEventListener('load', customHeightBackground);
   window.addEventListener('resize', customHeightBackground);
 
+  const bgUrl = process.env.PUBLIC_URL + '/user_logos/MQVwall.png';
+  const bgStyle = {
+    height: backgroundHeight,
+    backgroundImage: `url(${bgUrl})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center center',
+  };
+
   return (
     <div className="LoginPage" style={{ height: backgroundHeight }}>
-      <div className="LoginPage_bg"></div>
+      <div className="LoginPage_bg" style={bgStyle}></div>
       <div className="container LoginForm_container flex-fill">{props.children}</div>
     </div>
   );

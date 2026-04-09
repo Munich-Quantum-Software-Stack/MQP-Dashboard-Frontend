@@ -1,3 +1,17 @@
+// Resources — extended backgrounds (resource_bg_9 – resource_bg_14)
+$resource_bg_9: #e8e0f5; // soft lavender   — Neutral Atoms / PASQAL
+$resource_bg_10: #d0f0f0; // soft teal        — Photonic / ORCA / Quandela
+$resource_bg_11: #fde8ea; // soft rose        — Spin Qubit
+$resource_bg_12: #dce6f1; // soft grey-blue   — IBM systems
+$resource_bg_13: #ffecd4; // soft orange-amber — AWS resources
+$resource_bg_14: #d6ecf7; // soft sky blue    — DLR resources
+$resource_divider_9: #7b5ea7;
+$resource_divider_10: #0b9c9c;
+$resource_divider_11: #c0394b;
+$resource_divider_12: #0f62fe;
+$resource_divider_13: #ff9900;
+$resource_divider_14: #00adef;
+
 /*************
  * Resources 
  ************/
@@ -173,6 +187,42 @@ $resource_divider_8: #800080;
       background-image: linear-gradient($resource_bg_8, white);
       .short_divider {
         @include short_devider(40px, $resource_divider_8);
+      }
+    }
+    &.resource_bg_9 {
+      background-image: linear-gradient($resource_bg_9, white);
+      .short_divider {
+        @include short_devider(40px, $resource_divider_9);
+      }
+    }
+    &.resource_bg_10 {
+      background-image: linear-gradient($resource_bg_10, white);
+      .short_divider {
+        @include short_devider(40px, $resource_divider_10);
+      }
+    }
+    &.resource_bg_11 {
+      background-image: linear-gradient($resource_bg_11, white);
+      .short_divider {
+        @include short_devider(40px, $resource_divider_11);
+      }
+    }
+    &.resource_bg_12 {
+      background-image: linear-gradient($resource_bg_12, white);
+      .short_divider {
+        @include short_devider(40px, $resource_divider_12);
+      }
+    }
+    &.resource_bg_13 {
+      background-image: linear-gradient($resource_bg_13, white);
+      .short_divider {
+        @include short_devider(40px, $resource_divider_13);
+      }
+    }
+    &.resource_bg_14 {
+      background-image: linear-gradient($resource_bg_14, white);
+      .short_divider {
+        @include short_devider(40px, $resource_divider_14);
       }
     }
     .maintenance_bg_layer {

@@ -36,7 +36,8 @@ import FAQ from '@components/Pages/FAQ/FAQ';
 import './App.scss';
 import Funding from '@components/Pages/Funding/Funding';
 import TelemetryRoot from '@components/Pages/Telemetry/TelemetryRoot';
-import Telemetry from '@components/Pages/Telemetry/Telemetry';
+import TelemetryLanding from '@components/Pages/Telemetry/TelemetryLanding';
+import InstitutionDetail from '@components/Pages/Telemetry/InstitutionDetail';
 import TelemetryRoomDetail from '@components/Pages/Telemetry/TelemetryRoomDetail';
 import { loadRuntimeConfig } from '@components/Pages/Telemetry/runtimeConfig';
 
@@ -189,9 +190,22 @@ function App() {
               children: [
                 {
                   index: true,
-                  element: <Telemetry />,
+                  element: <TelemetryLanding />,
                 },
                 {
+                  // New: institution detail route
+                  path: 'institution/:institutionId',
+                  loader: checkTokenLoader,
+                  element: <InstitutionDetail />,
+                },
+                {
+                  // New: optional deep-link to a specific resource within an institution
+                  path: 'institution/:institutionId/resource/:resourceId',
+                  loader: checkTokenLoader,
+                  element: <InstitutionDetail />,
+                },
+                {
+                  // Existing room-detail route — preserved as-is
                   path: ':roomId',
                   element: <TelemetryRoomDetail />,
                 },

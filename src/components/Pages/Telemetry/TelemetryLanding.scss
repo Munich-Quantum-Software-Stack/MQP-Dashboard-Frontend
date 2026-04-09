@@ -1,0 +1,299 @@
+/* TelemetryLanding.scss */
+@import '../../../assets/scss/variables.scss';
+
+// ------------------------------------------------------------
+// Page shell
+// ------------------------------------------------------------
+.telemetry-landing {
+  padding: 28px 30px 40px;
+  min-height: 400px;
+}
+
+.telemetry-landing__header {
+  margin-bottom: 28px;
+
+  h2 {
+    margin-bottom: 8px;
+    font-weight: 700;
+    color: $dark_blue;
+  }
+}
+
+.telemetry-landing__subtitle {
+  color: $text_grey;
+  margin-bottom: 0;
+
+  &--dark {
+    color: $silver_grey;
+  }
+}
+
+// ------------------------------------------------------------
+// Section headers
+// ------------------------------------------------------------
+.landing-section-header {
+  margin-bottom: 20px;
+}
+
+.landing-section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $dark_blue;
+  margin-bottom: 6px;
+
+  &--dark {
+    color: #e5e7eb;
+  }
+}
+
+.landing-section-subtitle {
+  font-size: 0.9rem;
+  color: $text_grey;
+  margin-bottom: 0;
+
+  &--dark {
+    color: $silver_grey;
+  }
+}
+
+// ------------------------------------------------------------
+// Institution card grid — responsive 3 / 2 / 1 column
+// ------------------------------------------------------------
+.inst-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 36px;
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ------------------------------------------------------------
+// Institution card
+// ------------------------------------------------------------
+.inst-card {
+  background: #ffffff;
+  border: 1px solid $border_color_light;
+  border-left: 4px solid transparent;
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-left-color 0.25s ease;
+  outline: none;
+  position: relative;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 3px rgba($lrz_blue, 0.5);
+  }
+
+  &--dark {
+    background: #1f2937;
+    border-color: #374151;
+    color: #f9fafb;
+  }
+
+  &--light {
+    background: #ffffff;
+    color: #1f2937;
+  }
+}
+
+.inst-card__logo-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.inst-card__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.inst-card__header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.inst-card__name {
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.inst-card__flag {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+// Badges row
+.inst-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.inst-card__category-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+
+  &--hpcqcaas {
+    background-color: rgba($medium_blue, 0.12);
+    color: $medium_blue;
+    border: 1px solid rgba($medium_blue, 0.3);
+  }
+
+  &--qaas {
+    background-color: rgba($green, 0.12);
+    color: darken($green, 10%);
+    border: 1px solid rgba($green, 0.3);
+  }
+}
+
+.inst-card__live-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  background-color: rgba($green, 0.15);
+  color: darken($green, 12%);
+  border: 1px solid rgba($green, 0.4);
+
+  &::before {
+    content: '● ';
+    font-size: 0.55rem;
+    vertical-align: middle;
+  }
+}
+
+.inst-card__resource-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  background-color: $light_grey;
+  color: $dark_grey;
+  border: 1px solid $medium_grey;
+
+  .inst-card--dark & {
+    background-color: #374151;
+    color: #d1d5db;
+    border-color: #4b5563;
+  }
+}
+
+.inst-card__desc {
+  margin: 0;
+  line-height: 1.5;
+  color: $text_grey;
+  font-weight: 600;
+  flex: 1;
+
+  .inst-card--dark & {
+    color: #9ca3af;
+  }
+}
+
+.inst-card__arrow {
+  align-self: flex-end;
+  color: $text_grey;
+
+  .inst-card--dark & {
+    color: #6b7280;
+  }
+}
+
+.inst-card__inst-logo {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  height: 34px;
+  max-width: 88px;
+  object-fit: contain;
+  object-position: right center;
+  pointer-events: none;
+}
+
+// ------------------------------------------------------------
+// Divider between sections
+// ------------------------------------------------------------
+.landing-divider {
+  border: none;
+  border-top: 1px solid $border_color_light;
+  margin: 24px 0 32px;
+
+  &--dark {
+    border-top-color: #374151;
+  }
+}
+
+// ------------------------------------------------------------
+// Statistics bar
+// ------------------------------------------------------------
+.landing-statbar {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 0 0 28px;
+  padding: 24px 20px;
+  background-color: $light_grey;
+  border-radius: 12px;
+  border: 1px solid $border_color_light;
+
+  &--dark {
+    background-color: #1f2937;
+    border-color: #374151;
+  }
+
+  @media (max-width: 767px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.landing-statbar__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 80px;
+}
+
+.landing-statbar__number {
+  font-weight: 700;
+  color: $lrz_blue;
+  line-height: 1;
+}
+
+.landing-statbar__label {
+  color: $text_grey;
+  text-align: center;
+
+  .landing-statbar--dark & {
+    color: $silver_grey;
+  }
+}

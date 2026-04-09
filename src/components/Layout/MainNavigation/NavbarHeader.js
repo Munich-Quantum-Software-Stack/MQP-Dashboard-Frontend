@@ -18,7 +18,7 @@ const NavbarHeader = () => {
       >
         <a href={sidebar_logo.link} rel="noopener noreferrer">
           <img
-            src={`${user_logos_path}lrz_wortbild_square.png`}
+            src={`${user_logos_path}MQVsidebar.png`}
             className="topbar_logo_img"
             alt={sidebar_logo.alt}
             width={sidebar_logo.width}
@@ -27,6 +27,7 @@ const NavbarHeader = () => {
             onError={(e) => {
               try {
                 const candidates = [
+                  `${user_logos_path}MQVsidebar.png`,
                   `${user_logos_path}lrz_wortbild_square.png`,
                   `${user_logos_path}${sidebar_logo.file_name}${sidebar_logo.file_ext}`,
                   default_image,

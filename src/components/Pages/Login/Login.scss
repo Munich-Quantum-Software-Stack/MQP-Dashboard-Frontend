@@ -20,8 +20,7 @@
 
 .LoginPage_bg {
   background-color: black;
-  background-image: url('../../../assets/images/Visual_HPC-QC_02072024_16-9.jpg');
-  @include _background(cover, right center);
+  @include _background(cover, center center);
   position: absolute;
   top: 0;
   left: 0;

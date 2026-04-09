@@ -2,12 +2,11 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 //import { Link } from "react-router-dom";
 import PaneCard from '@components/UI/Card/PaneCard';
-import IQM_logo from '@assets/images/IQM_logo.png';
-import Eviden_QLM_logo from '@assets/images/eviden-logo.png';
-import WMI_logo from '@assets/images/wmi-logo.svg';
-import AQT_logo from '@assets/images/Logo-AQT.png';
-import MUNICQ_Atoms_logo from '@assets/images/MunicQC_Atoms.png';
-import PlanQC_logo from '@assets/images/planqc_logo.png';
+import {
+  getResourceBgClass,
+  getResourceLogo,
+  getLogoSizeHint,
+} from '@components/utils/vendorConfig';
 
 /**
  * ResourceItem - Base component for displaying a quantum resource card with vendor branding
@@ -18,45 +17,10 @@ const ResourceItem = (props) => {
   const resource_subtitle_fs = +fs * 1.05;
   const resource_text_fs = +fs;
 
-  // Resource name to vendor mapping for logo and background selection
-  const IQM_resources = ['qexa20', 'q5', 'q20'];
-  const Eviden_QLM_resources = ['qlm'];
-  const WMI_resources = ['wmi3'];
-  const Atom_resources = ['muniqc-atoms20'];
-  const AQT_resources = ['aqt20'];
-
-  // Determine logo and background color based on resource vendor
-  const resource_name = props.name.trim().toLowerCase();
-  let resource_logo_src = '';
-  let resource_bg = '';
-  if (IQM_resources.indexOf(resource_name) > -1) {
-    resource_logo_src = IQM_logo;
-    resource_bg = 'resource_bg_1';
-  }
-  if (Eviden_QLM_resources.indexOf(resource_name) > -1) {
-    resource_logo_src = Eviden_QLM_logo;
-    resource_bg = 'resource_bg_2';
-  }
-  if (WMI_resources.indexOf(resource_name) > -1) {
-    resource_logo_src = WMI_logo;
-    resource_bg = 'resource_bg_3';
-  }
-  if (AQT_resources.indexOf(resource_name) > -1) {
-    resource_logo_src = AQT_logo;
-    resource_bg = 'resource_bg_4';
-  }
-  if (Atom_resources.indexOf(resource_name) > -1) {
-    resource_logo_src = MUNICQ_Atoms_logo;
-    resource_bg = 'resource_bg_5';
-  }
-  if (resource_name === 'maqcs') {
-    resource_logo_src = PlanQC_logo;
-    resource_bg = 'resource_bg_7';
-  }
-  if (resource_name === 'eqe1') {
-    resource_logo_src = IQM_logo;
-    resource_bg = 'resource_bg_8';
-  }
+  // Determine logo and background color based on resource vendor (via shared vendorConfig)
+  const resource_logo_src = getResourceLogo(props.name) || ''; // resource_name derived inline if needed
+  const resource_bg = getResourceBgClass(props.name);
+  const logoSizeHint = getLogoSizeHint(props.name);
   return (
     <div className="col-12 col-xs-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3 resource_item_wrap">
       <PaneCard
@@ -74,21 +38,13 @@ const ResourceItem = (props) => {
           </div>
           {resource_logo_src && (
             <div className="resource_item_logo">
-              {resource_name === 'wmi3' && (
-                <div className="resource_log_wrap" style={{ height: 50 }}>
-                  <img src={resource_logo_src} alt={resource_name} />
-                </div>
-              )}
-              {resource_name === 'muniqc-atoms20' && (
-                <div className="resource_log_wrap">
-                  <img src={resource_logo_src} alt={resource_name} style={{ height: 50 }} />
-                </div>
-              )}
-              {resource_name !== 'wmi3' && resource_name !== 'muniqc-atoms20' && (
-                <div className="resource_log_wrap">
-                  <img src={resource_logo_src} alt={resource_name} />
-                </div>
-              )}
+              <div className="resource_log_wrap" style={logoSizeHint.height ? {} : {}}>
+                <img
+                  src={resource_logo_src}
+                  alt={props.name}
+                  style={logoSizeHint.height ? { height: logoSizeHint.height } : {}}
+                />
+              </div>
             </div>
           )}
         </div>
