@@ -159,6 +159,9 @@
   &:last-child {
     margin-bottom: 0;
   }
+  &.dark_bg {
+    box-shadow: none;
+  }
   //height: 80vh;
 }
 

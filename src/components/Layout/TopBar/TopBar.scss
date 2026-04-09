@@ -8,6 +8,9 @@
 .right_topbar {
   flex: 1;
   @include box_shadow(0px 2px 15px -10px, #888);
+  &.dark_bg {
+    box-shadow: none;
+  }
 }
 .left_topbar {
   width: 265px;

@@ -17,6 +17,10 @@
     font-weight: 700;
     color: $dark_blue;
   }
+
+  &--dark h2 {
+    color: #f9fafb;
+  }
 }
 
 .telemetry-landing__subtitle {

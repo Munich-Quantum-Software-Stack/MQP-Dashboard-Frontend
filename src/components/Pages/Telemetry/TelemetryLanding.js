@@ -251,7 +251,7 @@ const TelemetryLanding = () => {
     <ContentCard className={`${darkmode ? 'dark_bg' : 'white_bg'}`}>
       <div className="telemetry-landing">
         {/* Page header */}
-        <div className="telemetry-landing__header">
+        <div className={`telemetry-landing__header${darkmode ? ' telemetry-landing__header--dark' : ''}`}>
           <h2 style={{ fontSize: page_header_fs }}>Resource Map</h2>
           <p
             className={`telemetry-landing__subtitle ${darkmode ? 'telemetry-landing__subtitle--dark' : ''}`}

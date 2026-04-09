@@ -74,7 +74,7 @@ const RootLayout = () => {
               onToggle={leftSidebarToggleHandler}
             />
           </div>
-          <div className="right_topbar">
+          <div className={`right_topbar ${darkmode ? 'dark_bg' : ''}`}>
             <AnimatePresence>
               <TopBar />
             </AnimatePresence>
