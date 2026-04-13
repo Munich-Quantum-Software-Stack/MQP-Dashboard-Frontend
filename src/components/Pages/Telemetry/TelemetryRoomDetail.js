@@ -133,8 +133,8 @@ const TelemetryRoomDetail = () => {
       <div style={{ marginBottom: '16px', textAlign: 'left' }}>
         <button
           onClick={handleBackClick}
-          className="btn btn-warning btn-lg"
-          style={{ padding: '10px 20px', fontSize: '16px' }}
+          className={`inst-detail__back-btn${darkmode ? ' inst-detail__back-btn--dark' : ''}`}
+          aria-label="Back to Rooms"
         >
           ← Back to Rooms
         </button>

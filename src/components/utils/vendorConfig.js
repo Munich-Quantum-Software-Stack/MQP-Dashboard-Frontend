@@ -9,7 +9,6 @@
  * resource_bg_9–resource_bg_14 are new classes also in Resources.scss.
  */
 
-/* eslint-disable security/detect-object-injection */
 import IQM_logo from '@assets/images/IQM_logo.png';
 import Eviden_logo from '@assets/images/eviden-logo.png';
 import WMI_logo from '@assets/images/wmi-logo.svg';
@@ -20,86 +19,87 @@ import PlanQC_logo from '@assets/images/planqc_logo.png';
 // ---------------------------------------------------------------------------
 // Resource-name → vendor slot
 // Keyed by the trimmed, lowercased resource name that components already use.
+// Using ES6 Map so .get() is used for lookups — no bracket-notation on dynamic
+// keys anywhere in this file.
 // ---------------------------------------------------------------------------
 
-/** @type {Record<string, string>} Resource name (lowercase) → background CSS class */
-const RESOURCE_NAME_TO_BG = {
-  qexa20: 'resource_bg_1',
-  q5: 'resource_bg_1',
-  q20: 'resource_bg_1',
-  eqe1: 'resource_bg_8',
-  qlm: 'resource_bg_2',
-  qaptiva: 'resource_bg_2',
-  wmi3: 'resource_bg_3',
-  aqt20: 'resource_bg_4',
-  'muniqc-atoms20': 'resource_bg_5',
-  maqcs: 'resource_bg_7',
-};
+/** Resource name (lowercase) → background CSS class */
+const RESOURCE_NAME_TO_BG = new Map([
+  ['qexa20', 'resource_bg_1'],
+  ['q5', 'resource_bg_1'],
+  ['q20', 'resource_bg_1'],
+  ['eqe1', 'resource_bg_8'],
+  ['qlm', 'resource_bg_2'],
+  ['qaptiva', 'resource_bg_2'],
+  ['wmi3', 'resource_bg_3'],
+  ['aqt20', 'resource_bg_4'],
+  ['muniqc-atoms20', 'resource_bg_5'],
+  ['maqcs', 'resource_bg_7'],
+]);
 
-/** @type {Record<string, string>} Resource name (lowercase) → logo import */
-const RESOURCE_NAME_TO_LOGO = {
-  qexa20: IQM_logo,
-  q5: IQM_logo,
-  q20: IQM_logo,
-  eqe1: IQM_logo,
-  qlm: Eviden_logo,
-  qaptiva: Eviden_logo,
-  wmi3: WMI_logo,
-  'muniqc-atoms20': MuniQC_Atoms_logo,
-  aqt20: AQT_logo,
-  maqcs: PlanQC_logo,
-};
+/** Resource name (lowercase) → logo import */
+const RESOURCE_NAME_TO_LOGO = new Map([
+  ['qexa20', IQM_logo],
+  ['q5', IQM_logo],
+  ['q20', IQM_logo],
+  ['eqe1', IQM_logo],
+  ['qlm', Eviden_logo],
+  ['qaptiva', Eviden_logo],
+  ['wmi3', WMI_logo],
+  ['muniqc-atoms20', MuniQC_Atoms_logo],
+  ['aqt20', AQT_logo],
+  ['maqcs', PlanQC_logo],
+]);
 
 // ---------------------------------------------------------------------------
-// Vendor name → background CSS class (for new institution-level resource cards
-// that reference vendor string rather than resource name)
+// Vendor name → background CSS class
 // ---------------------------------------------------------------------------
 
-/** @type {Record<string, string>} Vendor name (lowercase) → background CSS class */
-const VENDOR_NAME_TO_BG = {
-  iqm: 'resource_bg_1',
-  eviden: 'resource_bg_2',
-  wmi: 'resource_bg_3',
-  aqt: 'resource_bg_4',
-  'muniqc-atoms': 'resource_bg_5',
-  planqc: 'resource_bg_7',
+/** Vendor name (lowercase) → background CSS class */
+const VENDOR_NAME_TO_BG = new Map([
+  ['iqm', 'resource_bg_1'],
+  ['eviden', 'resource_bg_2'],
+  ['wmi', 'resource_bg_3'],
+  ['aqt', 'resource_bg_4'],
+  ['muniqc-atoms', 'resource_bg_5'],
+  ['planqc', 'resource_bg_7'],
   // New vendors (resource_bg_9–resource_bg_14)
-  pasqal: 'resource_bg_9',
-  orca: 'resource_bg_10',
-  quandela: 'resource_bg_10',
-  ionq: 'resource_bg_4', // Trapped Ions — shares gold palette
-  quera: 'resource_bg_9', // Neutral Atoms — lavender
-  rigetti: 'resource_bg_1', // Superconducting — orange
-  eleqtron: 'resource_bg_14', // DLR sky-blue
-  xeedq: 'resource_bg_14',
-  ibm: 'resource_bg_12',
-  aws: 'resource_bg_13',
-};
+  ['pasqal', 'resource_bg_9'],
+  ['orca', 'resource_bg_10'],
+  ['quandela', 'resource_bg_10'],
+  ['ionq', 'resource_bg_4'], // Trapped Ions — shares gold palette
+  ['quera', 'resource_bg_9'], // Neutral Atoms — lavender
+  ['rigetti', 'resource_bg_1'], // Superconducting — orange
+  ['eleqtron', 'resource_bg_14'], // DLR sky-blue
+  ['xeedq', 'resource_bg_14'],
+  ['ibm', 'resource_bg_12'],
+  ['aws', 'resource_bg_13'],
+]);
 
-/** @type {Record<string, string>} Vendor name (lowercase) → logo import or null */
-const VENDOR_NAME_TO_LOGO = {
-  iqm: IQM_logo,
-  eviden: Eviden_logo,
-  wmi: WMI_logo,
-  aqt: AQT_logo,
-  'muniqc-atoms': MuniQC_Atoms_logo,
-  planqc: PlanQC_logo,
-};
+/** Vendor name (lowercase) → logo import */
+const VENDOR_NAME_TO_LOGO = new Map([
+  ['iqm', IQM_logo],
+  ['eviden', Eviden_logo],
+  ['wmi', WMI_logo],
+  ['aqt', AQT_logo],
+  ['muniqc-atoms', MuniQC_Atoms_logo],
+  ['planqc', PlanQC_logo],
+]);
 
 // ---------------------------------------------------------------------------
 // Technology → background CSS class (fallback when no vendor match)
 // ---------------------------------------------------------------------------
 
-/** @type {Record<string, string>} QuantumTechnology → background CSS class */
-export const TECHNOLOGY_TO_BG = {
-  Superconducting: 'resource_bg_1',
-  'Trapped Ions': 'resource_bg_4',
-  'Neutral Atoms': 'resource_bg_9',
-  Photonic: 'resource_bg_10',
-  'Spin Qubit': 'resource_bg_11',
-  Simulator: 'resource_bg_2',
-  Unknown: 'resource_bg_6',
-};
+/** QuantumTechnology → background CSS class */
+export const TECHNOLOGY_TO_BG = new Map([
+  ['Superconducting', 'resource_bg_1'],
+  ['Trapped Ions', 'resource_bg_4'],
+  ['Neutral Atoms', 'resource_bg_9'],
+  ['Photonic', 'resource_bg_10'],
+  ['Spin Qubit', 'resource_bg_11'],
+  ['Simulator', 'resource_bg_2'],
+  ['Unknown', 'resource_bg_6'],
+]);
 
 // ---------------------------------------------------------------------------
 // Exported helpers
@@ -116,12 +116,15 @@ export const TECHNOLOGY_TO_BG = {
  */
 export function getResourceBgClass(resourceName, vendorName, technology) {
   const nameLower = (resourceName || '').trim().toLowerCase();
-  if (RESOURCE_NAME_TO_BG[nameLower]) return RESOURCE_NAME_TO_BG[nameLower];
+  const byName = RESOURCE_NAME_TO_BG.get(nameLower);
+  if (byName) return byName;
 
   const vendorLower = (vendorName || '').trim().toLowerCase();
-  if (VENDOR_NAME_TO_BG[vendorLower]) return VENDOR_NAME_TO_BG[vendorLower];
+  const byVendor = VENDOR_NAME_TO_BG.get(vendorLower);
+  if (byVendor) return byVendor;
 
-  if (technology && TECHNOLOGY_TO_BG[technology]) return TECHNOLOGY_TO_BG[technology];
+  const byTech = technology ? TECHNOLOGY_TO_BG.get(technology) : undefined;
+  if (byTech) return byTech;
 
   return '';
 }
@@ -136,10 +139,12 @@ export function getResourceBgClass(resourceName, vendorName, technology) {
  */
 export function getResourceLogo(resourceName, vendorName) {
   const nameLower = (resourceName || '').trim().toLowerCase();
-  if (RESOURCE_NAME_TO_LOGO[nameLower]) return RESOURCE_NAME_TO_LOGO[nameLower];
+  const byName = RESOURCE_NAME_TO_LOGO.get(nameLower);
+  if (byName) return byName;
 
   const vendorLower = (vendorName || '').trim().toLowerCase();
-  if (VENDOR_NAME_TO_LOGO[vendorLower]) return VENDOR_NAME_TO_LOGO[vendorLower];
+  const byVendor = VENDOR_NAME_TO_LOGO.get(vendorLower);
+  if (byVendor) return byVendor;
 
   return null;
 }
@@ -152,7 +157,7 @@ export function getResourceLogo(resourceName, vendorName) {
  */
 export function getVendorBgClass(vendorName) {
   const vendorLower = (vendorName || '').trim().toLowerCase();
-  return VENDOR_NAME_TO_BG[vendorLower] || '';
+  return VENDOR_NAME_TO_BG.get(vendorLower) || '';
 }
 
 /**
@@ -163,7 +168,7 @@ export function getVendorBgClass(vendorName) {
  */
 export function getVendorLogo(vendorName) {
   const vendorLower = (vendorName || '').trim().toLowerCase();
-  return VENDOR_NAME_TO_LOGO[vendorLower] || null;
+  return VENDOR_NAME_TO_LOGO.get(vendorLower) || null;
 }
 
 /**

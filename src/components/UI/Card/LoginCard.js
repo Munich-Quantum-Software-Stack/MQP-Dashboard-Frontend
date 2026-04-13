@@ -22,7 +22,7 @@ const LoginCard = (props) => {
     height: backgroundHeight,
     backgroundImage: `url(${bgUrl})`,
     backgroundSize: 'cover',
-    backgroundPosition: 'center center',
+    backgroundPosition: 'right center',
   };
 
   return (
