@@ -63,6 +63,7 @@ const TelemetryRoomDetail = () => {
     selectedIds: [],
     from: new Date(Date.now() - 86400000),
     to: new Date(),
+    groupBy: '5m',
   });
 
   const loadRoom = useCallback(() => {
@@ -238,6 +239,7 @@ const TelemetryRoomDetail = () => {
         selectedIds={selection.selectedIds}
         from={selection.from}
         to={selection.to}
+        groupBy={selection.groupBy}
         darkmode={darkmode}
       />
 

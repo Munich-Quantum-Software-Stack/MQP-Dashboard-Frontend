@@ -7,6 +7,7 @@
  */
 
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { exportCSV } from '@components/Pages/Telemetry/telemetryService';
 
 // Maps sensor ID prefixes to short label abbreviations used in CSV filenames.
@@ -28,8 +29,10 @@ const SENSOR_ABBREV_MAP = [
  * @param {Date}     props.from         Range start.
  * @param {Date}     props.to           Range end.
  * @param {boolean}  props.darkmode
+ * @param {string}   [props.groupBy]    InfluxQL duration string, e.g. '5m'. Defaults to '5m'.
  */
-const DownloadBar = ({ selectedIds, from, to, darkmode }) => {
+const DownloadBar = ({ selectedIds, from, to, darkmode, groupBy = '5m' }) => {
+  const token = useSelector((state) => state.authentication.access_token);
   const [downloading, setDownloading] = useState(false);
   // { done: number, total: number } | null
   const [progress, setProgress] = useState(null);
@@ -41,9 +44,15 @@ const DownloadBar = ({ selectedIds, from, to, darkmode }) => {
     setDownloading(true);
     setProgress(null);
     try {
-      const blob = await exportCSV(selectedIds, from, to, ({ done, total }) => {
-        setProgress({ done, total });
-      });
+      const blob = await exportCSV(
+        selectedIds,
+        from,
+        to,
+        ({ done, total }) => {
+          setProgress({ done, total });
+        },
+        { token, groupBy },
+      );
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;

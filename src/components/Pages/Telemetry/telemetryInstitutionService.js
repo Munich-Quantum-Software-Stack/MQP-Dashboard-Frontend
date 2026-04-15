@@ -58,8 +58,14 @@ async function apiFetch(url, signal) {
 export async function fetchInstitutions({ signal } = {}) {
   const base = getApiBase();
   if (base) {
-    const data = await apiFetch(`${base}/institutions`, signal);
-    return data.institutions ?? data;
+    try {
+      const data = await apiFetch(`${base}/institutions`, signal);
+      return data.institutions ?? data;
+    } catch (err) {
+      // /institutions is a Phase-2 endpoint — fall back to local mock data
+      // when it is not yet available on the backend (404, network error, etc.)
+      if (err.name === 'AbortError') throw err;
+    }
   }
   // Mock fallback — return a resolved promise so callers are always async
   return Promise.resolve(getInstitutions());
@@ -76,8 +82,12 @@ export async function fetchInstitutions({ signal } = {}) {
 export async function fetchInstitutionById(id, { signal } = {}) {
   const base = getApiBase();
   if (base) {
-    const data = await apiFetch(`${base}/institutions/${encodeURIComponent(id)}`, signal);
-    return data.institution ?? data;
+    try {
+      const data = await apiFetch(`${base}/institutions/${encodeURIComponent(id)}`, signal);
+      return data.institution ?? data;
+    } catch (err) {
+      if (err.name === 'AbortError') throw err;
+    }
   }
   return Promise.resolve(getInstitutionById(id));
 }

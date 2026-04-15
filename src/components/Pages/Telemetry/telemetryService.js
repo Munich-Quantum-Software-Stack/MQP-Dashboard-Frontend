@@ -1,4 +1,9 @@
 import { getConfig } from './runtimeConfig';
+import {
+  requestTelemetryFile,
+  downloadTelemetryFile,
+  parseTelemetryBlob,
+} from '@components/utils/telemetry-http';
 
 export const MOCK_ROOMS = {
   'warm-lab': {
@@ -428,15 +433,18 @@ function generateDummyTimeseries(sensorId, from, to, points = 24) {
  */
 export async function getRoomData(roomId) {
   const { TELEMETRY_API_URL } = getConfig();
-  if (!TELEMETRY_API_URL) {
-    const room = MOCK_ROOMS[roomId];
-    if (!room) throw new Error(`Room "${roomId}" not found`);
-    return room;
+  if (TELEMETRY_API_URL) {
+    // /rooms is a Phase-2 endpoint — fall back to mock if not yet available
+    try {
+      const res = await fetch(`${TELEMETRY_API_URL}/rooms/${roomId}`);
+      if (res.ok) return res.json();
+    } catch {
+      // network error — fall through to mock
+    }
   }
-
-  const res = await fetch(`${TELEMETRY_API_URL}/rooms/${roomId}`);
-  if (!res.ok) throw new Error(`Failed to fetch room: ${res.status}`);
-  return res.json();
+  const room = MOCK_ROOMS[roomId];
+  if (!room) throw new Error(`Room "${roomId}" not found`);
+  return room;
 }
 
 /**
@@ -448,16 +456,19 @@ export async function getRoomData(roomId) {
  */
 export async function getSensorHistory(sensorId, from, to) {
   const { TELEMETRY_API_URL } = getConfig();
-  if (!TELEMETRY_API_URL) {
-    return generateDummyTimeseries(sensorId, from, to);
+  if (TELEMETRY_API_URL) {
+    try {
+      const params = new URLSearchParams({
+        from: new Date(from).toISOString(),
+        to: new Date(to).toISOString(),
+      });
+      const res = await fetch(`${TELEMETRY_API_URL}/sensors/${sensorId}/history?${params}`);
+      if (res.ok) return res.json();
+    } catch {
+      // network error — fall through to mock
+    }
   }
-  const params = new URLSearchParams({
-    from: new Date(from).toISOString(),
-    to: new Date(to).toISOString(),
-  });
-  const res = await fetch(`${TELEMETRY_API_URL}/sensors/${sensorId}/history?${params}`);
-  if (!res.ok) throw new Error(`Failed to fetch sensor history: ${res.status}`);
-  return res.json();
+  return generateDummyTimeseries(sensorId, from, to);
 }
 
 /**
@@ -468,9 +479,12 @@ export async function getSensorHistory(sensorId, from, to) {
  * @param {Date|string} to
  * @returns {Promise<Blob>}
  */
-export async function exportCSV(sensorIds, from, to, onProgress) {
+export async function exportCSV(sensorIds, from, to, onProgress, options = {}) {
   const { TELEMETRY_API_URL } = getConfig();
-  if (!TELEMETRY_API_URL) {
+  const { token, groupBy = '5m' } = options;
+
+  // Use mock data when no API URL is configured or no token is available
+  if (!TELEMETRY_API_URL || !token) {
     const total = sensorIds.length;
     const header = 'sensor_id,timestamp,value\n';
     const allRows = [];
@@ -487,15 +501,37 @@ export async function exportCSV(sensorIds, from, to, onProgress) {
     }
     return new Blob([header + allRows.join('\n')], { type: 'text/csv' });
   }
-  const res = await fetch(`${TELEMETRY_API_URL}/export/csv`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      sensorIds,
-      from: new Date(from).toISOString(),
-      to: new Date(to).toISOString(),
-    }),
+
+  // Real API: 2-step telemetry flow → gzip download → CSV conversion
+  const fromTs = from instanceof Date ? from.getTime() : new Date(from).getTime();
+  const toTs = to instanceof Date ? to.getTime() : new Date(to).getTime();
+
+  if (typeof onProgress === 'function') onProgress({ done: 0, total: 2 });
+
+  // Pass measurements = null so the backend returns all available sensors
+  const fileInfo = await requestTelemetryFile(token, {
+    measurements: null,
+    fromTs,
+    toTs,
+    groupBy,
   });
-  if (!res.ok) throw new Error(`Export failed: ${res.status}`);
-  return res.blob();
+
+  if (typeof onProgress === 'function') onProgress({ done: 1, total: 2 });
+
+  const gzipBlob = await downloadTelemetryFile(token, fileInfo.filename);
+  const parsed = await parseTelemetryBlob(gzipBlob);
+
+  if (typeof onProgress === 'function') onProgress({ done: 2, total: 2 });
+
+  // Flatten the nested { measurement: { sensor: [{ time, mean }] } } structure into CSV rows
+  const csvRows = ['measurement,sensor,time,mean'];
+  for (const [measurement, sensors] of Object.entries(parsed)) {
+    for (const [sensor, points] of Object.entries(sensors)) {
+      if (!Array.isArray(points)) continue;
+      for (const p of points) {
+        csvRows.push(`${measurement},${sensor},${p.time},${p.mean ?? ''}`);
+      }
+    }
+  }
+  return new Blob([csvRows.join('\n')], { type: 'text/csv' });
 }

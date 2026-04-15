@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Telemetry API Test Form</title>
+  <style>
+    .hidden { display: none; }
+    pre { max-height: 400px; overflow: auto; white-space: pre-wrap; word-break: break-all; }
+    input[type="text"], input[type="password"], input[type="datetime-local"], select { width: 300px; }
+    hr { margin: 20px 0; }
+  </style>
+</head>
+<body>
+
+<h1>Telemetry API Test Form</h1>
+<p>POST /telemetry → POST /telemetry/download/ → decompress gzip → display JSON.</p>
+
+<hr>
+<h2>0 — Connection &amp; Auth</h2>
+
+<label>API Base URL<br>
+  <input type="text" id="api-base" value="https://portal-test.quantum.lrz.de:5000" />
+</label><br><br>
+
+<label>Bearer Token (JWT)<br>
+  <input type="password" id="jwt-token" placeholder="Paste your JWT access token here" />
+</label><br><br>
+
+<button onclick="loadSensors()">Load Sensors (GET /telemetry/sensors)</button>
+
+<div id="sensor-status" class="hidden"></div>
+<div id="sensor-list" class="hidden"></div>
+
+<hr>
+<h2>1 — Query Parameters</h2>
+
+<label>From<br><input type="datetime-local" id="from-ts" /></label><br><br>
+<label>To<br><input type="datetime-local" id="to-ts" /></label><br><br>
+<label>Group by<br>
+  <select id="group-by">
+    <option>1m</option>
+    <option selected>5m</option>
+    <option>15m</option>
+    <option>30m</option>
+    <option>1h</option>
+    <option>6h</option>
+    <option>1d</option>
+  </select>
+</label><br><br>
+
+<p><small>Leave all sensors unchecked to send <code>measurements: null</code> (backend queries all).</small></p>
+
+<button id="submit-btn" onclick="runQuery()">POST /telemetry</button>
+&nbsp;
+<button onclick="resetAll()">Reset</button>
+
+<div id="query-status" class="hidden"></div>
+
+<hr>
+<h2>Request Body Preview (POST /telemetry)</h2>
+<pre id="request-preview">—</pre>
+
+<hr>
+<h2>Response</h2>
+<p id="response-label">Waiting for request…</p>
+<pre id="response-output">—</pre>
+
+<script>
+  // ── Helpers ────────────────────────────────────────────────────────────────
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function toDatetimeLocal(date) {
+    return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}` +
+           `T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  }
+
+  function apiBase() {
+    return document.getElementById('api-base').value.replace(/\/$/, '');
+  }
+
+  function token() {
+    return document.getElementById('jwt-token').value.trim();
+  }
+
+  function authHeaders() {
+    return {
+      'Authorization': `Bearer ${token()}`,
+      'Content-Type': 'application/json',
+    };
+  }
+
+  // ── Seed default timestamps ────────────────────────────────────────────────
+
+  (function seedDefaults() {
+    const now = new Date();
+    const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+    document.getElementById('from-ts').value = toDatetimeLocal(yesterday);
+    document.getElementById('to-ts').value   = toDatetimeLocal(now);
+  })();
+
+  // ── Sensor loading ─────────────────────────────────────────────────────────
+
+  async function loadSensors() {
+    const statusEl = document.getElementById('sensor-status');
+    const listEl   = document.getElementById('sensor-list');
+
+    statusEl.textContent = 'Calling GET /telemetry/sensors…';
+    statusEl.className = '';
+    listEl.className = 'hidden';
+
+    try {
+      const res = await fetch(`${apiBase()}/telemetry/sensors`, {
+        method: 'GET',
+        headers: authHeaders(),
+      });
+
+      if (res.status === 401) throw new Error('401 Unauthorized — check your JWT token.');
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(`HTTP ${res.status}: ${body.error || body.message || res.statusText}`);
+      }
+
+      const sensors = await res.json();
+      renderSensorPicker(sensors);
+      const measurementCount = new Set(sensors.map(e => e.measurement)).size;
+      statusEl.textContent = `Loaded ${sensors.length} entries across ${measurementCount} measurement(s).`;
+      statusEl.className = '';
+      listEl.className = '';
+
+    } catch (err) {
+      statusEl.textContent = `ERROR: ${err.message}`;
+      statusEl.className = '';
+    }
+  }
+
+  // Response shape from GET /telemetry/sensors:
+  // [ { measurement: string, sensor_type: string, sensor_ids: string[] }, ... ]
+  // Entries with the same `measurement` are grouped under one heading.
+  function renderSensorPicker(entries) {
+    const listEl = document.getElementById('sensor-list');
+    listEl.innerHTML = '';
+
+    // Group entries by measurement name.
+    const byMeasurement = {};
+    entries.forEach(entry => {
+      const m = entry.measurement;
+      if (!byMeasurement[m]) byMeasurement[m] = [];
+      byMeasurement[m].push(entry);
+    });
+
+    Object.entries(byMeasurement).forEach(([measurementName, typeEntries]) => {
+      // Measurement heading
+      listEl.appendChild(Object.assign(document.createElement('strong'), { textContent: measurementName }));
+      listEl.appendChild(document.createElement('br'));
+
+      typeEntries.forEach(({ sensor_type, sensor_ids }) => {
+        // sensor_type label
+        const typeLabel = document.createElement('span');
+        typeLabel.textContent = `  ${sensor_type}: `;
+        listEl.appendChild(typeLabel);
+
+        if (!sensor_ids || sensor_ids.length === 0) {
+          // No individual IDs yet — render a single checkbox for the type itself.
+          const lbl = document.createElement('label');
+          const cb  = document.createElement('input');
+          cb.type = 'checkbox';
+          cb.className = 'sensor-cb';
+          cb.dataset.measurement = measurementName;
+          cb.dataset.sensorType = sensor_type;
+          cb.dataset.sensorId = '';
+          cb.addEventListener('change', updateRequestPreview);
+          lbl.appendChild(cb);
+          lbl.appendChild(document.createTextNode(`(all ${sensor_type})`));
+          listEl.appendChild(lbl);
+        } else {
+          // Render one checkbox per sensor_id.
+          sensor_ids.forEach(sensorId => {
+            const lbl = document.createElement('label');
+            const cb  = document.createElement('input');
+            cb.type = 'checkbox';
+            cb.className = 'sensor-cb';
+            cb.dataset.measurement = measurementName;
+            cb.dataset.sensorType = sensor_type;
+            cb.dataset.sensorId = sensorId;
+            cb.addEventListener('change', updateRequestPreview);
+            lbl.appendChild(cb);
+            lbl.appendChild(document.createTextNode(sensorId));
+            listEl.appendChild(lbl);
+            listEl.appendChild(document.createTextNode(' '));
+          });
+        }
+        listEl.appendChild(document.createElement('br'));
+      });
+
+      listEl.appendChild(document.createElement('br'));
+    });
+
+    updateRequestPreview();
+  }
+
+  // ── Request preview ────────────────────────────────────────────────────────
+
+  function buildRequestBody() {
+    const from = document.getElementById('from-ts').value;
+    const to   = document.getElementById('to-ts').value;
+    const groupBy = document.getElementById('group-by').value;
+
+    // Build measurements array from checked sensor checkboxes.
+    // Structure mirrors SENSOR_MAP: { measurement, sensor_type, sensor_ids }
+    // Grouped by measurement + sensor_type, then collected sensor_ids.
+    const selectionMap = {}; // { measurement: { sensor_type: Set<sensorId> } }
+    document.querySelectorAll('.sensor-cb:checked').forEach(cb => {
+      const m  = cb.dataset.measurement;
+      const st = cb.dataset.sensorType;
+      const id = cb.dataset.sensorId;
+      if (!selectionMap[m]) selectionMap[m] = {};
+      if (!selectionMap[m][st]) selectionMap[m][st] = new Set();
+      if (id) selectionMap[m][st].add(id);
+    });
+    const measurements = [];
+    Object.entries(selectionMap).forEach(([measurement, types]) => {
+      Object.entries(types).forEach(([sensor_type, idSet]) => {
+        measurements.push({
+          measurement,
+          sensor_type,
+          sensor_ids: idSet.size > 0 ? Array.from(idSet) : [],
+        });
+      });
+    });
+
+    return {
+      measurements: measurements.length > 0 ? measurements : null,
+      from_timestamp: from ? new Date(from).getTime() : null,
+      to_timestamp:   to   ? new Date(to).getTime()   : null,
+      group_by: groupBy,
+    };
+  }
+
+  function updateRequestPreview() {
+    document.getElementById('request-preview').textContent =
+      JSON.stringify(buildRequestBody(), null, 2);
+  }
+
+  // Update preview when time/group-by inputs change
+  ['from-ts', 'to-ts', 'group-by'].forEach(id => {
+    document.getElementById(id).addEventListener('change', updateRequestPreview);
+  });
+  updateRequestPreview();
+
+  // ── Main query flow ────────────────────────────────────────────────────────
+
+  async function runQuery() {
+    const statusEl   = document.getElementById('query-status');
+    const responseEl = document.getElementById('response-output');
+    const labelEl    = document.getElementById('response-label');
+    const submitBtn  = document.getElementById('submit-btn');
+
+    if (!token()) {
+      statusEl.textContent = 'ERROR: No JWT token provided.';
+      statusEl.className = '';
+      return;
+    }
+
+    submitBtn.disabled = true;
+    statusEl.textContent = 'Step 1/3 — POST /telemetry (requesting file generation)…';
+    statusEl.className = '';
+    responseEl.textContent = '…';
+    labelEl.textContent = 'Waiting…';
+
+    try {
+      // ── Step 1: POST /telemetry ─────────────────────────────────────────
+      const body = buildRequestBody();
+      const step1 = await fetch(`${apiBase()}/telemetry`, {
+        method: 'POST',
+        headers: authHeaders(),
+        body: JSON.stringify(body),
+      });
+
+      if (step1.status === 401) throw new Error('401 Unauthorized — check your JWT token.');
+      if (!step1.ok) {
+        const err = await step1.json().catch(() => ({}));
+        throw new Error(`POST /telemetry failed (HTTP ${step1.status}): ${err.error || err.message || step1.statusText}`);
+      }
+
+      const fileInfo = await step1.json();
+      statusEl.textContent = `Step 2/3 — POST /telemetry/download/ (filename: ${fileInfo.filename}, size: ${fileInfo.filesize} bytes)…`;
+
+      // ── Step 2: POST /telemetry/download/ ──────────────────────────────
+      const step2 = await fetch(`${apiBase()}/telemetry/download/`, {
+        method: 'POST',
+        headers: authHeaders(),
+        body: JSON.stringify({ filename: fileInfo.filename }),
+      });
+
+      if (step2.status === 401) throw new Error('401 Unauthorized on download endpoint.');
+      if (!step2.ok) {
+        const err = await step2.json().catch(() => ({}));
+        throw new Error(`POST /telemetry/download/ failed (HTTP ${step2.status}): ${err.error || err.message || step2.statusText}`);
+      }
+
+      statusEl.textContent = 'Step 3/3 — Decompressing gzip blob…';
+      const blob = await step2.blob();
+
+      // ── Step 3: Decompress gzip ─────────────────────────────────────────
+      if (typeof DecompressionStream === 'undefined') {
+        throw new Error('DecompressionStream not supported in this browser (requires Chrome 80+, Firefox 113+, Safari 16.4+).');
+      }
+
+      const ds = new DecompressionStream('gzip');
+      const stream = blob.stream().pipeThrough(ds);
+      const reader = stream.getReader();
+      const chunks = [];
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        chunks.push(value);
+      }
+      const totalLen = chunks.reduce((s, c) => s + c.length, 0);
+      const combined = new Uint8Array(totalLen);
+      let offset = 0;
+      for (const chunk of chunks) { combined.set(chunk, offset); offset += chunk.length; }
+      const text = new TextDecoder('utf-8').decode(combined);
+      const parsed = JSON.parse(text);
+
+      // ── Display ─────────────────────────────────────────────────────────
+      statusEl.textContent = 'Success.';
+      statusEl.className = '';
+      labelEl.textContent = `Response — ${Object.keys(parsed).length} measurement(s)`;
+      responseEl.textContent = JSON.stringify(parsed, null, 2);
+
+    } catch (err) {
+      statusEl.textContent = `ERROR: ${err.message}`;
+      statusEl.className = '';
+      labelEl.textContent = 'Error';
+      responseEl.textContent = err.message;
+    } finally {
+      submitBtn.disabled = false;
+    }
+  }
+
+  function resetAll() {
+    document.getElementById('query-status').className = 'hidden';
+    document.getElementById('response-output').textContent = '—';
+    document.getElementById('response-label').textContent = 'Waiting for request…';
+    document.getElementById('request-preview').textContent = JSON.stringify(buildRequestBody(), null, 2);
+  }
+</script>
+</body>
+</html>
