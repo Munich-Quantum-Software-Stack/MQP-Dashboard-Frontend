@@ -358,3 +358,547 @@ $resource_divider_8: #800080;
     }
   }
 }
+
+// =============================================================================
+// Feature A — Flippable Resource Card
+// =============================================================================
+
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+// Perspective container — position:relative so the back face can overlay the front
+.resource_flip_wrapper {
+  perspective: 1000px;
+  position: relative;
+  width: 100%;
+}
+
+// Front face: normal flow so the wrapper sizes to its content
+.resource_card_front {
+  width: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  cursor: pointer;
+
+  .pane_card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  // "ⓘ" hint icon in bottom-right of the card body
+  .resource_flip_hint {
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    font-size: 1rem;
+    color: $lrz_blue;
+    opacity: 0.7;
+    pointer-events: none;
+  }
+}
+
+// Back face: absolutely covers the same area as the front face
+.resource_card_back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background-color: white;
+  border-radius: 8px;
+  @include box_shadow(0 4px 16px, rgba(0, 0, 0, 0.12));
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  .resource_card_back_content {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    height: 100%;
+  }
+
+  .resource_back_loading {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .resource_back_spinner_wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .resource_back_error {
+    color: $red;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+  }
+
+  .resource_back_nav_row {
+    margin-bottom: 4px;
+  }
+
+  .resource_back_nav_btn {
+    background: none;
+    border: none;
+    color: $lrz_blue;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    @include _transition(color, 0.2s, ease);
+
+    &:hover { color: $medium_blue; }
+    &:focus-visible { outline: 2px solid $lrz_blue; border-radius: 2px; }
+  }
+
+  .resource_back_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    font-size: 0.82rem;
+
+    &:last-of-type { border-bottom: none; }
+  }
+
+  .resource_back_label {
+    font-weight: 600;
+    color: $dark_grey;
+    flex-shrink: 0;
+  }
+
+  .resource_back_value {
+    font-weight: 400;
+    color: #333;
+    text-align: right;
+  }
+
+  .resource_back_footer {
+    margin-top: auto;
+    padding-top: 8px;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+// Status pill — reused on both card back and detail page
+.status_pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+
+  &.online { background-color: #d1fae5; color: #065f46; }
+  &.offline { background-color: #fee2e2; color: #991b1b; }
+  &.maintenance { background-color: #fef3c7; color: #92400e; }
+}
+
+// "More →" button on back face
+.resource_more_btn {
+  display: inline-block;
+  padding: 6px 18px;
+  background-color: $lrz_blue;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  @include _transition(background-color, 0.2s, ease);
+  width: auto;
+
+  &:hover { background-color: $medium_blue; }
+  &:focus-visible { outline: 2px solid white; outline-offset: 2px; }
+}
+
+// Dark mode adjustments for the card back
+.dark_bg {
+  .resource_card_back {
+    background-color: #1f2937;
+
+    .resource_back_nav_btn { color: $lrz_blue; &:hover { color: lighten($lrz_blue, 10%); } }
+    .resource_back_row { border-bottom-color: rgba(255, 255, 255, 0.08); }
+    .resource_back_label { color: #9ca3af; }
+    .resource_back_value { color: #f3f4f6; }
+  }
+}
+
+// =============================================================================
+// Feature B — Resource Detail Page layout
+// =============================================================================
+
+.resource_detail_page {
+  padding: 24px;
+}
+
+// Back button (reuses Jobs/Institution style)
+.resource_detail_back_btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: $lrz_blue;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 20px;
+  @include _transition(color, 0.2s, ease);
+
+  &:hover { color: $medium_blue; }
+  &:focus-visible { outline: 2px solid $lrz_blue; border-radius: 2px; }
+}
+
+// Top row: card + calendar (two-column grid, stacks below 900px)
+.resource_detail_layout {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 24px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.resource_detail_card_col {
+  // card column: static front face only, no flip
+  .resource_item_wrap { padding: 0; }
+}
+
+.resource_detail_calendar_col {
+  min-width: 0; // prevent grid overflow
+}
+
+// Bottom row: chip layout + metadata (two equal columns, stacks below 768px)
+.resource_detail_bottom_row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 24px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Shared card panel style for calendar, chip layout, metadata, telemetry widget
+%detail_panel {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  @include box_shadow(0 2px 12px, rgba(0, 0, 0, 0.08));
+}
+
+// Maintenance calendar panel
+.resource_maintenance_calendar {
+  @extend %detail_panel;
+  height: 100%;
+
+  .calendar_title {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 12px;
+    color: $dark_grey;
+  }
+
+  .calendar_nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+
+    .calendar_nav_btn {
+      background: none;
+      border: 1px solid $medium_grey;
+      border-radius: 6px;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      font-weight: 700;
+      color: $dark_grey;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      @include _transition(background-color, 0.15s, ease);
+
+      &:hover { background-color: $light_grey; }
+      &:focus-visible { outline: 2px solid $lrz_blue; }
+    }
+
+    .calendar_month_label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: $dark_grey;
+    }
+  }
+
+  // 7-column day-of-week header row
+  .calendar_weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 4px;
+
+    span {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: $text_grey;
+      text-align: center;
+    }
+  }
+
+  .calendar_grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+
+  .calendar_day_cell {
+    min-height: 34px;
+    min-width: 34px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.82rem;
+    color: $dark_grey;
+    position: relative;
+
+    &.empty { opacity: 0; pointer-events: none; }
+    &.today { border: 2px solid $lrz_blue; font-weight: 700; }
+    &.has_event {
+      background-color: #fef3c7;
+      color: #92400e;
+      font-weight: 600;
+      cursor: pointer;
+
+      &:hover { background-color: #fde68a; }
+      &:focus-visible { outline: 2px solid #92400e; border-radius: 6px; }
+    }
+  }
+
+  .calendar_empty_state {
+    font-size: 0.88rem;
+    color: $text_grey;
+    text-align: center;
+    padding: 16px 0;
+  }
+
+  // Loading shimmer
+  .calendar_skeleton {
+    height: 180px;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 400px 100%;
+    animation: shimmer 1.4s infinite linear;
+  }
+}
+
+// Chip layout panel
+.resource_chip_layout_panel {
+  @extend %detail_panel;
+
+  .chip_layout_title {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 12px;
+    color: $dark_grey;
+  }
+
+  .chip_placeholder {
+    font-size: 0.88rem;
+    color: $text_grey;
+    text-align: center;
+    padding: 16px 0;
+  }
+
+  svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+// Metadata panel
+.resource_metadata_panel {
+  @extend %detail_panel;
+
+  .metadata_panel_title {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 12px;
+    color: $dark_grey;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .metadata_row {
+    border-bottom: 1px solid var(--bs-gray-200, #e9ecef);
+
+    &:nth-child(even) { background-color: var(--bs-gray-100, #f8f9fa); }
+    &:last-child { border-bottom: none; }
+  }
+
+  .metadata_label {
+    padding: 10px 12px;
+    font-weight: 600;
+    width: 50%;
+    color: $dark_grey;
+    font-size: 0.87rem;
+  }
+
+  .metadata_value {
+    padding: 10px 12px;
+    font-size: 0.87rem;
+    color: #333;
+  }
+
+  // Skeleton row shimmer
+  .metadata_skeleton_row {
+    height: 40px;
+    margin-bottom: 4px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 400px 100%;
+    animation: shimmer 1.4s infinite linear;
+  }
+}
+
+// Telemetry widget (full width, bottom)
+.resource_telemetry_widget {
+  @extend %detail_panel;
+  margin-top: 24px;
+
+  .telemetry_widget_title {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 12px;
+    color: $dark_grey;
+  }
+
+  .telemetry_widget_controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+
+    label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: $dark_grey;
+      white-space: nowrap;
+    }
+
+    select {
+      border: 1px solid $medium_grey;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 0.88rem;
+      min-width: 180px;
+      @include _transition(border-color, 0.2s, ease);
+
+      &:focus { border-color: $lrz_blue; outline: none; }
+    }
+  }
+
+  .grafana_iframe_wrapper {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    border-radius: 8px;
+    overflow: hidden;
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  }
+
+  .grafana_skeleton {
+    height: 280px;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 400px 100%;
+    animation: shimmer 1.4s infinite linear;
+  }
+
+  .no_panel_notice,
+  .telemetry_not_linked {
+    font-size: 0.9rem;
+    color: $text_grey;
+    text-align: center;
+    padding: 24px;
+    border: 1px dashed $medium_grey;
+    border-radius: 8px;
+  }
+}
+
+// Dark mode variants for all detail page panels
+.dark_bg {
+  .resource_maintenance_calendar,
+  .resource_chip_layout_panel,
+  .resource_metadata_panel,
+  .resource_telemetry_widget {
+    background-color: #1f2937;
+
+    .calendar_title,
+    .chip_layout_title,
+    .metadata_panel_title,
+    .telemetry_widget_title,
+    .calendar_month_label {
+      color: #f3f4f6;
+    }
+
+    .calendar_day_cell { color: #d1d5db; }
+    .calendar_day_cell.today { border-color: $lrz_blue; }
+    .calendar_day_cell.has_event { background-color: #78350f; color: #fde68a; }
+    .calendar_nav_btn { border-color: #374151; color: #d1d5db; &:hover { background-color: #374151; } }
+    .calendar_empty_state,
+    .chip_placeholder,
+    .no_panel_notice,
+    .telemetry_not_linked { color: #9ca3af; border-color: #374151; }
+
+    .metadata_row {
+      border-bottom-color: #374151;
+      &:nth-child(even) { background-color: #111827; }
+    }
+    .metadata_label { color: #9ca3af; }
+    .metadata_value { color: #f3f4f6; }
+
+    .telemetry_widget_controls label { color: #d1d5db; }
+    .telemetry_widget_controls select {
+      background-color: #111827;
+      color: #f3f4f6;
+      border-color: #374151;
+    }
+
+    .calendar_skeleton,
+    .grafana_skeleton,
+    .metadata_skeleton_row {
+      background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+      background-size: 400px 100%;
+    }
+  }
+
+  .resource_detail_back_btn {
+    color: $lrz_blue;
+    &:hover { color: lighten($lrz_blue, 10%); }
+  }
+}

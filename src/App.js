@@ -25,7 +25,7 @@ import JobCircuit, { loader as jobCircuitLoader } from '@components/Pages/Jobs/J
 import Budgets from '@components/Pages/Budgets/Budgets';
 import ResourcesRoot from '@components/Pages/Resources/ResourcesRoot';
 import Resources from '@components/Pages/Resources/Resources';
-import ResourceDetail from '@components/Pages/Resources/ResourceDetail';
+import ResourceDetailPage, { loader as resourceDetailLoader } from '@components/Pages/Resources/ResourceDetailPage';
 import TokensRootLayout from '@components/Pages/Tokens/TokensRoot';
 import Tokens from '@components/Pages/Tokens/Tokens';
 import NewToken from '@components/Pages/Tokens/NewToken';
@@ -157,12 +157,9 @@ function App() {
                 {
                   path: ':resourceId',
                   id: 'resource-detail',
-                  children: [
-                    {
-                      index: true,
-                      element: <ResourceDetail />,
-                    },
-                  ],
+                  element: <ResourceDetailPage />,
+                  loader: resourceDetailLoader,
+                  errorElement: <ErrorPage />,
                 },
               ],
             },

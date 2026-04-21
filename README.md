@@ -25,25 +25,13 @@ MQP Dashboard Frontend can be deployed in three configurations:
 
 Deployment scripts are provided to ease this action in a non-development environment.
 
-## User logos
+## Update User's logo
 
-If you want to test custom logos locally, copy the example config and add
-your images locally. Do not commit binary logo files.
-
-1. Copy the example config:
-
-    ```sh
-    cp src/data/user_logos.example.json \
-       src/data/user_logos.json
-    ```
-
-2. Place your logo files in `public/user_logos/`.
-
-Notes:
-- `public/user_logos/` is ignored by the repository to avoid committing
-   large or copyrighted files.
-- If you need official logos added to the repo, please follow the
-   project's contribution process.
+- There are two places need to be updated:
+  - On Landing Page (or Login Page): the logo should have light background color
+  - On Top sidebar: here should be a dark version of logo
+- Replace draft logo files by your own logos in folder /public/user_logos
+- Update information about these logos at /src/data/user_logos.json
 
 ## 🤝 Contributing
 

@@ -1,15 +1,4 @@
-/**
- * useLiveSensor.js
- *
- * Returns a live-updated sensor value.
- *
- * • WS_URL unset  → mock: polls with setInterval, incrementing a seeded
- *   random walk around the sensor's static initial value.
- * • WS_URL set    → uses the singleton multiplexer from useSensorSocket.js
- *   (one shared WebSocket for ALL sensors, not one per sensor card).
- *
- * Zero component changes required when swapping mock → real.
- */
+
 
 import { useState, useEffect, useRef } from 'react';
 import { getConfig } from '@components/Pages/Telemetry/runtimeConfig';
@@ -30,7 +19,6 @@ export function useLiveSensor(sensorId, initialValue) {
     isLive: false,
   });
 
-  // Stable ref avoids stale closure in interval/ws handler
   const baseRef = useRef(parsed.num);
 
   useEffect(() => {
@@ -38,7 +26,6 @@ export function useLiveSensor(sensorId, initialValue) {
     let cleanup;
 
     if (!WS_URL) {
-      // Mock mode — random walk every 3 s
       const id = setInterval(() => {
         const delta = (Math.random() - 0.5) * 0.4;
         const next = +(baseRef.current + delta).toFixed(2);
@@ -52,7 +39,6 @@ export function useLiveSensor(sensorId, initialValue) {
       }, 3000);
       cleanup = () => clearInterval(id);
     } else {
-      // Real WebSocket mode — shared connection via singleton multiplexer
       const unsubscribe = subscribeToSensor(
         sensorId,
         ({ value, unit }) => {
@@ -70,7 +56,6 @@ export function useLiveSensor(sensorId, initialValue) {
     }
 
     return cleanup;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sensorId]);
 
   return state;

@@ -11,8 +11,6 @@ const Telemetry = () => {
   const page_header_fs = +fs * 2;
   const subtitle_fs = +fs * 1.3;
   const [hoveredCard, setHoveredCard] = useState(null);
-
-  // Room data with SVG icons
   const rooms = [
     {
       id: 'warm-lab',

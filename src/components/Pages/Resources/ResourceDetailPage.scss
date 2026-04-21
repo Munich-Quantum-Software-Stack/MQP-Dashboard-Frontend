@@ -1,0 +1,23 @@
+/**
+ * ResourceDetailPage.scss
+ * Scoped styles for the Resource Detail Page (/resources/:resourceId).
+ * Layout classes are defined here; panel + flip styles live in Resources.scss.
+ */
+@import '../../../assets/scss/variables.scss';
+
+// Page wrapper — provides padding and sets text context
+.resource_detail_page {
+  padding: 24px;
+  min-height: 60vh;
+
+  // Ensure resource cards inside the detail page render at fixed width
+  .resource_detail_card_col {
+    max-width: 420px;
+    min-width: 280px;
+
+    // stretch pane_card to fill the column height
+    .pane_card {
+      height: 100%;
+    }
+  }
+}
