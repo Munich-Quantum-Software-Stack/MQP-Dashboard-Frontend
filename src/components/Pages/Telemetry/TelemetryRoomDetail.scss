@@ -2,6 +2,323 @@
 
 /* Back button styling */
 
+// ── Room detail layout grid ─────────────────────────────────────────────
+.room_detail_top_row,
+.room_detail_bottom_row {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.room_detail_card_col {
+  max-width: 420px;
+  min-width: 280px;
+}
+
+// ── Shared panel card style ─────────────────────────────────────────────
+%room_detail_panel {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.room_maintenance_calendar {
+  @extend %room_detail_panel;
+}
+.room_chip_layout_panel {
+  @extend %room_detail_panel;
+}
+.room_metadata_panel {
+  @extend %room_detail_panel;
+}
+.room_grafana_sensor_widget {
+  @extend %room_detail_panel;
+  margin-bottom: 24px;
+}
+
+// ── Panel title ──────────────────────────────────────────────────────────
+.room_panel_title {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 16px;
+  color: #1f2937;
+}
+
+// ── Maintenance Calendar ─────────────────────────────────────────────────
+.room_calendar_nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.room_calendar_nav_btn {
+  background: none;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  font-weight: 700;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease;
+  &:hover {
+    background-color: #f3f4f6;
+  }
+  &:focus-visible {
+    outline: 2px solid #6cacde;
+  }
+}
+.room_calendar_month_label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #374151;
+}
+.room_calendar_weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-bottom: 4px;
+  span {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #9ca3af;
+    text-align: center;
+    padding: 2px 0;
+  }
+}
+.room_calendar_grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+.room_calendar_day_cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 2px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  color: #374151;
+  min-height: 36px;
+  &.today {
+    border: 2px solid #6cacde;
+    font-weight: 700;
+  }
+  &.empty {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+.room_calendar_dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-top: 2px;
+  flex-shrink: 0;
+  &.green {
+    background-color: #22c55e;
+  }
+  &.orange {
+    background-color: #f59e0b;
+  }
+  &.red {
+    background-color: #ef4444;
+  }
+}
+
+// ── Chip Layout Placeholder ──────────────────────────────────────────────
+.room_chip_placeholder_body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+  gap: 12px;
+}
+.room_chip_placeholder_text {
+  font-size: 0.88rem;
+  color: #6b7280;
+  text-align: center;
+}
+
+// ── Metadata Table ──────────────────────────────────────────────────────
+.room_metadata_table {
+  width: 100%;
+  border-collapse: collapse;
+  .room_metadata_row {
+    border-bottom: 1px solid #e5e7eb;
+    &:nth-child(even) {
+      background-color: #f9fafb;
+    }
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+  .room_metadata_label {
+    padding: 9px 12px;
+    font-weight: 600;
+    font-size: 0.87rem;
+    color: #6b7280;
+    width: 55%;
+  }
+  .room_metadata_value {
+    padding: 9px 12px;
+    font-size: 0.87rem;
+    color: #1f2937;
+  }
+}
+.room_status_pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+// ── Grafana Sensor Widget ────────────────────────────────────────────────
+.room_grafana_controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #374151;
+    white-space: nowrap;
+  }
+  select {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 0.88rem;
+    min-width: 200px;
+    background: #ffffff;
+    color: #1f2937;
+    cursor: pointer;
+    &:focus {
+      border-color: #6cacde;
+      outline: none;
+    }
+  }
+}
+.room_grafana_iframe_wrapper {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  border-radius: 8px;
+  overflow: hidden;
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+}
+.room_grafana_no_panel {
+  border: 1px dashed #d1d5db;
+  border-radius: 8px;
+  padding: 32px;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+.room_grafana_skeleton {
+  height: 280px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 400px 100%;
+  animation: shimmer 1.4s infinite linear;
+}
+
+// ── Section divider ──────────────────────────────────────────────────────
+.room_section_divider {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 28px 0;
+}
+
+// ── Dark mode overrides ──────────────────────────────────────────────────
+.dark_bg {
+  .room_maintenance_calendar,
+  .room_chip_layout_panel,
+  .room_metadata_panel,
+  .room_grafana_sensor_widget {
+    background-color: #1f2937;
+  }
+  .room_panel_title {
+    color: #f3f4f6;
+  }
+  .room_calendar_month_label {
+    color: #d1d5db;
+  }
+  .room_calendar_nav_btn {
+    border-color: #374151;
+    color: #9ca3af;
+    &:hover {
+      background-color: #374151;
+    }
+  }
+  .room_calendar_day_cell {
+    color: #d1d5db;
+    &.today {
+      border-color: #6cacde;
+    }
+  }
+  .room_chip_placeholder_text {
+    color: #9ca3af;
+  }
+  .room_metadata_table {
+    .room_metadata_row {
+      border-bottom-color: #374151;
+      &:nth-child(even) {
+        background-color: #111827;
+      }
+    }
+    .room_metadata_label {
+      color: #9ca3af;
+    }
+    .room_metadata_value {
+      color: #f3f4f6;
+    }
+  }
+  .room_grafana_controls {
+    label {
+      color: #d1d5db;
+    }
+    select {
+      background: #111827;
+      color: #f3f4f6;
+      border-color: #374151;
+    }
+  }
+  .room_grafana_no_panel {
+    border-color: #374151;
+    color: #6b7280;
+  }
+  .room_grafana_skeleton {
+    background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+    background-size: 400px 100%;
+  }
+  .room_section_divider {
+    border-top-color: #374151;
+  }
+}
+
 .telemetry-back-btn-bottom {
   margin-top: 30px;
   text-align: center;

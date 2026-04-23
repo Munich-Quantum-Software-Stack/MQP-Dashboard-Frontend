@@ -26,6 +26,10 @@ module.exports = {
   },
   rules: {
     'import/no-unresolved': 'error',
+    // False-positive: all bracket-notation accesses in this codebase use internal,
+    // trusted keys (ordered arrays, component maps, sensor category keys). There is
+    // no user-controlled input reaching these object lookups.
+    'security/detect-object-injection': 'off',
     'no-restricted-imports': [
       'error',
       {

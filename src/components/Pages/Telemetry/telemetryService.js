@@ -12,6 +12,7 @@ export const MOCK_ROOMS = {
       {
         id: 'warm-qexa20',
         name: 'QExa20',
+        resourceNames: ['qexa20'],
         vendor: 'IQM',
         fidelity: '98.5%',
         qubits: 20,
@@ -117,6 +118,7 @@ export const MOCK_ROOMS = {
       {
         id: 'daqc-q5',
         name: 'QExa20',
+        resourceNames: ['q5'],
         vendor: 'IQM',
         fidelity: '98.5%',
         qubits: 20,
@@ -127,6 +129,7 @@ export const MOCK_ROOMS = {
       {
         id: 'daqc-q20',
         name: 'Q5',
+        resourceNames: ['q20'],
         vendor: 'IQM',
         fidelity: '97.2%',
         qubits: 5,
@@ -137,6 +140,7 @@ export const MOCK_ROOMS = {
       {
         id: 'marmot-aqt',
         name: 'Q20',
+        resourceNames: ['aqt20'],
         vendor: 'IQM',
         fidelity: '99.4%',
         qubits: 20,
@@ -218,6 +222,7 @@ export const MOCK_ROOMS = {
       {
         id: 'q-exa',
         name: 'QExa20',
+        resourceNames: ['qexa20'],
         vendor: 'IQM',
         fidelity: '99.2%',
         qubits: 20,
@@ -228,6 +233,7 @@ export const MOCK_ROOMS = {
       {
         id: 'euro-q-exa',
         name: 'Q5',
+        resourceNames: ['q5'],
         vendor: 'IQM',
         fidelity: '98.7%',
         qubits: 5,
@@ -238,6 +244,7 @@ export const MOCK_ROOMS = {
       {
         id: 'qaptiva-800',
         name: 'Q20',
+        resourceNames: ['q20'],
         vendor: 'IQM',
         fidelity: '97.8%',
         qubits: 20,
@@ -319,6 +326,7 @@ export const MOCK_ROOMS = {
       {
         id: 'maqcs',
         name: 'QExa20',
+        resourceNames: ['maqcs'],
         vendor: 'IQM',
         fidelity: '98.5%',
         qubits: 20,
@@ -329,6 +337,7 @@ export const MOCK_ROOMS = {
       {
         id: 'munichqc-atoms',
         name: 'Q5',
+        resourceNames: ['muniqc-atoms20'],
         vendor: 'IQM',
         fidelity: '97.2%',
         qubits: 5,
@@ -399,6 +408,80 @@ export const MOCK_ROOMS = {
     },
   },
 };
+
+/**
+ * Returns the first MOCK_ROOM whose quantumDevices list contains a device
+ * with the given resource name in its resourceNames array.
+ * Falls back to case-insensitive name matching if resourceNames is absent.
+ *
+ * @param {string} resourceName  e.g. 'qexa20'
+ * @returns {Object|null}
+ */
+export function findRoomByResourceName(resourceName) {
+  const needle = (resourceName || '').trim().toLowerCase();
+  for (const room of Object.values(MOCK_ROOMS)) {
+    if (!Array.isArray(room.quantumDevices)) continue;
+    const match = room.quantumDevices.some((d) => {
+      if (Array.isArray(d.resourceNames)) {
+        return d.resourceNames.some((n) => n.toLowerCase() === needle);
+      }
+      return (d.name || '').trim().toLowerCase() === needle;
+    });
+    if (match) return room;
+  }
+  return null;
+}
+
+/**
+ * Returns an ordered list of category keys that have at least one sensor.
+ *
+ * @param {Object} environmentSensors
+ * @returns {string[]}
+ */
+export function getAvailableCategories(environmentSensors) {
+  if (!environmentSensors) return [];
+  const order = [
+    'temperature',
+    'humidity',
+    'pressure',
+    'magnetometer',
+    'lightIntensity',
+    'loudness',
+    'helium',
+    'power',
+    'network',
+  ];
+  return order.filter((key) => {
+    if (key === 'temperature') {
+      const t = environmentSensors.temperature || {};
+      return (t.floor?.length || 0) + (t.wall?.length || 0) + (t.roof?.length || 0) > 0;
+    }
+    return (environmentSensors[key]?.length || 0) > 0;
+  });
+}
+
+/**
+ * Returns the first grafanaPanelRef found among sensors in the given category,
+ * or null if none is configured.
+ *
+ * @param {Object} environmentSensors
+ * @param {string} category
+ * @returns {Object|null}
+ */
+export function findPanelRefForCategory(environmentSensors, category) {
+  if (!environmentSensors || !category) return null;
+  let sensors = [];
+  if (category === 'temperature') {
+    const t = environmentSensors.temperature || {};
+    sensors = [...(t.floor || []), ...(t.wall || []), ...(t.roof || [])];
+  } else {
+    sensors = environmentSensors[category] || [];
+  }
+  for (const s of sensors) {
+    if (s.grafanaPanelRef) return s.grafanaPanelRef;
+  }
+  return null;
+}
 
 export function parseSensorValue(valueStr) {
   const match = valueStr.match(/^([\d.]+)\s*(.*)$/);
