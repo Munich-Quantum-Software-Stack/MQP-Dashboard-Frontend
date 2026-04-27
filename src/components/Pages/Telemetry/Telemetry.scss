@@ -1,0 +1,62 @@
+/*************
+ * Telemetry 
+ ************/
+@import '../../../assets/scss/variables.scss';
+
+form.telemetryForm {
+  .time_frame {
+    .datetime_wrap {
+      display: flex;
+
+      .time_input {
+        width: 200px;
+      }
+    }
+  }
+  .selectMeasurement {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    padding: 0;
+    .measurement_item_wrap {
+      display: flex;
+      padding: 8px 15px;
+      margin: 5px 12px;
+      border: 1px solid $border_color_light;
+      border-radius: 5px;
+      //background-color: $light_grey;
+      .add_icon {
+        margin-right: 5px;
+      }
+    }
+  }
+  .measurement_sensors_container {
+    .measurement_header {
+      background-color: $blue;
+      color: white;
+      padding: 12px 15px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .measurement_sensors_wrap {
+      padding: 0;
+    }
+    .measurement_toggle_btn {
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+    ul.sensors_list {
+      padding-left: 30px;
+      li.checkbox-item {
+        list-style-type: none;
+      }
+    }
+  }
+}
+.download_telemetry_button {
+  width: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
