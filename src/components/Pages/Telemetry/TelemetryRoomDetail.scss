@@ -6,9 +6,27 @@
 .room_detail_top_row,
 .room_detail_bottom_row {
   display: grid;
-  grid-template-columns: 420px 1fr;
   gap: 24px;
   margin-bottom: 24px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+.room_detail_top_row {
+  grid-template-columns: 420px 1fr;
+}
+.room_detail_bottom_row {
+  grid-template-columns: 35% 65%;
+}
+
+// ── Calendar + Widget row: 30 / 70 split ────────────────────────────────
+.room_detail_cal_row {
+  display: grid;
+  grid-template-columns: 35% 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+  align-items: start;
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
@@ -23,11 +41,14 @@
 // ── Shared panel card style ─────────────────────────────────────────────
 %room_detail_panel {
   background-color: #ffffff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  padding: 22px 24px;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.06),
+    0 4px 16px rgba(0, 0, 0, 0.07);
   height: 100%;
   box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .room_maintenance_calendar {
@@ -41,7 +62,6 @@
 }
 .room_grafana_sensor_widget {
   @extend %room_detail_panel;
-  margin-bottom: 24px;
 }
 
 // ── Panel title ──────────────────────────────────────────────────────────
@@ -49,10 +69,45 @@
   font-weight: 700;
   font-size: 1rem;
   margin-bottom: 16px;
-  color: #1f2937;
+  color: #111827;
+  letter-spacing: -0.01em;
+}
+
+// ── Panel accent borders ─────────────────────────────────────────────────
+.room_metadata_panel {
+  border-top: 3px solid #009ee3;
+}
+.room_chip_layout_panel {
+  border-top: 3px solid #009ee3;
+}
+.room_maintenance_calendar {
+  border-top: 3px solid #009ee3;
+}
+.room_grafana_sensor_widget {
+  border-top: 3px solid #009ee3;
 }
 
 // ── Maintenance Calendar ─────────────────────────────────────────────────
+
+.room_calendar_legend {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  padding: 8px 10px;
+  background: #f3f8ff;
+  border-radius: 8px;
+  font-size: 0.78rem;
+
+  .room_calendar_legend_item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #374151;
+    font-weight: 500;
+  }
+}
+
 .room_calendar_nav {
   display: flex;
   justify-content: space-between;
@@ -112,7 +167,12 @@
   font-size: 0.82rem;
   color: #374151;
   min-height: 36px;
+  transition: background 0.1s;
+  &:hover:not(.empty) {
+    background-color: #f0f7ff;
+  }
   &.today {
+    background-color: #eff6ff;
     border: 2px solid #6cacde;
     font-weight: 700;
   }
@@ -136,6 +196,64 @@
   &.red {
     background-color: #ef4444;
   }
+}
+
+// ── Chip Layout Panel — constrain visualisation height in bottom row ────
+.room_detail_bottom_row {
+  .room_chip_layout_panel {
+    display: flex;
+    flex-direction: column;
+
+    .chip-visualisation {
+      flex: 1;
+      min-height: 0;
+    }
+
+    .chip-canvas {
+      max-height: 360px;
+      overflow: hidden;
+
+      svg {
+        max-height: 360px;
+      }
+    }
+
+    .chip-stats {
+      margin-top: 0;
+    }
+  }
+}
+
+// ── Coming Soon overlay for Device Metadata ─────────────────────────────
+.room_metadata_coming_soon_wrap {
+  position: relative;
+  height: 100%;
+}
+.room_metadata_coming_soon_overlay {
+  position: absolute;
+  inset: 56px 0 0 0;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+}
+.room_metadata_coming_soon_badge {
+  background: #1f2937;
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  user-select: none;
 }
 
 // ── Chip Layout Placeholder ──────────────────────────────────────────────
@@ -179,6 +297,24 @@
     color: #1f2937;
   }
 }
+
+/* Compressed variant used when metadata is shown in the narrow left column */
+.room_metadata_panel.room_metadata_compressed {
+  .room_metadata_table {
+    .room_metadata_row {
+      border-bottom-width: 1px;
+    }
+    .room_metadata_label {
+      padding: 6px 8px;
+      font-size: 0.82rem;
+      width: 40%;
+    }
+    .room_metadata_value {
+      padding: 6px 8px;
+      font-size: 0.82rem;
+    }
+  }
+}
 .room_status_pill {
   display: inline-block;
   padding: 2px 10px;
@@ -220,7 +356,7 @@
 .room_grafana_iframe_wrapper {
   position: relative;
   width: 100%;
-  height: 280px;
+  height: 360px;
   border-radius: 8px;
   overflow: hidden;
   iframe {
@@ -238,7 +374,7 @@
   font-size: 0.9rem;
 }
 .room_grafana_skeleton {
-  height: 280px;
+  height: 360px;
   border-radius: 8px;
   background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
   background-size: 400px 100%;
@@ -258,7 +394,34 @@
   .room_chip_layout_panel,
   .room_metadata_panel,
   .room_grafana_sensor_widget {
-    background-color: #1f2937;
+    background-color: #0d0d0d;
+    border-left-color: rgba(255, 255, 255, 0.07);
+    border-right-color: rgba(255, 255, 255, 0.07);
+    border-bottom-color: rgba(255, 255, 255, 0.07);
+  }
+  .room_maintenance_calendar {
+    .room_calendar_legend {
+      background: #111111;
+
+      .room_calendar_legend_item {
+        color: #d1d5db;
+      }
+    }
+  }
+  .room_metadata_coming_soon_overlay {
+    background: rgba(0, 0, 0, 0.6);
+  }
+  .room_metadata_coming_soon_badge {
+    background: #222222;
+    color: #f9fafb;
+  }
+  .room_calendar_day_cell {
+    &:hover:not(.empty) {
+      background-color: #1a1a1a;
+    }
+    &.today {
+      background-color: #1a1a1a;
+    }
   }
   .room_panel_title {
     color: #f3f4f6;
@@ -284,9 +447,9 @@
   }
   .room_metadata_table {
     .room_metadata_row {
-      border-bottom-color: #374151;
+      border-bottom-color: #222222;
       &:nth-child(even) {
-        background-color: #111827;
+        background-color: #111111;
       }
     }
     .room_metadata_label {
@@ -301,9 +464,9 @@
       color: #d1d5db;
     }
     select {
-      background: #111827;
+      background: #111111;
       color: #f3f4f6;
-      border-color: #374151;
+      border-color: #333333;
     }
   }
   .room_grafana_no_panel {
@@ -311,16 +474,57 @@
     color: #6b7280;
   }
   .room_grafana_skeleton {
-    background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+    background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
     background-size: 400px 100%;
   }
   .room_section_divider {
-    border-top-color: #374151;
+    border-top-color: #222222;
+  }
+}
+
+// ── Back to Rooms button ─────────────────────────────────────────────────
+.inst-detail__back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 18px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background-color: #f8c129;
+  border: none;
+  border-radius: 8px;
+  color: #000;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+
+  &:hover {
+    background-color: #f0b30c;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  }
+
+  &:active {
+    background-color: #e0a308;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #f8c129;
+    outline-offset: 3px;
+  }
+
+  &--dark {
+    background-color: #f8c129;
+    color: #000;
+
+    &:hover {
+      background-color: #f0b30c;
+    }
   }
 }
 
 .telemetry-back-btn-bottom {
-  margin-top: 30px;
   text-align: center;
 
   .btn {

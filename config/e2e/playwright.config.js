@@ -5,7 +5,7 @@
 const { defineConfig, devices } = require('@playwright/test');
 
 // Base URL for E2E tests, defaults to local dev server
-const baseURL = process.env.E2E_BASE_URL || 'http://127.0.0.1:3000';
+const baseURL = process.env.E2E_BASE_URL || 'http://127.0.0.1:3001';
 
 module.exports = defineConfig({
   testDir: '../../tests/e2e',

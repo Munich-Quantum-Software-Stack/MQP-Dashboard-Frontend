@@ -72,6 +72,32 @@
     }
   }
 
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+    filter: grayscale(60%);
+    pointer-events: none;
+
+    &:hover,
+    &.hovered {
+      transform: none;
+      box-shadow: none;
+      border-color: #e5e7eb;
+
+      &::before {
+        opacity: 0;
+      }
+
+      .card-arrow {
+        opacity: 0;
+      }
+
+      .card-icon {
+        transform: none;
+      }
+    }
+  }
+
   &.dark {
     background: #1f2937;
     border-color: #374151;

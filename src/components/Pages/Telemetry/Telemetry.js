@@ -41,6 +41,7 @@ const Telemetry = () => {
       id: 'cold-lab',
       name: 'Cold Lab (E.U.044)',
       description: 'Environment monitoring for the cryogenic laboratory area',
+      disabled: true,
       color: '#3b82f6',
       gradient: 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)',
       darkGradient: 'linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%)',
@@ -69,6 +70,7 @@ const Telemetry = () => {
       id: 'compute-cube',
       name: 'Compute Cube (NSR1)',
       description: 'Environment monitoring for the quantum computing hardware',
+      disabled: true,
       color: '#6b7280',
       gradient: 'linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%)',
       darkGradient: 'linear-gradient(135deg, #374151 0%, #4b5563 100%)',
@@ -96,6 +98,7 @@ const Telemetry = () => {
       id: 'cloud',
       name: 'Cloud',
       description: 'Devices operating through our cloud',
+      disabled: true,
       color: '#9ca3af',
       gradient: 'linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%)',
       darkGradient: 'linear-gradient(135deg, #4b5563 0%, #6b7280 100%)',
@@ -133,9 +136,9 @@ const Telemetry = () => {
           {rooms.map((room) => (
             <div
               key={room.id}
-              className={`telemetry-room-card ${hoveredCard === room.id ? 'hovered' : ''} ${darkmode ? 'dark' : ''}`}
-              onClick={() => handleRoomClick(room.id)}
-              onMouseEnter={() => setHoveredCard(room.id)}
+              className={`telemetry-room-card ${hoveredCard === room.id ? 'hovered' : ''} ${darkmode ? 'dark' : ''} ${room.disabled ? 'disabled' : ''}`}
+              onClick={() => !room.disabled && handleRoomClick(room.id)}
+              onMouseEnter={() => !room.disabled && setHoveredCard(room.id)}
               onMouseLeave={() => setHoveredCard(null)}
               style={{
                 '--card-color': room.color,

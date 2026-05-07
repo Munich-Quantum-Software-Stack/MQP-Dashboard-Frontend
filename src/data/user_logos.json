@@ -1,8 +1,8 @@
 [
   {
     "name": "landing_page_logo",
-    "file_name": "UserLandingPageLogo",
-    "file_ext": ".png",
+    "file_name": "lrz_wortbild",
+    "file_ext": ".svg",
     "alt": "",
     "link": "",
     "width": "100%",
@@ -10,11 +10,11 @@
   },
   {
     "name": "sidebar_logo",
-    "file_name": "UserTopSidebarLogo",
-    "file_ext": ".png",
-    "alt": "",
+    "file_name": "lrz_wortbild_square",
+    "file_ext": ".jpeg",
+    "alt": "LRZ",
     "link": "/",
-    "width": "180px",
-    "height": "auto"
+    "width": "72px",
+    "height": "72px"
   }
 ]
