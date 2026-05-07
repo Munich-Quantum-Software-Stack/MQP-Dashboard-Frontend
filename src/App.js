@@ -2,7 +2,7 @@
  * App.js - Main application component defining routes and provider wrappers
  */
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@utils/query';
@@ -41,10 +41,8 @@ import TelemetryRoomDetail from '@components/Pages/Telemetry/TelemetryRoomDetail
 import { loadRuntimeConfig } from '@components/Pages/Telemetry/runtimeConfig';
 
 function App() {
-  const [configReady, setConfigReady] = useState(false);
-
   useEffect(() => {
-    loadRuntimeConfig().then(() => setConfigReady(true));
+    loadRuntimeConfig();
   }, []);
 
   // Define all application routes with nested layouts, loaders, and error boundaries.
@@ -233,59 +231,9 @@ function App() {
             },
           ],
         },
-        {
-          path: 'visualisation',
-          element: require('@components/Pages/Visualisation').default(),
-          errorElement: <ErrorPage />,
-          loader: checkTokenLoader,
-        },
-        {
-          path: 'feedback',
-          element: <Feedback />,
-          errorElement: <ErrorPage />,
-        },
-        {
-          path: 'funding',
-          element: <Funding />,
-          errorElement: <ErrorPage />,
-        },
-        {
-          path: 'logout',
-          element: <Logout />,
-          loader: checkTokenLoader,
-          action: logoutAction,
-        },
-      ],
-    },
-    {
-      // Public routes under DefaultLayout for unauthenticated users
-      path: '/',
-      element: <DefaultLayout />,
-      errorElement: <DefaultErrorPage />,
-      children: [
-        {
-          index: true,
-          element: <Login />,
-        },
-        {
-          path: 'login',
-          element: <Login />,
-        },
-        {
-          path: 'blocked',
-          element: <Blocked />,
-        },
-        {
-          path: 'forgot_password',
-          element: <ForgotPassword />,
-        },
-        {
-          path: 'request_access',
-          element: <RequestAccess />,
-        },
-      ],
-    },
-  ]);
+      ]),
+    [],
+  );
 
   // Wrap app with React Query provider for data fetching and router for navigation
   return (

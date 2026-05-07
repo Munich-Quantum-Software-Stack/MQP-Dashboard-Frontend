@@ -1,5 +1,3 @@
-
-
 let _config = {
   TELEMETRY_API_URL: '',
   GRAFANA_URL: '',
@@ -23,8 +21,7 @@ export async function loadRuntimeConfig() {
       const json = await res.json();
       _config = { ..._config, ...json };
     }
-  } catch {
-  }
+  } catch {}
 
   if (!_config.TELEMETRY_API_URL) {
     _config.TELEMETRY_API_URL = process.env.REACT_APP_TELEMETRY_API_URL || '';

@@ -6,8 +6,7 @@ import PaneCard from '@components/UI/Card/PaneCard';
 import ErrorBlock from '@components/UI/MessageBox/ErrorBlock';
 import IQM_logo from '@assets/images/IQM_logo.png';
 import GrafanaPanel from './components/GrafanaPanel';
-import SensorSelector from './components/SensorSelector';
-import DownloadBar from './components/DownloadBar';
+import ChipVisualisation from '@components/Shared/ChipVisualisation/ChipVisualisation';
 import { getRoomData } from './telemetryService';
 import { buildPanelViewUrl } from '@components/Pages/Telemetry/grafanaConfig';
 import './Telemetry.scss';
@@ -199,6 +198,29 @@ const RoomMaintenanceCalendar = ({ darkmode, events = [] }) => {
   return (
     <div className="room_maintenance_calendar">
       <div className="room_panel_title">Maintenance Schedule</div>
+
+      {/* Legend */}
+      <div className="room_calendar_legend">
+        {[
+          { color: '#22c55e', label: 'Operational' },
+          { color: '#f59e0b', label: 'Maintenance' },
+          { color: '#ef4444', label: 'Offline' },
+        ].map(({ color, label }) => (
+          <div key={label} className="room_calendar_legend_item">
+            <span
+              style={{
+                display: 'inline-block',
+                width: 10,
+                height: 10,
+                borderRadius: '50%',
+                background: color,
+                flexShrink: 0,
+              }}
+            />
+            {label}
+          </div>
+        ))}
+      </div>
       <div className="room_calendar_nav">
         <button className="room_calendar_nav_btn" onClick={prevMonth} aria-label="Previous month">
           ‹
@@ -236,6 +258,7 @@ const RoomMaintenanceCalendar = ({ darkmode, events = [] }) => {
 };
 
 // ── Sub-component: RoomChipLayoutPlaceholder ─────────────────────────────────
+// eslint-disable-next-line no-unused-vars
 const RoomChipLayoutPlaceholder = ({ darkmode }) => {
   const stroke = darkmode ? '#4b5563' : '#9ca3af';
   const fill = darkmode ? '#374151' : '#e5e7eb';
@@ -302,7 +325,7 @@ const RoomChipLayoutPlaceholder = ({ darkmode }) => {
 };
 
 // ── Sub-component: RoomMetadataPanel ─────────────────────────────────────────
-const RoomMetadataPanel = ({ device, darkmode }) => {
+const RoomMetadataPanel = ({ device, darkmode, compressed }) => {
   const rows = [
     { label: 'Status', value: <span className="room_status_pill">Online</span> },
     { label: 'Qubits', value: device?.qubits ?? '—' },
@@ -319,7 +342,7 @@ const RoomMetadataPanel = ({ device, darkmode }) => {
   ];
 
   return (
-    <div className="room_metadata_panel">
+    <div className={`room_metadata_panel ${compressed ? 'room_metadata_compressed' : ''}`}>
       <div className="room_panel_title">Device Metadata</div>
       <table className="room_metadata_table">
         <tbody>
@@ -373,9 +396,8 @@ const RoomGrafanaSensorWidget = ({ environmentSensors, darkmode }) => {
     groupMap[s.categoryKey].sensors.push(s);
   }
 
-  // Widen to 7 days — increases likelihood of real InfluxDB data being present.
-  const from = new Date(Date.now() - 7 * 24 * 3600 * 1000);
-  const to = new Date();
+  const from = new Date('2026-01-01T00:00:00Z');
+  const to = new Date('2026-04-15T23:59:59Z');
 
   return (
     <div className="room_grafana_sensor_widget">
@@ -449,11 +471,6 @@ const TelemetryRoomDetail = () => {
   const [roomState, setRoomState] = useState({ status: 'loading', data: null, error: null });
   const [selectedSensor, setSelectedSensor] = useState(null);
   const [showGraphModal, setShowGraphModal] = useState(false);
-  const [selection, setSelection] = useState({
-    selectedIds: [],
-    from: new Date(Date.now() - 86400000),
-    to: new Date(),
-  });
 
   const loadRoom = useCallback(() => {
     setRoomState({ status: 'loading', data: null, error: null });
@@ -467,15 +484,6 @@ const TelemetryRoomDetail = () => {
   useEffect(() => {
     loadRoom();
   }, [loadRoom]);
-
-  const handleSensorClick = useCallback((sensor) => {
-    setSelectedSensor(sensor);
-    setShowGraphModal(true);
-  }, []);
-
-  const handleSelectionChange = useCallback((newSelection) => {
-    setSelection(newSelection);
-  }, []);
 
   const handleBackClick = () => navigate('/telemetry');
 
@@ -509,12 +517,15 @@ const TelemetryRoomDetail = () => {
 
   const roomData = roomState.data;
 
+  const modalFrom = new Date('2026-01-01T00:00:00Z');
+  const modalTo = new Date('2026-04-15T23:59:59Z');
+
   // Keep this variable for future Grafana button restore. ESLint: it may be unused while the
   // button is commented out — suppress the unused-vars warning so commits pass linting.
   // eslint-disable-next-line no-unused-vars
   const panelViewUrl =
     showGraphModal && selectedSensor
-      ? buildPanelViewUrl(selectedSensor.grafanaPanelRef, selection.from, selection.to)
+      ? buildPanelViewUrl(selectedSensor.grafanaPanelRef, modalFrom, modalTo)
       : null;
 
   return (
@@ -525,6 +536,26 @@ const TelemetryRoomDetail = () => {
           onClick={handleBackClick}
           className={`inst-detail__back-btn${darkmode ? ' inst-detail__back-btn--dark' : ''}`}
           aria-label="Back to Rooms"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px',
+            padding: '7px 18px',
+            fontSize: '0.875rem',
+            fontWeight: 600,
+            backgroundColor: '#f8c129',
+            border: 'none',
+            borderRadius: '8px',
+            color: '#000',
+            cursor: 'pointer',
+            boxShadow: '0 1px 4px rgba(0,0,0,0.12)',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = '#f0b30c';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = '#f8c129';
+          }}
         >
           ← Back to Rooms
         </button>
@@ -543,53 +574,40 @@ const TelemetryRoomDetail = () => {
         </h2>
       </div>
 
-      {/* ROW 1: Resource Card | Maintenance Calendar */}
+      {/* ROW 1: Resource Card (full width top) */}
       <div className="room_detail_top_row">
         <div className="room_detail_card_col">
           <RoomResourceCard device={roomData.quantumDevices?.[0]} darkmode={darkmode} fs={fs} />
         </div>
-        <div>
-          <RoomMaintenanceCalendar darkmode={darkmode} events={[]} />
+      </div>
+
+      {/* ROW 2: Metadata (left, compressed) | Chip Layout (right) */}
+      <div className="room_detail_bottom_row">
+        <div className="room_metadata_coming_soon_wrap">
+          <RoomMetadataPanel device={roomData.quantumDevices?.[0]} darkmode={darkmode} compressed />
+          <div className="room_metadata_coming_soon_overlay">
+            <span className="room_metadata_coming_soon_badge">Coming soon</span>
+          </div>
+        </div>
+        <div className="room_chip_layout_panel">
+          <div className="room_panel_title">QPU Topology</div>
+          <ChipVisualisation
+            couplingData={roomData.quantumDevices?.[0]?.coupling_data}
+            darkmode={darkmode}
+          />
         </div>
       </div>
 
-      {/* ROW 2: Chip Layout | Metadata */}
-      <div className="room_detail_bottom_row">
-        <RoomChipLayoutPlaceholder darkmode={darkmode} />
-        <RoomMetadataPanel device={roomData.quantumDevices?.[0]} darkmode={darkmode} />
+      {/* ROW 3: Maintenance Calendar (30%) | Telemetry Widget (70%) */}
+      <div className="room_detail_cal_row">
+        <RoomMaintenanceCalendar darkmode={darkmode} events={[]} />
+        <RoomGrafanaSensorWidget
+          environmentSensors={roomData.environmentSensors}
+          darkmode={darkmode}
+        />
       </div>
 
-      {/* ROW 3: Grafana Sensor Widget with dropdown */}
-      <RoomGrafanaSensorWidget
-        environmentSensors={roomData.environmentSensors}
-        darkmode={darkmode}
-      />
-
-      {/* Divider between Grafana widget and Environment Monitoring */}
-      <hr className="room_section_divider" />
-
-      {/* PRESERVED: Environment Monitoring (SensorSelector + DownloadBar) */}
-      <div className="mt-4">
-        <h3 style={{ marginBottom: '20px', color: darkmode ? '#f3f4f6' : '#1f2937' }}>
-          Environment Monitoring
-        </h3>
-        {roomData.environmentSensors && (
-          <SensorSelector
-            environmentSensors={roomData.environmentSensors}
-            darkmode={darkmode}
-            onChange={handleSelectionChange}
-            onSensorClick={handleSensorClick}
-          />
-        )}
-      </div>
-
-      <DownloadBar
-        selectedIds={selection.selectedIds}
-        from={selection.from}
-        to={selection.to}
-        groupBy={selection.groupBy}
-        darkmode={darkmode}
-      />
+      {/* Environment Monitoring removed (SensorSelector + DownloadBar) */}
 
       {/* Graph modal */}
       {showGraphModal && selectedSensor && (
@@ -649,8 +667,8 @@ const TelemetryRoomDetail = () => {
 
             <GrafanaPanel
               sensor={selectedSensor}
-              from={selection.from}
-              to={selection.to}
+              from={modalFrom}
+              to={modalTo}
               isDarkMode={darkmode}
             />
 

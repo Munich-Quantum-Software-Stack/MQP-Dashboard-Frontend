@@ -63,9 +63,9 @@ const Navigation = ({ onHidden }) => {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="visualisation" className="nav-link " style={{ fontSize: navbar_fs }}>
-                <span className="link_icon visualisation_icon"></span>
-                {onHidden && <span className="link_text">Visualisation</span>}
+              <NavLink to="telemetry" className="nav-link " style={{ fontSize: navbar_fs }}>
+                <span className="link_icon resources_icon"></span>
+                {onHidden && <span className="link_text">Telemetry</span>}
               </NavLink>
             </li>
           </ul>
