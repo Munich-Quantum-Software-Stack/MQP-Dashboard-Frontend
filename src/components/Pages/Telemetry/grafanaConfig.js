@@ -1,45 +1,3 @@
-/**
- * grafanaConfig.js
- *
- * Grafana URL helper for embedded panel iframes.
- *
- * Panel identity (dashboardUid + panelId) is stored directly on each sensor
- * object as `grafanaPanelRef: { dashboardUid: string, panelId: number } | null`.
- * This means the backend API (or mock data) is the single source of truth for
- * which panel maps to which sensor — no static table to keep in sync here.
- *
- * ─────────────────────────────────────────────────────────────────────────────
- * Grafana Authentication Strategy
- * ─────────────────────────────────────────────────────────────────────────────
- * Three options, choose one before production deployment:
- *
- *   Option A — Anonymous access (Grafana ≥ 9.x, simplest)
- *     • Enable `auth.anonymous` in grafana.ini / env vars
- *     • Grant the anonymous org "Viewer" role
- *     • Risk: anyone who can reach the Grafana host can view all dashboards
- *     • Acceptable only on a private, firewalled network
- *
- *   Option B — Embedding via Grafana service account + proxy
- *     • Create a read-only service account token in Grafana
- *     • Add a backend proxy route (nginx/express) that appends the token to
- *       every iframe request: `Authorization: Bearer <token>`
- *     • iframes point to the proxy URL, never to Grafana directly
- *     • Grafana never needs to be internet-reachable
- *     • Token stays server-side — NOT in config.json or the JS bundle
- *
- *   Option C — Grafana SSO via the platform's existing OIDC provider ← RECOMMENDED
- *     • Configure Grafana's built-in OAuth support to use the same IdP as MQP
- *     • Users who are already logged in to MQP are automatically authenticated
- *       by Grafana (same session cookie / token flow)
- *     • No anonymous access; no service-account token leakage
- *     • Works correctly for internet-facing deployments
- *     • Requires: Grafana ≥ 9.x, `allow_embedding = true` in grafana.ini,
- *       and `SameSite=None; Secure` cookies on the Grafana domain
- *     • Reference: https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/jwt/
- *
- * ─────────────────────────────────────────────────────────────────────────────
- */
-
 import { getConfig } from './runtimeConfig';
 
 // ---------------------------------------------------------------------------
@@ -70,11 +28,6 @@ const ROOM_DASHBOARDS = new Map([
 // ---------------------------------------------------------------------------
 
 /**
- * Build an embeddable Grafana panel URL (d-solo — panel-only, no nav chrome).
- *
- * Grafana 12.x requires a slug segment in d-solo URLs and the dashboardSceneSolo
- * feature flag appended without a value (e.g. &__feature.dashboardSceneSolo).
- *
  * @param {{ dashboardUid: string, slug?: string, panelId: number } | null} panelRef
  * @param {Date|string|null} from  Start of time range (null → 'now-6h').
  * @param {Date|string|null} to    End of time range (null → 'now').
