@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import PaneCard from '@components/UI/Card/PaneCard';
 import PDFLink from '@components/UI/Document/PDFLink';
-// Use inline updated date markup (no UpdatedDate component present)
+import UpdatedDate from '@components/UI/UpdatedDate';
 
 const QAOA_MaxCut = () => {
   const fs = useSelector((state) => state.accessibilities.font_size);
@@ -21,15 +21,15 @@ const QAOA_MaxCut = () => {
       <div className="pane_desc">
         <div className="my-2" style={{ fontSize: status_item_text_fs }}>
           <PDFLink
-            src="/documents/MaxCut_LRZ_FUPP.pdf"
+            src="/documents/MaxCut_FUPP.pdf"
             target="_blank"
             pdf_link_class="left_icon_link"
-            pdf_text="MaxCut_LRZ_FUPP.pdf"
+            pdf_text="MaxCut (PDF)"
           />
         </div>
       </div>
       <div className="pane_date">
-        <div className="updated_date">Updated: Sept 19, 2024</div>
+        <UpdatedDate />
       </div>
     </PaneCard>
   );

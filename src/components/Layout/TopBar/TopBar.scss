@@ -41,6 +41,17 @@
       justify-content: flex-start;
       align-items: center;
 
+      img {
+        height: 60px;
+        width: auto;
+
+        &.topbar_logo_img {
+          width: auto;
+        }
+
+        margin-right: 15px;
+      }
+
       .logo_text {
         font-size: 1.5rem;
         font-family: 'Open_Sans-Bold';
