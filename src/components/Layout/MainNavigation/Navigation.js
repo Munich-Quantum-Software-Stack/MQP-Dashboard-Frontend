@@ -55,17 +55,17 @@ const Navigation = ({ onHidden }) => {
                 {onHidden && <span className="link_text">Resources</span>}
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink to="telemetry" className="nav-link " style={{ fontSize: navbar_fs }}>
+                <span className="link_icon telemetry_icon"></span>
+                {onHidden && <span className="link_text">Telemetry</span>}
+              </NavLink>
+            </li>
 
             <li className="nav-item">
               <NavLink to="faq" className="nav-link " style={{ fontSize: navbar_fs }}>
                 <span className="link_icon faq_icon"></span>
                 {onHidden && <span className="link_text">FAQ</span>}
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="telemetry" className="nav-link " style={{ fontSize: navbar_fs }}>
-                <span className="link_icon resources_icon"></span>
-                {onHidden && <span className="link_text">Telemetry</span>}
               </NavLink>
             </li>
           </ul>

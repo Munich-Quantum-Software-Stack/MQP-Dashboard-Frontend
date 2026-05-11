@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import ContentCard from '@components/UI/Card/ContentCard';
 import PaneCard from '@components/UI/Card/PaneCard';
 import ErrorBlock from '@components/UI/MessageBox/ErrorBlock';
-import IQM_logo from '@assets/images/IQM_logo.png';
 import GrafanaPanel from './components/GrafanaPanel';
 import ChipVisualisation from '@components/Shared/ChipVisualisation/ChipVisualisation';
 import { getRoomData } from './telemetryService';
@@ -71,55 +70,78 @@ const RoomResourceCard = ({ device, darkmode, fs }) => {
   }
 
   return (
-    <div className="resource_item_wrap" style={{ padding: 0, height: '100%' }}>
-      <PaneCard className={`resource_item resource_bg_1`} style={{ height: '100%' }}>
-        <div className="resource_item_body">
-          <div className="d-flex justify-content-between">
-            <div className="resource_item_title">
-              <h5 className="pane_title resource_title" style={{ fontSize: resource_name_fs }}>
-                {device.name}
-              </h5>
-              <div className="short_divider"></div>
+    <div style={{ position: 'relative', height: '100%' }}>
+      {/* Blurred card */}
+      <div
+        className="resource_item_wrap"
+        style={{
+          padding: 0,
+          height: '100%',
+          filter: 'blur(4px)',
+          userSelect: 'none',
+          pointerEvents: 'none',
+        }}
+      >
+        <PaneCard className={`resource_item resource_bg_1`} style={{ height: '100%' }}>
+          <div className="resource_item_body">
+            <div className="d-flex justify-content-between">
+              <div className="resource_item_title">
+                <h5 className="pane_title resource_title" style={{ fontSize: resource_name_fs }}>
+                  &nbsp;
+                </h5>
+                <div className="short_divider"></div>
+              </div>
+              <div className="resource_item_logo"></div>
             </div>
-            <div className="resource_item_logo">
-              <div className="resource_log_wrap">
-                <img src={IQM_logo} alt={device.vendor} />
+            <div className="pane_desc">
+              <div className="my-2" style={{ fontSize: resource_text_fs }}>
+                &nbsp;
+              </div>
+            </div>
+            <div className="resource_status mb-2">
+              <div className="pane_subtitle" style={{ fontSize: resource_subtitle_fs }}>
+                Status:
+              </div>
+              <div className="status_icon_wrap d-flex justify-content-start">
+                <div className="status_icon">
+                  <span className="online_icon"></span>
+                </div>
+                <div className="mx-2" style={{ fontSize: resource_text_fs }}>
+                  Online
+                </div>
+              </div>
+            </div>
+            <div className="resource_qubit mb-2">
+              <div className="pane_subtitle" style={{ fontSize: resource_subtitle_fs }}>
+                Qubits: <b>{device.qubits}</b>
+              </div>
+            </div>
+            <div className="resource_technology mb-2">
+              <div className="pane_subtitle" style={{ fontSize: resource_subtitle_fs }}>
+                Quantum Technology:
+              </div>
+              <div className="resource_value" style={{ fontSize: resource_text_fs }}>
+                <i>{device.topology}</i>
               </div>
             </div>
           </div>
-          <div className="pane_desc">
-            <div className="my-2" style={{ fontSize: resource_text_fs }}>
-              {device.vendor} {device.name}
-            </div>
-          </div>
-          <div className="resource_status mb-2">
-            <div className="pane_subtitle" style={{ fontSize: resource_subtitle_fs }}>
-              Status:
-            </div>
-            <div className="status_icon_wrap d-flex justify-content-start">
-              <div className="status_icon">
-                <span className="online_icon"></span>
-              </div>
-              <div className="mx-2" style={{ fontSize: resource_text_fs }}>
-                Online
-              </div>
-            </div>
-          </div>
-          <div className="resource_qubit mb-2">
-            <div className="pane_subtitle" style={{ fontSize: resource_subtitle_fs }}>
-              Qubits: <b>{device.qubits}</b>
-            </div>
-          </div>
-          <div className="resource_technology mb-2">
-            <div className="pane_subtitle" style={{ fontSize: resource_subtitle_fs }}>
-              Quantum Technology:
-            </div>
-            <div className="resource_value" style={{ fontSize: resource_text_fs }}>
-              <i>{device.topology}</i>
-            </div>
-          </div>
-        </div>
-      </PaneCard>
+        </PaneCard>{' '}
+      </div>
+      {/* Unblurred label overlaid on top */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '16px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          pointerEvents: 'none',
+          zIndex: 2,
+        }}
+      >
+        <span className="room_metadata_coming_soon_badge" style={{ whiteSpace: 'nowrap' }}>
+          Quantum Resources coming soon
+        </span>
+      </div>{' '}
     </div>
   );
 };
@@ -589,18 +611,28 @@ const TelemetryRoomDetail = () => {
             <span className="room_metadata_coming_soon_badge">Coming soon</span>
           </div>
         </div>
-        <div className="room_chip_layout_panel">
-          <div className="room_panel_title">QPU Topology</div>
-          <ChipVisualisation
-            couplingData={roomData.quantumDevices?.[0]?.coupling_data}
-            darkmode={darkmode}
-          />
+        <div className="room_metadata_coming_soon_wrap">
+          <div className="room_chip_layout_panel">
+            <div className="room_panel_title">QPU Topology</div>
+            <ChipVisualisation
+              couplingData={roomData.quantumDevices?.[0]?.coupling_data}
+              darkmode={darkmode}
+            />
+          </div>
+          <div className="room_metadata_coming_soon_overlay">
+            <span className="room_metadata_coming_soon_badge">Coming soon</span>
+          </div>
         </div>
       </div>
 
       {/* ROW 3: Maintenance Calendar (30%) | Telemetry Widget (70%) */}
       <div className="room_detail_cal_row">
-        <RoomMaintenanceCalendar darkmode={darkmode} events={[]} />
+        <div className="room_metadata_coming_soon_wrap">
+          <RoomMaintenanceCalendar darkmode={darkmode} events={[]} />
+          <div className="room_metadata_coming_soon_overlay">
+            <span className="room_metadata_coming_soon_badge">Coming soon</span>
+          </div>
+        </div>
         <RoomGrafanaSensorWidget
           environmentSensors={roomData.environmentSensors}
           darkmode={darkmode}
