@@ -42,6 +42,7 @@ Infrastructure repo                             App repo
 
 ```
 MQP-Dashboard-Frontend/
+├── ...
 ├── src/
 ├── public/
 ├── nginx/
@@ -97,7 +98,7 @@ make deploy ENV=test
 On a fresh machine, ensure the shared network exists before bringing up the app:
 
 ```bash
-docker network create web
+docker network create mqp-web
 ```
 
 This network is owned by the infrastructure stack. If the infrastructure stack is already running, the network will already exist.
@@ -116,10 +117,10 @@ The result is a small, self-contained image with no Node.js runtime.
 FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+RUN npm install && npm ci
 COPY . .
 ARG BUILD_ENV=production
-RUN npx env-cmd -f .env.${BUILD_ENV} npm run build
+RUN npx env-cmd -f .env.${BUILD_ENV} npm run build:${BUILD_ENV}
 
 # Stage 2: serve
 FROM nginx:alpine
