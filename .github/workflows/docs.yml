@@ -3,7 +3,7 @@ name: Documentation
 on:
   push:
     branches:
-      - main
+      - develop
     paths:
       - 'docs/**'
       - 'mkdocs.yml'
