@@ -1,6 +1,6 @@
 import React from 'react';
 import MQSSLogo from '@assets/images/logo-mqss-light.svg';
-import MQVLogo from '@assets/images/MQV_LOGO_F_BUNT.png';
+import MQVLogo from '@assets/images/MQV_Logo_colour.png';
 
 function FooterLogos() {
   return (
