@@ -1,8 +1,8 @@
 {
   "name": "mqp_dashboard",
   "version": "0.1.0",
-  "description": "BQP Dashboard",
-  "author": "Trang Huynh",
+  "description": "MQP Dashboard",
+  "author": "Trang Huynh, Parth V, Marco De Pascale",
   "private": true,
   "proxy": "http://127.0.0.1:5000",
   "homepage": "/",

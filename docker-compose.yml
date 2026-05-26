@@ -1,0 +1,15 @@
+services:
+  mqp-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BUILD_ENV: production    # passed to Dockerfile at build time
+    container_name: mqp-app
+    restart: unless-stopped
+    networks:
+      - mqp-web
+
+networks:
+  mqp-web:
+    external: true

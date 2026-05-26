@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { registerLocale, setDefaultLocale } from 'react-datepicker';
-import de from 'date-fns/locale/de';
+import { de } from 'date-fns/locale/de';
 import 'react-datepicker/dist/react-datepicker.module.css';
 import Button from '@components/UI/Button/Button';
 import { createNewToken } from '@utils/tokens-http';
