@@ -1,13 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { getSidebarLogo } from '@utils/get-user-logos';
+import lrzSidebarLogo from '@assets/images/lrz_wortbild_square.jpeg';
 
 /** Animated MQP logo header */
 const NavbarHeader = () => {
-  const user_logos_path = process.env.PUBLIC_URL + '/user_logos/';
-  const default_image = `${user_logos_path}lrz_wortbild_square.png`;
-  const sidebar_logo = getSidebarLogo();
-
   return (
     <div className="topbar_logo_wrap" title="Munich Quantum Portal">
       <motion.div
@@ -16,11 +12,7 @@ const NavbarHeader = () => {
         animate={{ opacity: 1, width: 'auto' }}
         transition={{ duration: 0.2 }}
       >
-        <img
-          src={process.env.PUBLIC_URL + '/user_logos/lrz_wortbild_square.jpeg'}
-          className="topbar_logo_img"
-          alt="LRZ"
-        />
+        <img src={lrzSidebarLogo} className="topbar_logo_img" alt="LRZ" />
         <span className="logo_text"></span>
       </motion.div>
     </div>
