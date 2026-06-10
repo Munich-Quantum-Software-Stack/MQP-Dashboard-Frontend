@@ -1,26 +1,9 @@
-/**
- * GrafanaPanel.js
- *
- * Renders a live Grafana iframe panel when grafanaPanelRef is set and GRAFANA_URL is configured.
- * Falls back to a LiveValueFallback sparkline after GRACE_MS if the iframe does not signal
- * success, or immediately when grafanaPanelRef is null / GRAFANA_URL is blank.
- *
- * Cross-origin constraint: we cannot read iframe content, so "success" is declared when
- * GRACE_MS elapses after onLoad (optimistically showing the iframe, since Grafana renders
- * cross-origin and we cannot inspect its content).
- */
-
 import React, { useState, useEffect, useRef } from 'react';
 import { buildPanelUrl } from '@components/Pages/Telemetry/grafanaConfig';
 import { getConfig } from '@components/Pages/Telemetry/runtimeConfig';
 import { parseSensorValue } from '@components/Pages/Telemetry/telemetryService';
 
-// How long to wait after onLoad before declaring success and showing the iframe.
 const GRACE_MS = 3000;
-
-// ---------------------------------------------------------------------------
-// Skeleton loader — shown while the iframe is loading
-// ---------------------------------------------------------------------------
 
 const PanelSkeleton = ({ darkmode }) => (
   <div
@@ -38,10 +21,6 @@ const PanelSkeleton = ({ darkmode }) => (
     aria-label="Loading panel…"
   />
 );
-
-// ---------------------------------------------------------------------------
-// LiveValueFallback — sparkline built from the sensor's current value
-// ---------------------------------------------------------------------------
 
 function LiveValueFallback({ sensor, darkmode }) {
   const { num, unit } = parseSensorValue(sensor?.value || '0');
@@ -143,9 +122,6 @@ const GrafanaPanel = ({ sensor, from, to, isDarkMode }) => {
   const theme = isDarkMode ? 'dark' : 'light';
   const url = buildPanelUrl(sensor?.grafanaPanelRef, from, to, theme);
 
-  // 'loading' → iframe mounted, waiting for onLoad + grace period
-  // 'grafana'  → show iframe (optimistic success after GRACE_MS)
-  // 'fallback' → no url or GRAFANA_URL; show LiveValueFallback
   const [phase, setPhase] = useState(() => (url && GRAFANA_URL ? 'loading' : 'fallback'));
   const timerRef = useRef(null);
 
@@ -161,8 +137,6 @@ const GrafanaPanel = ({ sensor, from, to, isDarkMode }) => {
   }, [url, GRAFANA_URL]);
 
   const handleLoad = () => {
-    // After onLoad, wait GRACE_MS then optimistically show the iframe.
-    // We cannot inspect cross-origin content to verify successful render.
     timerRef.current = setTimeout(() => setPhase('grafana'), GRACE_MS);
   };
 

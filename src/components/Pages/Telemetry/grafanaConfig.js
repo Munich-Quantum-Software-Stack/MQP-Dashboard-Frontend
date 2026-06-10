@@ -1,9 +1,5 @@
 import { getConfig } from './runtimeConfig';
 
-// ---------------------------------------------------------------------------
-// Shared constants and helpers
-// ---------------------------------------------------------------------------
-
 const GRAFANA_ORG_ID = '1';
 const GRAFANA_TIMEZONE = 'browser';
 
@@ -13,7 +9,6 @@ function toMs(v) {
   return v instanceof Date ? v.getTime() : typeof v === 'number' ? v : new Date(v).getTime();
 }
 
-/** Resolve the URL slug from a panelRef — explicit slug or UID with '-telemetry' stripped. */
 function getPanelSlug(panelRef) {
   return panelRef.slug || panelRef.dashboardUid.replace(/-telemetry$/, '');
 }
@@ -22,10 +17,6 @@ function getPanelSlug(panelRef) {
 const ROOM_DASHBOARDS = new Map([
   ['warm-lab', { uid: '55b99d46-9e7d-4b1c-b5dc-592592f60031', slug: 'warmlab' }],
 ]);
-
-// ---------------------------------------------------------------------------
-// Exported URL builders
-// ---------------------------------------------------------------------------
 
 /**
  * @param {{ dashboardUid: string, slug?: string, panelId: number } | null} panelRef

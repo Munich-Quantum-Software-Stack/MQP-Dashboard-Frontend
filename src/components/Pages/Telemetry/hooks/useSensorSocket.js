@@ -1,33 +1,3 @@
-/**
- * useSensorSocket.js
- *
- * Singleton WebSocket multiplexer for live sensor data.
- *
- * Problem solved
- * ──────────────
- * The naïve approach opens one WebSocket per sensor card. A room with 20
- * sensors would open 20 concurrent connections to the same server — most
- * servers reject this or throttle it.
- *
- * This module maintains a SINGLE WebSocket per WebSocket URL. All sensor
- * subscriptions sharing that URL share the same connection. The server is
- * expected to multiplex messages for all sensors over the one socket.
- *
- * Wire format (server → client JSON frames)
- * ──────────────────────────────────────────
- *   { sensorId: "temp-floor-1", value: 22.4, unit: "°C" }
- *
- * If your server uses a different shape, adjust the `onmessage` handler below.
- *
- * Usage
- * ─────
- *   const unsubscribe = subscribeToSensor('temp-floor-1', (msg) => {
- *     // msg = { value: number, unit: string }
- *   }, wsUrl);
- *   // call unsubscribe() in useEffect cleanup
- */
-
-// Map<wsUrl, WebSocket>  — one socket per URL across the entire app lifetime
 const _sockets = new Map();
 
 // Map<wsUrl, Map<sensorId, Set<callback>>>
@@ -117,9 +87,7 @@ export function subscribeToSensor(sensorId, callback, wsUrl) {
   // Ensure the socket is running
   try {
     getOrCreateSocket(wsUrl);
-  } catch {
-    // Bad URL — subscriber will simply never receive messages
-  }
+  } catch {}
 
   return function unsubscribe() {
     const sm = _subscribers.get(wsUrl);
@@ -130,7 +98,6 @@ export function subscribeToSensor(sensorId, callback, wsUrl) {
     if (cbs.size === 0) {
       sm.delete(sensorId);
     }
-    // Close the shared socket only when NO sensors are subscribed on this URL
     if (sm.size === 0) {
       _subscribers.delete(wsUrl);
       const ws = _sockets.get(wsUrl);

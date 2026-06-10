@@ -41,15 +41,13 @@
       justify-content: flex-start;
       align-items: center;
 
-      img {
-        height: 60px;
-        width: auto;
-
-        &.topbar_logo_img {
-          width: auto;
-        }
-
-        margin-right: 15px;
+      .topbar_logo_img {
+        display: block;
+        width: 72px;
+        height: auto;
+        border: none;
+        background: transparent;
+        margin: 0;
       }
 
       .logo_text {

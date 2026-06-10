@@ -1,16 +1,3 @@
-/**
- * useLiveSensor.js
- *
- * Returns a live-updated sensor value.
- *
- * • WS_URL unset  → mock: polls with setInterval, incrementing a seeded
- *   random walk around the sensor's static initial value.
- * • WS_URL set    → uses the singleton multiplexer from useSensorSocket.js
- *   (one shared WebSocket for ALL sensors, not one per sensor card).
- *
- * Zero component changes required when swapping mock → real.
- */
-
 import { useState, useEffect, useRef } from 'react';
 import { getConfig } from '@components/Pages/Telemetry/runtimeConfig';
 import { parseSensorValue } from '@components/Pages/Telemetry/telemetryService';

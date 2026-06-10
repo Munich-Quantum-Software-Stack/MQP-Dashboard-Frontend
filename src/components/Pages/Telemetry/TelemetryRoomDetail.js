@@ -716,35 +716,6 @@ const TelemetryRoomDetail = () => {
               <span style={{ fontSize: '12px', color: darkmode ? '#9ca3af' : '#6b7280' }}>
                 Last updated: {new Date().toLocaleTimeString()}
               </span>
-              {/*
-              <button
-                className={`btn-open-grafana${!panelViewUrl ? ' btn-disabled' : ''}`}
-                disabled={!panelViewUrl}
-                title={
-                  panelViewUrl
-                    ? `Open ${selectedSensor?.name} panel in Grafana`
-                    : 'No Grafana panel configured for this sensor'
-                }
-                onClick={() => {
-                  if (panelViewUrl) {
-                    window.open(panelViewUrl, '_blank', 'noopener,noreferrer');
-                  }
-                }}
-                style={{
-                  padding: '8px 16px',
-                  borderRadius: '6px',
-                  background: panelViewUrl ? '#3b82f6' : '#9ca3af',
-                  color: '#ffffff',
-                  border: 'none',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  cursor: panelViewUrl ? 'pointer' : 'not-allowed',
-                  opacity: panelViewUrl ? 1 : 0.6,
-                }}
-              >
-                Open in Grafana ↗
-              </button>
-              */}
             </div>
           </div>
         </div>

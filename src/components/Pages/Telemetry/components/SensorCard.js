@@ -1,10 +1,3 @@
-/**
- * SensorCard.js
- *
- * Individual sensor card that shows the sensor name, a live-updating value
- * (via useLiveSensor), and a live badge. Clicking opens the graph modal.
- */
-
 import React from 'react';
 import { useLiveSensor } from '@components/Pages/Telemetry/hooks/useLiveSensor';
 

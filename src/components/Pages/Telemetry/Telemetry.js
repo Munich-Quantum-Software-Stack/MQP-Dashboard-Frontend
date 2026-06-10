@@ -16,7 +16,7 @@ const Telemetry = () => {
   const rooms = [
     {
       id: 'warm-lab',
-      name: 'Warm Lab (E.U.020)',
+      name: 'Warm Lab',
       description: 'Environment monitoring for the warm laboratory area',
       color: '#f59e0b',
       gradient: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)',
@@ -39,7 +39,7 @@ const Telemetry = () => {
     },
     {
       id: 'cold-lab',
-      name: 'Cold Lab (E.U.044)',
+      name: 'Cold Lab',
       description: 'Environment monitoring for the cryogenic laboratory area',
       disabled: true,
       color: '#3b82f6',
@@ -68,7 +68,7 @@ const Telemetry = () => {
     },
     {
       id: 'compute-cube',
-      name: 'Compute Cube (NSR1)',
+      name: 'Compute Cube',
       description: 'Environment monitoring for the quantum computing hardware',
       disabled: true,
       color: '#6b7280',

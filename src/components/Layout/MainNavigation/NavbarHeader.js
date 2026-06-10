@@ -17,11 +17,9 @@ const NavbarHeader = () => {
         transition={{ duration: 0.2 }}
       >
         <img
-          src={process.env.PUBLIC_URL + '/user_logos/UserTopSidebarLogo.png'}
+          src={process.env.PUBLIC_URL + '/user_logos/lrz_wortbild_square.jpeg'}
           className="topbar_logo_img"
-          alt="Logo"
-          width="72px"
-          height="72px"
+          alt="LRZ"
         />
         <span className="logo_text"></span>
       </motion.div>

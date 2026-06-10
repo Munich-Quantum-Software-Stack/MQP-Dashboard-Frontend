@@ -9,11 +9,9 @@ function LoginFormHeader() {
     <div>
       <div className="login_logo">
         <img
-          src={process.env.PUBLIC_URL + '/user_logos/UserLandingPageLogo.png'}
+          src={process.env.PUBLIC_URL + '/user_logos/lrz_landing_logo.jpeg'}
           className="header_logo_img"
-          alt="Logo"
-          width="100%"
-          height="auto"
+          alt="LRZ"
         />
       </div>
       <div className="my-3 form_text ">
