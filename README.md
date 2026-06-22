@@ -151,8 +151,6 @@ PRs should include:
 
 ### Coding Standards
 
-[Coding standards](./config/linting/.eslintrc.js)
-
 #### JavaScript / React
 
 - Follow ESLint rules from `react-app`, `security/recommended`,
@@ -172,12 +170,6 @@ PRs should include:
 Thank you for your interest in contributing to this project.
 
 Please refer to [CONTRIBUTING.md](./CONTRIBUTING.md) for the full contribution workflow.
-
-## 📚 Project Links
-
-- Codebase: [MQP Dashboard Frontend](https://github.com/Munich-Quantum-Software-Stack/MQP-Dashboard-Frontend)
-- Contributing: [CONTRIBUTING.md](./CONTRIBUTING.md)
-- Code of Conduct: [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)
 
 ## 📬 Contact
 
