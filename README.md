@@ -1,5 +1,21 @@
-<!-- markdownlint-disable-next-line MD041 -->
-![MQSS Logo](./src/assets/images/logo-mqss-light.svg)
+<!-- markdownlint-disable MD041 -->
+<!-- markdownlint-disable MD033 -->
+<p align="center">
+  <picture>
+    <source
+      media="(prefers-color-scheme: dark)"
+      srcset="https://raw.githubusercontent.com/Munich-Quantum-Software-Stack/QDMI/develop/docs/_static/mqss_logo_dark.svg"
+      width="20%"
+    >
+    <img
+      src="https://raw.githubusercontent.com/Munich-Quantum-Software-Stack/QDMI/develop/docs/_static/mqss_logo.svg"
+      width="20%"
+      alt="MQSS Logo"
+    >
+  </picture>
+</p>
+<!-- markdownlint-enable MD033 -->
+<!-- markdownlint-enable MD041 -->
 
 # MQP Dashboard Frontend
 
