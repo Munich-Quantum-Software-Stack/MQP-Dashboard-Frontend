@@ -1,8 +1,11 @@
+<!-- markdownlint-disable-next-line MD041 -->
+![MQSS Logo](./src/assets/images/logo-mqss-light.svg)
+
 # MQP Dashboard Frontend
 
+[![Documentation](https://img.shields.io/badge/DOCUMENTATION-0984CC?style=for-the-badge&logo=readthedocs&logoColor=white)](https://munich-quantum-software-stack.github.io/MQP-Dashboard-Frontend/)
 [![CI/CD Pipeline](https://github.com/Munich-Quantum-Software-Stack/MQP-Dashboard-Frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/Munich-Quantum-Software-Stack/MQP-Dashboard-Frontend/actions/workflows/ci.yml)
 ![Coverage](./.github/badges/coverage.svg)
-[![Documentation](https://img.shields.io/badge/DOCUMENTATION-0984CC?style=for-the-badge&logo=readthedocs&logoColor=white)](https://munich-quantum-software-stack.github.io/MQP-Dashboard-Frontend/)
 
 The **MQP Dashboard Frontend** is the React-based web interface for the MQSS
 Platform. It provides users with a unified view of quantum resources,
