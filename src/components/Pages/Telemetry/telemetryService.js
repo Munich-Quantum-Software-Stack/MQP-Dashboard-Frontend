@@ -511,15 +511,22 @@ function generateDummyTimeseries(sensorId, from, to, points = 24) {
  */
 export async function getRoomData(roomId) {
   const { TELEMETRY_API_URL } = getConfig();
+  const mock = MOCK_ROOMS[roomId];
+  if (!mock) throw new Error(`Room "${roomId}" not found`);
+
   if (!TELEMETRY_API_URL) {
-    const room = MOCK_ROOMS[roomId];
-    if (!room) throw new Error(`Room "${roomId}" not found`);
-    return room;
+    return mock;
   }
 
-  const res = await fetch(`${TELEMETRY_API_URL}/rooms/${roomId}`);
-  if (!res.ok) throw new Error(`Failed to fetch room: ${res.status}`);
-  return res.json();
+  try {
+    const res = await fetch(`${TELEMETRY_API_URL}/rooms/${roomId}`);
+    if (res.ok) return res.json();
+  } catch {
+    // network error — fall through to mock
+  }
+
+  // Backend does not expose a /rooms/ endpoint yet; use static config.
+  return mock;
 }
 
 /**
