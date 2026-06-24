@@ -1,5 +1,5 @@
 {
-  "TELEMETRY_API_URL": "",
+  "TELEMETRY_API_URL": "https://portal-test.quantum.lrz.de:5000",
   "GRAFANA_URL": "https://portal-telemetry.quantum.lrz.de:3000",
   "WS_URL": "",
   "GRAFANA_PANEL_TIMEOUT_MS": 10000
