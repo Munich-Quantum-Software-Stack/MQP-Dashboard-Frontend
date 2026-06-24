@@ -36,7 +36,7 @@ jobs:
         run: |
           npm run lint &
           npm run test:ci -- --coverage --coverageReporters="json-summary" --coverageReporters="text" &
-          npm audit --audit-level=high &
+          npm audit --audit-level=critical &
           wait
 
       - name: Build

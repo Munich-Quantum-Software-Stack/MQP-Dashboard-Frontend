@@ -353,6 +353,134 @@
     }
   }
 }
+
+.telemetry_export_section {
+  margin: 8px 0 16px 0;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #f9fafb;
+
+  &.dark {
+    background: #111827;
+    border-color: #374151;
+
+    .telemetry_export_title,
+    .telemetry_export_info,
+    .telemetry_export_fields label,
+    .telemetry_export_success {
+      color: #e5e7eb;
+    }
+
+    .telemetry_export_fields select,
+    .telemetry_export_fields input {
+      background: #1f2937;
+      color: #f3f4f6;
+      border-color: #4b5563;
+    }
+  }
+}
+
+.telemetry_export_title_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.telemetry_export_title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.telemetry_export_refresh_btn {
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #1f2937;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.telemetry_export_fields {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 8px 10px;
+  align-items: center;
+  margin-bottom: 10px;
+
+  label {
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  select,
+  input {
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 6px 8px;
+    font-size: 0.84rem;
+    color: #1f2937;
+    background: #ffffff;
+  }
+}
+
+.telemetry_export_multiselect {
+  min-height: 80px;
+}
+
+.telemetry_export_info {
+  margin: 0 0 10px 0;
+  font-size: 0.82rem;
+  color: #4b5563;
+}
+
+.telemetry_export_actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.telemetry_export_action_btn {
+  border: none;
+  background: #009ee3;
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.secondary {
+    background: #1f2937;
+  }
+}
+
+.telemetry_export_success {
+  margin: 8px 0 0 0;
+  color: #065f46;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.telemetry_export_error {
+  margin: 8px 0 0 0;
+  color: #b91c1c;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
 .room_grafana_iframe_wrapper {
   position: relative;
   width: 100%;

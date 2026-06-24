@@ -6,7 +6,14 @@ import PaneCard from '@components/UI/Card/PaneCard';
 import ErrorBlock from '@components/UI/MessageBox/ErrorBlock';
 import GrafanaPanel from './components/GrafanaPanel';
 import ChipVisualisation from '@components/Shared/ChipVisualisation/ChipVisualisation';
-import { getRoomData } from './telemetryService';
+import {
+  clearTelemetrySensorsCache,
+  downloadTelemetryExportFile,
+  getRoomData,
+  getTelemetrySensors,
+  requestTelemetryExport,
+  VALID_GROUP_BY_BUCKETS,
+} from './telemetryService';
 import { buildPanelViewUrl } from '@components/Pages/Telemetry/grafanaConfig';
 import './Telemetry.scss';
 import '@components/Pages/Resources/Resources.scss';
@@ -53,6 +60,19 @@ function flattenSensorsWithCategory(environmentSensors) {
     }
   }
   return result;
+}
+
+function formatBytes(bytes) {
+  if (!Number.isFinite(bytes) || bytes < 0) return 'Unknown size';
+  if (bytes < 1024) return `${bytes} B`;
+  const units = ['KB', 'MB', 'GB', 'TB'];
+  let value = bytes / 1024;
+  let idx = 0;
+  while (value >= 1024 && idx < units.length - 1) {
+    value /= 1024;
+    idx += 1;
+  }
+  return `${value.toFixed(value < 10 ? 2 : 1)} ${units[idx]}`;
 }
 
 // ── Sub-component: RoomResourceCard ─────────────────────────────────────────
@@ -383,6 +403,18 @@ const RoomMetadataPanel = ({ device, darkmode, compressed }) => {
 // ── Sub-component: RoomGrafanaSensorWidget ────────────────────────────────────
 const RoomGrafanaSensorWidget = ({ environmentSensors, darkmode }) => {
   const [activeSensor, setActiveSensor] = useState(null);
+  const [telemetrySensorsState, setTelemetrySensorsState] = useState({
+    status: 'idle',
+    data: [],
+    error: null,
+  });
+  const [selectedMeasurement, setSelectedMeasurement] = useState('');
+  const [selectedMeasurementSensors, setSelectedMeasurementSensors] = useState([]);
+  const [groupBy, setGroupBy] = useState('1h');
+  const [fromDateTime, setFromDateTime] = useState('');
+  const [toDateTime, setToDateTime] = useState('');
+  const [queryState, setQueryState] = useState({ status: 'idle', error: null, file: null });
+  const [downloadState, setDownloadState] = useState({ status: 'idle', error: null });
 
   const flattenedSensors = useMemo(
     () => flattenSensorsWithCategory(environmentSensors),
@@ -395,9 +427,153 @@ const RoomGrafanaSensorWidget = ({ environmentSensors, darkmode }) => {
     }
   }, [flattenedSensors]);
 
+  useEffect(() => {
+    const now = new Date();
+    const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+    setFromDateTime(oneDayAgo.toISOString().slice(0, 16));
+    setToDateTime(now.toISOString().slice(0, 16));
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadTelemetrySensors = async () => {
+      setTelemetrySensorsState({ status: 'loading', data: [], error: null });
+      try {
+        const discovered = await getTelemetrySensors();
+        if (cancelled) return;
+        setTelemetrySensorsState({ status: 'ready', data: discovered, error: null });
+      } catch (err) {
+        if (cancelled) return;
+        setTelemetrySensorsState({
+          status: 'error',
+          data: [],
+          error: err?.message || 'Failed to discover telemetry sensors',
+        });
+      }
+    };
+
+    loadTelemetrySensors();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (telemetrySensorsState.status !== 'ready' || telemetrySensorsState.data.length === 0) {
+      setSelectedMeasurement('');
+      setSelectedMeasurementSensors([]);
+      return;
+    }
+
+    const exists = telemetrySensorsState.data.some((m) => m.measurement === selectedMeasurement);
+    const fallbackMeasurement = exists
+      ? selectedMeasurement
+      : telemetrySensorsState.data[0].measurement;
+    setSelectedMeasurement(fallbackMeasurement);
+
+    const selected = telemetrySensorsState.data.find((m) => m.measurement === fallbackMeasurement);
+    const availableSensors = selected?.sensors || [];
+    setSelectedMeasurementSensors((prev) =>
+      prev.length ? prev.filter((sensor) => availableSensors.includes(sensor)) : availableSensors,
+    );
+  }, [telemetrySensorsState, selectedMeasurement]);
+
   const handleSensorChange = (e) => {
     const found = flattenedSensors.find((s) => s.id === e.target.value);
     if (found) setActiveSensor(found);
+  };
+
+  const handleMeasurementChange = (e) => {
+    const measurementName = e.target.value;
+    setSelectedMeasurement(measurementName);
+    const selected = telemetrySensorsState.data.find((m) => m.measurement === measurementName);
+    setSelectedMeasurementSensors(selected?.sensors || []);
+    setQueryState({ status: 'idle', error: null, file: null });
+    setDownloadState({ status: 'idle', error: null });
+  };
+
+  const handleMeasurementSensorsChange = (e) => {
+    const values = Array.from(e.target.selectedOptions).map((option) => option.value);
+    setSelectedMeasurementSensors(values);
+    setQueryState({ status: 'idle', error: null, file: null });
+    setDownloadState({ status: 'idle', error: null });
+  };
+
+  const handleSubmitTelemetryQuery = async () => {
+    const fromTimestamp = new Date(fromDateTime).getTime();
+    const toTimestamp = new Date(toDateTime).getTime();
+
+    if (!selectedMeasurement) {
+      setQueryState({ status: 'error', error: 'Select a measurement.', file: null });
+      return;
+    }
+
+    if (!selectedMeasurementSensors.length) {
+      setQueryState({ status: 'error', error: 'Select at least one sensor.', file: null });
+      return;
+    }
+
+    if (!Number.isFinite(fromTimestamp) || !Number.isFinite(toTimestamp)) {
+      setQueryState({ status: 'error', error: 'Provide a valid date range.', file: null });
+      return;
+    }
+
+    if (fromTimestamp >= toTimestamp) {
+      setQueryState({ status: 'error', error: 'Start time must be before end time.', file: null });
+      return;
+    }
+
+    setQueryState({ status: 'loading', error: null, file: null });
+    setDownloadState({ status: 'idle', error: null });
+
+    try {
+      const fileMeta = await requestTelemetryExport(
+        [{ measurement: selectedMeasurement, sensors: selectedMeasurementSensors }],
+        fromTimestamp,
+        toTimestamp,
+        groupBy,
+      );
+      if (!fileMeta.filename && fileMeta.filesize === 0) {
+        setQueryState({
+          status: 'ready',
+          error: null,
+          file: fileMeta,
+        });
+        return;
+      }
+
+      setQueryState({ status: 'ready', error: null, file: fileMeta });
+    } catch (err) {
+      setQueryState({
+        status: 'error',
+        error: err?.message || 'Telemetry query failed.',
+        file: null,
+      });
+    }
+  };
+
+  const handleDownloadTelemetryFile = async () => {
+    if (!queryState.file?.filename) return;
+
+    setDownloadState({ status: 'loading', error: null });
+    try {
+      const blob = await downloadTelemetryExportFile(queryState.file.filename);
+      const href = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = href;
+      anchor.download = queryState.file.filename;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(href);
+      setDownloadState({ status: 'ready', error: null });
+    } catch (err) {
+      setDownloadState({
+        status: 'error',
+        error: err?.message || 'Failed to download telemetry file.',
+      });
+    }
   };
 
   if (!flattenedSensors.length) {
@@ -421,6 +597,11 @@ const RoomGrafanaSensorWidget = ({ environmentSensors, darkmode }) => {
   const from = new Date('2026-01-01T00:00:00Z');
   const to = new Date('2026-04-15T23:59:59Z');
 
+  const selectedMeasurementRecord =
+    telemetrySensorsState.data.find(
+      (measurement) => measurement.measurement === selectedMeasurement,
+    ) || null;
+
   return (
     <div className="room_grafana_sensor_widget">
       <div className="room_panel_title">Telemetry Monitoring</div>
@@ -441,6 +622,157 @@ const RoomGrafanaSensorWidget = ({ environmentSensors, darkmode }) => {
             </optgroup>
           ))}
         </select>
+      </div>
+
+      <div className={`telemetry_export_section${darkmode ? ' dark' : ''}`}>
+        <div className="telemetry_export_title_row">
+          <h4 className="telemetry_export_title">Backend Telemetry Export</h4>
+          <button
+            type="button"
+            className="telemetry_export_refresh_btn"
+            onClick={async () => {
+              clearTelemetrySensorsCache();
+              setTelemetrySensorsState({ status: 'loading', data: [], error: null });
+              setQueryState({ status: 'idle', error: null, file: null });
+              setDownloadState({ status: 'idle', error: null });
+              try {
+                const discovered = await getTelemetrySensors();
+                setTelemetrySensorsState({ status: 'ready', data: discovered, error: null });
+              } catch (err) {
+                setTelemetrySensorsState({
+                  status: 'error',
+                  data: [],
+                  error: err?.message || 'Failed to discover telemetry sensors',
+                });
+              }
+            }}
+          >
+            Refresh sensors
+          </button>
+        </div>
+
+        {telemetrySensorsState.status === 'loading' && (
+          <p className="telemetry_export_info">Loading available measurements and sensors...</p>
+        )}
+
+        {telemetrySensorsState.status === 'error' && (
+          <p className="telemetry_export_error">{telemetrySensorsState.error}</p>
+        )}
+
+        {telemetrySensorsState.status === 'ready' && telemetrySensorsState.data.length > 0 && (
+          <>
+            <div className="telemetry_export_fields">
+              <label htmlFor="telemetry-measurement-select">Measurement</label>
+              <select
+                id="telemetry-measurement-select"
+                value={selectedMeasurement}
+                onChange={handleMeasurementChange}
+              >
+                {telemetrySensorsState.data.map((measurement) => (
+                  <option key={measurement.measurement} value={measurement.measurement}>
+                    {measurement.measurement}
+                  </option>
+                ))}
+              </select>
+
+              <label htmlFor="telemetry-sensor-select">Sensors</label>
+              <select
+                id="telemetry-sensor-select"
+                multiple
+                value={selectedMeasurementSensors}
+                onChange={handleMeasurementSensorsChange}
+                className="telemetry_export_multiselect"
+              >
+                {(selectedMeasurementRecord?.sensors || []).map((sensorName) => (
+                  <option key={sensorName} value={sensorName}>
+                    {sensorName}
+                  </option>
+                ))}
+              </select>
+
+              <label htmlFor="telemetry-from-input">From</label>
+              <input
+                id="telemetry-from-input"
+                type="datetime-local"
+                value={fromDateTime}
+                onChange={(e) => setFromDateTime(e.target.value)}
+              />
+
+              <label htmlFor="telemetry-to-input">To</label>
+              <input
+                id="telemetry-to-input"
+                type="datetime-local"
+                value={toDateTime}
+                onChange={(e) => setToDateTime(e.target.value)}
+              />
+
+              <label htmlFor="telemetry-groupby-select">Group by</label>
+              <select
+                id="telemetry-groupby-select"
+                value={groupBy}
+                onChange={(e) => setGroupBy(e.target.value)}
+              >
+                {VALID_GROUP_BY_BUCKETS.map((bucket) => (
+                  <option key={bucket} value={bucket}>
+                    {bucket}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <p className="telemetry_export_info">
+              Selected: {selectedMeasurement || 'None'} / {selectedMeasurementSensors.length}{' '}
+              sensors
+            </p>
+
+            <div className="telemetry_export_actions">
+              <button
+                type="button"
+                className="telemetry_export_action_btn"
+                onClick={handleSubmitTelemetryQuery}
+                disabled={
+                  queryState.status === 'loading' || telemetrySensorsState.status !== 'ready'
+                }
+              >
+                {queryState.status === 'loading' ? 'Preparing export...' : 'Prepare export'}
+              </button>
+
+              <button
+                type="button"
+                className="telemetry_export_action_btn secondary"
+                onClick={handleDownloadTelemetryFile}
+                disabled={!queryState.file?.filename || downloadState.status === 'loading'}
+              >
+                {downloadState.status === 'loading' ? 'Downloading...' : 'Download .json.gz'}
+              </button>
+            </div>
+
+            {queryState.file?.filename && (
+              <p className="telemetry_export_success">
+                Export ready: {queryState.file.filename} ({formatBytes(queryState.file.filesize)})
+              </p>
+            )}
+
+            {queryState.file && !queryState.file.filename && queryState.file.filesize === 0 && (
+              <p className="telemetry_export_info">
+                No telemetry data available for this selection. Try a wider time range or different
+                sensors.
+              </p>
+            )}
+
+            {queryState.status === 'error' && (
+              <p className="telemetry_export_error">{queryState.error}</p>
+            )}
+
+            {downloadState.status === 'ready' && (
+              <p className="telemetry_export_success">Download started successfully.</p>
+            )}
+
+            {downloadState.status === 'error' && (
+              <p className="telemetry_export_error">{downloadState.error}</p>
+            )}
+          </>
+        )}
       </div>
 
       {/* GrafanaPanel handles loading skeleton, iframe, and LiveValueFallback automatically. */}

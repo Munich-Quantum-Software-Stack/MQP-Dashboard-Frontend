@@ -32,10 +32,7 @@ export async function loadRuntimeConfig() {
   if (!_config.WS_URL) {
     _config.WS_URL = process.env.REACT_APP_WS_URL || '';
   }
-
-  // If the app is served over HTTPS, upgrade any http:// service URLs to
-  // https:// so the browser doesn't block them as Mixed Content.
-  if (typeof window !== 'undefined' && window.location.protocol === 'https:') {
+  if (typeof window !== 'undefined' && window.location && window.location.protocol === 'https:') {
     ['GRAFANA_URL', 'TELEMETRY_API_URL', 'WS_URL'].forEach((key) => {
       if (_config[key] && _config[key].startsWith('http:')) {
         _config[key] = _config[key].replace(/^http:/, 'https:');
