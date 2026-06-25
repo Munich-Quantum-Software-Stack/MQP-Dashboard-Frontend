@@ -92,6 +92,9 @@ ul.mainNav {
         &.faq_icon {
           @include bg_mask_image('../../../assets/icons/faq_icon.svg');
         }
+        &.telemetry_icon {
+          @include bg_mask_image('../../../assets/icons/timer_icon.svg');
+        }
       }
 
       &:hover,

@@ -107,7 +107,7 @@ const MaintenanceResourceItem = (props) => {
             Status:
           </div>
 
-          {props.status && (
+          {props.status === 'Offline' ? (
             <div className=" status_icon_wrap d-flex justify-content-start">
               <div className="status_icon">
                 <span className=" offline_icon"></span>
@@ -116,8 +116,7 @@ const MaintenanceResourceItem = (props) => {
                 Offline
               </div>
             </div>
-          )}
-          {!props.status && (
+          ) : (
             <div className=" status_icon_wrap d-flex justify-content-start">
               <div className="status_icon">
                 <span className=" online_icon"></span>

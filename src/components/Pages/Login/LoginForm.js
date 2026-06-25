@@ -115,8 +115,7 @@ function LoginForm() {
             }
             */
     } catch (error) {
-      //setValidationError(error.message);
-      setValidationError('Internal Server Error! Please try again later.');
+      setValidationError(error?.message || 'Internal Server Error! Please try again later.');
       setIsSubmitting(false);
     }
   };
