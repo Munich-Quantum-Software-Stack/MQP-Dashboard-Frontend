@@ -60,6 +60,9 @@
 .room_metadata_panel {
   @extend %room_detail_panel;
 }
+.room_telemetry_export_panel {
+  @extend %room_detail_panel;
+}
 .room_grafana_sensor_widget {
   @extend %room_detail_panel;
 }
@@ -81,6 +84,9 @@
   border-top: 3px solid #009ee3;
 }
 .room_maintenance_calendar {
+  border-top: 3px solid #009ee3;
+}
+.room_telemetry_export_panel {
   border-top: 3px solid #009ee3;
 }
 .room_grafana_sensor_widget {
@@ -359,10 +365,10 @@
   padding: 12px;
   border: 1px solid #e5e7eb;
   border-radius: 10px;
-  background: #f9fafb;
+  background: #ffffff;
 
   &.dark {
-    background: #111827;
+    background: #000000;
     border-color: #374151;
 
     .telemetry_export_title,
@@ -433,6 +439,63 @@
 
 .telemetry_export_multiselect {
   min-height: 80px;
+}
+
+.telemetry_export_panel {
+  margin: 0;
+  border-top: 3px solid #009ee3;
+}
+
+.telemetry_export_sensor_selector {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.telemetry_export_sensor_actions {
+  display: flex;
+  gap: 8px;
+}
+
+.telemetry_export_small_btn {
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #1f2937;
+  border-radius: 7px;
+  padding: 4px 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.telemetry_export_sensor_checkbox_list {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  min-height: 92px;
+  max-height: 180px;
+  overflow-y: auto;
+  padding: 8px;
+  display: grid;
+  gap: 6px;
+}
+
+.telemetry_export_sensor_checkbox_item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #1f2937;
+  font-size: 0.84rem;
+
+  input {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+  }
+
+  span {
+    line-height: 1.2;
+  }
 }
 
 .telemetry_export_info {
@@ -519,6 +582,7 @@
 // ── Dark mode overrides ──────────────────────────────────────────────────
 .dark_bg {
   .room_maintenance_calendar,
+  .room_telemetry_export_panel,
   .room_chip_layout_panel,
   .room_metadata_panel,
   .room_grafana_sensor_widget {
@@ -535,6 +599,21 @@
         color: #d1d5db;
       }
     }
+  }
+
+  .telemetry_export_small_btn {
+    background: #1f2937;
+    border-color: #4b5563;
+    color: #f3f4f6;
+  }
+
+  .telemetry_export_sensor_checkbox_list {
+    background: #000000;
+    border-color: #4b5563;
+  }
+
+  .telemetry_export_sensor_checkbox_item {
+    color: #f3f4f6;
   }
   .room_metadata_coming_soon_overlay {
     background: rgba(0, 0, 0, 0.6);

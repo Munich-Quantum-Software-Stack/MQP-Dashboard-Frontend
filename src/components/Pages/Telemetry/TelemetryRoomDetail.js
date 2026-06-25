@@ -62,19 +62,6 @@ function flattenSensorsWithCategory(environmentSensors) {
   return result;
 }
 
-function formatBytes(bytes) {
-  if (!Number.isFinite(bytes) || bytes < 0) return 'Unknown size';
-  if (bytes < 1024) return `${bytes} B`;
-  const units = ['KB', 'MB', 'GB', 'TB'];
-  let value = bytes / 1024;
-  let idx = 0;
-  while (value >= 1024 && idx < units.length - 1) {
-    value /= 1024;
-    idx += 1;
-  }
-  return `${value.toFixed(value < 10 ? 2 : 1)} ${units[idx]}`;
-}
-
 // ── Sub-component: RoomResourceCard ─────────────────────────────────────────
 const RoomResourceCard = ({ device, darkmode, fs }) => {
   const resource_name_fs = +fs * 1.5;
@@ -182,6 +169,7 @@ const MONTH_NAMES = [
   'December',
 ];
 
+// eslint-disable-next-line no-unused-vars
 const RoomMaintenanceCalendar = ({ darkmode, events = [] }) => {
   const today = new Date();
   const [displayDate, setDisplayDate] = useState(
@@ -400,9 +388,8 @@ const RoomMetadataPanel = ({ device, darkmode, compressed }) => {
   );
 };
 
-// ── Sub-component: RoomGrafanaSensorWidget ────────────────────────────────────
-const RoomGrafanaSensorWidget = ({ environmentSensors, darkmode }) => {
-  const [activeSensor, setActiveSensor] = useState(null);
+// ── Sub-component: RoomTelemetryExportPanel ─────────────────────────────────
+const RoomTelemetryExportPanel = ({ darkmode }) => {
   const [telemetrySensorsState, setTelemetrySensorsState] = useState({
     status: 'idle',
     data: [],
@@ -413,19 +400,7 @@ const RoomGrafanaSensorWidget = ({ environmentSensors, darkmode }) => {
   const [groupBy, setGroupBy] = useState('1h');
   const [fromDateTime, setFromDateTime] = useState('');
   const [toDateTime, setToDateTime] = useState('');
-  const [queryState, setQueryState] = useState({ status: 'idle', error: null, file: null });
   const [downloadState, setDownloadState] = useState({ status: 'idle', error: null });
-
-  const flattenedSensors = useMemo(
-    () => flattenSensorsWithCategory(environmentSensors),
-    [environmentSensors],
-  );
-
-  useEffect(() => {
-    if (flattenedSensors.length > 0) {
-      setActiveSensor(flattenedSensors[0]);
-    }
-  }, [flattenedSensors]);
 
   useEffect(() => {
     const now = new Date();
@@ -479,53 +454,63 @@ const RoomGrafanaSensorWidget = ({ environmentSensors, darkmode }) => {
     );
   }, [telemetrySensorsState, selectedMeasurement]);
 
-  const handleSensorChange = (e) => {
-    const found = flattenedSensors.find((s) => s.id === e.target.value);
-    if (found) setActiveSensor(found);
-  };
+  const selectedMeasurementRecord =
+    telemetrySensorsState.data.find(
+      (measurement) => measurement.measurement === selectedMeasurement,
+    ) || null;
 
   const handleMeasurementChange = (e) => {
     const measurementName = e.target.value;
     setSelectedMeasurement(measurementName);
     const selected = telemetrySensorsState.data.find((m) => m.measurement === measurementName);
     setSelectedMeasurementSensors(selected?.sensors || []);
-    setQueryState({ status: 'idle', error: null, file: null });
     setDownloadState({ status: 'idle', error: null });
   };
 
-  const handleMeasurementSensorsChange = (e) => {
-    const values = Array.from(e.target.selectedOptions).map((option) => option.value);
-    setSelectedMeasurementSensors(values);
-    setQueryState({ status: 'idle', error: null, file: null });
+  const handleToggleSensor = (sensorName) => {
+    setSelectedMeasurementSensors((prev) =>
+      prev.includes(sensorName)
+        ? prev.filter((existingSensor) => existingSensor !== sensorName)
+        : [...prev, sensorName],
+    );
     setDownloadState({ status: 'idle', error: null });
   };
 
-  const handleSubmitTelemetryQuery = async () => {
+  const handleSelectAllSensors = () => {
+    setSelectedMeasurementSensors(selectedMeasurementRecord?.sensors || []);
+    setDownloadState({ status: 'idle', error: null });
+  };
+
+  const handleClearSensors = () => {
+    setSelectedMeasurementSensors([]);
+    setDownloadState({ status: 'idle', error: null });
+  };
+
+  const handleDownloadTelemetryData = async () => {
     const fromTimestamp = new Date(fromDateTime).getTime();
     const toTimestamp = new Date(toDateTime).getTime();
 
     if (!selectedMeasurement) {
-      setQueryState({ status: 'error', error: 'Select a measurement.', file: null });
+      setDownloadState({ status: 'error', error: 'Select a measurement.' });
       return;
     }
 
     if (!selectedMeasurementSensors.length) {
-      setQueryState({ status: 'error', error: 'Select at least one sensor.', file: null });
+      setDownloadState({ status: 'error', error: 'Select at least one sensor.' });
       return;
     }
 
     if (!Number.isFinite(fromTimestamp) || !Number.isFinite(toTimestamp)) {
-      setQueryState({ status: 'error', error: 'Provide a valid date range.', file: null });
+      setDownloadState({ status: 'error', error: 'Provide a valid date range.' });
       return;
     }
 
     if (fromTimestamp >= toTimestamp) {
-      setQueryState({ status: 'error', error: 'Start time must be before end time.', file: null });
+      setDownloadState({ status: 'error', error: 'Start time must be before end time.' });
       return;
     }
 
-    setQueryState({ status: 'loading', error: null, file: null });
-    setDownloadState({ status: 'idle', error: null });
+    setDownloadState({ status: 'loading', error: null });
 
     try {
       const fileMeta = await requestTelemetryExport(
@@ -534,35 +519,21 @@ const RoomGrafanaSensorWidget = ({ environmentSensors, darkmode }) => {
         toTimestamp,
         groupBy,
       );
+
       if (!fileMeta.filename && fileMeta.filesize === 0) {
-        setQueryState({
-          status: 'ready',
-          error: null,
-          file: fileMeta,
+        setDownloadState({
+          status: 'error',
+          error:
+            'No telemetry data available for this selection. Try a wider time range or different sensors.',
         });
         return;
       }
 
-      setQueryState({ status: 'ready', error: null, file: fileMeta });
-    } catch (err) {
-      setQueryState({
-        status: 'error',
-        error: err?.message || 'Telemetry query failed.',
-        file: null,
-      });
-    }
-  };
-
-  const handleDownloadTelemetryFile = async () => {
-    if (!queryState.file?.filename) return;
-
-    setDownloadState({ status: 'loading', error: null });
-    try {
-      const blob = await downloadTelemetryExportFile(queryState.file.filename);
+      const blob = await downloadTelemetryExportFile(fileMeta.filename);
       const href = URL.createObjectURL(blob);
       const anchor = document.createElement('a');
       anchor.href = href;
-      anchor.download = queryState.file.filename;
+      anchor.download = fileMeta.filename;
       document.body.appendChild(anchor);
       anchor.click();
       anchor.remove();
@@ -574,6 +545,178 @@ const RoomGrafanaSensorWidget = ({ environmentSensors, darkmode }) => {
         error: err?.message || 'Failed to download telemetry file.',
       });
     }
+  };
+
+  return (
+    <div className={`telemetry_export_section telemetry_export_panel${darkmode ? ' dark' : ''}`}>
+      <div className="telemetry_export_title_row">
+        <h4 className="telemetry_export_title">Telemetry Data</h4>
+        <button
+          type="button"
+          className="telemetry_export_refresh_btn"
+          onClick={async () => {
+            clearTelemetrySensorsCache();
+            setTelemetrySensorsState({ status: 'loading', data: [], error: null });
+            setDownloadState({ status: 'idle', error: null });
+            try {
+              const discovered = await getTelemetrySensors();
+              setTelemetrySensorsState({ status: 'ready', data: discovered, error: null });
+            } catch (err) {
+              setTelemetrySensorsState({
+                status: 'error',
+                data: [],
+                error: err?.message || 'Failed to discover telemetry sensors',
+              });
+            }
+          }}
+        >
+          Refresh sensors
+        </button>
+      </div>
+
+      {telemetrySensorsState.status === 'loading' && (
+        <p className="telemetry_export_info">Loading available measurements and sensors...</p>
+      )}
+
+      {telemetrySensorsState.status === 'error' && (
+        <p className="telemetry_export_error">{telemetrySensorsState.error}</p>
+      )}
+
+      {telemetrySensorsState.status === 'ready' && telemetrySensorsState.data.length > 0 && (
+        <>
+          <div className="telemetry_export_fields">
+            <label htmlFor="telemetry-measurement-select">Measurement</label>
+            <select
+              id="telemetry-measurement-select"
+              value={selectedMeasurement}
+              onChange={handleMeasurementChange}
+            >
+              {telemetrySensorsState.data.map((measurement) => (
+                <option key={measurement.measurement} value={measurement.measurement}>
+                  {measurement.measurement}
+                </option>
+              ))}
+            </select>
+
+            <label>Sensors</label>
+            <div className="telemetry_export_sensor_selector">
+              <div className="telemetry_export_sensor_actions">
+                <button
+                  type="button"
+                  className="telemetry_export_small_btn"
+                  onClick={handleSelectAllSensors}
+                >
+                  Select all
+                </button>
+                <button
+                  type="button"
+                  className="telemetry_export_small_btn"
+                  onClick={handleClearSensors}
+                >
+                  Clear
+                </button>
+              </div>
+              <div
+                className="telemetry_export_sensor_checkbox_list"
+                role="group"
+                aria-label="Sensors"
+              >
+                {(selectedMeasurementRecord?.sensors || []).map((sensorName) => {
+                  const checked = selectedMeasurementSensors.includes(sensorName);
+                  return (
+                    <label key={sensorName} className="telemetry_export_sensor_checkbox_item">
+                      <input
+                        type="checkbox"
+                        checked={checked}
+                        onChange={() => handleToggleSensor(sensorName)}
+                      />
+                      <span>{sensorName}</span>
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+
+            <label htmlFor="telemetry-from-input">From</label>
+            <input
+              id="telemetry-from-input"
+              type="datetime-local"
+              value={fromDateTime}
+              onChange={(e) => setFromDateTime(e.target.value)}
+            />
+
+            <label htmlFor="telemetry-to-input">To</label>
+            <input
+              id="telemetry-to-input"
+              type="datetime-local"
+              value={toDateTime}
+              onChange={(e) => setToDateTime(e.target.value)}
+            />
+
+            <label htmlFor="telemetry-groupby-select">Group by</label>
+            <select
+              id="telemetry-groupby-select"
+              value={groupBy}
+              onChange={(e) => setGroupBy(e.target.value)}
+            >
+              {VALID_GROUP_BY_BUCKETS.map((bucket) => (
+                <option key={bucket} value={bucket}>
+                  {bucket}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <p className="telemetry_export_info">
+            Selected: {selectedMeasurement || 'None'} / {selectedMeasurementSensors.length} sensors
+          </p>
+
+          <div className="telemetry_export_actions">
+            <button
+              type="button"
+              className="telemetry_export_action_btn"
+              onClick={handleDownloadTelemetryData}
+              disabled={
+                downloadState.status === 'loading' || telemetrySensorsState.status !== 'ready'
+              }
+            >
+              {downloadState.status === 'loading'
+                ? 'Downloading...'
+                : 'Download Telemetry Data (JSON)'}
+            </button>
+          </div>
+
+          {downloadState.status === 'ready' && (
+            <p className="telemetry_export_success">Download started successfully.</p>
+          )}
+
+          {downloadState.status === 'error' && (
+            <p className="telemetry_export_error">{downloadState.error}</p>
+          )}
+        </>
+      )}
+    </div>
+  );
+};
+
+// ── Sub-component: RoomGrafanaSensorWidget ────────────────────────────────────
+const RoomGrafanaSensorWidget = ({ environmentSensors, darkmode }) => {
+  const [activeSensor, setActiveSensor] = useState(null);
+
+  const flattenedSensors = useMemo(
+    () => flattenSensorsWithCategory(environmentSensors),
+    [environmentSensors],
+  );
+
+  useEffect(() => {
+    if (flattenedSensors.length > 0) {
+      setActiveSensor(flattenedSensors[0]);
+    }
+  }, [flattenedSensors]);
+
+  const handleSensorChange = (e) => {
+    const found = flattenedSensors.find((s) => s.id === e.target.value);
+    if (found) setActiveSensor(found);
   };
 
   if (!flattenedSensors.length) {
@@ -597,11 +740,6 @@ const RoomGrafanaSensorWidget = ({ environmentSensors, darkmode }) => {
   const from = new Date('2026-01-01T00:00:00Z');
   const to = new Date('2026-04-15T23:59:59Z');
 
-  const selectedMeasurementRecord =
-    telemetrySensorsState.data.find(
-      (measurement) => measurement.measurement === selectedMeasurement,
-    ) || null;
-
   return (
     <div className="room_grafana_sensor_widget">
       <div className="room_panel_title">Telemetry Monitoring</div>
@@ -622,157 +760,6 @@ const RoomGrafanaSensorWidget = ({ environmentSensors, darkmode }) => {
             </optgroup>
           ))}
         </select>
-      </div>
-
-      <div className={`telemetry_export_section${darkmode ? ' dark' : ''}`}>
-        <div className="telemetry_export_title_row">
-          <h4 className="telemetry_export_title">Backend Telemetry Export</h4>
-          <button
-            type="button"
-            className="telemetry_export_refresh_btn"
-            onClick={async () => {
-              clearTelemetrySensorsCache();
-              setTelemetrySensorsState({ status: 'loading', data: [], error: null });
-              setQueryState({ status: 'idle', error: null, file: null });
-              setDownloadState({ status: 'idle', error: null });
-              try {
-                const discovered = await getTelemetrySensors();
-                setTelemetrySensorsState({ status: 'ready', data: discovered, error: null });
-              } catch (err) {
-                setTelemetrySensorsState({
-                  status: 'error',
-                  data: [],
-                  error: err?.message || 'Failed to discover telemetry sensors',
-                });
-              }
-            }}
-          >
-            Refresh sensors
-          </button>
-        </div>
-
-        {telemetrySensorsState.status === 'loading' && (
-          <p className="telemetry_export_info">Loading available measurements and sensors...</p>
-        )}
-
-        {telemetrySensorsState.status === 'error' && (
-          <p className="telemetry_export_error">{telemetrySensorsState.error}</p>
-        )}
-
-        {telemetrySensorsState.status === 'ready' && telemetrySensorsState.data.length > 0 && (
-          <>
-            <div className="telemetry_export_fields">
-              <label htmlFor="telemetry-measurement-select">Measurement</label>
-              <select
-                id="telemetry-measurement-select"
-                value={selectedMeasurement}
-                onChange={handleMeasurementChange}
-              >
-                {telemetrySensorsState.data.map((measurement) => (
-                  <option key={measurement.measurement} value={measurement.measurement}>
-                    {measurement.measurement}
-                  </option>
-                ))}
-              </select>
-
-              <label htmlFor="telemetry-sensor-select">Sensors</label>
-              <select
-                id="telemetry-sensor-select"
-                multiple
-                value={selectedMeasurementSensors}
-                onChange={handleMeasurementSensorsChange}
-                className="telemetry_export_multiselect"
-              >
-                {(selectedMeasurementRecord?.sensors || []).map((sensorName) => (
-                  <option key={sensorName} value={sensorName}>
-                    {sensorName}
-                  </option>
-                ))}
-              </select>
-
-              <label htmlFor="telemetry-from-input">From</label>
-              <input
-                id="telemetry-from-input"
-                type="datetime-local"
-                value={fromDateTime}
-                onChange={(e) => setFromDateTime(e.target.value)}
-              />
-
-              <label htmlFor="telemetry-to-input">To</label>
-              <input
-                id="telemetry-to-input"
-                type="datetime-local"
-                value={toDateTime}
-                onChange={(e) => setToDateTime(e.target.value)}
-              />
-
-              <label htmlFor="telemetry-groupby-select">Group by</label>
-              <select
-                id="telemetry-groupby-select"
-                value={groupBy}
-                onChange={(e) => setGroupBy(e.target.value)}
-              >
-                {VALID_GROUP_BY_BUCKETS.map((bucket) => (
-                  <option key={bucket} value={bucket}>
-                    {bucket}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <p className="telemetry_export_info">
-              Selected: {selectedMeasurement || 'None'} / {selectedMeasurementSensors.length}{' '}
-              sensors
-            </p>
-
-            <div className="telemetry_export_actions">
-              <button
-                type="button"
-                className="telemetry_export_action_btn"
-                onClick={handleSubmitTelemetryQuery}
-                disabled={
-                  queryState.status === 'loading' || telemetrySensorsState.status !== 'ready'
-                }
-              >
-                {queryState.status === 'loading' ? 'Preparing export...' : 'Prepare export'}
-              </button>
-
-              <button
-                type="button"
-                className="telemetry_export_action_btn secondary"
-                onClick={handleDownloadTelemetryFile}
-                disabled={!queryState.file?.filename || downloadState.status === 'loading'}
-              >
-                {downloadState.status === 'loading' ? 'Downloading...' : 'Download .json.gz'}
-              </button>
-            </div>
-
-            {queryState.file?.filename && (
-              <p className="telemetry_export_success">
-                Export ready: {queryState.file.filename} ({formatBytes(queryState.file.filesize)})
-              </p>
-            )}
-
-            {queryState.file && !queryState.file.filename && queryState.file.filesize === 0 && (
-              <p className="telemetry_export_info">
-                No telemetry data available for this selection. Try a wider time range or different
-                sensors.
-              </p>
-            )}
-
-            {queryState.status === 'error' && (
-              <p className="telemetry_export_error">{queryState.error}</p>
-            )}
-
-            {downloadState.status === 'ready' && (
-              <p className="telemetry_export_success">Download started successfully.</p>
-            )}
-
-            {downloadState.status === 'error' && (
-              <p className="telemetry_export_error">{downloadState.error}</p>
-            )}
-          </>
-        )}
       </div>
 
       {/* GrafanaPanel handles loading skeleton, iframe, and LiveValueFallback automatically. */}
@@ -870,6 +857,7 @@ const TelemetryRoomDetail = () => {
   }
 
   const roomData = roomState.data;
+  const displayRoomName = String(roomData?.name || '').replace(/\s*\([^)]*\)\s*$/, '');
 
   const modalFrom = new Date('2026-01-01T00:00:00Z');
   const modalTo = new Date('2026-04-15T23:59:59Z');
@@ -924,18 +912,28 @@ const TelemetryRoomDetail = () => {
           <span className="room-icon" style={{ marginRight: '10px' }}>
             {roomData.icon}
           </span>
-          {roomData.name}
+          {displayRoomName}
         </h2>
       </div>
 
-      {/* ROW 1: Resource Card (full width top) */}
+      {/* ROW 1: Telemetry Export (left) | Telemetry Widget (right) */}
+      <div className="room_detail_cal_row">
+        {/* <RoomMaintenanceCalendar darkmode={darkmode} events={[]} /> */}
+        <RoomTelemetryExportPanel darkmode={darkmode} />
+        <RoomGrafanaSensorWidget
+          environmentSensors={roomData.environmentSensors}
+          darkmode={darkmode}
+        />
+      </div>
+
+      {/* ROW 2: Resource Card (full width top) */}
       <div className="room_detail_top_row">
         <div className="room_detail_card_col">
           <RoomResourceCard device={roomData.quantumDevices?.[0]} darkmode={darkmode} fs={fs} />
         </div>
       </div>
 
-      {/* ROW 2: Metadata (left, compressed) | Chip Layout (right) */}
+      {/* ROW 3: Metadata (left, compressed) | Chip Layout (right) */}
       <div className="room_detail_bottom_row">
         <div className="room_metadata_coming_soon_wrap">
           <RoomMetadataPanel device={roomData.quantumDevices?.[0]} darkmode={darkmode} compressed />
@@ -955,20 +953,6 @@ const TelemetryRoomDetail = () => {
             <span className="room_metadata_coming_soon_badge">Coming soon</span>
           </div>
         </div>
-      </div>
-
-      {/* ROW 3: Maintenance Calendar (30%) | Telemetry Widget (70%) */}
-      <div className="room_detail_cal_row">
-        <div className="room_metadata_coming_soon_wrap">
-          <RoomMaintenanceCalendar darkmode={darkmode} events={[]} />
-          <div className="room_metadata_coming_soon_overlay">
-            <span className="room_metadata_coming_soon_badge">Coming soon</span>
-          </div>
-        </div>
-        <RoomGrafanaSensorWidget
-          environmentSensors={roomData.environmentSensors}
-          darkmode={darkmode}
-        />
       </div>
 
       {/* Environment Monitoring removed (SensorSelector + DownloadBar) */}
