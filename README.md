@@ -33,8 +33,8 @@ endpoints such as `/login`, `/resources`, `/jobs`, and `/tokens` to
 authenticate users, display available resources, submit and monitor jobs,
 and manage API tokens.
 
-The documentation page linked by the badge above is published from this
-`README.md` on every push to `develop`.
+The documentation page linked by the badge above is published from the
+MkDocs configuration and files in `docs/` on every push to `develop`.
 
 ## How to Use this Documentation
 
@@ -106,6 +106,21 @@ Additional checks available in this repository:
 - `npm run lint:json`
 - `npm run lint:yaml`
 - `npm run security:audit`
+
+## Documentation Workflow
+
+Use these standard commands for documentation work:
+
+```bash
+# Install all dependencies (including docs)
+uv sync
+
+# Build the docs statically
+uv run mkdocs build
+
+# Serve locally with live reload at http://localhost:8000
+uv run mkdocs serve
+```
 
 ## 📁 Project Structure (Overview)
 
