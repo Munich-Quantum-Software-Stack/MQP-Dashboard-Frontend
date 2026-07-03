@@ -1,0 +1,17 @@
+[project]
+name = "mqp-dashboard-frontend-docs"
+version = "0.1.0"
+description = "Documentation tooling for MQP Dashboard Frontend"
+requires-python = ">=3.11"
+
+[project.optional-dependencies]
+docs = [
+    "mkdocs>=1.6.1",
+    "mkdocs-material>=9.6.2",
+]
+
+[dependency-groups]
+dev = [
+    "mkdocs",
+    "mkdocs-material",
+]
