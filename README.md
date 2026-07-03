@@ -19,7 +19,7 @@
 
 # MQP Dashboard Frontend
 
-[![Documentation](https://img.shields.io/badge/DOCUMENTATION-0984CC?style=for-the-badge&logo=readthedocs&logoColor=white)](https://munich-quantum-software-stack.github.io/MQSS-Interfaces/MQP-Dashboard-Frontend/)
+[![Documentation](https://img.shields.io/badge/DOCUMENTATION-0984CC?style=for-the-badge&logo=readthedocs&logoColor=white)](https://munich-quantum-software-stack.github.io/MQSS-Interfaces/)
 [![CI/CD Pipeline](https://github.com/Munich-Quantum-Software-Stack/MQP-Dashboard-Frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/Munich-Quantum-Software-Stack/MQP-Dashboard-Frontend/actions/workflows/ci.yml)
 ![Coverage](./.github/badges/coverage.svg)
 
