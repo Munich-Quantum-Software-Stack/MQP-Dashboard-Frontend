@@ -6,6 +6,7 @@ import PaneCard from '@components/UI/Card/PaneCard';
 import ErrorBlock from '@components/UI/MessageBox/ErrorBlock';
 import GrafanaPanel from './components/GrafanaPanel';
 import ChipVisualisation from '@components/Shared/ChipVisualisation/ChipVisualisation';
+import eqe1CouplingMapData from '@data/eqe1-coupling-map.json';
 import {
   clearTelemetrySensorsCache,
   downloadTelemetryExportFile,
@@ -355,7 +356,7 @@ const RoomChipLayoutPlaceholder = ({ darkmode }) => {
 };
 
 // ── Sub-component: RoomMetadataPanel ─────────────────────────────────────────
-const RoomMetadataPanel = ({ device, darkmode, compressed }) => {
+const RoomMetadataPanel = ({ device, darkmode, compressed, selectedMachine = 'EQE1' }) => {
   const rows = [
     { label: 'Status', value: <span className="room_status_pill">Online</span> },
     { label: 'Qubits', value: device?.qubits ?? '—' },
@@ -373,7 +374,18 @@ const RoomMetadataPanel = ({ device, darkmode, compressed }) => {
 
   return (
     <div className={`room_metadata_panel ${compressed ? 'room_metadata_compressed' : ''}`}>
-      <div className="room_panel_title">Device Metadata</div>
+      <div className="room_panel_header">
+        <div className="room_panel_title">Device Metadata</div>
+        <label
+          className="room_panel_machine_selector_label"
+          htmlFor="device-metadata-machine-select"
+        >
+          Select machine
+          <select id="device-metadata-machine-select" value={selectedMachine} disabled>
+            <option value="EQE1">EQE1</option>
+          </select>
+        </label>
+      </div>
       <table className="room_metadata_table">
         <tbody>
           {rows.map(({ label, value }) => (
@@ -387,6 +399,11 @@ const RoomMetadataPanel = ({ device, darkmode, compressed }) => {
     </div>
   );
 };
+
+function getTopologyDataForMachine(machine, device) {
+  if (machine === 'EQE1') return eqe1CouplingMapData;
+  return device?.coupling_data;
+}
 
 // ── Sub-component: RoomTelemetryExportPanel ─────────────────────────────────
 const RoomTelemetryExportPanel = ({ darkmode }) => {
@@ -810,6 +827,7 @@ const TelemetryRoomDetail = () => {
   // resource_name_fs, resource_subtitle_fs, resource_text_fs are used in RoomResourceCard
 
   const [roomState, setRoomState] = useState({ status: 'loading', data: null, error: null });
+  const [selectedTopologyMachine, setSelectedTopologyMachine] = useState('EQE1');
   const [selectedSensor, setSelectedSensor] = useState(null);
   const [showGraphModal, setShowGraphModal] = useState(false);
 
@@ -926,32 +944,52 @@ const TelemetryRoomDetail = () => {
         />
       </div>
 
-      {/* ROW 2: Resource Card (full width top) */}
-      <div className="room_detail_top_row">
-        <div className="room_detail_card_col">
-          <RoomResourceCard device={roomData.quantumDevices?.[0]} darkmode={darkmode} fs={fs} />
-        </div>
-      </div>
-
-      {/* ROW 3: Metadata (left, compressed) | Chip Layout (right) */}
+      {/* ROW 2: Metadata (left) | Chip Layout (right) */}
       <div className="room_detail_bottom_row">
         <div className="room_metadata_coming_soon_wrap">
-          <RoomMetadataPanel device={roomData.quantumDevices?.[0]} darkmode={darkmode} compressed />
+          <RoomMetadataPanel
+            device={roomData.quantumDevices?.[0]}
+            darkmode={darkmode}
+            compressed
+            selectedMachine="EQE1"
+          />
           <div className="room_metadata_coming_soon_overlay">
             <span className="room_metadata_coming_soon_badge">Coming soon</span>
           </div>
         </div>
-        <div className="room_metadata_coming_soon_wrap">
+        <div className="room_detail_topology_wrap">
           <div className="room_chip_layout_panel">
-            <div className="room_panel_title">QPU Topology</div>
+            <div className="room_panel_header">
+              <div className="room_panel_title">QPU Topology</div>
+              <label
+                className="room_panel_machine_selector_label"
+                htmlFor="qpu-topology-machine-select"
+              >
+                Select machine
+                <select
+                  id="qpu-topology-machine-select"
+                  value={selectedTopologyMachine}
+                  onChange={(event) => setSelectedTopologyMachine(event.target.value)}
+                >
+                  <option value="EQE1">EQE1</option>
+                </select>
+              </label>
+            </div>
             <ChipVisualisation
-              couplingData={roomData.quantumDevices?.[0]?.coupling_data}
+              couplingData={getTopologyDataForMachine(
+                selectedTopologyMachine,
+                roomData.quantumDevices?.[0],
+              )}
               darkmode={darkmode}
             />
           </div>
-          <div className="room_metadata_coming_soon_overlay">
-            <span className="room_metadata_coming_soon_badge">Coming soon</span>
-          </div>
+        </div>
+      </div>
+
+      {/* ROW 3: Quantum Resources card moved to very bottom */}
+      <div className="room_detail_top_row room_detail_resource_bottom_row">
+        <div className="room_detail_card_col">
+          <RoomResourceCard device={roomData.quantumDevices?.[0]} darkmode={darkmode} fs={fs} />
         </div>
       </div>
 

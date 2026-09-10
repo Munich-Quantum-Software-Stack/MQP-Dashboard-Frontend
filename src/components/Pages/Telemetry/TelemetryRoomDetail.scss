@@ -14,10 +14,10 @@
   }
 }
 .room_detail_top_row {
-  grid-template-columns: 420px 1fr;
+  grid-template-columns: 35% 1fr;
 }
 .room_detail_bottom_row {
-  grid-template-columns: 35% 65%;
+  grid-template-columns: 35% 1fr;
 }
 
 // ── Calendar + Widget row: 30 / 70 split ────────────────────────────────
@@ -36,6 +36,29 @@
 .room_detail_card_col {
   max-width: 420px;
   min-width: 280px;
+}
+
+.room_detail_resource_bottom_row {
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+.room_detail_topology_wrap {
+  height: 100%;
+}
+
+.room_detail_cal_row {
+  .telemetry_export_panel,
+  .room_grafana_sensor_widget {
+    min-height: 520px;
+  }
+}
+
+.room_detail_bottom_row {
+  .room_metadata_panel,
+  .room_chip_layout_panel {
+    min-height: 520px;
+  }
 }
 
 // ── Shared panel card style ─────────────────────────────────────────────
@@ -74,6 +97,45 @@
   margin-bottom: 16px;
   color: #111827;
   letter-spacing: -0.01em;
+}
+
+.room_panel_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+
+  .room_panel_title {
+    margin-bottom: 0;
+  }
+}
+
+.room_panel_machine_selector_label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #4b5563;
+  white-space: nowrap;
+
+  select {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 0.82rem;
+    background: #ffffff;
+    color: #1f2937;
+    min-width: 90px;
+  }
+
+  select:disabled {
+    background: #f3f4f6;
+    color: #9ca3af;
+    border-color: #e5e7eb;
+    cursor: not-allowed;
+  }
 }
 
 // ── Panel accent borders ─────────────────────────────────────────────────
@@ -632,6 +694,21 @@
   }
   .room_panel_title {
     color: #f3f4f6;
+  }
+  .room_panel_machine_selector_label {
+    color: #d1d5db;
+
+    select {
+      background: #111111;
+      color: #f3f4f6;
+      border-color: #333333;
+    }
+
+    select:disabled {
+      background: #1f2937;
+      color: #6b7280;
+      border-color: #374151;
+    }
   }
   .room_calendar_month_label {
     color: #d1d5db;
