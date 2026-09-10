@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+  <head>
+    <title>QPU Circuit Visualizer Demo</title>
+    <style>
+      #qpu-visualizer {
+        width: 400px;
+        height: 300px;
+        margin: 40px auto;
+        border-radius: 8px;
+        background: #f8f9fa;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        position: relative;
+      }
+      h2 {
+        color: #4a90e2;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>QPU Circuit Visualisation</h2>
+    <div id="qpu-visualizer"></div>
+    <script src="qpuCircuitVisualizer.js"></script>
+    <script>
+      // Example chip/component data
+      const components = [
+        { id: 'q1', type: 'qubit', position: [0.2, 0.3], neighbors: ['r1'] },
+        { id: 'r1', type: 'resonator', position: [0.5, 0.5], neighbors: ['q1'] },
+      ];
+      // Debug logs
+      // debug logs removed for CI/precommit
+      // Check if QPUCircuitVisualizer is defined
+      if (!window.QPUCircuitVisualizer) {
+        console.error('QPUCircuitVisualizer is undefined. Script not loaded or broken.');
+      }
+      // Check if container exists
+      if (!document.getElementById('qpu-visualizer')) {
+        console.error('Container div not found in DOM.');
+      }
+      // Check if components array is valid
+      if (!Array.isArray(components) || components.length === 0) {
+        console.error('Components array is empty or invalid.');
+      }
+      // Render after DOM and script are ready
+      if (
+        window.QPUCircuitVisualizer &&
+        document.getElementById('qpu-visualizer') &&
+        Array.isArray(components) &&
+        components.length > 0
+      ) {
+        window.QPUCircuitVisualizer.render(document.getElementById('qpu-visualizer'), components);
+        // render succeeded
+      } else {
+        console.error('Render not called. Check above errors.');
+      }
+    </script>
+  </body>
+</html>

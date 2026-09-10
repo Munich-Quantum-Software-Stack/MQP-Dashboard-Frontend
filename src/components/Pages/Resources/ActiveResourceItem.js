@@ -61,7 +61,7 @@ const ActiveResourceItem = (props) => {
     <div className="col-12 col-xs-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3 resource_item_wrap">
       <PaneCard className={`resource_item ${resource_bg}`}>
         {/* Overlay for restricted resources not available to user's budget */}
-        {props.isRestricted === 'true' && (
+        {props.isRestricted && (
           <div className="disabled_bg_layer">
             <div className="disabled_icon"></div>
             <p className="my-3 disabled_text">
@@ -112,7 +112,7 @@ const ActiveResourceItem = (props) => {
               Status:
             </div>
 
-            {props.status && (
+            {props.status === 'Offline' ? (
               <div className=" status_icon_wrap d-flex justify-content-start">
                 <div className="status_icon">
                   <span className=" offline_icon"></span>
@@ -121,8 +121,7 @@ const ActiveResourceItem = (props) => {
                   Offline
                 </div>
               </div>
-            )}
-            {!props.status && (
+            ) : (
               <div className=" status_icon_wrap d-flex justify-content-start">
                 <div className="status_icon">
                   <span className=" online_icon"></span>

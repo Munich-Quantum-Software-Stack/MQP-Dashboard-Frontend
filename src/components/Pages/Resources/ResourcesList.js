@@ -86,7 +86,7 @@ const ResourcesList = ({ resources, available_resources }) => {
               <MaintenanceResourceItem
                 key={resource.name}
                 name={resource.name}
-                status={resource.maintenance}
+                status={resource.status}
                 note={resource.note}
                 qubits={resource.qubits}
                 quantum_technology={resource.quantum_technology}
