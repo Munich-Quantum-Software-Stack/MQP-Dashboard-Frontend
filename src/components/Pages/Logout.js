@@ -2,6 +2,7 @@ import React from 'react';
 import { redirect, useSubmit } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '@store/auth-slice';
+import keycloak from '@utils/keycloak';
 
 /** Logout button component */
 const Logout = ({ onHidden }) => {
@@ -12,6 +13,9 @@ const Logout = ({ onHidden }) => {
 
   const logoutHandler = () => {
     dispatch(authActions.logout());
+    // Ends the Keycloak session too, not just local app state - otherwise
+    // the silent-SSO check on next load would immediately log the user back in.
+    keycloak.logout({ redirectUri: window.location.origin + '/login' });
     submit(null, { method: 'POST', action: '/logout' });
   };
 

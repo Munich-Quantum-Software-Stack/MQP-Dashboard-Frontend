@@ -13,6 +13,23 @@ const ALLOWLIST = new Set([
   'GHSA-7h2j-956f-4vf2', // @isaacs/brace-expansion - transitive dependency
   'GHSA-2w69-qvjg-hvjx', // @remix-run/router - react-router dependency
   'GHSA-6rw7-vpxm-498p', // qs - transitive dependency
+  'GHSA-v56q-mh7h-f735', // immutable - transitive via react-scripts/workbox-build, build-time only
+  'GHSA-xvcm-6775-5m9r', // immutable - transitive via react-scripts/workbox-build, build-time only
+  'GHSA-h67p-54hq-rp68', // js-yaml - transitive via markdownlint-cli, dev-time only
+  'GHSA-52cp-r559-cp3m', // js-yaml - transitive via markdownlint-cli, dev-time only
+  'GHSA-5p4m-2wfm-xmqj', // js-yaml - transitive via markdownlint-cli, dev-time only
+  'GHSA-2883-xcg3-v3hh', // js-yaml - transitive via markdownlint-cli, dev-time only
+  'GHSA-3ppc-4f35-3m26', // minimatch - transitive via markdownlint-cli, dev-time only
+  'GHSA-7r86-cg39-jmmj', // minimatch - transitive via markdownlint-cli, dev-time only
+  'GHSA-23c5-xmqv-rm74', // minimatch - transitive via markdownlint-cli, dev-time only
+  'GHSA-5c6j-r48x-rmvq', // serialize-javascript - transitive via react-scripts/workbox-webpack-plugin, build-time only
+  'GHSA-qj8w-gfj5-8c6v', // serialize-javascript - transitive via react-scripts/workbox-webpack-plugin, build-time only
+  'GHSA-v3rj-xjv7-4jmq', // smol-toml - transitive via markdownlint-cli, dev-time only
+  'GHSA-7w5x-hrqm-74c2', // smol-toml - transitive via markdownlint-cli, dev-time only
+  'GHSA-2p49-hgcm-8545', // svgo - transitive via @svgr/webpack (react-scripts), build-time only
+  'GHSA-w27v-7q3p-w38r', // svgo - transitive via @svgr/webpack (react-scripts), build-time only
+  'GHSA-4vpr-x523-8j87', // svgo - transitive via @svgr/webpack (react-scripts), build-time only
+  'GHSA-qpx9-hpmf-5gmw', // underscore - transitive via jsonpath/bfj (react-scripts/workbox-build), build-time only
 ]);
 
 function getStagedFiles() {
