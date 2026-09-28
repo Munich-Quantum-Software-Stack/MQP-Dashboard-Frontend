@@ -4,6 +4,16 @@
 // learn more: https://github.com/testing-library/jest-dom
 require('@testing-library/jest-dom');
 
+jest.mock('keycloak-js', () => ({
+  __esModule: true,
+  default: jest.fn().mockImplementation(() => ({
+    init: jest.fn().mockResolvedValue(false),
+    login: jest.fn(),
+    logout: jest.fn(),
+    updateToken: jest.fn().mockResolvedValue(false),
+  })),
+}));
+
 const { TextDecoder, TextEncoder } = require('util');
 const { ReadableStream, TransformStream, WritableStream } = require('stream/web');
 

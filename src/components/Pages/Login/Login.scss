@@ -4,7 +4,7 @@
 @import '../../../assets/scss/variables.scss';
 
 .form_text {
-  color: $dark_grey;
+  color: #f4eff8;
 }
 
 .page_header {
@@ -20,7 +20,6 @@
 
 .LoginPage_bg {
   background-color: black;
-  background-image: url('../../../assets/images/Visual_HPC-QC_02072024_16-9.jpg');
   @include _background(cover, right center);
   position: absolute;
   top: 0;
@@ -44,15 +43,17 @@
   min-height: 500px;
   padding: 1rem 2rem;
   margin: 0 1rem;
-  @include box_shadow(0px 8px 20px 0px, #000);
-  background-color: white;
+  border: 1px solid #b88bd5;
+  border-radius: 4px;
+  @include box_shadow(0px 8px 24px 0px, rgba(0, 0, 0, 0.6));
+  background-color: #19171d;
 }
 
 .LoginForm_wrap {
   width: 100%;
   display: flex;
   flex-direction: column;
-  color: $dark_grey;
+  color: #f4eff8;
 
   .login_content {
     display: flex;
@@ -64,7 +65,64 @@
   margin-top: 3rem;
   display: flex;
   flex-direction: column;
-  color: $dark_grey;
+  color: #c6bfcb;
+}
+
+.login_footer_container {
+  .copyright,
+  .footer_navbar ul.footer_nav li a {
+    color: #c6bfcb;
+  }
+
+  .footer_logos a:first-child .footer_logo_img {
+    filter: brightness(0) invert(1);
+  }
+
+  .footer_logos a:nth-child(2) {
+    display: none;
+  }
+
+  .copyright a {
+    color: #c5a3ef;
+
+    &:hover,
+    &:focus {
+      color: #ffffff;
+    }
+  }
+}
+
+.login_form_background .dashboard_btn.login_btn {
+  width: auto;
+  min-width: 230px;
+  min-height: 46px;
+  height: auto;
+  padding: 0.7rem 1.25rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background:
+    linear-gradient(#09080c, #09080c) padding-box,
+    linear-gradient(110deg, #e6ad24, #aa70d0, #1ea9d2, #4bc99c) border-box;
+  color: #ffffff;
+  font-size: 0.95rem;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+
+  &:hover,
+  &:focus {
+    background:
+      linear-gradient(#17131c, #17131c) padding-box,
+      linear-gradient(110deg, #e6ad24, #aa70d0, #1ea9d2, #4bc99c) border-box;
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 0 16px rgba(170, 112, 208, 0.25);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #d8b9ee;
+    outline-offset: 3px;
+  }
 }
 .login_logo {
   margin-bottom: 3rem;

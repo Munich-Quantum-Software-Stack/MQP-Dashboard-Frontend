@@ -14,7 +14,7 @@ function LoginForm() {
   return (
     <div className="text-center mt-4">
       <Button type="button" className="login_btn" onClick={loginHandler}>
-        Login with SSO
+        Login with Single Sign on
       </Button>
     </div>
   );

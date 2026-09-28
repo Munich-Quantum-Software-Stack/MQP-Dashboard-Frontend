@@ -19,7 +19,7 @@ function LoginFormHeader() {
         </a>
       </div>
       <div className="my-3 form_text ">
-        <h3 className="mb-4 text-center page_header">Welcome</h3>
+        <h3 className="mb-4 text-center page_header">Welcome to Quantum Pathway Program</h3>
       </div>
     </div>
   );

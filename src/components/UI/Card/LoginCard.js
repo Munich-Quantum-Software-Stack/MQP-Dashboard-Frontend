@@ -19,7 +19,10 @@ const LoginCard = (props) => {
 
   return (
     <div className="LoginPage" style={{ height: backgroundHeight }}>
-      <div className="LoginPage_bg"></div>
+      <div
+        className="LoginPage_bg"
+        style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/user_logos/MQV_BG_PORTAL.png)` }}
+      ></div>
       <div className="container LoginForm_container flex-fill">{props.children}</div>
     </div>
   );
