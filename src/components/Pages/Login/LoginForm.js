@@ -8,7 +8,9 @@ import keycloak from '@utils/keycloak';
  * no longer has a password-based /login route. */
 function LoginForm() {
   const loginHandler = () => {
-    keycloak.login();
+    keycloak.login({
+      redirectUri: `${window.location.origin}/`,
+    });
   };
 
   return (

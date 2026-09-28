@@ -4,9 +4,11 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        BUILD_ENV: production    # passed to Dockerfile at build time
+        BUILD_ENV: production # passed to Dockerfile at build time
     container_name: mqp-app
     restart: unless-stopped
+    ports:
+      - '3000:3000'
     networks:
       - mqp-web
 
