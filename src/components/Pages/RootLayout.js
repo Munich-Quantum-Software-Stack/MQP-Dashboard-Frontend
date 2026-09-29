@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { AnimatePresence, useAnimate } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { Outlet, useLoaderData } from 'react-router-dom';
 import UnauthoriedModal from '@components/UI/UnauthoriedModal';
 import TopBar from '@components/Layout/TopBar/TopBar';
@@ -10,8 +10,6 @@ import Footer from '@components/Layout/Footer/Footer';
 import { authActions } from '@store/auth-slice';
 import ToggleButton from '@components/UI/Button/ToggleButton';
 
-const MIN_WIDTH_SIDEBAR = 80;
-const MAX_WIDTH_SIDEBAR = 265;
 const isExpiredToken = (value) => typeof value === 'string' && value.localeCompare('EXPIRED') === 0;
 
 /** Main authenticated layout with sidebar, topbar, and session handling */
@@ -22,8 +20,6 @@ const RootLayout = () => {
   const darkmode = useSelector((state) => state.accessibilities.darkmode);
   const isExpired = useSelector((state) => state.authentication.isExpired);
   const [minSidebar, setMinSidebar] = useState(true);
-
-  const [scope, animate] = useAnimate();
 
   const triggerTokenExpired = useCallback(() => {
     dispatch(authActions.set_expired());
@@ -41,11 +37,6 @@ const RootLayout = () => {
 
   const leftSidebarToggleHandler = () => {
     setMinSidebar((prevSidebar) => !prevSidebar);
-    animate(
-      'div.left_sidebar_wrap, div.left_topbar',
-      { width: minSidebar ? MIN_WIDTH_SIDEBAR : MAX_WIDTH_SIDEBAR },
-      { duration: 0.6, type: 'spring' },
-    );
   };
 
   // const resetTimerHandler = () => {
@@ -60,20 +51,17 @@ const RootLayout = () => {
     <React.Fragment>
       <AnimatePresence>{isExpired && <UnauthoriedModal />}</AnimatePresence>
 
-      <div
-        className={`fluid-container body_container ${!minSidebar ? 'sidebar_collapsed' : ''}`}
-        ref={scope}
-      >
+      <div className={`fluid-container body_container ${!minSidebar ? 'sidebar_collapsed' : ''}`}>
         <div className="mx-0 topbar_container">
           <div className={`left_topbar ${!minSidebar ? 'minimized' : ''}`}>
-            <AnimatePresence>{minSidebar && <NavbarHeader />}</AnimatePresence>
+            <NavbarHeader />
             <ToggleButton
               id="toggle_left_sidebar"
               aria-controls="left_sidebar"
               data-target="left_sidebar"
               aria-label="Toggle Left Sidebar"
               label="Toggle Left Sidebar"
-              className={`toggle_btn ${!minSidebar ? 'collapsed' : ''}`}
+              className={`toggle_btn ${minSidebar ? 'collapsed' : ''}`}
               onToggle={leftSidebarToggleHandler}
             />
           </div>
