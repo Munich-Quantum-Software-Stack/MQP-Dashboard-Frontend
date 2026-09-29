@@ -14,7 +14,7 @@ const Feedback = () => {
   const page_header_fs = +fs * 1.5;
   return (
     <React.Fragment>
-      <ContentCard className={`${darkmode ? 'dark_bg' : 'white_bg'} h-100`}>
+      <ContentCard className={`feedback_page ${darkmode ? 'dark_bg' : 'white_bg'} h-100`}>
         <div className="container_header_wrap">
           <h4 className="page_header" style={{ fontSize: page_header_fs }}>
             Feedback

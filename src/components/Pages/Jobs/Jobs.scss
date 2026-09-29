@@ -138,8 +138,8 @@ $canceled_color: $red;
   margin: 20px 0;
   padding: 15px;
   border-radius: 8px;
-  background-color: rgba(255, 215, 0, 0.1); // Very light yellow background
-  border: 1px solid rgba(255, 215, 0, 0.3);
+  background-color: rgba(184, 139, 213, 0.1);
+  border: 1px solid rgba(184, 139, 213, 0.3);
 }
 
 .pagination_info {
@@ -176,13 +176,13 @@ $canceled_color: $red;
   font-weight: 500;
 
   &:hover:not(:disabled) {
-    background-color: #fff8dc; // Light yellow on hover
-    border-color: #ffd700;
+    background-color: #eadcf3;
+    border-color: #b88bd5;
   }
 
   &.active {
-    background-color: #ffd700; // Yellow for active page
-    border-color: #daa520;
+    background-color: #b88bd5;
+    border-color: #b88bd5;
     color: #000;
     font-weight: bold;
   }
@@ -201,11 +201,11 @@ $canceled_color: $red;
 
   &.prev-button,
   &.next-button {
-    background-color: #fff8dc; // Light yellow background
-    border-color: #ffd700;
+    background-color: #eadcf3;
+    border-color: #b88bd5;
 
     &:hover:not(:disabled) {
-      background-color: #ffd700;
+      background-color: #b88bd5;
       color: #000;
     }
   }
@@ -283,8 +283,8 @@ $canceled_color: $red;
 
 .dark_bg {
   .pagination_tray {
-    background-color: rgba(255, 215, 0, 0.05);
-    border-color: rgba(255, 215, 0, 0.2);
+    background-color: rgba(184, 139, 213, 0.05);
+    border-color: rgba(184, 139, 213, 0.2);
   }
 
   .pagination_info {
@@ -298,13 +298,13 @@ $canceled_color: $red;
     color: #eee;
 
     &:hover:not(:disabled) {
-      background-color: #4a4a00;
-      border-color: #ffd700;
+      background-color: #3b2b45;
+      border-color: #b88bd5;
     }
 
     &.active {
-      background-color: #b8860b; // Darker yellow for dark mode
-      border-color: #ffd700;
+      background-color: #7d5a91;
+      border-color: #b88bd5;
       color: #fff;
     }
 
@@ -317,11 +317,11 @@ $canceled_color: $red;
 
   .pagination_button.prev-button,
   .pagination_button.next-button {
-    background-color: #4a4a00;
-    border-color: #b8860b;
+    background-color: #3b2b45;
+    border-color: #7d5a91;
 
     &:hover:not(:disabled) {
-      background-color: #b8860b;
+      background-color: #7d5a91;
       color: #fff;
     }
   }

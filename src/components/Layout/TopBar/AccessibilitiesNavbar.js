@@ -81,6 +81,7 @@ const AccessibilitiesNavbar = ({
         >
           <button
             title="Decrease Font Size"
+            aria-label="Decrease font size"
             type="button"
             className="font_size_btn"
             onClick={decreaseFontSizeHandler}
@@ -90,6 +91,7 @@ const AccessibilitiesNavbar = ({
           </button>
           <button
             title="Default Font Size"
+            aria-label="Reset font size"
             type="button"
             className="font_size_btn"
             onClick={resetFontSizeHandler}
@@ -98,6 +100,7 @@ const AccessibilitiesNavbar = ({
           </button>
           <button
             title="Increase Font Size"
+            aria-label="Increase font size"
             type="button"
             className="font_size_btn"
             onClick={increaseFontSizeHandler}

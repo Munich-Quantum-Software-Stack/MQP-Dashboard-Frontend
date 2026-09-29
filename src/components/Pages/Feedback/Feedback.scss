@@ -3,6 +3,17 @@
  *************/
 @import '../../../assets/scss/variables.scss';
 
+.feedback_page {
+  font-family: 'Open_Sans-Regular', sans-serif;
+
+  button,
+  input,
+  select,
+  textarea {
+    font-family: inherit;
+  }
+}
+
 .rate_field {
   display: flex;
   justify-content: flex-start;

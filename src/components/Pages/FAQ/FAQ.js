@@ -465,8 +465,8 @@ function FAQ() {
 
   const [expandedCategory, setExpandedCategory] = useState(null);
 
-  // Softer gold for dark mode, bright yellow for light mode
-  const accentColor = darkmode ? '#c9a227' : '#ffe066';
+  // Match the purple accent used by the login form
+  const accentColor = '#b88bd5';
 
   // Redirect to login if session is expired
   React.useEffect(() => {
