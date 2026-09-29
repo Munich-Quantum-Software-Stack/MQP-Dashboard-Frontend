@@ -3,6 +3,14 @@
  *********/
 @import '../../../assets/scss/variables.scss';
 
+.LoginPage {
+  font-family: 'Open_Sans-Regular', sans-serif;
+
+  button {
+    font-family: inherit;
+  }
+}
+
 .form_text {
   color: #f4eff8;
 }
