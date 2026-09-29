@@ -4,6 +4,10 @@
 @import '../../../assets/scss/variables.scss';
 
 .LoginPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
   font-family: 'Open_Sans-Regular', sans-serif;
 
   button {
@@ -43,14 +47,16 @@
   flex-direction: column;
   align-items: center;
   flex: 1;
+  width: 100%;
   position: relative;
 }
 
 .login_form_background {
-  max-width: 420px;
-  min-height: 500px;
-  padding: 1rem 2rem;
-  margin: 0 1rem;
+  width: min(100%, 480px);
+  max-width: 480px;
+  min-height: 540px;
+  padding: 1.5rem 2.5rem;
+  margin: 0;
   border: 1px solid #b88bd5;
   border-radius: 4px;
   @include box_shadow(0px 8px 24px 0px, rgba(0, 0, 0, 0.6));
@@ -102,10 +108,10 @@
 
 .login_form_background .dashboard_btn.login_btn {
   width: auto;
-  min-width: 230px;
-  min-height: 46px;
+  min-width: 250px;
+  min-height: 50px;
   height: auto;
-  padding: 0.7rem 1.25rem;
+  padding: 0.75rem 1.5rem;
   border: 1px solid transparent;
   border-radius: 4px;
   background:
@@ -137,9 +143,9 @@
   margin-top: 1rem;
   img {
     width: auto;
-    max-width: 320px;
+    max-width: 340px;
     height: auto;
-    max-height: 120px;
+    max-height: 140px;
     display: block;
     margin-left: auto;
     margin-right: auto;

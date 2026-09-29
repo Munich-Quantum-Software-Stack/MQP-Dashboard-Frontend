@@ -98,12 +98,15 @@ ul.mainNav {
       &:focus,
       &.active {
         @include _transition(ease, 0.2s, all);
-        background-color: $dark_grey;
         color: $yellow;
         font-family: 'Open_Sans-Regular';
         .link_icon {
           background-color: $yellow;
         }
+      }
+
+      &.active {
+        background-color: $dark_grey;
       }
     }
   }
