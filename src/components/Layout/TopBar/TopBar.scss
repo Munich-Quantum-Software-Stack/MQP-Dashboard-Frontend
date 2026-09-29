@@ -20,8 +20,8 @@
   z-index: 1;
   position: relative;
   transition:
-    width 0.25s ease,
-    flex-basis 0.25s ease;
+    width 0.3s ease,
+    flex-basis 0.3s ease;
   &.minimized {
     justify-content: center;
   }
@@ -83,23 +83,11 @@
 .sidebar_collapsed .left_topbar {
   width: 80px;
   flex-basis: 80px;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
-  gap: 2px;
 
   .topbar_logo_wrap {
-    padding: 0;
-
-    .topbar_logo {
-      justify-content: center;
-      margin-top: 0;
-
-      img.topbar_logo_img {
-        width: 42px;
-        height: auto;
-        margin-right: 0;
-      }
-    }
+    display: none;
   }
 
   .toggle_btn {

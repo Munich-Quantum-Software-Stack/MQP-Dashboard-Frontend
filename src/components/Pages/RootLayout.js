@@ -61,7 +61,7 @@ const RootLayout = () => {
               data-target="left_sidebar"
               aria-label="Toggle Left Sidebar"
               label="Toggle Left Sidebar"
-              className={`toggle_btn ${minSidebar ? 'collapsed' : ''}`}
+              className={`toggle_btn ${!minSidebar ? 'collapsed' : ''}`}
               onToggle={leftSidebarToggleHandler}
             />
           </div>
