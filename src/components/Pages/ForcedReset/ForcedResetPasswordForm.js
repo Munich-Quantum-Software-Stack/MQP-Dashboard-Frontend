@@ -77,7 +77,7 @@ const ForcedResetPasswordForm = (props) => {
       const response = await fetch(reset_url, {
         method: 'POST',
         headers: {
-          Authorization: 'Bearer' + access_token,
+          Authorization: 'Bearer ' + access_token,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),

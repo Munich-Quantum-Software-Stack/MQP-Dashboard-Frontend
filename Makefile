@@ -1,5 +1,7 @@
 ENV ?= production
 
+.PHONY: build up deploy down logs
+
 build:
 	BUILD_ENV=$(ENV) docker compose build
 

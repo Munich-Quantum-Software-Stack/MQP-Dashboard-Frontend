@@ -4,6 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '@store/auth-slice';
 import keycloak from '@utils/keycloak';
 
+function clearLocalAuthentication() {
+  localStorage.removeItem('isLoggedIn');
+  localStorage.removeItem('token');
+  localStorage.removeItem('isReset');
+  localStorage.removeItem('expiration');
+}
+
 /** Logout button component */
 const Logout = ({ onHidden }) => {
   const submit = useSubmit();
@@ -11,12 +18,12 @@ const Logout = ({ onHidden }) => {
   const fs = useSelector((state) => state.accessibilities.font_size);
   const navbar_fs = +fs * 1.1;
 
-  const logoutHandler = () => {
+  const logoutHandler = (event) => {
+    event.preventDefault();
     dispatch(authActions.logout());
-    // Ends the Keycloak session too, not just local app state - otherwise
-    // the silent-SSO check on next load would immediately log the user back in.
-    keycloak.logout({ redirectUri: window.location.origin + '/login' });
+    clearLocalAuthentication();
     submit(null, { method: 'POST', action: '/logout' });
+    keycloak.logout({ redirectUri: window.location.origin });
   };
 
   return (
@@ -35,9 +42,6 @@ export default Logout;
 
 /** Route action - clears session data and redirects to login */
 export function action() {
-  localStorage.removeItem('isLoggedIn');
-  localStorage.removeItem('token');
-  localStorage.removeItem('isReset');
-  localStorage.removeItem('expiration');
+  clearLocalAuthentication();
   return redirect('/login');
 }

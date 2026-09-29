@@ -37,6 +37,27 @@ describe('resources-http API helper', () => {
     expect(data).toEqual(resourcesResponse);
   });
 
+  it('composes the same-origin /api URL and sends the Bearer token', async () => {
+    process.env.REACT_APP_API_ENDPOINT = '/api';
+    const fetchSpy = jest.spyOn(global, 'fetch').mockResolvedValue({
+      ok: true,
+      json: jest.fn().mockResolvedValue(resourcesResponse),
+    });
+
+    try {
+      await fetchResources({ access_token: 'token', signal: undefined });
+      expect(fetchSpy).toHaveBeenCalledWith(
+        '/api/resources',
+        expect.objectContaining({
+          headers: expect.objectContaining({ Authorization: 'Bearer token' }),
+        }),
+      );
+    } finally {
+      fetchSpy.mockRestore();
+      process.env.REACT_APP_API_ENDPOINT = API_BASE;
+    }
+  });
+
   // Test error handling: verify descriptive error with code and backend details is thrown
   it('fetchResources throws descriptive error when backend fails', async () => {
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});

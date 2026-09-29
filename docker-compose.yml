@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        BUILD_ENV: production    # passed to Dockerfile at build time
+        BUILD_ENV: ${BUILD_ENV:-production} # passed to Dockerfile at build time
     container_name: mqp-app
     restart: unless-stopped
     networks:
