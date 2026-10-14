@@ -9,11 +9,13 @@ import NavbarHeader from '@components/Layout/MainNavigation/NavbarHeader';
 import Footer from '@components/Layout/Footer/Footer';
 import { authActions } from '@store/auth-slice';
 import ToggleButton from '@components/UI/Button/ToggleButton';
+import usePageTitle from '@hooks/use-page-title';
 
 const isExpiredToken = (value) => typeof value === 'string' && value.localeCompare('EXPIRED') === 0;
 
 /** Main authenticated layout with sidebar, topbar, and session handling */
 const RootLayout = () => {
+  usePageTitle();
   const dispatch = useDispatch();
   const token = useLoaderData();
 

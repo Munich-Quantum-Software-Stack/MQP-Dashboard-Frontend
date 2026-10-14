@@ -461,6 +461,7 @@ const FAQ_SECTIONS = Object.freeze(
  */
 function FAQ() {
   const darkmode = useSelector((state) => state.accessibilities.darkmode);
+  const fs = useSelector((state) => state.accessibilities.font_size);
   const navigate = useNavigate();
 
   const [expandedCategory, setExpandedCategory] = useState(null);
@@ -484,15 +485,17 @@ function FAQ() {
 
   return (
     <ContentCard className={`faq_container ${darkmode ? 'dark_bg' : 'white_bg'} h-100`}>
-      <h2 style={{ fontWeight: 'bold', marginBottom: '2rem' }}>Frequently Asked Questions</h2>
+      <h2 className="page_header" style={{ fontSize: +fs * 1.5, marginBottom: '2rem' }}>
+        Frequently Asked Questions
+      </h2>
       <div className="faq-categories-list">
         {FAQ_SECTIONS.map(({ category, items }) => (
           <div key={category} className="faq-category-section mb-4">
             <div
               className="faq-category-header"
               style={{
-                fontWeight: 600,
-                fontSize: '1.15rem',
+                fontFamily: "'Open_Sans-Bold', sans-serif",
+                fontSize: +fs * 1.05,
                 cursor: 'pointer',
                 background: expandedCategory === category ? accentColor : 'transparent',
                 color: expandedCategory === category && !darkmode ? '#333' : undefined,
@@ -518,11 +521,11 @@ function FAQ() {
                       paddingRight: 0,
                     }}
                   >
-                    <div style={{ fontWeight: 500 }}>{item.q}</div>
+                    <div style={{ fontSize: +fs }}>{item.q}</div>
                     <div
                       className="faq-answer mt-1 mb-2"
                       style={{
-                        fontSize: '0.97em',
+                        fontSize: +fs,
                         color: darkmode ? '#e0e0e0' : '#555',
                       }}
                     >

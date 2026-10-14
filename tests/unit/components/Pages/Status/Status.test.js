@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import store from 'src/store';
-import Status from 'src/components/Pages/Status/Status';
+import store from '@store/index';
+import Status from '@components/Pages/Status/Status';
 
 describe('Status Page', () => {
   test('render Status component', () => {
@@ -11,7 +11,7 @@ describe('Status Page', () => {
       </Provider>,
     );
 
-    const welcomeText = screen.getByText('Welcome to Munich Quantum Portal', { exact: false });
+    const welcomeText = screen.getByText('Welcome to Quantum Pathway Program', { exact: false });
     expect(welcomeText).toBeInTheDocument();
   });
 });

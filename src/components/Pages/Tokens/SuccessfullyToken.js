@@ -6,7 +6,7 @@ import NotificationCard from '@components/UI/MessageBox/NotificationCard';
 import { useNavigate } from 'react-router-dom';
 const SuccessfullyToken = ({ newToken }) => {
   const fs = useSelector((state) => state.accessibilities.font_size);
-  const page_subheader_fs = +fs * 1.25;
+  const page_subheader_fs = +fs * 1.05;
   const text_fs = +fs;
 
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const SuccessfullyToken = ({ newToken }) => {
   return (
     <ContentCard>
       <div className="tokenContainer_header_wrap">
-        <h5 className="mb-4" style={{ fontSize: page_subheader_fs }}>
+        <h5 className="mb-4 page_subheader" style={{ fontSize: page_subheader_fs }}>
           New token created successfully
         </h5>
       </div>

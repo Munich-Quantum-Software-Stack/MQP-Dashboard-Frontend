@@ -13,9 +13,9 @@ function StatusContent() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           style={{ fontSize: h1_fs }}
-          className="welcome_text"
+          className="welcome_text page_header"
         >
-          Welcome to Munich Quantum Portal
+          Welcome to Quantum Pathway Program
         </motion.h1>
       </div>
       <StatusItems />

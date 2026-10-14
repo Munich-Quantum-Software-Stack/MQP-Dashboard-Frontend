@@ -33,7 +33,7 @@ const JobCircuit = ({ isExecutedCircuit = false }) => {
 
   return (
     <ContentCard>
-      <h4 style={{ fontSize: page_header_fs }}>
+      <h4 className="page_header" style={{ fontSize: page_header_fs }}>
         {isExecutedCircuit ? 'Executed Circuit' : 'Submitted Circuit'} for Job {params.jobId}
       </h4>
       {/* Scrollable code block displaying the circuit content */}

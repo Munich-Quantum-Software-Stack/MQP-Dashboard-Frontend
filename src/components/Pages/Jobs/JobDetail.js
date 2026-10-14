@@ -166,7 +166,9 @@ const JobDetail = () => {
   return (
     <ContentCard>
       {/* Page title with dynamic font size */}
-      <h4 style={{ fontSize: page_header_fs }}>Detail of job {job.id}</h4>
+      <h4 className="page_header" style={{ fontSize: page_header_fs }}>
+        Detail of job {job.id}
+      </h4>
 
       {/* Main content container with dark/light mode styling */}
       <div className={`job_detail_container ${darkmode_class} `}>
