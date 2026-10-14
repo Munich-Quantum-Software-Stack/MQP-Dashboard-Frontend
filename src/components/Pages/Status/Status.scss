@@ -56,3 +56,42 @@ $status_divider: #058af7;
     }
   }
 }
+
+.status_resource_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.status_resource_box {
+  border: 1px solid rgba(128, 128, 128, 0.35);
+  border-radius: 8px;
+  padding: 0.6rem 0.7rem;
+  background: rgba(128, 128, 128, 0.06);
+
+  .status_resource_head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .status_resource_name {
+    font-weight: 700;
+    word-break: break-word;
+  }
+  .status_resource_meta {
+    opacity: 0.8;
+  }
+  .status_resource_logo {
+    height: 32px;
+    max-width: 64px;
+    object-fit: contain;
+    border-radius: 4px;
+  }
+  .status_chart {
+    width: 100%;
+    height: auto;
+    margin-top: 0.4rem;
+  }
+}
