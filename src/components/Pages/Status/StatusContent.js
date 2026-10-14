@@ -38,20 +38,22 @@ function StatusContent() {
           const available = !resource.maintenance && resource.status !== 'Offline';
           const logo = getResourceLogo(resource.name) || FALLBACK_LOGO;
           return (
-            <div className="status_resource_box" key={resource.name}>
-              <div className="status_resource_head">
-                <div className="status_resource_info">
-                  <div className="status_resource_name" style={{ fontSize: +fs * 1.1 }}>
-                    {resource.name}
+            <div className="status_resource_item" key={resource.name}>
+              <div className="status_resource_box">
+                <div className="status_resource_head">
+                  <div className="status_resource_info">
+                    <div className="status_resource_name" style={{ fontSize: +fs * 1.1 }}>
+                      {resource.name}
+                    </div>
+                    <div className="status_resource_meta" style={{ fontSize: +fs * 0.85 }}>
+                      {resource.quantum_technology}
+                    </div>
+                    <div className="status_resource_meta" style={{ fontSize: +fs * 0.85 }}>
+                      {resource.qubits} Qubits
+                    </div>
                   </div>
-                  <div className="status_resource_meta" style={{ fontSize: +fs * 0.85 }}>
-                    {resource.quantum_technology}
-                  </div>
-                  <div className="status_resource_meta" style={{ fontSize: +fs * 0.85 }}>
-                    {resource.qubits} Qubits
-                  </div>
+                  <img className="status_resource_logo" src={logo} alt={`${resource.name} logo`} />
                 </div>
-                <img className="status_resource_logo" src={logo} alt={`${resource.name} logo`} />
               </div>
               <AvailabilityChart available={available} />
             </div>
@@ -73,6 +75,7 @@ function StatusContent() {
           Welcome to Quantum Pathway Program
         </motion.h1>
       </div>
+      <h2 className="status_backends_title">Quantum Backends</h2>
       {content}
     </React.Fragment>
   );
