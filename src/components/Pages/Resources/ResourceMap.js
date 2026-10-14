@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import IQM_logo from '@assets/images/IQM_logo.png';
@@ -13,7 +13,6 @@ export const RESOURCE_PROVIDERS = [
     name: 'LRZ',
     country: '🇩🇪',
     resources: 9,
-    liveTelemetry: true,
     logo: '/user_logos/lrz_wortbild_e_rgb.svg',
     description:
       "Leibniz Supercomputing Centre operates Germany's flagship HPC-integrated quantum computing facility, providing seamless HPCQC workflows and live telemetry.",
@@ -144,6 +143,7 @@ export const RESOURCE_PROVIDERS = [
 const RESOURCE_CATEGORIES = ['HPCQC-as-a-Service Providers', 'Quantum-as-a-Service Providers'];
 
 function ProviderCard({ provider, resourceCount }) {
+  const [logoFailed, setLogoFailed] = useState(false);
   const isAvailable = provider.id === 'lrz';
   const CardTag = isAvailable ? Link : 'div';
   const cardProps = isAvailable
@@ -173,7 +173,6 @@ function ProviderCard({ provider, resourceCount }) {
             {provider.name} <span aria-label={provider.country}>{provider.country}</span>
           </h3>
           <div className="resource-provider-badges">
-            {provider.liveTelemetry && <span className="resource-live-badge">Live telemetry</span>}
             <span className="resource-count-badge">
               {provider.id === 'lrz' && resourceCount !== undefined
                 ? `${resourceCount} Resources`
@@ -181,9 +180,15 @@ function ProviderCard({ provider, resourceCount }) {
             </span>
           </div>
         </div>
-        <span className={`resource-provider-logo${provider.logo ? ' has-logo' : ''}`}>
-          {provider.logo ? (
-            <img src={provider.logo} alt={`${provider.name} logo`} />
+        <span
+          className={`resource-provider-logo${logoFailed || !provider.logo ? '' : ' has-logo'}`}
+        >
+          {provider.logo && !logoFailed ? (
+            <img
+              src={provider.logo}
+              alt={`${provider.name} logo`}
+              onError={() => setLogoFailed(true)}
+            />
           ) : (
             provider.name
           )}
@@ -201,9 +206,10 @@ function ProviderCard({ provider, resourceCount }) {
 
 function ResourceMap({ resourceCount }) {
   const darkmode = useSelector((state) => state.accessibilities.darkmode);
+  const fs = useSelector((state) => state.accessibilities.font_size);
 
   return (
-    <main className={`resource-map${darkmode ? ' dark_bg' : ''}`}>
+    <main className={`resource-map${darkmode ? ' dark_bg' : ''}`} style={{ '--rm-fs': `${fs}px` }}>
       <header className="resource-map-header">
         <h1>Resource Map</h1>
         <p>

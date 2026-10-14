@@ -13,6 +13,8 @@ import './ResourceMap.scss';
 function ResourceProviderDetail() {
   const { providerId } = useParams();
   const darkmode = useSelector((state) => state.accessibilities.darkmode);
+  const fs = useSelector((state) => state.accessibilities.font_size);
+  const fsStyle = { '--rm-fs': `${fs}px` };
   const access_token = getAuthToken();
   const provider = RESOURCE_PROVIDERS.find((item) => item.id === providerId);
 
@@ -24,7 +26,10 @@ function ResourceProviderDetail() {
 
   if (!provider) {
     return (
-      <main className={`resource-provider-detail ${darkmode ? 'dark_bg' : 'white_bg'}`}>
+      <main
+        className={`resource-provider-detail ${darkmode ? 'dark_bg' : 'white_bg'}`}
+        style={fsStyle}
+      >
         <Link className="resource-map-back-link" to="/resources">
           ← Back to Resource Map
         </Link>
@@ -35,7 +40,10 @@ function ResourceProviderDetail() {
 
   if (providerId === 'lrz' && isError) {
     return (
-      <main className={`resource-provider-detail ${darkmode ? 'dark_bg' : 'white_bg'}`}>
+      <main
+        className={`resource-provider-detail ${darkmode ? 'dark_bg' : 'white_bg'}`}
+        style={fsStyle}
+      >
         <Link className="resource-map-back-link" to="/resources">
           ← Back to Resource Map
         </Link>
@@ -45,7 +53,10 @@ function ResourceProviderDetail() {
   }
 
   return (
-    <main className={`resource-provider-detail ${darkmode ? 'dark_bg' : 'white_bg'}`}>
+    <main
+      className={`resource-provider-detail ${darkmode ? 'dark_bg' : 'white_bg'}`}
+      style={fsStyle}
+    >
       <Link className="resource-map-back-link" to="/resources">
         ← Back to Resource Map
       </Link>
