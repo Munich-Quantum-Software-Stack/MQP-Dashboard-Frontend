@@ -246,6 +246,9 @@ $resource_divider_8: #800080;
       color: $dark_grey;
     }
     .resource_status {
+      .pane_subtitle {
+        color: $dark_grey;
+      }
       .status_icon_wrap,
       .status_icon_wrap > * {
         color: black;

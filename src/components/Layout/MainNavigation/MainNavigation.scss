@@ -116,6 +116,8 @@ ul.mainNav {
 
       &.active {
         background-color: $dark_grey;
+        font-family: 'Open_Sans-Bold';
+        font-weight: bold;
       }
     }
   }
@@ -211,20 +213,20 @@ ul.userNav {
     &:hover,
     &:focus,
     &.active {
-      color: #5b9bd5;
+      color: #8fc1ee;
 
       .link_icon {
-        background-color: #5b9bd5;
+        background-color: #8fc1ee;
       }
     }
   }
 
   .logout_btn:hover,
   .logout_btn:focus {
-    color: #5b9bd5;
+    color: #8fc1ee;
 
     .logout_icon {
-      background-color: #5b9bd5;
+      background-color: #8fc1ee;
     }
   }
 }

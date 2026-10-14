@@ -45,7 +45,7 @@
       align-items: center;
 
       img {
-        height: 60px;
+        height: 75px;
         width: auto;
 
         &.topbar_logo_img {
@@ -71,10 +71,31 @@
     // top: 1rem;
     padding: 5px;
     width: 38px;
+    height: 34px;
+    margin-right: 1rem;
     border-color: transparent;
     z-index: 2;
     .toggler_bar {
-      border-color: #c7c2c2;
+      width: 26px;
+      height: 0;
+      border-top: 3px solid white;
+      border-radius: 2px;
+    }
+    // Expanded sidebar: show a white X
+    &:not(.collapsed) {
+      position: relative;
+      .toggler_bar {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: -1.5px 0 0 -13px;
+        &.bar_1 {
+          transform: rotate(-45deg);
+        }
+        &.bar_3 {
+          transform: rotate(45deg);
+        }
+      }
     }
   }
 }
@@ -90,12 +111,13 @@
   }
 
   .toggle_btn {
-    width: 30px;
-    height: 24px;
+    width: 34px;
+    height: 28px;
     padding: 4px;
+    margin-right: 0;
 
     .toggler_bar {
-      width: 20px;
+      width: 24px;
     }
   }
 }

@@ -459,7 +459,7 @@ const FAQ_DATA = {
 const DEVICE_SPECIFIC_DATA = {
   'Euro-Q-Exa': [
     {
-      q: '1.Introduction to the system',
+      q: '1. Introduction to the system',
       a: (
         <a href="/documents/Intro to EQE.pdf" target="_blank" rel="noopener noreferrer">
           Documentation of Euro-Q-Exa
@@ -467,7 +467,7 @@ const DEVICE_SPECIFIC_DATA = {
       ),
     },
     {
-      q: '2.Euro Q Exa and MQSS demo',
+      q: '2. Euro-Q-Exa and MQSS demo',
       a: (
         <a href="/documents/Euro-Q-Exa-Demo.pdf" target="_blank" rel="noopener noreferrer">
           Demo to use Euro-Q-Exa
@@ -536,7 +536,7 @@ function FAQ() {
   const [expandedCategory, setExpandedCategory] = useState(null);
 
   // Match the blue accent used by the login form
-  const accentColor = darkmode ? '#2f6fb7' : '#2f6fb7';
+  const accentColor = '#8fc1ee';
 
   // Redirect to login if session is expired
   React.useEffect(() => {

@@ -418,23 +418,19 @@ input.token_number_field {
         background-color: $dark_grey;
       }
       li.token_item_row {
-        &:nth-child(odd) {
-          background-color: black;
-          div {
-            color: white;
-          }
-          .token_btn {
-            color: $light_grey;
-          }
-          .token_btn .button_icon {
-            background-color: $light_grey;
-          }
+        border-bottom: 1px solid $dark_grey;
+        background-color: black;
+        div {
+          color: white;
         }
         &:nth-child(even) {
+          background-color: #1a1a1a;
+        }
+        .token_btn {
+          color: $light_grey;
+        }
+        .token_btn .button_icon {
           background-color: $light_grey;
-          div {
-            color: black;
-          }
         }
       }
     }
