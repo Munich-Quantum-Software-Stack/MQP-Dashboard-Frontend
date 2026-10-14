@@ -138,8 +138,8 @@ $canceled_color: $red;
   margin: 20px 0;
   padding: 15px;
   border-radius: 8px;
-  background-color: rgba(184, 139, 213, 0.1);
-  border: 1px solid rgba(184, 139, 213, 0.3);
+  background-color: rgba(47, 111, 183, 0.1);
+  border: 1px solid rgba(47, 111, 183, 0.3);
 }
 
 .pagination_info {
@@ -177,12 +177,12 @@ $canceled_color: $red;
 
   &:hover:not(:disabled) {
     background-color: #eadcf3;
-    border-color: #b88bd5;
+    border-color: #2f6fb7;
   }
 
   &.active {
-    background-color: #b88bd5;
-    border-color: #b88bd5;
+    background-color: #2f6fb7;
+    border-color: #2f6fb7;
     color: #000;
     font-weight: bold;
   }
@@ -202,10 +202,10 @@ $canceled_color: $red;
   &.prev-button,
   &.next-button {
     background-color: #eadcf3;
-    border-color: #b88bd5;
+    border-color: #2f6fb7;
 
     &:hover:not(:disabled) {
-      background-color: #b88bd5;
+      background-color: #2f6fb7;
       color: #000;
     }
   }
@@ -283,8 +283,8 @@ $canceled_color: $red;
 
 .dark_bg {
   .pagination_tray {
-    background-color: rgba(184, 139, 213, 0.05);
-    border-color: rgba(184, 139, 213, 0.2);
+    background-color: rgba(47, 111, 183, 0.05);
+    border-color: rgba(47, 111, 183, 0.2);
   }
 
   .pagination_info {
@@ -299,12 +299,12 @@ $canceled_color: $red;
 
     &:hover:not(:disabled) {
       background-color: #3b2b45;
-      border-color: #7d5a91;
+      border-color: #3a7bc8;
     }
 
     &.active {
-      background-color: #6b4585;
-      border-color: #7d5a91;
+      background-color: #2f6fb7;
+      border-color: #3a7bc8;
       color: #fff;
     }
 
@@ -318,10 +318,10 @@ $canceled_color: $red;
   .pagination_button.prev-button,
   .pagination_button.next-button {
     background-color: #3b2b45;
-    border-color: #7d5a91;
+    border-color: #3a7bc8;
 
     &:hover:not(:disabled) {
-      background-color: #7d5a91;
+      background-color: #3a7bc8;
       color: #fff;
     }
   }

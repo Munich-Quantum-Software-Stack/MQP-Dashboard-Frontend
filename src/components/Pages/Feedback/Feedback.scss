@@ -73,3 +73,23 @@
 .category_input_wrap {
   max-width: 350px;
 }
+
+.feedback_submit_button,
+.dark_bg .feedback_submit_button {
+  color: white;
+  background-color: #2f6fb7;
+  background-image: none;
+  border-color: #2f6fb7;
+
+  &:hover,
+  &:focus {
+    color: white;
+    background-color: #3a7bc8;
+    border-color: #3a7bc8;
+  }
+
+  &:disabled {
+    background-color: #2f6fb7;
+    opacity: 0.6;
+  }
+}

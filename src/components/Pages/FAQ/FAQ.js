@@ -11,7 +11,7 @@ import './FAQ.scss';
 const FAQ_DATA = {
   'Getting Started': [
     {
-      q: 'What is MQSS',
+      q: '1. What is MQSS',
       a: (
         <a href="/documents/MQSS-Overview.pdf" target="_blank" rel="noopener noreferrer">
           Munich Quantum Software Stack Overview
@@ -19,7 +19,7 @@ const FAQ_DATA = {
       ),
     },
     {
-      q: '1. Prerequisites to get started on the MQP',
+      q: '2. Prerequisites to get started on the MQP',
       a: (
         <div>
           <a
@@ -57,7 +57,7 @@ const FAQ_DATA = {
       ),
     },
     {
-      q: '2. I have a token—what should I do next?',
+      q: '3. I have a token—what should I do next?',
       a: (
         <div>
           <p>
@@ -86,7 +86,7 @@ const FAQ_DATA = {
       ),
     },
     {
-      q: '3. What are the names or IDs of the available backends?',
+      q: '4. What are the names or IDs of the available backends?',
       a: (
         <div>
           <div>
@@ -112,7 +112,7 @@ const FAQ_DATA = {
       ),
     },
     {
-      q: '4. Where can I find the native gate sets for each device?',
+      q: '5. Where can I find the native gate sets for each device?',
       a: (
         <div>
           <p>
@@ -128,7 +128,7 @@ const FAQ_DATA = {
       ),
     },
     {
-      q: '5. Are there sample jobs or example scripts to help me get started?',
+      q: '6. Are there sample jobs or example scripts to help me get started?',
       a: (
         <div>
           Yes, some example scripts are available on GitHub:{' '}
@@ -459,7 +459,7 @@ const FAQ_DATA = {
 const DEVICE_SPECIFIC_DATA = {
   'Euro-Q-Exa': [
     {
-      q: 'Introduction to the system',
+      q: '1.Introduction to the system',
       a: (
         <a href="/documents/Intro to EQE.pdf" target="_blank" rel="noopener noreferrer">
           Documentation of Euro-Q-Exa
@@ -467,7 +467,7 @@ const DEVICE_SPECIFIC_DATA = {
       ),
     },
     {
-      q: 'Euro Q Exa and MQSS demo',
+      q: '2.Euro Q Exa and MQSS demo',
       a: (
         <a href="/documents/Euro-Q-Exa-Demo.pdf" target="_blank" rel="noopener noreferrer">
           Demo to use Euro-Q-Exa
@@ -475,7 +475,7 @@ const DEVICE_SPECIFIC_DATA = {
       ),
     },
     {
-      q: 'Running QAOA',
+      q: '3. Running QAOA',
       a: (
         <a href="/documents/MaxCut_FUPP.pdf" target="_blank" rel="noopener noreferrer">
           QAOA documentation
@@ -483,7 +483,7 @@ const DEVICE_SPECIFIC_DATA = {
       ),
     },
     {
-      q: 'Euro-Q-Exa Friendly User Pilot Phase',
+      q: '4. Euro-Q-Exa Friendly User Pilot Phase',
       a: (
         <a
           href="/documents/Friendly-User-Pilot-Phase_Structure_Tools.pdf"
@@ -497,7 +497,7 @@ const DEVICE_SPECIFIC_DATA = {
   ],
   'Q-Exa': [
     {
-      q: 'Introduction to the Software Stack',
+      q: '1. Introduction to the Software Stack',
       a: (
         <a
           href="/documents/2024-07-09-MNF-MC-SH-BM-JE-Garching-IQM-Training.pdf"
@@ -535,8 +535,8 @@ function FAQ() {
 
   const [expandedCategory, setExpandedCategory] = useState(null);
 
-  // Match the purple accent used by the login form
-  const accentColor = darkmode ? '#6b4585' : '#b88bd5';
+  // Match the blue accent used by the login form
+  const accentColor = darkmode ? '#2f6fb7' : '#2f6fb7';
 
   // Redirect to login if session is expired
   React.useEffect(() => {

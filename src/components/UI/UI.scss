@@ -3,8 +3,8 @@
 /******** Button *********/
 .dashboard_btn {
   border: 1px solid var(--bs-gray-400);
-  color: black;
-  background-color: $light_yellow;
+  color: white;
+  background-color: $yellow;
   //background-image: linear-gradient($yellow, white);
   //text-transform: capitalize;
   height: 40px;
@@ -14,7 +14,8 @@
   @include _transition(all, 0.5s, ease);
   &:hover,
   &:focus {
-    background-color: $yellow;
+    background-color: #3a7bc8;
+    color: white;
   }
   &:disabled,
   &:disabled:hover,
