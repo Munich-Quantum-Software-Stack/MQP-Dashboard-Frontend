@@ -86,6 +86,11 @@
           width: 220px;
           min-width: 150px;
         }
+        &.token_max_jobs,
+        &.token_max_budget {
+          width: 180px;
+          min-width: 120px;
+        }
         &.token_expired,
         &.token_revoked_time {
           width: 220px;
@@ -211,11 +216,7 @@
   @include _transition(all, 1s, ease);
   position: relative;
   .create_btn_text {
-    background: rgb(255, 190, 0);
-    background: linear-gradient(90deg, rgba(255, 190, 0, 1) 0%, rgba(180, 138, 88, 1) 47%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--page-header-color);
   }
   &:hover,
   &:focus {
@@ -406,8 +407,8 @@ input.token_number_field {
       background-color: black;
     }
     .create_btn_text {
-      background: black;
-      background-clip: text;
+      background: none;
+      color: var(--page-header-color);
     }
   }
   .createToken_btn,
@@ -465,5 +466,149 @@ input.token_number_field {
             }
         }
         */
+  }
+}
+
+/*
+ * Create token form: explicit styling (no global form framework styles are loaded)
+ */
+.tokenForm_container {
+  font-family: 'Open_Sans-Regular', sans-serif;
+  border: 1px solid #d5d9e0;
+  @include border_radius(8px, 8px, 8px, 8px);
+  padding: 1.25rem 1rem;
+
+  .form_indication_text {
+    font-family: 'Open_Sans-Regular', sans-serif;
+    margin-bottom: 0.5rem;
+  }
+
+  #token_form {
+    font-family: 'Open_Sans-Regular', sans-serif;
+
+    .token_input label,
+    label.form-label {
+      font-family: 'Open_Sans-Regular', sans-serif;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    input.form-control {
+      width: 100%;
+      min-width: 0;
+      max-width: 28rem;
+      padding: 0.5rem 0.75rem;
+      font-family: 'Open_Sans-Regular', sans-serif;
+      font-size: 1em;
+      color: #17243b;
+      background-color: #fff;
+      border: 1px solid #c4cad4;
+      @include border_radius(6px, 6px, 6px, 6px);
+
+      &:focus {
+        outline: none;
+        border-color: #b88bd5;
+        box-shadow: 0 0 0 3px rgba(184, 139, 213, 0.3);
+      }
+
+      &[readonly] {
+        background-color: $light_grey;
+        color: #565657;
+      }
+
+      &.invalid_input {
+        border-color: $red;
+      }
+    }
+
+    input.form-range {
+      width: 100%;
+      max-width: 28rem;
+      accent-color: #8a5aa8;
+    }
+
+    .range_value_wrap {
+      font-family: 'Open_Sans-Regular', sans-serif;
+      max-width: 28rem;
+    }
+
+    .error-text {
+      font-size: 0.85em;
+      margin-top: 0.3rem;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .createToken_btn,
+    .cancel_btn {
+      font-family: 'Open_Sans-Regular', sans-serif;
+      margin: 0;
+    }
+
+    .createToken_btn {
+      width: auto;
+      min-width: 9rem;
+      padding: 0 1.5rem;
+      border: none;
+    }
+
+    .cancel_btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 0 1rem;
+      color: #565657;
+      text-decoration: none;
+    }
+  }
+}
+
+.dark_bg .tokenForm_container {
+  border-color: #3a3a3a;
+  background-color: #0b0b0b;
+
+  #token_form {
+    input.form-control {
+      color: #f2f2f2;
+      background-color: #1c1c1e;
+      border-color: #4a4a4f;
+
+      &:focus {
+        border-color: #9468b0;
+        box-shadow: 0 0 0 3px rgba(148, 104, 176, 0.35);
+      }
+
+      &[readonly] {
+        background-color: #141416;
+        color: #b5b5ba;
+      }
+    }
+
+    input.form-range {
+      accent-color: #9468b0;
+    }
+
+    .createToken_btn,
+    .createToken_btn:hover,
+    .createToken_btn:focus {
+      color: #fff;
+      background-color: #6b4585;
+      background-image: none;
+    }
+
+    .createToken_btn:hover,
+    .createToken_btn:focus {
+      background-color: #7d5a91;
+    }
+
+    .cancel_btn,
+    .cancel_btn:hover,
+    .cancel_btn:focus {
+      color: #d0d0d5;
+      background-color: transparent;
+    }
   }
 }

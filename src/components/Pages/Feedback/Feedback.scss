@@ -62,6 +62,14 @@
   }
 }
 
+.comment_field textarea.form-control {
+  display: block;
+  min-height: 120px;
+  border: 1px solid $dark_grey;
+  background-color: #fff;
+  color: #000;
+}
+
 .category_input_wrap {
   max-width: 350px;
 }

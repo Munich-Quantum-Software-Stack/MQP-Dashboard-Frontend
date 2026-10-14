@@ -139,15 +139,20 @@ code {
 
 /****** Right Content *********/
 .right_content {
-  background-color: var(--bs-gray-200);
+  background-color: white;
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
   min-width: 0;
   width: auto;
   &.darkgrey_bg {
-    background-color: $dark_grey;
+    background-color: black;
   }
+}
+
+/* Mid blue used for page headers */
+:root {
+  --page-header-color: #2f6fb7;
 }
 
 /******* Main Content ******/
@@ -160,6 +165,7 @@ code {
   .page_header {
     font-family: 'Open_Sans-Bold';
     font-weight: normal;
+    color: var(--page-header-color);
   }
   .page_subheader {
     font-family: 'Open_Sans-Bold';
@@ -210,7 +216,7 @@ code {
   background-color: black;
 }
 .lightgrey_bg {
-  background-color: var(--bs-gray-200);
+  background-color: white;
 }
 
 @media screen and (max-width: 991px) {

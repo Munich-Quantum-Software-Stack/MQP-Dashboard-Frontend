@@ -13,7 +13,7 @@ export const RESOURCE_PROVIDERS = [
     name: 'LRZ',
     country: '🇩🇪',
     resources: 9,
-    logo: '/user_logos/lrz_wortbild_e_rgb.svg',
+    logo: '/user_logos/lrz_wortbild_square.png',
     description:
       "Leibniz Supercomputing Centre operates Germany's flagship HPC-integrated quantum computing facility, providing seamless HPCQC workflows and live telemetry.",
     category: 'HPCQC-as-a-Service Providers',

@@ -59,12 +59,21 @@ function TokensList({ tokens }) {
                 <div className="token_column token_name" style={{ fontSize: table_label_fs }}>
                   Token Name
                 </div>
+                <div className="token_column token_expired" style={{ fontSize: table_label_fs }}>
+                  Expiration Date
+                </div>
+                <div className="token_column token_max_jobs" style={{ fontSize: table_label_fs }}>
+                  Max Job Count
+                </div>
+                <div className="token_column token_max_budget" style={{ fontSize: table_label_fs }}>
+                  Max Budget Usage
+                </div>
                 <div className="token_column token_actions"></div>
               </li>
               {activatedTokens.map((token) => (
                 <ActivedTokenListItem
                   key={token.token_name}
-                  tokenName={token.token_name}
+                  token={token}
                   onRevoke={revokeHandler}
                 />
               ))}

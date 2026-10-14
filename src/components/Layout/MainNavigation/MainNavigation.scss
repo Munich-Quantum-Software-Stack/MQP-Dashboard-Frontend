@@ -203,3 +203,28 @@ ul.userNav {
     display: none;
   }
 }
+
+// Darker purple accent so it blends with dark mode
+.dark_mode .left_sidebar {
+  ul.mainNav li.nav-item a,
+  ul.userNav li.nav-item a {
+    &:hover,
+    &:focus,
+    &.active {
+      color: #9468b0;
+
+      .link_icon {
+        background-color: #9468b0;
+      }
+    }
+  }
+
+  .logout_btn:hover,
+  .logout_btn:focus {
+    color: #9468b0;
+
+    .logout_icon {
+      background-color: #9468b0;
+    }
+  }
+}

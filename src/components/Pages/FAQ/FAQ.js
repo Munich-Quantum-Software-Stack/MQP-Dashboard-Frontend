@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ContentCard from '@components/UI/Card/ContentCard';
-import PDFLink from '@components/UI/Document/PDFLink';
 import { getAuthToken } from '@utils/auth';
 import './FAQ.scss';
 
@@ -14,12 +13,9 @@ const FAQ_DATA = {
     {
       q: 'What is MQSS',
       a: (
-        <PDFLink
-          src="/documents/MQSS-Overview.pdf"
-          target="_blank"
-          pdf_link_class="left_icon_link"
-          pdf_text="Munich Quantum Software Stack Overview"
-        />
+        <a href="/documents/MQSS-Overview.pdf" target="_blank" rel="noopener noreferrer">
+          Munich Quantum Software Stack Overview
+        </a>
       ),
     },
     {
@@ -465,45 +461,37 @@ const DEVICE_SPECIFIC_DATA = {
     {
       q: 'Introduction to the system',
       a: (
-        <PDFLink
-          src="/documents/Intro to EQE.pdf"
-          target="_blank"
-          pdf_link_class="left_icon_link"
-          pdf_text="Documentation of Euro-Q-Exa"
-        />
+        <a href="/documents/Intro to EQE.pdf" target="_blank" rel="noopener noreferrer">
+          Documentation of Euro-Q-Exa
+        </a>
       ),
     },
     {
       q: 'Euro Q Exa and MQSS demo',
       a: (
-        <PDFLink
-          src="/documents/Euro-Q-Exa-Demo.pdf"
-          target="_blank"
-          pdf_link_class="left_icon_link"
-          pdf_text="Demo to use Euro-Q-Exa"
-        />
+        <a href="/documents/Euro-Q-Exa-Demo.pdf" target="_blank" rel="noopener noreferrer">
+          Demo to use Euro-Q-Exa
+        </a>
       ),
     },
     {
       q: 'Running QAOA',
       a: (
-        <PDFLink
-          src="/documents/MaxCut_FUPP.pdf"
-          target="_blank"
-          pdf_link_class="left_icon_link"
-          pdf_text="QAOA documentation"
-        />
+        <a href="/documents/MaxCut_FUPP.pdf" target="_blank" rel="noopener noreferrer">
+          QAOA documentation
+        </a>
       ),
     },
     {
       q: 'Euro-Q-Exa Friendly User Pilot Phase',
       a: (
-        <PDFLink
-          src="/documents/Friendly-User-Pilot-Phase_Structure_Tools.pdf"
+        <a
+          href="/documents/Friendly-User-Pilot-Phase_Structure_Tools.pdf"
           target="_blank"
-          pdf_link_class="left_icon_link"
-          pdf_text="FUPP: Structure and Tools"
-        />
+          rel="noopener noreferrer"
+        >
+          FUPP: Structure and Tools
+        </a>
       ),
     },
   ],
@@ -511,12 +499,13 @@ const DEVICE_SPECIFIC_DATA = {
     {
       q: 'Introduction to the Software Stack',
       a: (
-        <PDFLink
-          src="/documents/2024-07-09-MNF-MC-SH-BM-JE-Garching-IQM-Training.pdf"
+        <a
+          href="/documents/2024-07-09-MNF-MC-SH-BM-JE-Garching-IQM-Training.pdf"
           target="_blank"
-          pdf_link_class="left_icon_link"
-          pdf_text="Working with IQM Quantum computers"
-        />
+          rel="noopener noreferrer"
+        >
+          Working with IQM Quantum computers
+        </a>
       ),
     },
   ],
@@ -547,7 +536,7 @@ function FAQ() {
   const [expandedCategory, setExpandedCategory] = useState(null);
 
   // Match the purple accent used by the login form
-  const accentColor = '#b88bd5';
+  const accentColor = darkmode ? '#6b4585' : '#b88bd5';
 
   // Redirect to login if session is expired
   React.useEffect(() => {
@@ -568,7 +557,8 @@ function FAQ() {
       <div
         className="faq-category-header"
         style={{
-          fontFamily: "'Open_Sans-Bold', sans-serif",
+          fontFamily: "'Open_Sans-Regular', sans-serif",
+          fontWeight: 'normal',
           fontSize: +fs * 1.05,
           cursor: 'pointer',
           background: expandedCategory === category ? accentColor : 'transparent',
@@ -627,10 +617,13 @@ function FAQ() {
   return (
     <ContentCard className={`faq_container ${darkmode ? 'dark_bg' : 'white_bg'} h-100`}>
       <h2 className="page_header" style={{ fontSize: +fs * 1.5, marginBottom: '2rem' }}>
+        Frequently Asked Questions
+      </h2>
+      <h2 className="page_header" style={{ fontSize: +fs * 1.25, marginBottom: '2rem' }}>
         General
       </h2>
       <div className="faq-categories-list">{FAQ_SECTIONS.map(renderCategory)}</div>
-      <h2 className="page_header" style={{ fontSize: +fs * 1.5, marginBottom: '2rem' }}>
+      <h2 className="page_header" style={{ fontSize: +fs * 1.25, marginBottom: '2rem' }}>
         Device Specific
       </h2>
       <div className="faq-categories-list">{DEVICE_SPECIFIC_SECTIONS.map(renderCategory)}</div>

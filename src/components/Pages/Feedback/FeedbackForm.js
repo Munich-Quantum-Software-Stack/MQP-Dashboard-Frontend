@@ -64,6 +64,7 @@ const FeedbackForm = () => {
     event.preventDefault();
     setIsSubmitting(true);
     setHttpErr(null);
+    setValidationError(null);
 
     // Validation
     const isCommentValid = isNotEmpty(commentValue);
@@ -122,6 +123,7 @@ const FeedbackForm = () => {
                 <div className="rate_field">
                   {ratings.map((rate) => (
                     <button
+                      type="button"
                       key={`rating-${rate.value}`}
                       id={`rating-${rate.value}`}
                       className={`rating_input_wrap ${rate.isActive ? 'active' : 'undefined'}`}

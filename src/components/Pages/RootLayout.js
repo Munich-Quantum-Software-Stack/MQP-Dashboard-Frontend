@@ -53,7 +53,9 @@ const RootLayout = () => {
     <React.Fragment>
       <AnimatePresence>{isExpired && <UnauthoriedModal />}</AnimatePresence>
 
-      <div className={`fluid-container body_container ${!minSidebar ? 'sidebar_collapsed' : ''}`}>
+      <div
+        className={`fluid-container body_container ${!minSidebar ? 'sidebar_collapsed' : ''} ${darkmode ? 'dark_mode' : ''}`}
+      >
         <div className="mx-0 topbar_container">
           <div className={`left_topbar ${!minSidebar ? 'minimized' : ''}`}>
             <NavbarHeader />
