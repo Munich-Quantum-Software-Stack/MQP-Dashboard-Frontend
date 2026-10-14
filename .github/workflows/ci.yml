@@ -21,10 +21,10 @@ jobs:
         node-version: [22.x, 24.11.1]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -67,10 +67,10 @@ jobs:
         shard: [1, 2]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Use Node.js 22.x
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 22.x
 
@@ -79,7 +79,7 @@ jobs:
 
       # Cache Playwright browsers to speed up subsequent runs
       - name: Cache Playwright Browsers
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
@@ -101,17 +101,19 @@ jobs:
 
       # Upload test artifacts only on failure for debugging
       - name: Upload Playwright Report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         if: failure()
         with:
           name: playwright-report-shard-${{ matrix.shard }}
           path: playwright-report/
           retention-days: 7
+          if-no-files-found: ignore
 
       - name: Upload Test Results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         if: failure()
         with:
           name: test-results-shard-${{ matrix.shard }}
           path: test-results/
           retention-days: 7
+          if-no-files-found: ignore

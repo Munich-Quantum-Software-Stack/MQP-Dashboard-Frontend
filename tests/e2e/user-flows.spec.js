@@ -5,11 +5,6 @@
 const { test, expect } = require('@playwright/test');
 
 // Mock API response data for login, tokens list, and user limits
-const loginResponse = {
-  access_token: 'test-access-token',
-  force_secret_reset: false,
-};
-
 const tokensResponse = {
   tokens: [
     {
@@ -25,19 +20,21 @@ const userLimitsResponse = {
   remaining: 4,
 };
 
-// Intercept login API calls and return mock auth token response
-async function mockLogin(page) {
-  await page.route('**/login', async (route) => {
-    if (route.request().resourceType() === 'document') {
-      await route.continue();
-      return;
-    }
-    await route.fulfill({
-      status: 200,
-      contentType: 'application/json',
-      body: JSON.stringify(loginResponse),
-    });
-  });
+// The app renders only after the Keycloak silent SSO check settles (up to ~10s when blocked)
+const APP_READY_TIMEOUT = 25_000;
+
+// Fail Keycloak requests fast so the silent SSO check ends and the app renders
+async function blockKeycloak(page) {
+  await page.route('https://test.quantumpathway.eu/**', (route) => route.abort());
+}
+
+// Seed a session as if Keycloak had already authenticated the user
+async function mockAuthenticatedSession(page) {
+  const expiration = new Date(Date.now() + 15 * 60 * 1000).toISOString();
+  await page.addInitScript((exp) => {
+    window.localStorage.setItem('token', 'test-access-token');
+    window.localStorage.setItem('expiration', exp);
+  }, expiration);
 }
 
 // Intercept token-related API calls (user limits and token list) with mock data
@@ -72,24 +69,30 @@ async function mockTokenQueries(page) {
   });
 }
 
-// Reusable helper that performs full login flow and verifies redirect to status page
+// Reusable helper that opens the app with an authenticated session and verifies the status page
 async function performLogin(page) {
-  await mockLogin(page);
-  await page.goto('/login');
-  await page.getByLabel('Identity *').fill('user@example.com');
-  await page.getByLabel('Password *').fill('super-secret');
-
-  const loginButton = page.getByRole('button', { name: 'Login' });
-  await loginButton.waitFor({ state: 'visible' });
-
-  await Promise.all([page.waitForURL(/\/status$/), loginButton.click({ force: true })]);
+  await blockKeycloak(page);
+  await mockAuthenticatedSession(page);
+  await page.goto('/status');
   await expect(page).toHaveURL(/\/status$/);
-  await expect(page.getByRole('heading', { name: /Munich Quantum Portal/i })).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: /Welcome to Quantum Pathway Program/i }),
+  ).toBeVisible({
+    timeout: APP_READY_TIMEOUT,
+  });
 }
 
 // Test suite covering main user journeys: login, token viewing, and access request
 test.describe('End-to-End user journeys', () => {
-  test('user can log in and reach the status page', async ({ page }) => {
+  test('visitor sees the SSO login button', async ({ page }) => {
+    await blockKeycloak(page);
+    await page.goto('/login');
+    await expect(page.getByRole('button', { name: 'Login with Single Sign on' })).toBeVisible({
+      timeout: APP_READY_TIMEOUT,
+    });
+  });
+
+  test('authenticated user can reach the status page', async ({ page }) => {
     await performLogin(page);
   });
 
@@ -107,6 +110,7 @@ test.describe('End-to-End user journeys', () => {
 
   // Test unauthenticated visitor filling and submitting the access request form
   test('visitor can request portal access', async ({ page }) => {
+    await blockKeycloak(page);
     await page.route('**/request_access', async (route) => {
       if (route.request().resourceType() === 'document') {
         await route.continue();
