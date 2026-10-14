@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ContentCard from '@components/UI/Card/ContentCard';
+import PDFLink from '@components/UI/Document/PDFLink';
 import { getAuthToken } from '@utils/auth';
 import './FAQ.scss';
 
@@ -10,6 +11,17 @@ import './FAQ.scss';
  */
 const FAQ_DATA = {
   'Getting Started': [
+    {
+      q: 'What is MQSS',
+      a: (
+        <PDFLink
+          src="/documents/MQSS-Overview.pdf"
+          target="_blank"
+          pdf_link_class="left_icon_link"
+          pdf_text="Munich Quantum Software Stack Overview"
+        />
+      ),
+    },
     {
       q: '1. Prerequisites to get started on the MQP',
       a: (
@@ -448,9 +460,77 @@ const FAQ_DATA = {
   ],
 };
 
+const DEVICE_SPECIFIC_DATA = {
+  'Euro-Q-Exa': [
+    {
+      q: 'Introduction to the system',
+      a: (
+        <PDFLink
+          src="/documents/Intro to EQE.pdf"
+          target="_blank"
+          pdf_link_class="left_icon_link"
+          pdf_text="Documentation of Euro-Q-Exa"
+        />
+      ),
+    },
+    {
+      q: 'Euro Q Exa and MQSS demo',
+      a: (
+        <PDFLink
+          src="/documents/Euro-Q-Exa-Demo.pdf"
+          target="_blank"
+          pdf_link_class="left_icon_link"
+          pdf_text="Demo to use Euro-Q-Exa"
+        />
+      ),
+    },
+    {
+      q: 'Running QAOA',
+      a: (
+        <PDFLink
+          src="/documents/MaxCut_FUPP.pdf"
+          target="_blank"
+          pdf_link_class="left_icon_link"
+          pdf_text="QAOA documentation"
+        />
+      ),
+    },
+    {
+      q: 'Euro-Q-Exa Friendly User Pilot Phase',
+      a: (
+        <PDFLink
+          src="/documents/Friendly-User-Pilot-Phase_Structure_Tools.pdf"
+          target="_blank"
+          pdf_link_class="left_icon_link"
+          pdf_text="FUPP: Structure and Tools"
+        />
+      ),
+    },
+  ],
+  'Q-Exa': [
+    {
+      q: 'Introduction to the Software Stack',
+      a: (
+        <PDFLink
+          src="/documents/2024-07-09-MNF-MC-SH-BM-JE-Garching-IQM-Training.pdf"
+          target="_blank"
+          pdf_link_class="left_icon_link"
+          pdf_text="Working with IQM Quantum computers"
+        />
+      ),
+    },
+  ],
+};
+
 // Transform FAQ_DATA into an array of category objects for rendering
 const FAQ_SECTIONS = Object.freeze(
   Object.entries(FAQ_DATA).map(([category, items]) => ({
+    category,
+    items,
+  })),
+);
+const DEVICE_SPECIFIC_SECTIONS = Object.freeze(
+  Object.entries(DEVICE_SPECIFIC_DATA).map(([category, items]) => ({
     category,
     items,
   })),
@@ -483,75 +563,77 @@ function FAQ() {
     setExpandedCategory(expandedCategory === cat ? null : cat);
   };
 
+  const renderCategory = ({ category, items }) => (
+    <div key={category} className="faq-category-section mb-4">
+      <div
+        className="faq-category-header"
+        style={{
+          fontFamily: "'Open_Sans-Bold', sans-serif",
+          fontSize: +fs * 1.05,
+          cursor: 'pointer',
+          background: expandedCategory === category ? accentColor : 'transparent',
+          color: expandedCategory === category && !darkmode ? '#333' : undefined,
+          borderRadius: '5px',
+          padding: '8px 12px',
+          transition: 'background 0.2s',
+        }}
+        onClick={() => handleCategoryClick(category)}
+      >
+        {category}
+        <span style={{ float: 'right' }}>{expandedCategory === category ? '▲' : '▼'}</span>
+      </div>
+      {expandedCategory === category && (
+        <ul className="list-group mt-3">
+          {items.map((item, qidx) => (
+            <li
+              key={qidx}
+              className="list-group-item faq-question"
+              style={{
+                border: 'none',
+                background: 'transparent',
+                paddingLeft: 0,
+                paddingRight: 0,
+              }}
+            >
+              <div style={{ fontSize: +fs }}>{item.q}</div>
+              <div
+                className="faq-answer mt-1 mb-2"
+                style={{
+                  fontSize: +fs,
+                  color: darkmode ? '#e0e0e0' : '#555',
+                }}
+              >
+                {item.a ? (
+                  item.a
+                ) : (
+                  <span style={{ color: darkmode ? '#888' : '#999' }}>Answer coming soon.</span>
+                )}
+              </div>
+              <div
+                style={{
+                  height: '2px',
+                  background: accentColor,
+                  margin: '8px 0',
+                  borderRadius: '1px',
+                }}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+
   return (
     <ContentCard className={`faq_container ${darkmode ? 'dark_bg' : 'white_bg'} h-100`}>
       <h2 className="page_header" style={{ fontSize: +fs * 1.5, marginBottom: '2rem' }}>
-        Frequently Asked Questions
+        General
       </h2>
-      <div className="faq-categories-list">
-        {FAQ_SECTIONS.map(({ category, items }) => (
-          <div key={category} className="faq-category-section mb-4">
-            <div
-              className="faq-category-header"
-              style={{
-                fontFamily: "'Open_Sans-Bold', sans-serif",
-                fontSize: +fs * 1.05,
-                cursor: 'pointer',
-                background: expandedCategory === category ? accentColor : 'transparent',
-                color: expandedCategory === category && !darkmode ? '#333' : undefined,
-                borderRadius: '5px',
-                padding: '8px 12px',
-                transition: 'background 0.2s',
-              }}
-              onClick={() => handleCategoryClick(category)}
-            >
-              {category}
-              <span style={{ float: 'right' }}>{expandedCategory === category ? '▲' : '▼'}</span>
-            </div>
-            {expandedCategory === category && (
-              <ul className="list-group mt-3">
-                {items.map((item, qidx) => (
-                  <li
-                    key={qidx}
-                    className="list-group-item faq-question"
-                    style={{
-                      border: 'none',
-                      background: 'transparent',
-                      paddingLeft: 0,
-                      paddingRight: 0,
-                    }}
-                  >
-                    <div style={{ fontSize: +fs }}>{item.q}</div>
-                    <div
-                      className="faq-answer mt-1 mb-2"
-                      style={{
-                        fontSize: +fs,
-                        color: darkmode ? '#e0e0e0' : '#555',
-                      }}
-                    >
-                      {item.a ? (
-                        item.a
-                      ) : (
-                        <span style={{ color: darkmode ? '#888' : '#999' }}>
-                          Answer coming soon.
-                        </span>
-                      )}
-                    </div>
-                    <div
-                      style={{
-                        height: '2px',
-                        background: accentColor,
-                        margin: '8px 0',
-                        borderRadius: '1px',
-                      }}
-                    />
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        ))}
-      </div>
+      <div className="faq-categories-list">{FAQ_SECTIONS.map(renderCategory)}</div>
+      <h2 className="page_header" style={{ fontSize: +fs * 1.5, marginBottom: '2rem' }}>
+        Device Specific
+      </h2>
+      <div className="faq-categories-list">{DEVICE_SPECIFIC_SECTIONS.map(renderCategory)}</div>
     </ContentCard>
   );
 }
