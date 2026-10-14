@@ -3,12 +3,10 @@ import { useSelector } from 'react-redux';
 import ContentCard from '@components/UI/Card/ContentCard';
 import { useQuery } from '@tanstack/react-query';
 import { fetchResources } from '@utils/resources-http';
-import ResourcesList from '@components/Pages/Resources/ResourcesList';
-
+import ResourceMap from '@components/Pages/Resources/ResourceMap';
 import LoadingIndicator from '@components/UI/LoadingIndicator';
 import ErrorBlock from '@components/UI/MessageBox/ErrorBlock';
 import { getAuthToken } from '@utils/auth';
-import './Resources.scss';
 
 function Resources() {
   const access_token = getAuthToken();
@@ -37,14 +35,7 @@ function Resources() {
   }
 
   if (data) {
-    resourcesContent = (
-      <ContentCard className={`${darkmode ? 'dark_bg' : 'white_bg'} h-100`}>
-        <ResourcesList
-          resources={data.resources}
-          available_resources={data.available_resources ? data.available_resources : null}
-        />
-      </ContentCard>
-    );
+    resourcesContent = <ResourceMap resourceCount={data.resources.length} />;
   }
 
   return <React.Fragment>{resourcesContent}</React.Fragment>;

@@ -26,6 +26,7 @@ import Budgets from '@components/Pages/Budgets/Budgets';
 import ResourcesRoot from '@components/Pages/Resources/ResourcesRoot';
 import Resources from '@components/Pages/Resources/Resources';
 import ResourceDetail from '@components/Pages/Resources/ResourceDetail';
+import ResourceProviderDetail from '@components/Pages/Resources/ResourceProviderDetail';
 import TokensRootLayout from '@components/Pages/Tokens/TokensRoot';
 import Tokens from '@components/Pages/Tokens/Tokens';
 import NewToken from '@components/Pages/Tokens/NewToken';
@@ -138,6 +139,10 @@ function App() {
             {
               index: true,
               element: <Resources />,
+            },
+            {
+              path: 'providers/:providerId',
+              element: <ResourceProviderDetail />,
             },
             {
               path: ':resourceId',
