@@ -1,1 +1,15 @@
+// Bootstrap's escape-svg() leaves '%' unescaped. Recent Dart Sass versions print
+// the colors Bootstrap derives (tint/shade/mix) as rgb() with percentages, so the
+// inline SVG data URIs end up with bare '%' characters that are not valid URL
+// escapes. The CSS minimizer (postcss-svgo) then fails to decode them, and
+// `CI=true` turns that warning into a build error. Escape '%' first.
+$escaped-characters: (
+  ('%', '%25'),
+  ('<', '%3c'),
+  ('>', '%3e'),
+  ('#', '%23'),
+  ('(', '%28'),
+  (')', '%29')
+);
+
 @import '~bootstrap/scss/bootstrap';
