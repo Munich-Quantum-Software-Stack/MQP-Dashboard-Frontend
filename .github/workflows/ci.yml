@@ -5,39 +5,63 @@ name: CI/CD Pipeline
 on:
   push:
   pull_request:
+  merge_group:
+  workflow_dispatch:
 
 # Cancel redundant runs on same branch/PR to save CI minutes
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   # Main job: runs lint, unit tests, security audit, and production build
   # Both Node versions run in parallel (matrix), not sequentially
   build-and-test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # only used by the coverage badge commit on main/master
     strategy:
       matrix:
         node-version: [22.x, 24.11.1]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: true # zizmor: ignore[artipacked] needed by the coverage badge commit
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: ${{ matrix.node-version }}
 
       - name: Install Dependencies
         run: npm install --loglevel=error
 
-      # Run lint, tests (with coverage), and security audit in parallel
-      - name: Lint, Test & Audit
-        run: |
-          npm run lint &
-          npm run test:ci -- --coverage --coverageReporters="json-summary" --coverageReporters="text" &
-          npm audit --audit-level=high &
-          wait
+      # Lint and tests run as separate steps so that a failure fails the job.
+      # (Before, they ran in the background and `wait` returned success regardless.)
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test:ci -- --coverage --coverageReporters="json-summary" --coverageReporters="text" --coverageReporters="lcov"
+
+      # Reported but not blocking: npm audit currently finds known high-severity
+      # advisories in dependencies; make this blocking once they are resolved.
+      - name: Audit
+        continue-on-error: true
+        run: npm audit --audit-level=high
+
+      - name: Upload coverage to Codecov
+        if: matrix.node-version == '22.x'
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          # Switch to true (as in QDMI) once the repository is registered with Codecov.
+          fail_ci_if_error: false
+          files: coverage/lcov.info
+          flags: javascript
 
       - name: Build
         run: npm run build
@@ -67,10 +91,12 @@ jobs:
         shard: [1, 2]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
 
       - name: Use Node.js 22.x
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22.x
 
@@ -79,7 +105,7 @@ jobs:
 
       # Cache Playwright browsers to speed up subsequent runs
       - name: Cache Playwright Browsers
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
@@ -95,13 +121,15 @@ jobs:
 
       # Build test version and run sharded E2E tests
       - name: Build & Test
+        env:
+          SHARD: ${{ matrix.shard }}
         run: |
           npm run build:test
-          npx playwright test --config=config/e2e/playwright.config.js --shard=${{ matrix.shard }}/2
+          npx playwright test --config=config/e2e/playwright.config.js --shard=${SHARD}/2
 
       # Upload test artifacts only on failure for debugging
       - name: Upload Playwright Report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: failure()
         with:
           name: playwright-report-shard-${{ matrix.shard }}
@@ -109,9 +137,37 @@ jobs:
           retention-days: 7
 
       - name: Upload Test Results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: failure()
         with:
           name: test-results-shard-${{ matrix.shard }}
           path: test-results/
           retention-days: 7
+
+  workflow-checks:
+    name: 🪝 Workflow checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - name: Install the latest version of uv
+        uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
+        with:
+          enable-cache: false
+      - name: Run pre-commit (workflow schemas and zizmor)
+        run: uvx prek run --all-files
+
+  required-checks-pass: # This job does nothing and is only used for branch protection
+    name: 🚦 Check
+    if: always()
+    needs:
+      - build-and-test
+      - e2e-tests
+      - workflow-checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Decide whether the needed jobs succeeded or failed
+        uses: re-actors/alls-green@b5b5b37504aa4183270bd3d855c52a67f212be35 # v1.3.0
+        with:
+          jobs: ${{ toJSON(needs) }}
